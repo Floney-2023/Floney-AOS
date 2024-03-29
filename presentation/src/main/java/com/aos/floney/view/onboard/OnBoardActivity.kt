@@ -29,7 +29,7 @@ class OnBoardActivity : BaseActivity<ActivityOnBoardBinding, OnBoardViewModel>(R
     }
 
     fun startLoginActivity() {
-        startActivity(Intent(this, SignUpActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 
