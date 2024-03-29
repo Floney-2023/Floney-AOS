@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.aos.floney.view.onboard.OnBoardStartViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.onboard.OnBoardRecordFragment">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="@string/on_board_start_text"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="24dp"
+            android:id="@+id/tv_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/grayscale1"/>
+        
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_marginTop="32dp"
+            android:layout_height="426dp"
+            android:id="@+id/iv_background"
+            android:src="@drawable/background_on_board_start"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/tv_top"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/on_board_start_button_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> vm.onClickStartBtn()}"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/iv_background"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

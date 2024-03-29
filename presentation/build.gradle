@@ -52,6 +52,8 @@ dependencies {
     implementation project(':data')
     implementation project(':domain')
 
+    implementation("com.tbuonomo:dotsindicator:5.0")
+
     // viweModels
     implementation 'androidx.activity:activity-ktx:1.1.0'
     implementation 'androidx.fragment:fragment-ktx:1.2.5'

@@ -97,7 +97,4 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
             lifecycleOwner = viewLifecycleOwner
         }
     }
-
-    abstract fun setupObserver()
-
 }
