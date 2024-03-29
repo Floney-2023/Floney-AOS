@@ -8,6 +8,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityOnBoardBinding
 import com.aos.floney.view.login.LoginActivity
+import com.aos.floney.view.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +29,7 @@ class OnBoardActivity : BaseActivity<ActivityOnBoardBinding, OnBoardViewModel>(R
     }
 
     fun startLoginActivity() {
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, SignUpActivity::class.java))
         finish()
     }
 

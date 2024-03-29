@@ -6,6 +6,7 @@
     <string name="bottom_navigation_mypage">마이</string>
     <string name="date_pick_button">완료</string>
     <string name="already_pick_button">확인</string>
+    <string name="default_error_text">에러가 발생하였습니다. 플로니 팀에 문의 해주세요.</string>
     <string name="detail_empty_record_message">캘린더 내역 작성해주세요</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -106,5 +107,22 @@
     <string name="gallery">앨범에서 사진 선택</string>
     <string name="random_image">랜덤 이미지</string>
     <string name="choose_image_source">프로필 변경</string>
+
+    <!--signUp-->
+    <string name="sign_up_exist_email">이미 등록된 이메일입니다.</string>
+    <string name="sign_up_request_valid_email">유효한 이메일을 입력해주세요</string>
+    <string name="sign_up_request_email">이메일 주소를 입력해주세요</string>
+    <string name="sign_up_request_email_hint">이메일을 입력해주세요</string>
+    <string name="sign_up_valid_email">이메일 인증하기</string>
+    <string name="sign_up_valid_email_text">이메일 인증을 위해 사용 가능한\n이메일을 입력해주세요</string>
+    <string name="sign_up_send_mail">메일 보내기</string>
+    <string name="sign_up_agree_of_terms">약관 동의</string>
+    <string name="sign_up_all_agree_of_terms">전체 동의</string>
+    <string name="sign_up_terms_text_1">서비스 이용 약관 (필수)</string>
+    <string name="sign_up_terms_text_2">개인정보 수집 및 이용 동의 (필수)</string>
+    <string name="sign_up_terms_text_3">마케팅 정보 수신 동의 (선택)</string>
+    <string name="sign_up_terms_text_4">만 14세 이상 확인 (필수)</string>
+    <string name="sign_up_next">다음으로</string>
+    <string name="sign_up_error_terms">필수 약관에 모두 동의해주세요.</string>
 
 </resources>

@@ -1,19 +1,20 @@
 package com.aos.floney.module
 
-import com.aos.data.api.UserService
+import com.aos.data.repository.remote.UserRepositoryImpl
+import com.aos.repository.UserRepository
+import com.aos.usecase.SendEmailUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ServiceModule {
+object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideUserService(retrofit: Retrofit): UserService = retrofit.create(UserService::class.java)
+    fun provideSendEmailUseCase(userRepository: UserRepository) = SendEmailUseCase(userRepository)
 
 }
