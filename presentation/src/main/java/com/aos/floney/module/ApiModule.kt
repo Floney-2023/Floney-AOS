@@ -30,7 +30,7 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient) = run {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = run {
         Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(com.aos.floney.BuildConfig.BASE_URL)

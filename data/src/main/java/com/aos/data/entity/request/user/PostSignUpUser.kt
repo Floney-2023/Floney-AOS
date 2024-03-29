@@ -1,4 +1,4 @@
-package com.aos.data.entity.request
+package com.aos.data.entity.request.user
 
 import kotlinx.serialization.Serializable
 

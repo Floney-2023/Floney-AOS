@@ -14,22 +14,38 @@
         android:id="@+id/signUpAgreeFragment"
         android:name="com.aos.floney.view.signup.SignUpAgreeFragment"
         tools:layout="@layout/fragment_sign_up_agree"
-        android:label="SignUpAgreeFragment" />
+        android:label="SignUpAgreeFragment" >
+        <action
+            android:id="@+id/action_signUpAgreeFragment_to_signUpInputEmailFragment"
+            app:destination="@id/signUpInputEmailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpEmailCodeFragment"
         android:name="com.aos.floney.view.signup.SignUpEmailCodeFragment"
         tools:layout="@layout/fragment_sign_up_email_code"
-        android:label="SignUpEmailCodeFragment" />
+        android:label="SignUpEmailCodeFragment" >
+        <action
+            android:id="@+id/action_signUpEmailCodeFragment_to_signUpInputInfoFragment"
+            app:destination="@id/signUpInputInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpInputEmailFragment"
         android:name="com.aos.floney.view.signup.SignUpInputEmailFragment"
         tools:layout="@layout/fragment_sign_up_input_email"
-        android:label="SignUpInputEmailFragment" />
+        android:label="SignUpInputEmailFragment" >
+        <action
+            android:id="@+id/action_signUpInputEmailFragment_to_signUpEmailCodeFragment"
+            app:destination="@id/signUpEmailCodeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpInputInfoFragment"
         android:name="com.aos.floney.view.signup.SignUpInputInfoFragment"
         tools:layout="@layout/fragment_sign_up_input_info"
-        android:label="SignUpInputInfoFragment" />
+        android:label="SignUpInputInfoFragment" >
+        <action
+            android:id="@+id/action_signUpInputInfoFragment_to_signUpCompleteFragment"
+            app:destination="@id/signUpCompleteFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpCompleteFragment"
         android:name="com.aos.floney.view.signup.SignUpCompleteFragment"

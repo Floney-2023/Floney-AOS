@@ -23,6 +23,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>(R.la
 
         val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = host.navController
+
     }
 
 }
