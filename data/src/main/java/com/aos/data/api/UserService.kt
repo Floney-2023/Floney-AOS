@@ -1,10 +1,16 @@
 package com.aos.data.api
 
-import com.aos.util.NetworkState
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import retrofit2.http.Field
+import retrofit2.http.POST
 
-interface ApiService {
+interface UserService {
+
+    @POST
+    suspend fun postRegisterUser(
+        @Field("email") email: String,
+        @Field("nickname") nickname: String,
+        @Field("password") password: String,
+        @Field("receiveMarketing") receiveMarketing: String,
+    )
 
 }
