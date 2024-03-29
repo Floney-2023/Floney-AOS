@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelLazy
+import com.aos.floney.BR
+import com.aos.floney.R
 import com.aos.floney.ext.repeatOnStarted
 import java.lang.reflect.ParameterizedType
 
@@ -36,7 +38,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
 
     private val loadingDialog by lazy {
         AppCompatDialog(requireContext()).apply {
-            setContentView(R.layout.dialog_progress)
+            setContentView(R.layout.item_progress_loading)
             setCancelable(false)
             window?.setDimAmount(0.2f)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
