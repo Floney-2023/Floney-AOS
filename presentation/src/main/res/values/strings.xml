@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Floney</string>
+    <string name="is_first">isFirst</string>
     <string name="bottom_navigation_home">홈</string>
     <string name="bottom_navigation_analysis">분석</string>
     <string name="bottom_navigation_calculate">정산</string>
@@ -24,8 +25,12 @@
     <string name="on_board_start_button_text">플로니 시작하기</string>
 
     <!--loginActivity-->
-    <string name="find_pw"><u>비밀번호 찾기</u></string>
-    <string name="sign_up"><u>회원가입 하기</u></string>
+    <string name="login">로그인하기</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="find_pw">비밀번호 찾기</string>
+    <string name="sign_up">회원가입 하기</string>
+    <string name="simple_login">간편 로그인</string>
 
     <!--myPageActivity(메인)-->
     <string name="mypage_main_mypage_text">마이페이지</string>
