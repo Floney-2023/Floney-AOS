@@ -1,4 +1,4 @@
-package com.aos.floney.view
+package com.aos.floney.view.onboarding
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
