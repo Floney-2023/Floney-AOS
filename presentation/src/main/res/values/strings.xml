@@ -15,6 +15,13 @@
     <string name="sign_length_limit_text">* 최대 8자까지 입력할 수 있어요.</string>
     <string name="sign_complete_text">플로니와 함께 똑똑하고 편리한 가계부를 작성해보세요.</string>
 
+    <!--onBoardRecordFragment-->
+    <string name="on_board_record_text">함께, 간편하게\n가계부를 기록해 보세요</string>
+    <string name="on_board_show_flow_text">모으고 사용한 흐름을\n한눈에 볼 수 있어요</string>
+    <string name="on_board_start_text">기록한 내역으로\n손쉽게 정산할 수 있어요</string>
+    <string name="on_board_skip_text">건너뛰기</string>
+    <string name="on_board_start_button_text">플로니 시작하기</string>
+
     <!--loginActivity-->
     <string name="find_pw"><u>비밀번호 찾기</u></string>
     <string name="sign_up"><u>회원가입 하기</u></string>
