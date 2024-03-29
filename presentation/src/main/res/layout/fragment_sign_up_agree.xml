@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.signup.SignUpAgreeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.signup.SignUpAgreeFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:src="@drawable/icon_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon_back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="1"
+                android:textColor="@color/grayscale2"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="/"
+                android:textColor="@color/grayscale6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="4"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_agree_of_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/sign_up_agree_of_terms"
+            android:textColor="@color/grayscale1"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/ll_page"
+            app:layout_constraintTop_toBottomOf="@id/ll_page" />
+
+        <ImageView
+            android:id="@+id/iv_all_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="45dp"
+            android:onClick="@{() -> vm.onClickAllTerms()}"
+            android:src="@{vm.allTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintStart_toStartOf="@id/tv_agree_of_terms"
+            app:layout_constraintTop_toBottomOf="@id/tv_agree_of_terms" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{() -> vm.onClickAllTerms()}"
+            android:text="@string/sign_up_all_agree_of_terms"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_all_terms"
+            app:layout_constraintStart_toEndOf="@+id/iv_all_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_all_terms" />
+
+        <View
+            android:id="@+id/v_terms"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/grayscale10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_all_terms" />
+
+        <ImageView
+            android:id="@+id/iv_service_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:onClick="@{() -> vm.onClickServiceTerms()}"
+            android:src="@{vm.serviceTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintStart_toStartOf="@id/tv_agree_of_terms"
+            app:layout_constraintTop_toBottomOf="@id/v_terms" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{() -> vm.onClickServiceTerms()}"
+            android:text="@string/sign_up_terms_text_1"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_service_terms"
+            app:layout_constraintStart_toEndOf="@+id/iv_service_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_service_terms" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_chevron_right"
+            app:layout_constraintBottom_toBottomOf="@id/iv_service_terms"
+            app:layout_constraintEnd_toEndOf="@id/v_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_service_terms" />
+
+        <ImageView
+            android:id="@+id/iv_use_info_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="28dp"
+            android:onClick="@{() -> vm.onClickUseInfoTerms()}"
+            android:src="@{vm.useInfoTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintStart_toStartOf="@id/tv_agree_of_terms"
+            app:layout_constraintTop_toBottomOf="@id/iv_service_terms" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{() -> vm.onClickUseInfoTerms()}"
+            android:text="@string/sign_up_terms_text_2"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_use_info_terms"
+            app:layout_constraintStart_toEndOf="@+id/iv_use_info_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_use_info_terms" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_chevron_right"
+            app:layout_constraintBottom_toBottomOf="@id/iv_use_info_terms"
+            app:layout_constraintEnd_toEndOf="@id/v_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_use_info_terms" />
+
+        <ImageView
+            android:id="@+id/iv_marketing_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="28dp"
+            android:onClick="@{() -> vm.onClickMarketingTerms()}"
+            android:src="@{vm.marketingTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintStart_toStartOf="@id/tv_agree_of_terms"
+            app:layout_constraintTop_toBottomOf="@id/iv_use_info_terms" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{() -> vm.onClickMarketingTerms()}"
+            android:text="@string/sign_up_terms_text_3"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_marketing_terms"
+            app:layout_constraintStart_toEndOf="@+id/iv_marketing_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_marketing_terms" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_chevron_right"
+            app:layout_constraintBottom_toBottomOf="@id/iv_marketing_terms"
+            app:layout_constraintEnd_toEndOf="@id/v_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_marketing_terms" />
+
+        <ImageView
+            android:id="@+id/iv_age_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="28dp"
+            android:onClick="@{() -> vm.onClickAgeTerms()}"
+            android:src="@{vm.ageTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintStart_toStartOf="@id/tv_agree_of_terms"
+            app:layout_constraintTop_toBottomOf="@id/iv_marketing_terms" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{() -> vm.onClickAgeTerms()}"
+            android:text="@string/sign_up_terms_text_4"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_age_terms"
+            app:layout_constraintStart_toEndOf="@+id/iv_age_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_age_terms" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_chevron_right"
+            app:layout_constraintBottom_toBottomOf="@id/iv_age_terms"
+            app:layout_constraintEnd_toEndOf="@id/v_terms"
+            app:layout_constraintTop_toTopOf="@id/iv_age_terms" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/sign_up_next"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:onClick="@{() -> vm.onClickNextPage()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/v_terms"
+            app:layout_constraintStart_toStartOf="@id/v_terms" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

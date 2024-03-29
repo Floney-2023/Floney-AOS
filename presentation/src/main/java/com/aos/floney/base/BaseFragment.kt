@@ -3,6 +3,8 @@ package com.aos.floney.base
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import androidx.lifecycle.ViewModelLazy
 import com.aos.floney.BR
 import com.aos.floney.R
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.ErrorToastDialog
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
@@ -73,13 +76,23 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
 
     private fun handleEvent(event: BaseViewModel.Event) {
         when (event) {
-            is BaseViewModel.Event.ShowToast -> Toast.makeText(
-                requireContext(), event.message, Toast.LENGTH_LONG
-            ).show()
+            is BaseViewModel.Event.ShowToast -> {
+                val errorToastDialog = ErrorToastDialog(requireContext(), event.message)
+                errorToastDialog.show()
 
-            is BaseViewModel.Event.ShowToastRes -> Toast.makeText(
-                requireContext(), getString(event.message), Toast.LENGTH_LONG
-            ).show()
+                Handler(Looper.myLooper()!!).postDelayed({
+                    errorToastDialog.dismiss()
+                }, 2000)
+            }
+
+            is BaseViewModel.Event.ShowToastRes -> {
+                val errorToastDialog = ErrorToastDialog(requireContext(), getString(event.message))
+                errorToastDialog.show()
+
+                Handler(Looper.myLooper()!!).postDelayed({
+                    errorToastDialog.dismiss()
+                }, 2000)
+            }
 
             is BaseViewModel.Event.ShowLoading -> loadingDialog.show()
             is BaseViewModel.Event.HideLoading -> loadingDialog.dismiss()

@@ -1,9 +1,7 @@
 package com.aos.floney.module
 
+import com.aos.data.BuildConfig
 import com.aos.data.util.CustomCallAdapterFactory
-import com.example.data.api.ApiService
-import com.example.data.util.CustomCallAdapterFactory
-import com.example.presentation.BuildConfig
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -35,7 +33,7 @@ object ApiModule {
     fun provideRetrofit(okHttpClient: OkHttpClient) = run {
         Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl(BuildConfig.KAKAO_BASE_URL)
+            .baseUrl(com.aos.floney.BuildConfig.BASE_URL)
             .addCallAdapterFactory(CustomCallAdapterFactory())
             .addConverterFactory(
                 Json {

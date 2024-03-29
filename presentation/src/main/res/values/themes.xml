@@ -363,7 +363,7 @@
 
     <!--item_toast_sample-->
     <style name="item_toast_sample" parent="Base.Theme.Floney">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
