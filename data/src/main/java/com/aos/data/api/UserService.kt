@@ -1,6 +1,7 @@
 package com.aos.data.api
 
 import com.aos.data.entity.request.user.PostCheckEmailCode
+import com.aos.data.entity.request.user.PostSignUpUser
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
 import retrofit2.http.Body
@@ -13,12 +14,9 @@ import retrofit2.http.Query
 interface UserService {
 
     // 회원가입
-    @POST
+    @POST("users")
     suspend fun postSignUpUser(
-        @Field("email") email: String,
-        @Field("nickname") nickname: String,
-        @Field("password") password: String,
-        @Field("receiveMarketing") receiveMarketing: Boolean,
+        @Body postSignUpUser: PostSignUpUser
     ): NetworkState<PostSignUpUserEntity>
 
     // 이메일 전송

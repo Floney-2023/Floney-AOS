@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentSignUpAgreeBinding
+import com.aos.floney.ext.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -25,13 +26,23 @@ class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgree
     }
 
     private fun setUpViewModelObserver() {
-        lifecycleScope.launch(Dispatchers.Main) {
+        repeatOnStarted {
             // 다음 페이지 이동
             viewModel.nextPage.collect {
                 if(it) {
                     val action =
                         SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
                     findNavController().navigate(action)
+                }
+            }
+        }
+
+        repeatOnStarted {
+            // 이전 페이지 이동
+            viewModel.back.collect {
+                if(it) {
+                    val activity = requireActivity() as SignUpActivity
+                    activity.startLoginActivity()
                 }
             }
         }

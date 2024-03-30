@@ -11,7 +11,9 @@ import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentSignUpEmailCodeBinding
+import com.aos.floney.ext.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -20,7 +22,34 @@ class SignUpEmailCodeFragment : BaseFragment<FragmentSignUpEmailCodeBinding, Sig
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpViewModelObserver()
         codeEditTextAutoFocus()
+    }
+
+    private fun setUpViewModelObserver() {
+        repeatOnStarted {
+            viewModel.nextPage.collect() {
+                if (it) {
+                    val email = viewModel.email.value ?: ""
+                    val marketing = viewModel.marketing.value ?: false
+                    val action =
+                        SignUpEmailCodeFragmentDirections.actionSignUpEmailCodeFragmentToSignUpInputInfoFragment(
+                            email,
+                            marketing
+                        )
+                    findNavController().navigate(action)
+                }
+            }
+        }
+
+        repeatOnStarted {
+            // 이전 페이지 이동
+            viewModel.back.collect {
+                if(it) {
+                    findNavController().popBackStack()
+                }
+            }
+        }
     }
 
     // editText 자동 포커싱

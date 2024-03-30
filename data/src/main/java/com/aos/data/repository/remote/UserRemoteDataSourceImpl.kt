@@ -2,6 +2,7 @@ package com.aos.data.repository.remote
 
 import com.aos.data.api.UserService
 import com.aos.data.entity.request.user.PostCheckEmailCode
+import com.aos.data.entity.request.user.PostSignUpUser
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
 import javax.inject.Inject
@@ -17,10 +18,12 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
         receiveMarketing: Boolean,
     ): NetworkState<PostSignUpUserEntity> {
         return userService.postSignUpUser(
-            email = email,
-            nickname = nickname,
-            password = password,
-            receiveMarketing = receiveMarketing
+            PostSignUpUser(
+                email = email,
+                nickname = nickname,
+                password = password,
+                receiveMarketing = receiveMarketing
+            )
         )
     }
 

@@ -28,7 +28,7 @@
         <EditText
             android:id="@+id/et_email"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="46dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="20dp"
@@ -47,7 +47,7 @@
             android:id="@+id/et_password"
             style="@style/login_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="46dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="20dp"

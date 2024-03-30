@@ -9,9 +9,14 @@ import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
+import com.aos.floney.util.EventFlow
+import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.CheckEmailCodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -26,6 +31,13 @@ class SignUpEmailCodeViewModel @Inject constructor(
     var email: LiveData<String> = stateHandle.getLiveData("email")
     var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
 
+    // 뒤로가기
+    private var _back = MutableStateFlow<Boolean>(false)
+    val back: StateFlow<Boolean> get() = _back.asStateFlow()
+
+    // 다음 페이지 이동
+    private var _nextPage = MutableEventFlow<Boolean>()
+    val nextPage: EventFlow<Boolean> get() = _nextPage
     // 첫번째 코드
     var codeFirst = MutableLiveData<String>()
 
@@ -85,9 +97,14 @@ class SignUpEmailCodeViewModel @Inject constructor(
                 if (!timerExpired) {
                     val email = email.value ?: ""
                     val code = "${codeFirst.value}${codeSecond.value}${codeThird.value}${codeFour.value}${codeFifth.value}${codeSix.value}"
+                    baseEvent(Event.ShowLoading)
+
                     checkEmailCodeUseCase(email, code).onSuccess {
-                        Timber.e("성공")
+                        baseEvent(Event.HideLoading)
+
+                        _nextPage.emit(true)
                     }.onFailure {
+                        baseEvent(Event.HideLoading)
                         baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                     }
                 } else {
@@ -99,6 +116,11 @@ class SignUpEmailCodeViewModel @Inject constructor(
                 baseEvent(Event.ShowToastRes(R.string.sign_up_request_input_code))
             }
         }
+    }
+
+    // 이전 페이지로 이동
+    fun onClickPreviousPage() {
+        _back.value = true
     }
 
     // 전부 입력 되었는지 확인

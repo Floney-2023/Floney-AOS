@@ -16,7 +16,6 @@ class ErrorToastDialog(context: Context, private val text: String): Dialog(conte
         super.onCreate(savedInstanceState)
         binding = DialogToastErrorBinding.inflate(layoutInflater)
 
-        setCancelable(false)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         window?.setGravity(Gravity.BOTTOM)

@@ -18,6 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
 
+    // 뒤로가기
+    private var _back = MutableStateFlow<Boolean>(false)
+    val back: StateFlow<Boolean> get() = _back.asStateFlow()
+
     // 다음 페이지 이동
     private var _nextPage = MutableStateFlow<Boolean>(false)
     val nextPage: StateFlow<Boolean> get() = _nextPage.asStateFlow()
@@ -101,6 +105,11 @@ class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
         } else {
             baseEvent(Event.ShowToastRes(R.string.sign_up_error_terms))
         }
+    }
+
+    // 이전 페이지로 이동
+    fun onClickPreviousPage() {
+        _back.value = true
     }
 
     // 모두 체크 됐으면 전체 동의 버튼 Check 상태로 변경

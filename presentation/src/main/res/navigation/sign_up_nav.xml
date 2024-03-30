@@ -21,7 +21,8 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/signUpAgreeFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpEmailCodeFragment"
@@ -53,7 +54,8 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/signUpInputEmailFragment" />
         <argument
             android:name="marketing"
             app:argType="boolean" />
@@ -70,6 +72,11 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument android:name="marketing"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/signUpCompleteFragment"

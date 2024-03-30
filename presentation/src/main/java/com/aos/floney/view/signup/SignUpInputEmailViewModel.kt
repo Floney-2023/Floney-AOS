@@ -8,11 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
+import com.aos.floney.util.EventFlow
+import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.SendEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -24,8 +27,12 @@ class SignUpInputEmailViewModel @Inject constructor(
 ): BaseViewModel() {
 
     var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
-    private var _nextPage = MutableLiveData<Boolean>()
-    val nextPage: LiveData<Boolean> get() = _nextPage
+
+    // 뒤로가기
+    private var _back = MutableStateFlow<Boolean>(false)
+    val back: StateFlow<Boolean> get() = _back.asStateFlow()
+    private var _nextPage = MutableEventFlow<Boolean>()
+    val nextPage: EventFlow<Boolean> get() = _nextPage
 
     // 이메일
     var email = MutableLiveData<String>("")
@@ -39,9 +46,9 @@ class SignUpInputEmailViewModel @Inject constructor(
                     baseEvent(Event.ShowLoading)
 
                     sendEmailUseCase(email.value!!).onSuccess {
-                        baseEvent(Event.HideLoading)
                         // 전송 성공
-                        _nextPage.postValue(true)
+                        baseEvent(Event.HideLoading)
+                        _nextPage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
                         baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -55,6 +62,11 @@ class SignUpInputEmailViewModel @Inject constructor(
             // 이메일이 비어 있을 경우
             baseEvent(Event.ShowToastRes(R.string.sign_up_request_email))
         }
+    }
+
+    // 이전 페이지로 이동
+    fun onClickPreviousPage() {
+        _back.value = true
     }
 
     // 이메일 유효성 체크
