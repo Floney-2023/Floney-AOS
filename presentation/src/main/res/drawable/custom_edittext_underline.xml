@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 포커스 상태일 때의 밑줄 -->
+    <item android:state_focused="true">
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- 하단 밑줄 -->
+            <item
+                android:left="-2dp"
+                android:right="-2dp"
+                android:top="-2dp"
+                android:bottom="2dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#0000"/> <!-- 투명 배경 -->
+                    <stroke
+                        android:width="2dp"
+                        android:color="@color/primary3" /> <!-- 밑줄 색상 -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <!-- 기본 상태의 밑줄 (포커스 없을 때) -->
+    <item>
+        <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- 하단 밑줄 -->
+            <item
+                android:left="-2dp"
+                android:right="-2dp"
+                android:top="-2dp"
+                android:bottom="2dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#0000"/> <!-- 투명 배경 -->
+                    <stroke
+                        android:width="2dp"
+                        android:color="@color/grayscale9" /> <!-- 밑줄 색상 -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

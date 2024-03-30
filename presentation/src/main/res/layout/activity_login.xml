@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:fontFamily="@font/pretendard_regular"
-            android:onClick="@{() -> vm.onClickFindPassword()}"
+            android:onClick="@{() -> vm.onClickSignUp()}"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
             android:paddingEnd="8dp"

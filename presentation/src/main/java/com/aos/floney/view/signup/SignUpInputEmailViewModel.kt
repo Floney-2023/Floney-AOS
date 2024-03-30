@@ -1,7 +1,9 @@
 package com.aos.floney.view.signup
 
 import android.util.Patterns
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
@@ -16,9 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpInputEmailViewModel @Inject constructor(
+    stateHandle: SavedStateHandle,
     private val sendEmailUseCase: SendEmailUseCase
 ): BaseViewModel() {
 
+    var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
     private var _nextPage = MutableStateFlow<Boolean>(false)
     val nextPage: StateFlow<Boolean> get() = _nextPage
 
@@ -32,6 +36,8 @@ class SignUpInputEmailViewModel @Inject constructor(
                 // 이메일 전송
                 viewModelScope.launch(Dispatchers.IO) {
                     baseEvent(Event.ShowLoading)
+                    _nextPage.emit(true)
+
                     sendEmailUseCase(email.value!!).onSuccess {
                         baseEvent(Event.HideLoading)
                         // 전송 성공

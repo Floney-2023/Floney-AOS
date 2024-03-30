@@ -129,5 +129,11 @@
     <string name="sign_up_terms_text_4">만 14세 이상 확인 (필수)</string>
     <string name="sign_up_next">다음으로</string>
     <string name="sign_up_error_terms">필수 약관에 모두 동의해주세요.</string>
+    <string name="sign_up_input_code">인증 코드 입력</string>
+    <string name="sign_up_input_code_text">이메일로 전송된 코드를\n하단에 입력해주세요.</string>
+    <string name="sign_up_input_code_info_text">- 유효 시간이 지났을 경우 인증 메일을 다시 보내주세요.\n- 하루동안 5번까지 새로운 인증 코드를 받을 수 있습니다.\n- 5번 연속 코드 입력에 실패했다면 24시간 이후 시도해 주세요.</string>
+    <string name="sign_up_expired_code">유효 시간이 초과되었습니다. 다시 시도해주세요.</string>
+    <string name="sign_up_not_valid_code">코드가 올바르지 않습니다.</string>
+    <string name="sign_up_request_input_code">코드를 입력해주세요</string>
 
 </resources>
