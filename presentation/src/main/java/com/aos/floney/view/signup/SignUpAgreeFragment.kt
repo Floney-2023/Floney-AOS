@@ -30,7 +30,7 @@ class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgree
             viewModel.nextPage.collect {
                 if(it) {
                     val action =
-                        SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment()
+                        SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
                     findNavController().navigate(action)
                 }
             }

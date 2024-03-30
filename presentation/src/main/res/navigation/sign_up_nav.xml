@@ -27,6 +27,12 @@
         <action
             android:id="@+id/action_signUpEmailCodeFragment_to_signUpInputInfoFragment"
             app:destination="@id/signUpInputInfoFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="marketing"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/signUpInputEmailFragment"
@@ -36,6 +42,9 @@
         <action
             android:id="@+id/action_signUpInputEmailFragment_to_signUpEmailCodeFragment"
             app:destination="@id/signUpEmailCodeFragment" />
+        <argument
+            android:name="marketing"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/signUpInputInfoFragment"

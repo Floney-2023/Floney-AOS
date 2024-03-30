@@ -27,8 +27,10 @@ class SignUpInputEmailFragment : BaseFragment<FragmentSignUpInputEmailBinding, S
         lifecycleScope.launch(Dispatchers.Main) {
             viewModel.nextPage.collect {
                 if(it) {
+                    val email = viewModel.email.value.toString()
+                    val marketing = viewModel.marketing.value ?: false
                     val action =
-                        SignUpInputEmailFragmentDirections.actionSignUpInputEmailFragmentToSignUpEmailCodeFragment()
+                        SignUpInputEmailFragmentDirections.actionSignUpInputEmailFragmentToSignUpEmailCodeFragment(email, marketing)
                     findNavController().navigate(action)
                 }
             }

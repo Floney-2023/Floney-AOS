@@ -1,7 +1,9 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.user.PostCheckEmailCode
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -23,6 +25,13 @@ interface UserService {
     @GET("users/email/mail")
     suspend fun getSendEmail(
         @Query("email") email: String
+    ): NetworkState<Void>
+
+
+    // 이메일 코드 검사
+    @POST("users/email/mail")
+    suspend fun postCheckEmailCode(
+        @Body postCheckEmailCode: PostCheckEmailCode
     ): NetworkState<Void>
 
 }
