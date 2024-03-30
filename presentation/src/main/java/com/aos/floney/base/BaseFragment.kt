@@ -24,6 +24,7 @@ import com.aos.floney.BR
 import com.aos.floney.R
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.common.ErrorToastDialog
+import timber.log.Timber
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
@@ -168,8 +169,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     fun dismissLoadingDialog(){
-        if(loadingDialog != null && loadingDialog.isShowing()){
-            loadingDialog.dismiss()
-        }
+        Timber.e("dismissLoadingDialog")
+        loadingDialog.dismiss()
     }
 }

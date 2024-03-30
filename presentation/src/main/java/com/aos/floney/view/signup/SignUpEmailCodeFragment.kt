@@ -43,8 +43,6 @@ class SignUpEmailCodeFragment : BaseFragment<FragmentSignUpEmailCodeBinding, Sig
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(count > 0) {
                     binding.etCodeThird.requestFocus()
-                } else {
-                    binding.etCodeFirst.requestFocus()
                 }
             }
 
@@ -58,8 +56,6 @@ class SignUpEmailCodeFragment : BaseFragment<FragmentSignUpEmailCodeBinding, Sig
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(count > 0) {
                     binding.etCodeFour.requestFocus()
-                } else {
-                    binding.etCodeThird.requestFocus()
                 }
             }
 
@@ -73,8 +69,6 @@ class SignUpEmailCodeFragment : BaseFragment<FragmentSignUpEmailCodeBinding, Sig
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(count > 0) {
                     binding.etCodeFifth.requestFocus()
-                } else {
-                    binding.etCodeFour.requestFocus()
                 }
             }
 
@@ -88,8 +82,6 @@ class SignUpEmailCodeFragment : BaseFragment<FragmentSignUpEmailCodeBinding, Sig
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(count > 0) {
                     binding.etCodeSix.requestFocus()
-                } else {
-                    binding.etCodeFifth.requestFocus()
                 }
             }
 
