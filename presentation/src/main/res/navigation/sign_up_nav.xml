@@ -17,7 +17,11 @@
         android:label="SignUpAgreeFragment" >
         <action
             android:id="@+id/action_signUpAgreeFragment_to_signUpInputEmailFragment"
-            app:destination="@id/signUpInputEmailFragment" />
+            app:destination="@id/signUpInputEmailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/signUpEmailCodeFragment"
@@ -26,7 +30,11 @@
         android:label="SignUpEmailCodeFragment" >
         <action
             android:id="@+id/action_signUpEmailCodeFragment_to_signUpInputInfoFragment"
-            app:destination="@id/signUpInputInfoFragment" />
+            app:destination="@id/signUpInputInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="email"
             app:argType="string" />
@@ -41,7 +49,11 @@
         android:label="SignUpInputEmailFragment" >
         <action
             android:id="@+id/action_signUpInputEmailFragment_to_signUpEmailCodeFragment"
-            app:destination="@id/signUpEmailCodeFragment" />
+            app:destination="@id/signUpEmailCodeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="marketing"
             app:argType="boolean" />
@@ -53,7 +65,11 @@
         android:label="SignUpInputInfoFragment" >
         <action
             android:id="@+id/action_signUpInputInfoFragment_to_signUpCompleteFragment"
-            app:destination="@id/signUpCompleteFragment" />
+            app:destination="@id/signUpCompleteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/signUpCompleteFragment"
