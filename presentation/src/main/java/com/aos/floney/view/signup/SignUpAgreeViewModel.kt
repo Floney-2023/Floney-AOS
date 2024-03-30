@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.util.EventFlow
+import com.aos.floney.util.MutableEventFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +25,8 @@ class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
     val back: StateFlow<Boolean> get() = _back.asStateFlow()
 
     // 다음 페이지 이동
-    private var _nextPage = MutableStateFlow<Boolean>(false)
-    val nextPage: StateFlow<Boolean> get() = _nextPage.asStateFlow()
+    private var _nextPage = MutableEventFlow<Boolean>()
+    val nextPage: EventFlow<Boolean> get() = _nextPage
 
     // 전체 동의 체크
     private var _allTerms = MutableLiveData<Boolean>(false)
@@ -99,9 +101,12 @@ class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
 
     // 다음 페이지로 이동
     fun onClickNextPage() {
+        Timber.e("onClickNextPage")
         if(checkEssentialAgree()) {
             // 페이지 전환
-            _nextPage.value = true
+            viewModelScope.launch {
+                _nextPage.emit(true)
+            }
         } else {
             baseEvent(Event.ShowToastRes(R.string.sign_up_error_terms))
         }
