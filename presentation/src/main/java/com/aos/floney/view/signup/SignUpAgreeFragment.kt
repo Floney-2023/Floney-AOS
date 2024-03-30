@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgreeViewModel>(R.layout.fragment_sign_up_agree) {
@@ -29,6 +30,7 @@ class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgree
         repeatOnStarted {
             // 다음 페이지 이동
             viewModel.nextPage.collect {
+                Timber.e("nextPage $it")
                 if(it) {
                     val action =
                         SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
