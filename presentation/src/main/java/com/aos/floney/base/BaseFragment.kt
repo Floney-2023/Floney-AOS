@@ -169,7 +169,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     fun dismissLoadingDialog(){
-        Timber.e("dismissLoadingDialog")
         loadingDialog.dismiss()
     }
 }
