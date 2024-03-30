@@ -25,7 +25,7 @@ class SignUpInputEmailFragment : BaseFragment<FragmentSignUpInputEmailBinding, S
 
     private fun setUpViewModelObserver() {
         lifecycleScope.launch(Dispatchers.Main) {
-            viewModel.nextPage.collect {
+            viewModel.nextPage.observe(viewLifecycleOwner) {
                 if(it) {
                     val email = viewModel.email.value.toString()
                     val marketing = viewModel.marketing.value ?: false

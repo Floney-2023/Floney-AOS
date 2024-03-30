@@ -8,6 +8,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.ext.parseErrorMsg
 import com.aos.usecase.CheckEmailCodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -60,8 +61,6 @@ class SignUpEmailCodeViewModel @Inject constructor(
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = (millisUntilFinished / 1000) / 60
                 val seconds = (millisUntilFinished / 1000) % 60
-                Timber.e("minutes $minutes")
-                Timber.e("seconds $seconds")
                 _timerText.value = "${minutes}:${
                     if (seconds < 10) {
                         "0$seconds"
@@ -86,12 +85,10 @@ class SignUpEmailCodeViewModel @Inject constructor(
                 if (!timerExpired) {
                     val email = email.value ?: ""
                     val code = "${codeFirst.value}${codeSecond.value}${codeThird.value}${codeFour.value}${codeFifth.value}${codeSix.value}"
-                    Timber.e("email $email")
-                    Timber.e("code $code")
                     checkEmailCodeUseCase(email, code).onSuccess {
                         Timber.e("성공")
                     }.onFailure {
-                        baseEvent(Event.ShowToast(it.message ?: ""))
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                     }
                 } else {
                     // 5분 타이머가 만료되었을 경우

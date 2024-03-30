@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.ext.parseErrorMsg
 import com.aos.usecase.SendEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +24,8 @@ class SignUpInputEmailViewModel @Inject constructor(
 ): BaseViewModel() {
 
     var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
-    private var _nextPage = MutableStateFlow<Boolean>(false)
-    val nextPage: StateFlow<Boolean> get() = _nextPage
+    private var _nextPage = MutableLiveData<Boolean>()
+    val nextPage: LiveData<Boolean> get() = _nextPage
 
     // 이메일
     var email = MutableLiveData<String>("")
@@ -36,15 +37,14 @@ class SignUpInputEmailViewModel @Inject constructor(
                 // 이메일 전송
                 viewModelScope.launch(Dispatchers.IO) {
                     baseEvent(Event.ShowLoading)
-                    _nextPage.emit(true)
 
                     sendEmailUseCase(email.value!!).onSuccess {
                         baseEvent(Event.HideLoading)
                         // 전송 성공
-                        _nextPage.emit(true)
+                        _nextPage.postValue(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message ?: ""))
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                     }
                 }
             } else {
