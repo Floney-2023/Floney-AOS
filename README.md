@@ -13,7 +13,7 @@
 
 ### 💻 팀원 목록
 
-|                   Android                    |                      Backend                        |                  
+|                   Android                    |                      Android                        |                  
 | :------------------------------------------: | :------------------------------------------------:  |
 | ![](https://github.com/wnsgml517.png?size=120) | ![](https://github.com/jayyaj12.png?size=120) |
 |  [박준희](https://github.com/wnsgml517)  |  [황중현](https://github.com/jayyaj12)  |
