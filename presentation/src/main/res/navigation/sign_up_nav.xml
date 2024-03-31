@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sign_up_nav"
+    app:startDestination="@id/signUpAgreeFragment">
+
+    <activity
+        android:id="@+id/signUpActivity"
+        android:name="com.aos.floney.view.signup.SignUpActivity"
+        tools:layout="@layout/activity_sign_up"
+        android:label="SignUpActivity" />
+    <fragment
+        android:id="@+id/signUpAgreeFragment"
+        android:name="com.aos.floney.view.signup.SignUpAgreeFragment"
+        tools:layout="@layout/fragment_sign_up_agree"
+        android:label="SignUpAgreeFragment" >
+        <action
+            android:id="@+id/action_signUpAgreeFragment_to_signUpInputEmailFragment"
+            app:destination="@id/signUpInputEmailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/signUpAgreeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpEmailCodeFragment"
+        android:name="com.aos.floney.view.signup.SignUpEmailCodeFragment"
+        tools:layout="@layout/fragment_sign_up_email_code"
+        android:label="SignUpEmailCodeFragment" >
+        <action
+            android:id="@+id/action_signUpEmailCodeFragment_to_signUpInputInfoFragment"
+            app:destination="@id/signUpInputInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument
+            android:name="marketing"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpInputEmailFragment"
+        android:name="com.aos.floney.view.signup.SignUpInputEmailFragment"
+        tools:layout="@layout/fragment_sign_up_input_email"
+        android:label="SignUpInputEmailFragment" >
+        <action
+            android:id="@+id/action_signUpInputEmailFragment_to_signUpEmailCodeFragment"
+            app:destination="@id/signUpEmailCodeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/signUpInputEmailFragment" />
+        <argument
+            android:name="marketing"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpInputInfoFragment"
+        android:name="com.aos.floney.view.signup.SignUpInputInfoFragment"
+        tools:layout="@layout/fragment_sign_up_input_info"
+        android:label="SignUpInputInfoFragment" >
+        <action
+            android:id="@+id/action_signUpInputInfoFragment_to_signUpCompleteFragment"
+            app:destination="@id/signUpCompleteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <argument android:name="marketing"
+            app:argType="boolean" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpCompleteFragment"
+        android:name="com.aos.floney.view.signup.SignUpCompleteFragment"
+        tools:layout="@layout/fragment_sign_up_complete"
+        android:label="SignUpCompleteFragment" />
+</navigation>

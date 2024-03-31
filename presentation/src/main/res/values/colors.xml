@@ -2,4 +2,79 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bottom_black">#262626</color>
+    <color name="bottom_gray">#A6A6A6</color>
+    <color name="mint">#31C690</color>
+
+    <!--primary color-->
+    <color name="primary1">#31C690</color>
+    <color name="primary2">#259D71</color>
+    <color name="primary3">#1A7454</color>
+    <color name="primary4">#135D42</color>
+    <color name="primary5">#56D1A5</color>
+    <color name="primary6">#7FDCBA</color>
+    <color name="primary7">#A7E7D0</color>
+    <color name="primary8">#CFF2E5</color>
+    <color name="primary9">#DFF6EE</color>
+    <color name="primary10">#F1F9F7</color>
+
+    <!--grayscale color-->
+    <color name="grayscale1">#0D0D0D</color>
+    <color name="grayscale2">#262626</color>
+    <color name="grayscale3">#414141</color>
+    <color name="grayscale4">#595959</color>
+    <color name="grayscale5">#737373</color>
+    <color name="grayscale6">#8C8C8C</color>
+    <color name="grayscale7">#A6A6A6</color>
+    <color name="grayscale8">#BFBFBF</color>
+    <color name="grayscale9">#D9D9D9</color>
+    <color name="grayscale10">#F1F1F1</color>
+    <color name="grayscale11">#F4F4F4</color>
+    <color name="grayscale12">#FAFAFA</color>
+
+    <!--blue color-->
+    <color name="blue1">#0060E5</color>
+    <color name="blue2">#1A79FF</color>
+    <color name="blue3">#4C97FF</color>
+    <color name="blue4">#99C4FF</color>
+    <color name="blue5">#CCE1FF</color>
+
+    <!--orange color-->
+    <color name="orange1">#CE4A00</color>
+    <color name="orange2">#FF5C00</color>
+    <color name="orange3">#FF965B</color>
+    <color name="orange4">#FFBE99</color>
+    <color name="orange5">#FFDECC</color>
+
+    <!--chart color-->
+    <!--red color-->
+    <color name="red1">#AD1F25</color>
+    <color name="red2">#E56E73</color>
+    <color name="red3">#EFA9AB</color>
+
+    <!--yellow color-->
+    <color name="yellow1">#E4BF00</color>
+    <color name="yellow2">#FFDE31</color>
+    <color name="yellow3">#FFEE97</color>
+
+    <!--indigo color-->
+    <color name="indigo1">#35347F</color>
+    <color name="indigo2">#4A48B0</color>
+    <color name="indigo3">#706EC4</color>
+
+    <!--purple color-->
+    <color name="purple1">#654CFF</color>
+    <color name="purple2">#9B8BFF</color>
+    <color name="purple3">#D3CCFF</color>
+
+    <!--background color-->
+    <color name="background1">#F5F5F5</color>
+    <color name="background2">#F6F6F6</color>
+    <color name="background3">#FAFAFA</color>
+
+    <color name="checked_border_color">@color/primary5</color>
+    <color name="checked_background_color">@color/primary5</color>
+    <color name="default_border_color">@color/grayscale9</color>
+    <color name="default_background_color">@color/grayscale9</color>
+
 </resources>
