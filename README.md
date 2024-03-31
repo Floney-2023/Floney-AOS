@@ -43,7 +43,7 @@
 
 ## 시스템 아키텍처 🏗
 
-<img src="system_architecture.png" width="70%">
+<img src="https://github.com/Floney-2023/Floney-AOS/assets/85539366/d959a594-8de9-4aa3-bb52-712951b5fd1f" width="70%">
 
 <br/>
 
@@ -51,7 +51,7 @@
 
 <details>
 <summary>👋 ERD 확인</summary>
-<img src="erd.png">
+<img src="https://github.com/Floney-2023/Floney-AOS/assets/85539366/8f2be128-ac8f-44df-9a88-12b13c5b073e">
 </details>
 
 <br/>
