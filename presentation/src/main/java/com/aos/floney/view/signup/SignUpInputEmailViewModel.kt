@@ -28,9 +28,10 @@ class SignUpInputEmailViewModel @Inject constructor(
 
     var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
 
+
     // 뒤로가기
-    private var _back = MutableStateFlow<Boolean>(false)
-    val back: StateFlow<Boolean> get() = _back.asStateFlow()
+    private var _back = MutableEventFlow<Boolean>()
+    val back: EventFlow<Boolean> get() = _back
     private var _nextPage = MutableEventFlow<Boolean>()
     val nextPage: EventFlow<Boolean> get() = _nextPage
 
@@ -66,7 +67,9 @@ class SignUpInputEmailViewModel @Inject constructor(
 
     // 이전 페이지로 이동
     fun onClickPreviousPage() {
-        _back.value = true
+        viewModelScope.launch {
+            _back.emit(true)
+        }
     }
 
     // 이메일 유효성 체크

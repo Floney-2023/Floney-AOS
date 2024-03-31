@@ -31,13 +31,15 @@ class SignUpEmailCodeViewModel @Inject constructor(
     var email: LiveData<String> = stateHandle.getLiveData("email")
     var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
 
+
     // 뒤로가기
-    private var _back = MutableStateFlow<Boolean>(false)
-    val back: StateFlow<Boolean> get() = _back.asStateFlow()
+    private var _back = MutableEventFlow<Boolean>()
+    val back: EventFlow<Boolean> get() = _back
 
     // 다음 페이지 이동
     private var _nextPage = MutableEventFlow<Boolean>()
     val nextPage: EventFlow<Boolean> get() = _nextPage
+
     // 첫번째 코드
     var codeFirst = MutableLiveData<String>()
 
@@ -93,10 +95,11 @@ class SignUpEmailCodeViewModel @Inject constructor(
     // 이메일 코드 일치한지 체크
     fun checkEmailCode() {
         viewModelScope.launch(Dispatchers.IO) {
-            if(checkAllInput()) {
+            if (checkAllInput()) {
                 if (!timerExpired) {
                     val email = email.value ?: ""
-                    val code = "${codeFirst.value}${codeSecond.value}${codeThird.value}${codeFour.value}${codeFifth.value}${codeSix.value}"
+                    val code =
+                        "${codeFirst.value}${codeSecond.value}${codeThird.value}${codeFour.value}${codeFifth.value}${codeSix.value}"
                     baseEvent(Event.ShowLoading)
 
                     checkEmailCodeUseCase(email, code).onSuccess {
@@ -120,7 +123,9 @@ class SignUpEmailCodeViewModel @Inject constructor(
 
     // 이전 페이지로 이동
     fun onClickPreviousPage() {
-        _back.value = true
+        viewModelScope.launch {
+            _back.emit(true)
+        }
     }
 
     // 전부 입력 되었는지 확인
