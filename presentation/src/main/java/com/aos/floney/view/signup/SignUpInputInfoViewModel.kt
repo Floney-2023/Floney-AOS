@@ -27,8 +27,8 @@ class SignUpInputInfoViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     // 뒤로가기
-    private var _back = MutableStateFlow<Boolean>(false)
-    val back: StateFlow<Boolean> get() = _back.asStateFlow()
+    private var _back = MutableEventFlow<Boolean>()
+    val back: EventFlow<Boolean> get() = _back
 
     // 다음 페이지 이동
     private var _nextPage = MutableEventFlow<Boolean>()
@@ -92,7 +92,9 @@ class SignUpInputInfoViewModel @Inject constructor(
 
     // 이전 페이지로 이동
     fun onClickPreviousPage() {
-        _back.value = true
+        viewModelScope.launch {
+            _back.emit(true)
+        }
     }
 
     // 비밀번호 유효성 검사 영문 대소문자 구분 없음, 숫자, 특수문자 8자 이상

@@ -20,9 +20,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
 
+
     // 뒤로가기
-    private var _back = MutableStateFlow<Boolean>(false)
-    val back: StateFlow<Boolean> get() = _back.asStateFlow()
+    private var _back = MutableEventFlow<Boolean>()
+    val back: EventFlow<Boolean> get() = _back
 
     // 다음 페이지 이동
     private var _nextPage = MutableEventFlow<Boolean>()
@@ -114,7 +115,9 @@ class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
 
     // 이전 페이지로 이동
     fun onClickPreviousPage() {
-        _back.value = true
+        viewModelScope.launch {
+            _back.emit(true)
+        }
     }
 
     // 모두 체크 됐으면 전체 동의 버튼 Check 상태로 변경
