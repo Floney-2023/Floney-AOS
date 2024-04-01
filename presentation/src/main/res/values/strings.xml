@@ -45,6 +45,10 @@
     <string name="sign_up">회원가입 하기</string>
     <string name="simple_login">간편 로그인</string>
 
+    <!--PasswordFindActivity-->
+    <string name="find_password_text">가입한 이메일 주소를 입력하세요.\n로그인 가능한 임시 비밀번호를 보내드립니다.</string>
+    <string name="send_temp_password">임시 비밀번호 보내기</string>
+
     <!--myPageActivity(메인)-->
     <string name="mypage_main_mypage_text">마이페이지</string>
     <string name="mypage_main_appstore_text">앱스토어에서\n별점을 남겨주세요</string>

@@ -1,4 +1,4 @@
-package com.aos.usecase
+package com.aos.usecase.signup
 
 import com.aos.repository.UserRepository
 import javax.inject.Inject

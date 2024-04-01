@@ -7,10 +7,15 @@ import androidx.lifecycle.lifecycleScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityLoginBinding
+import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.signup.SignUpActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layout.activity_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,9 +24,23 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
     }
 
     private fun setUpViewModelObserver() {
-        lifecycleScope.launch {
-            viewModel.clickSignUp.observe(this@LoginActivity) {
-                Timber.e("it $it")
+        repeatOnStarted {
+            viewModel.nextPage.collect {
+                if(it) {
+                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.clickPasswordFind.collect {
+                if(it) {
+                    startActivity(Intent(this@LoginActivity, PasswordFindActivity::class.java))
+                }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.clickSignUp.collect {
                 if(it) {
                     startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
                 }

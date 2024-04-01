@@ -1,6 +1,8 @@
 package com.aos.data.repository.remote
 
-import com.aos.data.entity.request.user.PostCheckEmailCode
+import com.aos.data.entity.request.user.PostCheckEmailCodeBody
+import com.aos.data.entity.request.user.PostLoginBody
+import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
 
@@ -19,10 +21,20 @@ interface UserRemoteDataSource {
         email: String
     ): NetworkState<Void>
 
-
     // 이메일 코드 확인
     suspend fun postCheckEmailCode(
-        postCheckEmailCode: PostCheckEmailCode
+        postCheckEmailCodeBody: PostCheckEmailCodeBody
     ): NetworkState<Void>
+
+    // 이메일 코드 확인
+    suspend fun getSendEmailPassword(
+        email: String
+    ): NetworkState<Void>
+
+    // 로그인
+    suspend fun postLogin(
+        email: String,
+        password: String
+    ): NetworkState<PostLoginEntity>
 
 }

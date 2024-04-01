@@ -1,51 +1,41 @@
-package com.aos.floney.view.signup
+package com.aos.floney.view.password.find
 
 import android.util.Patterns
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
-import com.aos.usecase.signup.SendEmailUseCase
+import com.aos.usecase.password.SendTempPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpInputEmailViewModel @Inject constructor(
-    stateHandle: SavedStateHandle,
-    private val sendEmailUseCase: SendEmailUseCase
+class PasswordFindViewModel @Inject constructor(
+    private val sendTempPasswordUseCase: SendTempPasswordUseCase
 ): BaseViewModel() {
-
-    var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
-
-
-    // 뒤로가기
-    private var _back = MutableEventFlow<Boolean>()
-    val back: EventFlow<Boolean> get() = _back
-    private var _nextPage = MutableEventFlow<Boolean>()
-    val nextPage: EventFlow<Boolean> get() = _nextPage
 
     // 이메일
     var email = MutableLiveData<String>("")
+    private var _nextPage = MutableEventFlow<Boolean>()
+    val nextPage: EventFlow<Boolean> get() = _nextPage
 
-    // 이메일 전송
-    fun onClickSendEmail() {
+    // 임시 비밀번호 보내기
+    fun onClickSendTempPassword() {
         if(email.value!!.isNotEmpty()) {
             if(isEmailValid()) {
                 // 이메일 전송
                 viewModelScope.launch(Dispatchers.IO) {
                     baseEvent(Event.ShowLoading)
 
-                    sendEmailUseCase(email.value!!).onSuccess {
+                    sendTempPasswordUseCase(email.value!!).onSuccess {
                         // 전송 성공
                         baseEvent(Event.HideLoading)
-                        _nextPage.emit(true)
+//                        _nextPage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
                         baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -61,12 +51,6 @@ class SignUpInputEmailViewModel @Inject constructor(
         }
     }
 
-    // 이전 페이지로 이동
-    fun onClickPreviousPage() {
-        viewModelScope.launch {
-            _back.emit(true)
-        }
-    }
 
     // 이메일 유효성 체크
     private fun isEmailValid(): Boolean {

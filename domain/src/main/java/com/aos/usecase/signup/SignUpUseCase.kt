@@ -1,4 +1,4 @@
-package com.aos.usecase
+package com.aos.usecase.signup
 
 import com.aos.model.user.PostSignUpUserModel
 import com.aos.repository.UserRepository

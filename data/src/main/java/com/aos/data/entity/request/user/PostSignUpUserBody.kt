@@ -3,7 +3,7 @@ package com.aos.data.entity.request.user
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PostSignUpUser(
+data class PostSignUpUserBody(
     val email: String,
     val nickname: String,
     val password: String,
