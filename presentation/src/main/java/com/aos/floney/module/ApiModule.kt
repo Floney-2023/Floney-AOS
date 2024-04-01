@@ -1,13 +1,20 @@
 package com.aos.floney.module
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.aos.data.BuildConfig
+import com.aos.data.util.AuthInterceptor
 import com.aos.data.util.CustomCallAdapterFactory
+import com.aos.data.util.HeaderInterceptor
+import com.aos.data.util.SharedPreferenceUtil
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import okhttp3.Authenticator
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,11 +27,32 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient() = run {
+    fun provideSharedPreferenceUtil(@ApplicationContext context: Context): SharedPreferenceUtil = SharedPreferenceUtil(context)
+
+    @Singleton
+    @Provides
+    fun provideHeaderInterceptor(prefs: SharedPreferenceUtil): HeaderInterceptor {
+        return HeaderInterceptor(prefs)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthInterceptor(prefs: SharedPreferenceUtil): Authenticator {
+        return AuthInterceptor(prefs)
+    }
+
+    @Singleton
+    @Provides
+    fun provideOkHttpClient(
+        headerInterceptor: HeaderInterceptor,
+        authInterceptor: AuthInterceptor
+    ) = run {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(headerInterceptor)
+            .authenticator(authInterceptor)
             .build()
     }
 
