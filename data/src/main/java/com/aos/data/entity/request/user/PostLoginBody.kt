@@ -3,7 +3,7 @@ package com.aos.data.entity.request.user
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PostCheckEmailCodeBody(
+data class PostLoginBody(
     val email: String,
-    val code: String
+    val password: String
 )

@@ -1,8 +1,10 @@
 package com.aos.data.repository.remote
 
 import com.aos.data.api.UserService
-import com.aos.data.entity.request.user.PostCheckEmailCode
-import com.aos.data.entity.request.user.PostSignUpUser
+import com.aos.data.entity.request.user.PostCheckEmailCodeBody
+import com.aos.data.entity.request.user.PostLoginBody
+import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
 import javax.inject.Inject
@@ -18,7 +20,7 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
         receiveMarketing: Boolean,
     ): NetworkState<PostSignUpUserEntity> {
         return userService.postSignUpUser(
-            PostSignUpUser(
+            PostSignUpUserBody(
                 email = email,
                 nickname = nickname,
                 password = password,
@@ -31,7 +33,15 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
         return userService.getSendEmail(email)
     }
 
-    override suspend fun postCheckEmailCode(postCheckEmailCode: PostCheckEmailCode): NetworkState<Void> {
-        return userService.postCheckEmailCode(postCheckEmailCode)
+    override suspend fun postCheckEmailCode(postCheckEmailCodeBody: PostCheckEmailCodeBody): NetworkState<Void> {
+        return userService.postCheckEmailCode(postCheckEmailCodeBody)
+    }
+
+    override suspend fun getSendEmailPassword(email: String): NetworkState<Void> {
+        return userService.getSendTempPassword(email)
+    }
+
+    override suspend fun postLogin(email: String, password: String): NetworkState<PostLoginEntity> {
+        return userService.postLogin(PostLoginBody(email, password))
     }
 }

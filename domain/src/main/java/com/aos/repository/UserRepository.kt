@@ -1,6 +1,7 @@
 package com.aos.repository
 
-import com.aos.model.PostSignUpUserModel
+import com.aos.model.user.PostLoginModel
+import com.aos.model.user.PostSignUpUserModel
 
 interface UserRepository {
 
@@ -10,5 +11,9 @@ interface UserRepository {
     suspend fun getSendEmail(email: String): Result<Void?>
     // 이메일 인증
     suspend fun postCheckEmailCode(email: String, code: String): Result<Void?>
+    // 임시 비밀번호 발송
+    suspend fun getSendTempPassword(email: String): Result<Void?>
+    // 임시 비밀번호 발송
+    suspend fun postLogin(email: String, password: String): Result<PostLoginModel>
 
 }
