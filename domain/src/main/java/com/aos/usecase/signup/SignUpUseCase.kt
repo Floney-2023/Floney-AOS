@@ -1,6 +1,6 @@
 package com.aos.usecase
 
-import com.aos.model.PostSignUpUserModel
+import com.aos.model.user.PostSignUpUserModel
 import com.aos.repository.UserRepository
 import javax.inject.Inject
 
