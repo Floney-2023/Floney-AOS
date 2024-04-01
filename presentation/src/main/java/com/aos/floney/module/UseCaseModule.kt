@@ -1,6 +1,8 @@
 package com.aos.floney.module
 
+import com.aos.repository.BookRepository
 import com.aos.repository.UserRepository
+import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.signup.CheckEmailCodeUseCase
 import com.aos.usecase.signup.SendEmailUseCase
 import com.aos.usecase.password.SendTempPasswordUseCase
@@ -27,5 +29,8 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideSendTempPasswordUseCase(userRepository: UserRepository) = SendTempPasswordUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideCheckUserBookUseCase(bookRepository: BookRepository) = CheckUserBookUseCase(bookRepository)
 
 }
