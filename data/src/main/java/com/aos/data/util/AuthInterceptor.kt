@@ -1,8 +1,7 @@
 package com.aos.data.util
 
 import com.aos.data.BuildConfig
-import com.aos.data.entity.response.token.PostUserReissue
-import kotlinx.coroutines.Dispatchers
+import com.aos.data.entity.response.token.PostUserReissueEntity
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -14,7 +13,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.Route
 import timber.log.Timber
-import java.net.Authenticator
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
@@ -48,8 +46,10 @@ class AuthInterceptor @Inject constructor(
 
                 val responseBody = response.body?.string()
                 responseBody?.let {
-                    val token = json.decodeFromString<PostUserReissue>(responseBody)
+                    val token = json.decodeFromString<PostUserReissueEntity>(responseBody)
                     Timber.e("토큰 $token")
+                    prefs.setString("accessToken", token.accessToken)
+                    prefs.setString("refreshToken", token.refreshToken)
                 }
                 response.close()
                 return originRequest.newBuilder().addHeader("Authorization", "Bearer ${getAccessToken()}").build()

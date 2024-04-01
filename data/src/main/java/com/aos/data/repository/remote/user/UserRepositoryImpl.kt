@@ -1,4 +1,4 @@
-package com.aos.data.repository.remote
+package com.aos.data.repository.remote.user
 
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.mapper.toPostLoginModel
