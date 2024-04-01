@@ -5,7 +5,7 @@ import android.view.View
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentOnBoardStartBinding
-import com.aos.floney.util.SharedPreferenceUtil
+import com.aos.data.util.SharedPreferenceUtil
 
 class OnBoardStartFragment : BaseFragment<FragmentOnBoardStartBinding, OnBoardStartViewModel>(R.layout.fragment_on_board_start) {
 

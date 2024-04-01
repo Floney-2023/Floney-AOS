@@ -8,7 +8,7 @@ import android.view.animation.AnimationUtils
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySplashBinding
-import com.aos.floney.util.SharedPreferenceUtil
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.onboard.OnBoardActivity
 import dagger.hilt.android.AndroidEntryPoint

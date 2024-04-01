@@ -1,4 +1,4 @@
-package com.aos.floney.util
+package com.aos.data.util
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,6 +13,10 @@ class SharedPreferenceUtil(context: Context) {
 
     fun setString(key: String, str: String) {
         prefs.edit().putString(key, str).apply()
+    }
+
+    fun removeString(key: String) {
+        prefs.edit().remove(key).apply()
     }
 
     fun getBoolean(key: String, defValue: Boolean): Boolean {

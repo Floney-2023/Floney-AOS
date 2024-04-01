@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -15,12 +16,14 @@ interface UserService {
 
     // 회원가입
     @POST("users")
-    suspend fun postSignUpUser(
+    @Headers("Auth: false")
+    suspend fun postSignUpUser( 
         @Body postSignUpUser: PostSignUpUser
     ): NetworkState<PostSignUpUserEntity>
 
     // 이메일 전송
     @GET("users/email/mail")
+    @Headers("Auth: false")
     suspend fun getSendEmail(
         @Query("email") email: String
     ): NetworkState<Void>
@@ -28,6 +31,7 @@ interface UserService {
 
     // 이메일 코드 검사
     @POST("users/email/mail")
+    @Headers("Auth: false")
     suspend fun postCheckEmailCode(
         @Body postCheckEmailCode: PostCheckEmailCode
     ): NetworkState<Void>
