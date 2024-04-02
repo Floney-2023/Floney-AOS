@@ -11,5 +11,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setUpFragment()
+    }
+
+    private fun setUpFragment() {
+        val fragmentManager = supportFragmentManager
+        fragmentManager.beginTransaction().replace(R.id.fl_container, HomeCalendarTypeFragment()).commit()
     }
 }

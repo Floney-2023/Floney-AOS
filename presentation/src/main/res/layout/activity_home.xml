@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.aos.floney.view.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background3"
         tools:context=".view.home.HomeActivity">
 
         <ImageView
@@ -63,6 +66,82 @@
             app:layout_constraintEnd_toStartOf="@id/cv_book_profile"
             app:layout_constraintTop_toTopOf="@id/cv_book_profile"
             app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="28dp"
+            android:src="@drawable/icon_previous_month"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            android:id="@+id/iv_previous_month"
+            android:layout_marginTop="37dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2022.11"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textColor="@color/grayscale1"
+            android:layout_marginStart="2dp"
+            android:textSize="20dp"
+            android:id="@+id/tv_month"
+            app:layout_constraintStart_toEndOf="@id/iv_previous_month"
+            app:layout_constraintTop_toTopOf="@id/iv_previous_month"
+            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="28dp"
+            android:src="@drawable/icon_next_month"
+            app:layout_constraintStart_toEndOf="@id/tv_month"
+            app:layout_constraintTop_toTopOf="@id/iv_previous_month"
+            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"/>
+        
+        <LinearLayout
+            android:layout_width="116dp"
+            android:layout_height="32dp"
+            android:background="@drawable/custom_radius_8_solid_grayscale10"
+            android:id="@+id/ll_calendar_type"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/cv_book_profile"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/cv_book_profile"
+            android:layout_marginTop="26dp">
+            
+            <TextView
+                android:layout_width="54dp"
+                android:layout_height="24dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textColor="@color/grayscale2"
+                android:layout_marginStart="4dp"
+                android:textSize="11dp"
+                android:text="캘린더"
+                android:background="@drawable/custom_radius_5_solid_white"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="54dp"
+                android:layout_height="24dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/grayscale8"
+                android:layout_marginEnd="4dp"
+                android:textSize="11dp"
+                android:text="일별"
+                android:gravity="center"/>
+
+        </LinearLayout>
+        
+        <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/iv_previous_month"
+            app:layout_constraintEnd_toEndOf="@id/ll_calendar_type"
+            app:layout_constraintTop_toBottomOf="@id/iv_previous_month"
+            android:layout_marginTop="24dp"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

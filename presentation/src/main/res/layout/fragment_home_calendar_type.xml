@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.aos.model.home.UiBookMonthModel" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.home.HomeCalendarTypeViewModel" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.home.UiBookMonthModel.OnItemClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_radius_12_solid_white"
+        tools:context=".view.home.HomeCalendarTypeFragment">
+
+        <LinearLayout
+            android:id="@+id/ll_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="일"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="월"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="화"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="수"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="목"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="금"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/ll_week"
+            app:layout_constraintStart_toStartOf="@id/ll_week"
+            app:layout_constraintTop_toBottomOf="@id/ll_week"
+            app:spanCount="7"
+            bind:diffCallback="@{(Object)UiBookMonthModel.Companion}"
+            bind:eventHolder="@{eventHolder}"
+            bind:itemLayout="@{@layout/item_home_calendar}"
+            bind:items="@{vm.getCalendarList}"
+            tools:listitem="@layout/item_home_calendar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
