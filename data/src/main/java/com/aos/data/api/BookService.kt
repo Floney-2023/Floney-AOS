@@ -1,8 +1,10 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
@@ -19,5 +21,12 @@ interface BookService {
     @GET("books/users/check")
     @Headers("Auth: true")
     suspend fun getCheckUserBook(): NetworkState<GetCheckUserBookEntity>
+
+    @GET("books/join")
+    @Headers("Auth: true")
+    suspend fun postBooksJoin(
+        @Body postBooksJoinBody: PostBooksJoinBody
+    ): NetworkState<PostBooksJoinEntity>
+
 
 }

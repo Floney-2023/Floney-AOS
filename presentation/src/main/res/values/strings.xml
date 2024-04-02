@@ -166,6 +166,7 @@
     <string name="book_add_invite_success_title">가계부에\n초대되었어요!</string>
     <string name="book_add_invite_success_info">간편하고 쉬운 가계부, 플로니와 함께해요</string>
     <string name="book_add_invite_success_button_text">작성하러 가기</string>
+    <string name="book_add_invite_check_request_empty_code">코드를 입력하세요.</string>
 
     <string name="book_add_new_book_name_title">가계부 생성하기</string>
     <string name="book_add_new_book_name_info">언제든지 멤버를 추가할 수 있는\n플로니의 가계부를 만들어 보세요.</string>
