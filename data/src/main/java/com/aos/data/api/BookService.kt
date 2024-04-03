@@ -25,14 +25,14 @@ interface BookService {
     suspend fun getCheckUserBook(): NetworkState<GetCheckUserBookEntity>
 
     // 가계부 참여
-    @GET("books/join")
+    @POST("books/join")
     @Headers("Auth: true")
     suspend fun postBooksJoin(
         @Body postBooksJoinBody: PostBooksJoinBody
     ): NetworkState<PostBooksJoinEntity>
 
     // 가계부 생성 - 최초 가입 후 가계부 생성
-    @GET("books")
+    @POST("books")
     @Headers("Auth: true")
     suspend fun postBooksCreate(
         @Body postBooksCreateBody: PostBooksCreateBody

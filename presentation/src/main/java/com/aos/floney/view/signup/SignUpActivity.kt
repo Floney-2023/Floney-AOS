@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySignUpBinding
+import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>(R.la
     // 회원가입 완료 후 로그인 페이지로 이동
     fun startLoginActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
+        finishAffinity()
+    }
+
+    fun startBookAddActivity() {
+        startActivity(Intent(this, BookAddActivity::class.java))
         finishAffinity()
     }
 
