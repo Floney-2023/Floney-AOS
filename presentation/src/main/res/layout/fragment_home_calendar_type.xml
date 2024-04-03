@@ -19,105 +19,178 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_radius_12_solid_white"
-        tools:context=".view.home.HomeCalendarTypeFragment">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/ll_week"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/pretendard_medium"
-                android:gravity="center"
-                android:text="일"
-                android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/pretendard_medium"
-                android:gravity="center"
-                android:text="월"
-                android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/pretendard_medium"
-                android:gravity="center"
-                android:text="화"
-                android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/pretendard_medium"
-                android:gravity="center"
-                android:text="수"
-                android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/pretendard_medium"
-                android:gravity="center"
-                android:text="목"
-                android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/pretendard_medium"
-                android:gravity="center"
-                android:text="금"
-                android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/pretendard_medium"
-                android:gravity="center"
-                android:text="토"
-                android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintEnd_toEndOf="@id/ll_week"
-            app:layout_constraintStart_toStartOf="@id/ll_week"
-            app:layout_constraintTop_toBottomOf="@id/ll_week"
-            app:spanCount="7"
-            bind:diffCallback="@{(Object)UiBookMonthModel.Companion}"
-            bind:eventHolder="@{eventHolder}"
-            bind:itemLayout="@{@layout/item_home_calendar}"
-            bind:items="@{vm.getCalendarList}"
-            tools:listitem="@layout/item_home_calendar" />
+            android:background="@drawable/custom_radius_12_solid_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".view.home.HomeCalendarTypeFragment">
 
+            <LinearLayout
+                android:id="@+id/ll_week"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="center"
+                    android:text="일"
+                    android:textColor="@color/grayscale6"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="center"
+                    android:text="월"
+                    android:textColor="@color/grayscale6"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="center"
+                    android:text="화"
+                    android:textColor="@color/grayscale6"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="center"
+                    android:text="수"
+                    android:textColor="@color/grayscale6"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="center"
+                    android:text="목"
+                    android:textColor="@color/grayscale6"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="center"
+                    android:text="금"
+                    android:textColor="@color/grayscale6"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="center"
+                    android:text="토"
+                    android:textColor="@color/grayscale6"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/ll_week"
+                app:layout_constraintStart_toStartOf="@id/ll_week"
+                app:layout_constraintTop_toBottomOf="@id/ll_week"
+                app:spanCount="7"
+                bind:diffCallback="@{(Object)UiBookMonthModel.Companion}"
+                bind:eventHolder="@{eventHolder}"
+                bind:itemLayout="@{@layout/item_home_calendar}"
+                bind:items="@{vm.getCalendarList}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_radius_12_solid_primary5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_calendar">
+
+            <TextView
+                android:id="@+id/tv_total_outcome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="총지출"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_total_income"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_total_outcome_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{vm.getExtData.totalOutcome}"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@id/tv_total_outcome"
+                app:layout_constraintStart_toStartOf="@id/tv_total_outcome"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_outcome" />
+
+            <TextView
+                android:id="@+id/tv_total_income"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="총수입"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_total_outcome"
+                app:layout_constraintTop_toTopOf="@id/tv_total_outcome" />
+
+            <TextView
+                android:id="@+id/tv_total_income_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{vm.getExtData.totalOutcome}"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_total_income"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_income" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

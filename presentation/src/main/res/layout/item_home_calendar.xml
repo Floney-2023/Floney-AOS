@@ -38,8 +38,12 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:background="@drawable/custom_oval_solid_primary1"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
             android:text="@{item.date}"
-            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:visibility="@{item.today ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="@id/tv_date"
             app:layout_constraintStart_toStartOf="@id/tv_date"
             app:layout_constraintTop_toTopOf="@id/tv_date" />

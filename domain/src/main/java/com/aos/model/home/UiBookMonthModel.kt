@@ -14,8 +14,6 @@ data class UiBookMonthModel(
 
     companion object : DiffUtil.ItemCallback<ListData>() {
         override fun areItemsTheSame(oldItem: ListData, newItem: ListData): Boolean {
-            Timber.e("oldItem $oldItem")
-            Timber.e("newItem $newItem")
             return oldItem.hashCode() == newItem.hashCode()
         }
 
@@ -26,26 +24,19 @@ data class UiBookMonthModel(
 }
 
 data class ListData(
-    val date: String,
-    val expenses: Expenses,
+    val date: String = "",
+    val expenses: Expenses = Expenses(),
+    val isToday: Boolean = false
 )
 
 data class ExtData(
-    val totalIncome: Double,
-    val totalOutcome: Double,
-    val carryOverInfo: CarryOverInfo
+    val totalIncome: String,
+    val totalOutcome: String,
 )
 
 data class Expenses(
-    val year: String,
-    val month: String,
-    val day: String,
-    var outcome: String,
-    val income: String,
-)
-
-data class CarryOverInfo(
-    val carryOverStatus: Boolean,
-    val carryOverMoney: Double
+    val date: String = "",
+    var outcome: String = "",
+    val income: String = "",
 )
 

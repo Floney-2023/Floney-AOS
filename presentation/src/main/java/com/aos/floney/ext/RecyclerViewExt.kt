@@ -37,10 +37,4 @@ fun RecyclerView.bindSetAdapter(
     baseListAdapter.headerItem = headerItem
     baseListAdapter.headerLayoutResId = headerLayoutResId
     baseListAdapter.submitList(items?.toList())
-
-    Timber.e("items $items")
-    Timber.e("layoutResId $layoutResId")
-    Timber.e("diffCallback $diffCallback")
-    Timber.e("viewModel $viewModel")
-    Timber.e("eventHolder $eventHolder")
 }
