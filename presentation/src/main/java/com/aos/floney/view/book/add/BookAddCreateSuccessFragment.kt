@@ -36,8 +36,9 @@ class BookAddCreateSuccessFragment : BaseFragment<FragmentBookAddCreateSuccessBi
             // 친구초대 bottomsheet 올라오게 하기
             viewModel.inviteDailog.collect() {
                 if(it) {
-
-                    // bottomSheet
+                    val inviteCode = viewModel.inviteCode.value ?: ""
+                    val bottomSheetFragment = BookAddInviteShareBottomSheetFragment.newInstance(inviteCode)
+                    bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
                 }
             }
         }
