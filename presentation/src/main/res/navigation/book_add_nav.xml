@@ -74,5 +74,8 @@
         android:name="com.aos.floney.view.book.add.BookAddCreateSuccessFragment"
         tools:layout="@layout/fragment_book_add_create_success"
         android:label="BookAddCreateSuccessFragment" >
+        <argument
+            android:name="invitecode"
+            app:argType="string" />
     </fragment>
 </navigation>

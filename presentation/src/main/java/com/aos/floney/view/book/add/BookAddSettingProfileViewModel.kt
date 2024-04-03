@@ -37,6 +37,8 @@ class BookAddSettingProfileViewModel @Inject constructor(
     private var _bookUrl = MutableLiveData<String>("")
     val bookUrl : LiveData<String> get() = _bookUrl
 
+    // 가계부 초대코드
+    var inviteCode = MutableLiveData<String>()
 
     // 이전 페이지로 이동
     fun onClickPreviousPage() {
@@ -54,7 +56,7 @@ class BookAddSettingProfileViewModel @Inject constructor(
                     // 전송 성공
 
                     it.bookKey
-                    it.code
+                    inviteCode.value = it.code
 
                     baseEvent(Event.HideLoading)
                     _nextPage.emit(true)

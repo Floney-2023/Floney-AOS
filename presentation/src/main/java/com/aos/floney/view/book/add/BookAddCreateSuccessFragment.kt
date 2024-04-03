@@ -1,5 +1,6 @@
 package com.aos.floney.view.book.add
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
@@ -31,5 +32,21 @@ class BookAddCreateSuccessFragment : BaseFragment<FragmentBookAddCreateSuccessBi
                 }
             }
         }
+        repeatOnStarted {
+            // 친구초대 bottomsheet 올라오게 하기
+            viewModel.inviteDailog.collect() {
+                if(it) {
+
+                    // bottomSheet
+                }
+            }
+        }
+    }
+    private fun onSharedBtnClicked() {
+        val code = viewModel.inviteCode.value ?: ""
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/html"
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, code)
+        startActivity(Intent.createChooser(sharingIntent, "Share using text"))
     }
 }

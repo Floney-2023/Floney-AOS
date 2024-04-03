@@ -188,7 +188,9 @@
     <string name="book_add_invite_friend_code_share_button_text">친구들을 초대해서\n함께 가계부를 적어보세요🍀</string>
     <string name="book_add_invite_friend_exit_button_text">나중에 하기</string>
 
-
-
+    <string name="book_add_invite_dialog_title">친구들을 초대해서\n함께 가계부를 적어보세요🍀</string>
+    <string name="book_add_invite_dialog_info">초대 코드</string>
+    <string name="book_add_invite_dialog_share_button">공유하기</string>
+    <string name="book_add_invite_dialog_exit_button"><u>나중에 하기</u></string>
 
 </resources>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.book.add.BookAddInviteShareViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_bottom_sheet"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <LinearLayout
+            android:id="@+id/bottom_sheet_book_add_inivite_share_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_book_add_invite_dialog_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/book_add_invite_dialog_title"
+                android:textColor="@color/grayscale1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_tv_book_add_invite_dialog_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/book_add_invite_dialog_info"
+                android:textColor="@color/grayscale8"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/li_invite_code_view"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_invite_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/floney_pretendard_bold"
+                    android:text="##333"
+                    android:textColor="@color/grayscale2"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/appCompatButton"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/custom_radius_12_solid_primary1"
+                android:fontFamily="@font/pretendard_bold"
+                android:onClick="@{() -> vm.onClickInviteCodeShare()}"
+                android:text="@string/book_add_invite_dialog_share_button"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_skip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="34dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:text="@string/book_add_invite_dialog_exit_button"
+                android:onClick="@{() -> vm.onClickedSkipBtn()}"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp"/>
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
