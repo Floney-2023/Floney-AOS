@@ -23,7 +23,6 @@ class HomeCalendarTypeViewModel @Inject constructor(
     private val searchBookMonthUseCase: SearchBookMonthUseCase
 ) : BaseViewModel() {
 
-
     // 날짜 데이터
     private val _calendar = MutableStateFlow<Calendar>(Calendar.getInstance())
     val calendar: MutableStateFlow<Calendar> get() = _calendar

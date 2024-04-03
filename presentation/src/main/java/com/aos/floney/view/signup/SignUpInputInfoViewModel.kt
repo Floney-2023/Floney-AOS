@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SignUpInputInfoViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
+    private val prefs: SharedPreferenceUtil,
     private val signUpUseCase: SignUpUseCase
 ) : BaseViewModel() {
 
@@ -54,8 +56,8 @@ class SignUpInputInfoViewModel @Inject constructor(
                                 baseEvent(Event.ShowLoading)
                                 signUpUseCase(email = email.value ?: "", nickname = nickname.value ?: "", password = password.value ?: "", receiveMarketing = marketing.value ?: false).onSuccess {
                                     // 엑세스 토큰 저장
-                                    UtilToken.accessToken = it.accessToken
-                                    UtilToken.refreshToken = it.refreshToken
+                                    prefs.setString("accessToken", it.accessToken)
+                                    prefs.setString("refreshToken", it.refreshToken)
 
                                     baseEvent(Event.HideLoading)
                                     _nextPage.emit(true)
