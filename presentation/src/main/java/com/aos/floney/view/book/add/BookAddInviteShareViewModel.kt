@@ -31,6 +31,10 @@ class BookAddInviteShareViewModel @Inject constructor(
     private var _inviteCodeExit = MutableEventFlow<Boolean>()
     val inviteCodeExit: EventFlow<Boolean> get() = _inviteCodeExit
 
+    // 코드 복사
+    private var _inviteCodeCopy = MutableEventFlow<Boolean>()
+    val inviteCodeCopy: EventFlow<Boolean> get() = _inviteCodeCopy
+
     // 코드 공유 버튼 클릭
     fun onClickInviteCodeShare(){
         viewModelScope.launch {
@@ -41,6 +45,14 @@ class BookAddInviteShareViewModel @Inject constructor(
     fun onClickedSkipBtn(){
         viewModelScope.launch {
             _inviteCodeExit.emit(true)
+        }
+    }
+
+    // 초대 코드 복사
+    fun onClickInviteCodeCopy(){
+        viewModelScope.launch {
+            baseEvent(Event.ShowToastRes(R.string.book_add_invite_dialog_copy_text))
+            _inviteCodeCopy.emit(true)
         }
     }
 }

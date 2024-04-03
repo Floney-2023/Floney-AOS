@@ -1,7 +1,11 @@
 package com.aos.floney.view.book.add
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
@@ -17,7 +21,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class BookAddInviteShareBottomSheetFragment :
     BaseBottomSheetFragment<BottomSheetBookAddInviteShareBinding,BookAddInviteShareViewModel>
-    (R.layout.bottom_sheet_book_add_invite_share) {
+        (R.layout.bottom_sheet_book_add_invite_share) {
 
     companion object {
         private const val ARG_INVITE_CODE = "invite_code"
@@ -53,6 +57,19 @@ class BookAddInviteShareBottomSheetFragment :
                 Timber.e("nextPage $it")
                 if(it) {
                     dismiss()
+                }
+            }
+        }
+        repeatOnStarted {
+            // 초대 코드 클립보드 복사
+            viewModel.inviteCodeCopy.collect {
+                Timber.e("nextPage $it")
+                if(it) {
+                    val code = viewModel.inviteCode.value ?: ""
+                    val clipboard: ClipboardManager =
+                        requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText("label", code)
+                    clipboard.setPrimaryClip(clip)
                 }
             }
         }

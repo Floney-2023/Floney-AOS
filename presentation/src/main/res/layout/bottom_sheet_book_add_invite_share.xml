@@ -43,7 +43,7 @@
                 android:textColor="@color/grayscale8"
                 android:textSize="12sp" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/li_invite_code_view"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -51,17 +51,34 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
-                android:gravity="center">
+                >
 
                 <TextView
                     android:id="@+id/tv_invite_code"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:fontFamily="@font/floney_pretendard_bold"
+                    android:gravity="center"
                     android:text="@{vm.inviteCode}"
                     android:textColor="@color/grayscale2"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_invite_code_copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/icon_invite_code_copy"
+                    android:onClick="@{() -> vm.onClickInviteCodeCopy()}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/appCompatButton"
