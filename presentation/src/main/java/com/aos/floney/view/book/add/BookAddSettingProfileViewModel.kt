@@ -56,7 +56,7 @@ class BookAddSettingProfileViewModel @Inject constructor(
                     // 전송 성공
 
                     it.bookKey
-                    inviteCode.value = it.code
+                    inviteCode.postValue(it.code)
 
                     baseEvent(Event.HideLoading)
                     _nextPage.emit(true)
