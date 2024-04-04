@@ -26,11 +26,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     }
 
     private fun setUpViewModelObserver() {
-        repeatOnStarted {
-            viewModel.showCalendarFragment.collect {
-                if(it) {
-                }
-            }
-        }
     }
 }

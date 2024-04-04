@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 abstract class BaseViewModel : ViewModel() {
     private val _baseEventFlow = MutableEventFlow<Event>()
     val baseEventFlow = _baseEventFlow.asEventFlow()
-    protected fun baseEvent(event: Event) {
+    fun baseEvent(event: Event) {
         viewModelScope.launch {
             _baseEventFlow.emit(event)
         }

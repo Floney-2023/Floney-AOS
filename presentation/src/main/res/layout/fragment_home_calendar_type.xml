@@ -123,6 +123,7 @@
                 app:layout_constraintStart_toStartOf="@id/ll_week"
                 app:layout_constraintTop_toBottomOf="@id/ll_week"
                 app:spanCount="7"
+                bind:viewModel="@{vm}"
                 bind:diffCallback="@{(Object)UiBookMonthModel.Companion}"
                 bind:eventHolder="@{eventHolder}"
                 bind:itemLayout="@{@layout/item_home_calendar}"

@@ -72,8 +72,10 @@ class HomeViewModel @Inject constructor(
 
     // 다음 월 클릭
     fun onClickNextMonth() {
+        Timber.e("onClickNextMonth")
         viewModelScope.launch {
             updateCalendarMonth(1)
+            Timber.e("onClickNextMonth - emit")
             _clickedNextMonth.emit(getFormatDate())
         }
     }

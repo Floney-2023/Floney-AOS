@@ -1,5 +1,7 @@
 package com.aos.floney.view.home
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +14,7 @@ import com.aos.model.home.ListData
 import com.aos.model.home.UiBookMonthModel
 import com.aos.usecase.home.SearchBookMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -41,17 +44,11 @@ class HomeCalendarTypeViewModel @Inject constructor(
             val firstDayFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             firstDayFormat.format(calendar.time)
         }
-
-        Timber.e("prefs.getString(\"bookKey\", \"\") ${prefs.getString("bookKey", "")}")
-
         viewModelScope.launch {
-            baseEvent(Event.ShowLoading)
             searchBookMonthUseCase(bookKey = prefs.getString("bookKey", ""), date = date).onSuccess {
-                 baseEvent(Event.HideLoading)
                 _getCalendarList.postValue(it.data)
                 _getExtData.postValue(it.extData)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }

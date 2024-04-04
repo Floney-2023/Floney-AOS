@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentHomeCalendarTypeBinding
@@ -43,7 +44,7 @@ class HomeCalendarTypeFragment : BaseFragment<FragmentHomeCalendarTypeBinding, H
 
     private fun setUpCalendarRecyclerView() {
         binding.rvCalendar.itemAnimator = null
-    }
+      }
 
     private fun setUpViewModelObserver() {
         repeatOnStarted {
@@ -53,6 +54,7 @@ class HomeCalendarTypeFragment : BaseFragment<FragmentHomeCalendarTypeBinding, H
         }
         repeatOnStarted {
             activityViewModel.clickedNextMonth.collect {
+                Timber.e("activityViewModel.clickedNextMonth")
                 viewModel.getBookMonth(it)
             }
         }

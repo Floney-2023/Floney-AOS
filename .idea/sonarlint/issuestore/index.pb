@@ -1,22 +1,16 @@
 
 r
 Bpresentation/src/main/java/com/aos/floney/base/BaseItemViewType.kt,3\8\38b410651b7b1a4866d3f1e871196c07627c648b
-q
-Apresentation/src/main/java/com/aos/floney/base/BaseListAdapter.kt,0\0\004bfc940ec7085ec8a37ae1671ea92958dc412a
 n
 >presentation/src/main/java/com/aos/floney/di/AppApplication.kt,0\5\053b9d578dbb0b5ca0f9c03946656fffc76367df
 m
 =presentation/src/main/java/com/aos/floney/ext/ImageVIewExt.kt,a\a\aa034908705237a7b2f1d4b31ae5643a0e9fd561
 p
 @data/src/main/java/com/aos/data/util/CustomCallAdapterFactory.kt,9\7\97a6ac71c8ff0465c8ec11c3592a86a61755a5ce
-p
-@presentation/src/main/java/com/aos/floney/ext/RecyclerViewExt.kt,d\1\d1939043ca8473212a455bdcd7aabf243fc76929
 r
 Bpresentation/src/main/java/com/aos/floney/ext/LifecycleOwnerExt.kt,d\2\d2a756f1a0af12cdeb73d9c5d5290618afe783c3
 a
 1domain/src/main/java/com/aos/util/NetworkState.kt,7\e\7ee6d6b22c61b7a3996067b924e8e5a59d05577c
-Q
-!data/src/main/AndroidManifest.xml,f\a\fa20ad08e770fe0392ec3df5be8c6bde6c35d607
 k
 ;presentation/src/main/java/com/aos/floney/util/EventFlow.kt,c\6\c6d0651d64c001604309b2473232cae6213fd3ba
 Å
@@ -35,8 +29,6 @@ Opresentation/src/main/java/com/aos/floney/view/onboard/OnBoardStartViewModel.kt
 Qpresentation/src/main/java/com/aos/floney/view/onboard/OnBoardShowFlowFragment.kt,0\1\018494ea3f98a6de1791a05dbfd0666036ff95fa
 Ç
 Rpresentation/src/main/java/com/aos/floney/view/onboard/OnBoardShowFlowViewModel.kt,0\1\01367376657c331600f791e646610a5272fcbbaa
-X
-(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 C
 domain/build.gradle,a\3\a3021bb5ba623a461b5fdb89ae51923a4945c354
 x
