@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_page_inform_simple_nav"
+    app:startDestination="@id/myPageInformEmailSettingFragment">
+
+    <activity
+        android:id="@+id/myPageInformSimpleActivity"
+        android:name="com.aos.floney.view.mypage.inform.simple.login.version.MyPageInformSimpleActivity"
+        tools:layout="@layout/activity_my_page_inform_email"
+        android:label="MyPageInformSimpleActivity" />
+    <fragment
+        android:id="@+id/myPageInformEmailSettingFragment"
+        android:name="com.aos.floney.view.mypage.inform.email.login.version.setting.MyPageInformEmailSettingFragment"
+        tools:layout="@layout/fragment_my_page_inform_email_setting"
+        android:label="MyPageInformEmailSettingFragment" >
+        <action
+            android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformProfileChangeFragment"
+            app:destination="@id/myPageInformProfileChangeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageInformProfileChangeFragment"
+        android:name="com.aos.floney.view.mypage.inform.profile.change.MyPageInformProfileChangeFragment"
+        tools:layout="@layout/fragment_my_page_inform_profilechange"
+        android:label="MyPageInformProfileChangeFragment" />
+</navigation>

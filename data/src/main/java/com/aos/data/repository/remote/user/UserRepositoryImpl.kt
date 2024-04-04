@@ -1,6 +1,7 @@
 package com.aos.data.repository.remote.user
 
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
+import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.mapper.toPostLoginModel
 import com.aos.data.mapper.toPostSignUpUserModel
 import com.aos.data.util.RetrofitFailureStateException
@@ -106,6 +107,48 @@ class UserRepositoryImpl @Inject constructor(private val userRemoteDataSource: U
             )
             is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
             is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+    override suspend fun putPasswordChange(newPassword: String, oldPassword: String): Result<Void?> {
+        when (val data =
+            userRemoteDataSource.putPasswordChange(PutPasswordChangeBody(newPassword, oldPassword))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun getNicknameChange(nickname: String): Result<Void?> {
+        when (val data =
+            userRemoteDataSource.getNicknameChange(nickname)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
         }
     }
 }

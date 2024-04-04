@@ -3,6 +3,7 @@ package com.aos.data.api
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
@@ -10,6 +11,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface UserService {
@@ -49,4 +51,17 @@ interface UserService {
         @Body postLoginBody: PostLoginBody
     ): NetworkState<PostLoginEntity>
 
+    // 비밀번호 변경
+    @PUT("users/password")
+    @Headers("Auth: true")
+    suspend fun putPasswordChange(
+        @Body putPasswordChangeBody: PutPasswordChangeBody
+    ): NetworkState<Void>
+
+    // 닉네임 변경
+    @GET("users/nickname/update")
+    @Headers("Auth: true")
+    suspend fun getNicknameChange(
+        @Query("nickname") nickname: String
+    ): NetworkState<Void>
 }

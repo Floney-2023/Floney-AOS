@@ -81,6 +81,8 @@
     <string name="mypage_main_inform_change_passwd">비밀번호 변경</string>
     <string name="mypage_main_inform_logout">로그아웃</string>
     <string name="mypage_main_inform_exit"><u>회원탈퇴</u></string>
+    <string name="mypage_main_inform_nickname_request">닉네임을 입력해주세요.</string>
+    <string name="mypage_main_inform_nickname_request_success">변경이 완료되었습니다.</string>
 
     <!--myPageActivity(회원정보 1-2, 비밀번호 변경)-->
     <string name="mypage_main_inform_pwchange_title">비밀번호 변경</string>
@@ -91,6 +93,12 @@
     <string name="mypage_main_inform_pwchange_newpw_check">새 비밀번호 확인</string>
     <string name="mypage_main_inform_pwchange_newpw_check_tint">영문 대소문자, 숫자, 특수문자 포함 8자 이상</string>
     <string name="mypage_main_inform_pwchange_check_button">확인</string>
+    <string name="mypage_main_inform_pwchange_nowpw_request">현재 비밀번호를 입력해주세요.</string>
+    <string name="mypage_main_inform_pwchange_request_input_password">새 비밀번호를 입력해주세요.</string>
+    <string name="mypage_main_inform_pwchange_request_input_re_password">새 비밀번호 확인을 입력해주세요.</string>
+    <string name="mypage_main_inform_pwchange_check_password_rule">새 비밀번호 양식을 확인해주세요.</string>
+    <string name="mypage_main_inform_pwchange_not_match_password">새 비밀번호가 일치하지 않습니다.</string>
+
 
     <!--myPageActivity(회원정보 1-4, 프로필 이미지 변경)-->
     <string name="mypage_main_inform_profile_change">프로필 이미지 변경</string>
