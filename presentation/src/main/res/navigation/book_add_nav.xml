@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/book_add_nav"
+    app:startDestination="@id/bookAddInviteCheckFragment">
+
+    <activity
+        android:id="@+id/bookAddActivity"
+        android:name="com.aos.floney.view.book.add.BookAddActivity"
+        tools:layout="@layout/activity_book_add"
+        android:label="BookAddActivity" />
+    <fragment
+        android:id="@+id/bookAddInviteCheckFragment"
+        android:name="com.aos.floney.view.book.add.BookAddInviteCheckFragment"
+        tools:layout="@layout/fragment_book_add_invite_check"
+        android:label="BookAddInviteCheckFragment" >
+        <action
+            android:id="@+id/action_bookAddInviteCheckFragment_to_bookAddInviteSuccessFragment"
+            app:destination="@id/bookAddInviteSuccessFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/bookAddInviteCheckFragment" />
+        <action
+            android:id="@+id/action_bookAddInviteCheckFragment_to_bookAddInputBookNameFragment"
+            app:destination="@id/bookAddInputBookNameFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/bookAddInviteCheckFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/bookAddInviteSuccessFragment"
+        android:name="com.aos.floney.view.book.add.BookAddInviteSuccessFragment"
+        tools:layout="@layout/fragment_book_add_invite_success"
+        android:label="BookAddInviteSuccessFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookAddInputBookNameFragment"
+        android:name="com.aos.floney.view.book.add.BookAddInputBookNameFragment"
+        tools:layout="@layout/fragment_book_add_input_book_name"
+        android:label="BookAddInputBookNameFragment">
+        <action
+            android:id="@+id/action_bookAddInputBookNameFragment_to_bookAddSettingProfileFragment"
+            app:destination="@id/bookAddSettingProfileFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/bookAddInputBookNameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookAddSettingProfileFragment"
+        android:name="com.aos.floney.view.book.add.BookAddSettingProfileFragment"
+        tools:layout="@layout/fragment_book_add_setting_profile"
+        android:label="BookAddSettingProfileFragment" >
+        <action
+            android:id="@+id/action_bookAddSettingProfileFragment_to_bookAddCreateSuccessFragment"
+            app:destination="@id/bookAddCreateSuccessFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="bookname"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookAddCreateSuccessFragment"
+        android:name="com.aos.floney.view.book.add.BookAddCreateSuccessFragment"
+        tools:layout="@layout/fragment_book_add_create_success"
+        android:label="BookAddCreateSuccessFragment" >
+        <argument
+            android:name="invitecode"
+            app:argType="string" />
+    </fragment>
+</navigation>

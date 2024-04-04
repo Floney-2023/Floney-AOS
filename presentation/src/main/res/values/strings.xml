@@ -157,4 +157,41 @@
     <string name="sign_up_complete_text_detail">플로니와 함께 똑똑하고 편리한 가계부를\n작성해부세요.</string>
     <string name="sign_up_start_floney">플로니 시작하기</string>
 
+    <!--bookAdd(4-1, 가계부 추가(최초)-->
+    <string name="book_add_invite_check_code_title">초대받은 가계부\n코드가 있나요?</string>
+    <string name="book_add_invite_check_code_info">친구에게 받은 코드를 입력하거나\n코드가 없다면 가계부를 새로 만들 수 있어요.</string>
+    <string name="book_add_invite_check_code_input_hint">코드를 입력하세요.</string>
+    <string name="book_add_invite_check_code_complete_button_text">입력 완료하기</string>
+    <string name="book_add_invite_check_code_new_book_add_button_text">새 가계부 만들기</string>
+    <string name="book_add_invite_success_title">가계부에\n초대되었어요!</string>
+    <string name="book_add_invite_success_info">간편하고 쉬운 가계부, 플로니와 함께해요</string>
+    <string name="book_add_invite_success_button_text">작성하러 가기</string>
+    <string name="book_add_invite_check_request_empty_code">코드를 입력하세요.</string>
+
+    <string name="book_add_new_book_name_title">가계부 생성하기</string>
+    <string name="book_add_new_book_name_info">언제든지 멤버를 추가할 수 있는\n플로니의 가계부를 만들어 보세요.</string>
+    <string name="book_add_new_book_name_input_hint">가계부 이름을 입력하세요.</string>
+    <string name="book_add_new_book_name_input_info">* 최대 10자까지 입력할 수 있어요.</string>
+    <string name="book_add_new_book_name_button_text">다음으로</string>
+
+    <string name="book_add_new_book_profile_title">가계부 프로필 설정하기</string>
+    <string name="book_add_new_book_profile_info">사진을 설정하여 나만의 가계부를\n만들어 보세요.</string>
+    <string name="book_add_new_book_profile_button_text">다음으로</string>
+
+    <string name="book_add_new_book_success_title">가계부가 생성되었어요!</string>
+    <string name="book_add_new_book_success_info">간편하고 쉬운 가계부, 플로니와 함께해요</string>
+    <string name="book_add_new_book_success_go_home_button_text">작성하러 가기</string>
+    <string name="book_add_new_book_success_invite_friend_button_text">친구 초대하기</string>
+
+    <string name="book_add_invite_friend_title">친구들을 초대해서\n함께 가계부를 적어보세요🍀</string>
+    <string name="book_add_invite_friend_code_text">초대 코드</string>
+    <string name="book_add_invite_friend_code_share_button_text">친구들을 초대해서\n함께 가계부를 적어보세요🍀</string>
+    <string name="book_add_invite_friend_exit_button_text">나중에 하기</string>
+
+    <string name="book_add_invite_dialog_title">친구들을 초대해서\n함께 가계부를 적어보세요🍀</string>
+    <string name="book_add_invite_dialog_info">초대 코드</string>
+    <string name="book_add_invite_dialog_share_button">공유하기</string>
+    <string name="book_add_invite_dialog_exit_button"><u>나중에 하기</u></string>
+    <string name="book_add_invite_dialog_copy_text">참여 코드 복사가 완료되었습니다.</string>
+
 </resources>

@@ -25,7 +25,7 @@ class SignUpCompleteFragment : BaseFragment<FragmentSignUpCompleteBinding, SignU
             viewModel.nextPage.collect() {
                 if(it) {
                     val activity = requireActivity() as SignUpActivity
-                    activity.startLoginActivity()
+                    activity.startBookAddActivity()
                 }
             }
         }
