@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.aos.floney.view.home.HomeViewModel" />
@@ -16,24 +17,24 @@
         tools:context=".view.home.HomeActivity">
 
         <ImageView
+            android:id="@+id/iv_logo"
             android:layout_width="82dp"
             android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="24dp"
             android:src="@drawable/logo_floney_horizontal_gray"
             app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/iv_logo"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"/>
-        
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_book_profile"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            app:layout_constraintTop_toTopOf="@id/iv_logo"
-            app:layout_constraintBottom_toBottomOf="@id/iv_logo"
             android:layout_marginEnd="20dp"
+            app:cardCornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_logo"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/cv_book_profile"
-            app:cardCornerRadius="12dp">
+            app:layout_constraintTop_toTopOf="@id/iv_logo">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -41,109 +42,168 @@
                 android:scaleType="centerCrop" />
 
         </androidx.cardview.widget.CardView>
-        
+
         <ImageView
             android:layout_width="8dp"
             android:layout_height="10dp"
-            app:layout_constraintEnd_toStartOf="@id/cv_book_profile"
-            app:layout_constraintTop_toTopOf="@id/cv_book_profile"
-            app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"
+            android:layout_marginEnd="4dp"
             android:src="@drawable/icon_chip"
-            android:layout_marginEnd="4dp"/>
+            app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"
+            app:layout_constraintEnd_toStartOf="@id/cv_book_profile"
+            app:layout_constraintTop_toTopOf="@id/cv_book_profile" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="박차장의 시크릿노트"
-            android:textSize="11sp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/custom_radious_4_solid_primary4"
             android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/white"
             android:gravity="center"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/custom_radious_4_solid_primary4"
+            android:text="박차장의 시크릿노트"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"
             app:layout_constraintEnd_toStartOf="@id/cv_book_profile"
-            app:layout_constraintTop_toTopOf="@id/cv_book_profile"
-            app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"/>
+            app:layout_constraintTop_toTopOf="@id/cv_book_profile" />
 
         <ImageView
+            android:id="@+id/iv_previous_month"
             android:layout_width="24dp"
             android:layout_height="28dp"
-            android:src="@drawable/icon_previous_month"
-            app:layout_constraintTop_toBottomOf="@id/iv_logo"
-            android:onClick="@{() -> vm.onClickPreviousMonth()}"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="12dp"
-            android:id="@+id/iv_previous_month"
-            android:layout_marginTop="37dp"/>
+            android:layout_marginTop="37dp"
+            android:onClick="@{() -> vm.onClickPreviousMonth()}"
+            android:src="@drawable/icon_previous_month"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
         <TextView
+            android:id="@+id/tv_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{vm.showDate}"
-            android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/grayscale1"
             android:layout_marginStart="2dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@{vm.showDate}"
+            android:textColor="@color/grayscale1"
             android:textSize="20dp"
-            android:id="@+id/tv_month"
+            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"
             app:layout_constraintStart_toEndOf="@id/iv_previous_month"
-            app:layout_constraintTop_toTopOf="@id/iv_previous_month"
-            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"/>
+            app:layout_constraintTop_toTopOf="@id/iv_previous_month" />
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="28dp"
-            android:src="@drawable/icon_next_month"
-            app:layout_constraintStart_toEndOf="@id/tv_month"
             android:onClick="@{() -> vm.onClickNextMonth()}"
-            app:layout_constraintTop_toTopOf="@id/iv_previous_month"
-            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"/>
-        
+            android:src="@drawable/icon_next_month"
+            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"
+            app:layout_constraintStart_toEndOf="@id/tv_month"
+            app:layout_constraintTop_toTopOf="@id/iv_previous_month" />
+
         <LinearLayout
+            android:id="@+id/ll_calendar_type"
             android:layout_width="116dp"
             android:layout_height="32dp"
+            android:layout_marginTop="26dp"
             android:background="@drawable/custom_radius_8_solid_grayscale10"
-            android:id="@+id/ll_calendar_type"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/cv_book_profile"
-            android:gravity="center_vertical"
-            app:layout_constraintTop_toBottomOf="@id/cv_book_profile"
-            android:layout_marginTop="26dp">
-            
-            <TextView
-                android:layout_width="54dp"
-                android:layout_height="24dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:textColor="@color/grayscale2"
-                android:layout_marginStart="4dp"
-                android:textSize="11dp"
-                android:text="캘린더"
-                android:background="@drawable/custom_radius_5_solid_white"
-                android:gravity="center"/>
+            app:layout_constraintTop_toBottomOf="@id/cv_book_profile">
 
             <TextView
                 android:layout_width="54dp"
                 android:layout_height="24dp"
-                android:fontFamily="@font/pretendard_medium"
-                android:textColor="@color/grayscale8"
+                android:layout_marginStart="4dp"
+                android:background="@drawable/custom_radius_5_solid_white"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:text="캘린더"
+                android:textColor="@color/grayscale2"
+                android:textSize="11dp" />
+
+            <TextView
+                android:layout_width="54dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="4dp"
-                android:textSize="11dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
                 android:text="일별"
-                android:gravity="center"/>
+                android:textColor="@color/grayscale8"
+                android:textSize="11dp" />
 
         </LinearLayout>
-        
+
         <FrameLayout
             android:id="@+id/fl_container"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/iv_previous_month"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="12dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_previous_month"
-            android:layout_marginTop="24dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/iv_previous_month"
+            app:layout_constraintTop_toBottomOf="@id/iv_previous_month" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="384dp"
+            android:background="@drawable/custom_radius_top_left_right_12_solid_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="2022년"
+                android:textColor="@color/grayscale6"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_month_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="11월 20일"
+                android:textColor="@color/grayscale1"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@id/tv_year"
+                app:layout_constraintTop_toBottomOf="@id/tv_year" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:paddingStart="4dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="10dp"
+                android:text="내역 추가"
+                android:textColor="@color/primary2"
+                app:layout_constraintBottom_toBottomOf="@id/tv_month_day"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_year" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_day_history"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_month_day" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

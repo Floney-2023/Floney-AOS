@@ -54,7 +54,6 @@ class HomeCalendarTypeFragment : BaseFragment<FragmentHomeCalendarTypeBinding, H
         }
         repeatOnStarted {
             activityViewModel.clickedNextMonth.collect {
-                Timber.e("activityViewModel.clickedNextMonth")
                 viewModel.getBookMonth(it)
             }
         }

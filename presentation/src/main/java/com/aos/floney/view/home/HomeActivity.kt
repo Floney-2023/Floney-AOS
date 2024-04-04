@@ -27,4 +27,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
 
     private fun setUpViewModelObserver() {
     }
+
+    // 캘린더 아이템이 표시됨
+    fun onClickCalendarItem() {
+
+    }
 }

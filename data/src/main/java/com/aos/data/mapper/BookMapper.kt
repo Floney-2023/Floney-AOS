@@ -13,10 +13,12 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+// 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
     return GetCheckUserBookModel(this.bookKey ?: "")
 }
 
+// 캘린더 조회
 fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
     val listData = arrayListOf<ListData>()
     var tempDay = ""

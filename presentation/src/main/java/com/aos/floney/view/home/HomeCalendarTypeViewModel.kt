@@ -48,7 +48,9 @@ class HomeCalendarTypeViewModel @Inject constructor(
             searchBookMonthUseCase(bookKey = prefs.getString("bookKey", ""), date = date).onSuccess {
                 _getCalendarList.postValue(it.data)
                 _getExtData.postValue(it.extData)
+
             }.onFailure {
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }
