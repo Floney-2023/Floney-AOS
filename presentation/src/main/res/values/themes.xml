@@ -190,7 +190,7 @@
 
     <!--LoginActivity-->
     <style name="login_edit_text" parent="Widget.Design.TextInputLayout">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/grayscale6</item>
         <item name="android:textCursorDrawable">@color/grayscale6</item>
         <item name="android:textColorHint">@color/grayscale6</item>
@@ -332,7 +332,7 @@
     </style>
 
     <style name="mypage_inform_title_text">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/grayscale2</item>
     </style>
 
