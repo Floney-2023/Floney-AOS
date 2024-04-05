@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.aos.model.user.UiMypageSearchModel" />
         <variable
             name="vm"
             type="com.aos.floney.view.mypage.MyPageViewModel" />
+        <variable
+            name="eventHolder"
+            type="com.aos.model.user.UiMypageSearchModel.OnItemClickListener"/>
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -215,6 +221,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    bind:diffCallback="@{(Object)UiMypageSearchModel.Companion}"
+                    bind:eventHolder="@{eventHolder}"
+                    bind:itemLayout="@{@layout/item_wallet_detail_view}"
+                    bind:items="@{vm.mypageInfo.myBooks}"
+                    bind:viewModel="@{vm}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
             </LinearLayout>
             <TextView
