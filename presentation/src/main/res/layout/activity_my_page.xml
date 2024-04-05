@@ -99,14 +99,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/floney_pretendard_bold"
-                        android:text="test"
+                        android:text="@{vm.mypageInfo.nickname}"
                         android:textAppearance="@style/mypage_user_name" />
 
                     <TextView
                         android:id="@+id/tv_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="user@gmail.com"
+                        android:text="@{vm.mypageInfo.email}"
                         android:textAppearance="@style/mypage_user_email" />
                 </LinearLayout>
 

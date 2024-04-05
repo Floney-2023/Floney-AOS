@@ -4,6 +4,7 @@ import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
+import com.aos.data.entity.response.user.GetMypageSearchEntity
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
@@ -57,4 +58,9 @@ interface UserRemoteDataSource {
     // 유저 마케팅 수신 동의 여부 확인
     suspend fun getMarketingCheck(
     ): NetworkState<GetReceiveMarketingEntity>
+
+    // 마이페이지 조회
+    suspend fun getMypageSearch(
+    ): NetworkState<GetMypageSearchEntity>
+
 }

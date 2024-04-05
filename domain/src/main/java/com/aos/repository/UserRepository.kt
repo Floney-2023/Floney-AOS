@@ -3,6 +3,7 @@ package com.aos.repository
 import com.aos.model.user.GetReceiveMarketingModel
 import com.aos.model.user.PostLoginModel
 import com.aos.model.user.PostSignUpUserModel
+import com.aos.model.user.UiMypageSearchModel
 
 interface UserRepository {
 
@@ -24,4 +25,7 @@ interface UserRepository {
     suspend fun putMarketingChange(agree: Boolean): Result<Void?>
     // 유저 마케팅 수신 동의 여부 조회
     suspend fun getMarketingCheck(): Result<GetReceiveMarketingModel>
+    // 마이페이지 조회
+    // 유저 마케팅 수신 동의 여부 조회
+    suspend fun getMypageSearch(): Result<UiMypageSearchModel>
 }

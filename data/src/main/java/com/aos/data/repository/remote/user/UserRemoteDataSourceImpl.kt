@@ -6,6 +6,7 @@ import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
+import com.aos.data.entity.response.user.GetMypageSearchEntity
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
@@ -60,5 +61,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
     }
     override suspend fun getMarketingCheck(): NetworkState<GetReceiveMarketingEntity> {
         return userService.getMarketingCheck()
+    }
+    override suspend fun getMypageSearch(): NetworkState<GetMypageSearchEntity> {
+        return userService.getMypageSearch()
     }
 }

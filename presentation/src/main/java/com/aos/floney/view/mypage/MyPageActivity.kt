@@ -36,5 +36,8 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.searchMypageItems()
+        }
     }
 }

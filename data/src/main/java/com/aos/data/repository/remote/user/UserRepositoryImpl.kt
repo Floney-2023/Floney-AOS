@@ -5,10 +5,12 @@ import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.mapper.toGetReceiveMarketing
 import com.aos.data.mapper.toPostLoginModel
 import com.aos.data.mapper.toPostSignUpUserModel
+import com.aos.data.mapper.toUiMypageSearchModel
 import com.aos.data.util.RetrofitFailureStateException
 import com.aos.model.user.GetReceiveMarketingModel
 import com.aos.model.user.PostLoginModel
 import com.aos.model.user.PostSignUpUserModel
+import com.aos.model.user.UiMypageSearchModel
 import com.aos.repository.UserRepository
 import com.aos.util.NetworkState
 import javax.inject.Inject
@@ -179,6 +181,21 @@ class UserRepositoryImpl @Inject constructor(private val userRemoteDataSource: U
             userRemoteDataSource.getMarketingCheck()) {
             is NetworkState.Success -> {
                 return Result.success(data.body.toGetReceiveMarketing())
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+    override suspend fun getMypageSearch(): Result<UiMypageSearchModel> {
+        when (val data =
+            userRemoteDataSource.getMypageSearch()) {
+            is NetworkState.Success -> {
+                return Result.success(data.body.toUiMypageSearchModel())
             }
             is NetworkState.Failure -> {
                 return Result.failure(
