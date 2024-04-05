@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.MyPageViewModel" />
+            type="com.aos.floney.view.mypage.setting.MyPageSettingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 app:defaultNavHost="true"
-                app:navGraph="@navigation/my_page_nav"/>
+                app:navGraph="@navigation/my_page_setting_nav"/>
 
         </FrameLayout>
 

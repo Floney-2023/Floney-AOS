@@ -10,6 +10,7 @@ import com.aos.floney.databinding.ActivityLoginBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +29,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         repeatOnStarted {
             viewModel.nextPage.collect {
                 if(it) {
-                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, MyPageActivity::class.java))
                 }
             }
         }

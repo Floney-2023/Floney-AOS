@@ -4,6 +4,7 @@ import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
+import com.aos.data.entity.response.home.GetReceiveMarketingEntity
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
@@ -64,4 +65,16 @@ interface UserService {
     suspend fun getNicknameChange(
         @Query("nickname") nickname: String
     ): NetworkState<Void>
+
+    // 유저 마케팅 수신 동의 여부 변경
+    @PUT("users/receive-marketing")
+    @Headers("Auth: true")
+    suspend fun putMarketingChange(
+        @Query("agree") agree: Boolean
+    ): NetworkState<Void>
+
+    // 유저 마케팅 수신 동의 여부 변경
+    @GET("users/receive-marketing")
+    @Headers("Auth: true")
+    suspend fun getMarketingCheck(): NetworkState<GetReceiveMarketingEntity>
 }

@@ -1,4 +1,4 @@
-package com.aos.floney.view.mypage.inform.simple.login.version.setting
+package com.aos.floney.view.mypage.inform.simple.login.version.main
 
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.util.EventFlow
@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageInformSimpleSettingViewModel @Inject constructor(): BaseViewModel() {
+class MyPageInformSimpleMainViewModel @Inject constructor(): BaseViewModel() {
 
 
     // 뒤로가기

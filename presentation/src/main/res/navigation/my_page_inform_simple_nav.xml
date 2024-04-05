@@ -12,8 +12,8 @@
         android:label="MyPageInformSimpleActivity" />
     <fragment
         android:id="@+id/myPageInformEmailSettingFragment"
-        android:name="com.aos.floney.view.mypage.inform.email.login.version.setting.MyPageInformEmailSettingFragment"
-        tools:layout="@layout/fragment_my_page_inform_email_setting"
+        android:name="com.aos.floney.view.mypage.inform.email.login.version.main.MyPageInformEmailMainFragment"
+        tools:layout="@layout/fragment_my_page_inform_email_main"
         android:label="MyPageInformEmailSettingFragment" >
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformProfileChangeFragment"

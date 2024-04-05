@@ -16,6 +16,11 @@ class MyPageViewModel @Inject constructor(): BaseViewModel() {
     private var _informPage = MutableEventFlow<Boolean>()
     val informPage: EventFlow<Boolean> get() = _informPage
 
+    // 설정 페이지
+    // 회원 정보 페이지
+    private var _settingPage = MutableEventFlow<Boolean>()
+    val settingPage: EventFlow<Boolean> get() = _settingPage
+
     // 알람 페이지 이동
     fun onClickAlarmPage()
     {
@@ -25,7 +30,9 @@ class MyPageViewModel @Inject constructor(): BaseViewModel() {
     // 설정 페이지 이동
     fun onClickSettingPage()
     {
-
+        viewModelScope.launch {
+            _settingPage.emit(true)
+        }
     }
 
     // 회원 정보 페이지 이동

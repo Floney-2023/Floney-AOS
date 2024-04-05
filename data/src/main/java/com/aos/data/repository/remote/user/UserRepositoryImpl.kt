@@ -2,9 +2,11 @@ package com.aos.data.repository.remote.user
 
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
+import com.aos.data.mapper.toGetReceiveMarketing
 import com.aos.data.mapper.toPostLoginModel
 import com.aos.data.mapper.toPostSignUpUserModel
 import com.aos.data.util.RetrofitFailureStateException
+import com.aos.model.user.GetReceiveMarketingModel
 import com.aos.model.user.PostLoginModel
 import com.aos.model.user.PostSignUpUserModel
 import com.aos.repository.UserRepository
@@ -149,6 +151,42 @@ class UserRepositoryImpl @Inject constructor(private val userRemoteDataSource: U
                     Result.failure(IllegalStateException("unKnownError"))
                 }
             }
+        }
+    }
+    override suspend fun putMarketingChange(agree: Boolean): Result<Void?> {
+        when (val data =
+            userRemoteDataSource.putMarketingChange(agree)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun getMarketingCheck(): Result<GetReceiveMarketingModel> {
+        when (val data =
+            userRemoteDataSource.getMarketingCheck()) {
+            is NetworkState.Success -> {
+                return Result.success(data.body.toGetReceiveMarketing())
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
         }
     }
 }

@@ -12,15 +12,25 @@
         android:label="MyPageInformEmailActivity" />
     <fragment
         android:id="@+id/myPageInformEmailSettingFragment"
-        android:name="com.aos.floney.view.mypage.inform.email.login.version.setting.MyPageInformEmailSettingFragment"
-        tools:layout="@layout/fragment_my_page_inform_email_setting"
+        android:name="com.aos.floney.view.mypage.inform.email.login.version.main.MyPageInformEmailMainFragment"
+        tools:layout="@layout/fragment_my_page_inform_email_main"
         android:label="MyPageInformEmailSettingFragment" >
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformProfileChangeFragment"
-            app:destination="@id/myPageInformProfileChangeFragment" />
+            app:destination="@id/myPageInformProfileChangeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/myPageInformEmailSettingFragment" />
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformEmailPwChangeFragment"
-            app:destination="@id/myPageInformEmailPwChangeFragment" />
+            app:destination="@id/myPageInformEmailPwChangeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/myPageInformEmailSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/myPageInformEmailPwChangeFragment"

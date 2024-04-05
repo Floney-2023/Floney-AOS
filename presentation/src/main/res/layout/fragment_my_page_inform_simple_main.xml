@@ -7,13 +7,13 @@
 
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.inform.email.login.version.setting.MyPageInformEmailSettingViewModel" />
+            type="com.aos.floney.view.mypage.inform.simple.login.version.main.MyPageInformSimpleMainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.mypage.inform.email.login.version.MyPageInformEmailActivity">
+        tools:context=".view.mypage.inform.simple.login.version.MyPageInformSimpleActivity">
 
         <ImageView
             android:id="@+id/iv_back_button"
@@ -73,8 +73,7 @@
                 android:theme="@style/login_edit_text"
                 android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
                 android:padding="16dp"
-                android:textAppearance="@style/login_edit_text"
-                android:text="@={vm.nickName}"/>
+                android:textAppearance="@style/login_edit_text" />
 
             <View
                 android:layout_width="8dp"
@@ -89,8 +88,7 @@
                 android:background="@drawable/onboard_area1"
                 android:text="@string/mypage_main_inform_change_button"
                 android:textAppearance="@style/start_button"
-                android:textSize="14sp"
-                android:onClick="@{() -> vm.onClickNicknameChange()}"/>
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,49 +122,18 @@
                 android:onClick="@{() -> vm.onClickProfileImgChange()}"
                 />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/pw_change"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_image_change">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mypage_main_inform_change_passwd"
-                android:textAppearance="@style/mypage_user_email" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/icon_chevron_right"
-                android:onClick="@{() -> vm.onClickPasswordChange()}"/>
-        </LinearLayout>
-
         <LinearLayout
             android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
+            android:onClick="@{() -> vm.onClickLogOut()}"
             android:orientation="horizontal"
             android:padding="16dp"
-            android:onClick="@{() -> vm.onClickLogOut()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pw_change">
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_change">
 
             <TextView
                 android:layout_width="wrap_content"

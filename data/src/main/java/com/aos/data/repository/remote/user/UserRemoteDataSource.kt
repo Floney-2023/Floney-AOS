@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.user
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
+import com.aos.data.entity.response.home.GetReceiveMarketingEntity
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
 import com.aos.util.NetworkState
@@ -47,4 +48,13 @@ interface UserRemoteDataSource {
     suspend fun getNicknameChange(
         nickname: String
     ): NetworkState<Void>
+
+    // 유저 마케팅 수신 동의 여부 변경
+    suspend fun putMarketingChange(
+        agree: Boolean
+    ): NetworkState<Void>
+
+    // 유저 마케팅 수신 동의 여부 확인
+    suspend fun getMarketingCheck(
+    ): NetworkState<GetReceiveMarketingEntity>
 }

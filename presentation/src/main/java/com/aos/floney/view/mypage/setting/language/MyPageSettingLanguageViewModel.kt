@@ -1,4 +1,4 @@
-package com.aos.floney.view.mypage.inform.email.login.version.setting
+package com.aos.floney.view.mypage.setting.language
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageInformEmailSettingViewModel @Inject constructor(
+class MyPageSettingLanguageViewModel @Inject constructor(
     private val nicknameChangeUseCase : NicknameChangeUseCase
 ): BaseViewModel() {
 
