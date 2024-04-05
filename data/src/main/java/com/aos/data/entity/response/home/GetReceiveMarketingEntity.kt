@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetReceiveMarketingEntity(
-    val agree: Boolean = false
+    val receiveMarketing: Boolean = false
 )

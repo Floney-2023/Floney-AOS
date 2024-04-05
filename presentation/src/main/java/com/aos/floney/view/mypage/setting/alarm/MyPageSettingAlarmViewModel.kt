@@ -15,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +30,7 @@ class MyPageSettingAlarmViewModel @Inject constructor(
     val back: EventFlow<Boolean> get() = _back
 
     // 마케팅 정보 수신
-    private var _marketingTerms = MutableLiveData<Boolean>(false)
+    private var _marketingTerms = MutableLiveData<Boolean>()
     val marketingTerms: LiveData<Boolean> get() = _marketingTerms
 
     init {

@@ -23,6 +23,6 @@ fun PostLoginEntity.toPostLoginModel(): PostLoginModel {
 
 fun GetReceiveMarketingEntity.toGetReceiveMarketing(): GetReceiveMarketingModel {
     return GetReceiveMarketingModel(
-        this.agree
+        this.receiveMarketing
     )
 }
