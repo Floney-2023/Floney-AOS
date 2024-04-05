@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.aos.floney.base.BaseListAdapter
 import com.aos.floney.base.BaseViewModel
+import timber.log.Timber
 
 @BindingAdapter(
     "items",
@@ -35,5 +36,7 @@ fun RecyclerView.bindSetAdapter(
 
     baseListAdapter.headerItem = headerItem
     baseListAdapter.headerLayoutResId = headerLayoutResId
+
     baseListAdapter.submitList(items?.toList())
+
 }

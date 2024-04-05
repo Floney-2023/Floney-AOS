@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 import com.aos.floney.BR
+import timber.log.Timber
 
 open class BaseViewHolder(
     @LayoutRes layoutResId: Int,
@@ -23,8 +24,8 @@ open class BaseViewHolder(
     private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
 
     fun onBind(item: Any?, eventHolder: Any?) {
-//        binding.setVariable(BR.item, item)
-//        binding.setVariable(BR.eventHolder, eventHolder)
+        binding.setVariable(BR.item, item)
+        binding.setVariable(BR.eventHolder, eventHolder)
         binding.executePendingBindings()
     }
 

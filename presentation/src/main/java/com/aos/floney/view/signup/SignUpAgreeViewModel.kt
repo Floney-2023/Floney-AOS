@@ -102,7 +102,6 @@ class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
 
     // 다음 페이지로 이동
     fun onClickNextPage() {
-        Timber.e("onClickNextPage")
         if(checkEssentialAgree()) {
             // 페이지 전환
             viewModelScope.launch {

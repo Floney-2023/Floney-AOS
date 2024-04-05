@@ -45,14 +45,15 @@ class AuthInterceptor @Inject constructor(
                 }
 
                 val responseBody = response.body?.string()
+                var token = PostUserReissueEntity("", "")
                 responseBody?.let {
-                    val token = json.decodeFromString<PostUserReissueEntity>(responseBody)
+                    token = json.decodeFromString<PostUserReissueEntity>(responseBody)
                     Timber.e("토큰 $token")
                     prefs.setString("accessToken", token.accessToken)
                     prefs.setString("refreshToken", token.refreshToken)
                 }
                 response.close()
-                return originRequest.newBuilder().addHeader("Authorization", "Bearer ${getAccessToken()}").build()
+                return originRequest.newBuilder().header("Authorization", "Bearer ${token.accessToken}").build()
             } else {
                 response.close()
                 prefs.setString("accessToken", "")
