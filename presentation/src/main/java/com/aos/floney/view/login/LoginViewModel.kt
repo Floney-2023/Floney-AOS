@@ -45,6 +45,7 @@ class LoginViewModel @Inject constructor(
                 if(password.value!!.isNotEmpty()) {
                     baseEvent(Event.ShowLoading)
                     loginUseCase(email.value ?: "", password.value ?: "").onSuccess {
+                        baseEvent(Event.HideLoading)
                         prefs.setString("accessToken", it.accessToken)
                         prefs.setString("refreshToken", it.refreshToken)
                         _nextPage.emit(true)

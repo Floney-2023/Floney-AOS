@@ -6,7 +6,6 @@ import org.json.JSONObject
 import timber.log.Timber
 
 fun String?.parseErrorMsg(): String {
-    Timber.e("it $this")
     return if(this == "") {
         ""
     } else if(this == "NetworkError") {

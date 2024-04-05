@@ -5,26 +5,28 @@ import timber.log.Timber
 
 
 data class UiBookMonthModel(
-    val data: List<ListData>,
+    val data: List<MonthMoney>,
     val extData: ExtData,
 ) {
     interface OnItemClickListener {
-        fun onItemClick(item: ListData)
+        fun onItemClick(item: MonthMoney)
     }
 
-    companion object : DiffUtil.ItemCallback<ListData>() {
-        override fun areItemsTheSame(oldItem: ListData, newItem: ListData): Boolean {
+    companion object : DiffUtil.ItemCallback<MonthMoney>() {
+        override fun areItemsTheSame(oldItem: MonthMoney, newItem: MonthMoney): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
 
-        override fun areContentsTheSame(oldItem: ListData, newItem: ListData): Boolean {
+        override fun areContentsTheSame(oldItem: MonthMoney, newItem: MonthMoney): Boolean {
             return oldItem == newItem
         }
     }
 }
 
-data class ListData(
-    val date: String = "",
+data class MonthMoney(
+    val year: String = "",
+    val month: String = "",
+    val day: String = "",
     val expenses: Expenses = Expenses(),
     val isToday: Boolean = false
 )

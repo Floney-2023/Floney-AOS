@@ -24,7 +24,6 @@ open class BaseViewHolder(
     private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
 
     fun onBind(item: Any?, eventHolder: Any?) {
-        Timber.e("onBind $item")
         binding.setVariable(BR.item, item)
         binding.setVariable(BR.eventHolder, eventHolder)
         binding.executePendingBindings()

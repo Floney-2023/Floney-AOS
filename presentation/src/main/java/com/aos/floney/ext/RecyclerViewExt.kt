@@ -27,7 +27,6 @@ fun RecyclerView.bindSetAdapter(
     headerItem: Any? = null,
     @LayoutRes headerLayoutResId: Int? = null,
 ) {
-    Timber.e("bindSetAdapter")
     val callback = diffCallback ?: return
     val baseListAdapter = this.adapter as? BaseListAdapter
         ?: BaseListAdapter(layoutResId, callback).also {

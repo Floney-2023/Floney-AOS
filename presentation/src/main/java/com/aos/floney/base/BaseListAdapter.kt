@@ -35,7 +35,6 @@ open class BaseListAdapter(
             isHeaderPosition(position) -> headerItem
             else -> getItem(position - headerSize)
         }
-        Timber.e("onBindViewHolder")
         holder.onBind(item, eventHolder)
     }
 

@@ -5,10 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
-            type="com.aos.model.home.ListData" />
+            type="com.aos.model.home.MonthMoney" />
 
         <variable
             name="eventHolder"
@@ -29,7 +28,7 @@
             android:layout_height="28dp"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
-            android:text="@{item.date}"
+            android:text="@{item.day}"
             android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +39,7 @@
             android:background="@drawable/custom_oval_solid_primary1"
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
-            android:text="@{item.date}"
+            android:text="@{item.day}"
             android:textColor="@color/white"
             android:textSize="12dp"
             android:visibility="@{item.today ? View.VISIBLE : View.GONE}"

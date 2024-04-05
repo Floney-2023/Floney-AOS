@@ -5,12 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="com.aos.model.home.UiBookMonthModel" />
 
         <variable
             name="vm"
-            type="com.aos.floney.view.home.HomeCalendarTypeViewModel" />
+            type="com.aos.floney.view.home.HomeMonthTypeViewModel" />
 
         <variable
             name="eventHolder"
@@ -29,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:context=".view.home.HomeCalendarTypeFragment">
+            tools:context=".view.home.HomeMonthTypeFragment">
 
             <LinearLayout
                 android:id="@+id/ll_week"
@@ -118,16 +117,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:minHeight="320dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="@id/ll_week"
                 app:layout_constraintStart_toStartOf="@id/ll_week"
                 app:layout_constraintTop_toBottomOf="@id/ll_week"
                 app:spanCount="7"
-                bind:viewModel="@{vm}"
                 bind:diffCallback="@{(Object)UiBookMonthModel.Companion}"
                 bind:eventHolder="@{eventHolder}"
                 bind:itemLayout="@{@layout/item_home_calendar}"
-                bind:items="@{vm.getCalendarList}" />
+                bind:items="@{vm.getCalendarList}"
+                bind:viewModel="@{vm}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

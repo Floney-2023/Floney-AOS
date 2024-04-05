@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="item"
+            type="com.aos.model.home.DayMoney" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.home.UiBookDayModel.OnItemClickListener" />
 
     </data>
 
@@ -14,6 +21,7 @@
             android:id="@+id/iv_profile"
             android:layout_width="34dp"
             android:layout_height="34dp"
+            setImageToUrl="@{item.writerProfileImg}"
             android:layout_marginStart="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="멜론"
+            android:text="@{item.description}"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
             android:id="@+id/tv_name"
@@ -36,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/pretendard_medium"
-            android:text="자산 분류"
+            android:text="@{item.lineSubCategory + ` ‧ ` +item.assetSubCategory}"
             android:textColor="@color/grayscale6"
             android:id="@+id/tv_category"
             android:textSize="12dp"
