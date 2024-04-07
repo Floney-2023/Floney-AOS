@@ -26,6 +26,7 @@ interface UserRepository {
     // 유저 마케팅 수신 동의 여부 조회
     suspend fun getMarketingCheck(): Result<GetReceiveMarketingModel>
     // 마이페이지 조회
-    // 유저 마케팅 수신 동의 여부 조회
     suspend fun getMypageSearch(): Result<UiMypageSearchModel>
+    // 로그아웃
+    suspend fun getLogout(accessToken: String): Result<Void?>
 }

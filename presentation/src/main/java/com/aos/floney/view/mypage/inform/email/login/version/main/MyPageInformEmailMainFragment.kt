@@ -32,8 +32,8 @@ class MyPageInformEmailMainFragment :
         repeatOnStarted {
             viewModel.pwChangePage.collect() {
                 if(it) {
-                    val action = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformEmailPwChangeFragment()
-                    findNavController().navigate(action)
+//                    val action = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformEmailPwChangeFragment()
+//                    findNavController().navigate(action)
                 }
             }
         }
@@ -42,6 +42,14 @@ class MyPageInformEmailMainFragment :
                 if(it) {
                     val action = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformProfileChangeFragment()
                     findNavController().navigate(action)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.logOutPage.collect() {
+                if(it) {
+                    val activity = requireActivity() as MyPageInformEmailActivity
+                    activity.startLoginActivity()
                 }
             }
         }

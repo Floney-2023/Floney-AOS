@@ -7,6 +7,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityMyPageInformEmailBinding
+import com.aos.floney.view.book.add.BookAddActivity
+import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.mypage.MyPageActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +30,10 @@ class MyPageInformEmailActivity :
     }
     fun startMyPageActivity(){
         startActivity(Intent(this, MyPageActivity::class.java))
+        finishAffinity()
+    }
+    fun startLoginActivity() {
+        startActivity(Intent(this, LoginActivity::class.java))
         finishAffinity()
     }
 }

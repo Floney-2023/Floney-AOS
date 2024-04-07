@@ -63,4 +63,8 @@ interface UserRemoteDataSource {
     suspend fun getMypageSearch(
     ): NetworkState<GetMypageSearchEntity>
 
+    // 로그아웃
+    suspend fun getLogout(
+        accessToken: String
+    ): NetworkState<Void>
 }

@@ -2,11 +2,13 @@ package com.aos.floney.view.mypage.inform.email.login.version.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.usecase.logout.LogoutUseCase
 import com.aos.usecase.mypage.NicknameChangeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageInformEmailMainViewModel @Inject constructor(
-    private val nicknameChangeUseCase : NicknameChangeUseCase
+    private val prefs: SharedPreferenceUtil,
+    private val nicknameChangeUseCase : NicknameChangeUseCase,
+    private val logoutUseCase : LogoutUseCase
 ): BaseViewModel() {
 
     // 뒤로가기
@@ -89,7 +93,15 @@ class MyPageInformEmailMainViewModel @Inject constructor(
     fun onClickLogOut()
     {
         viewModelScope.launch {
-            _logOutPage.emit(true)
+            if(prefs.getString("accessToken","").isNotEmpty()) {
+                baseEvent(Event.ShowLoading)
+                logoutUseCase(prefs.getString("accessToken","")).onSuccess {
+                    _logOutPage.emit(true)
+                }.onFailure {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                }
+            }
         }
     }
     // 회원탈퇴

@@ -83,4 +83,11 @@ interface UserService {
     @GET("users/mypage")
     @Headers("Auth: true")
     suspend fun getMypageSearch(): NetworkState<GetMypageSearchEntity>
+
+    // 로그아웃
+    @GET("users/logout")
+    @Headers("Auth: false")
+    suspend fun getLogout(
+        @Query("accessToken") accessToken: String
+    ): NetworkState<Void>
 }

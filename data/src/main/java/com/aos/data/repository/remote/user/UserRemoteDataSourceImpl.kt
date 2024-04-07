@@ -65,4 +65,9 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
     override suspend fun getMypageSearch(): NetworkState<GetMypageSearchEntity> {
         return userService.getMypageSearch()
     }
+
+    override suspend fun getLogout(accessToken: String): NetworkState<Void> {
+        return userService.getLogout(accessToken)
+    }
+
 }
