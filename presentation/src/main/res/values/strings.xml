@@ -108,29 +108,33 @@
 
     <!--myPageActivity(회원정보 1-5, 회원탈퇴1단계)-->
     <string name="mypage_main_inform_exit_title">회원탈퇴 전\n이유를 선택해주세요 😥</string>
-    <string name="mypage_main_inform_exit_text1">잠깐! 탈퇴 시 가계부 기록이\n모두 삭제 됩니다.</string>
-    <string name="mypage_main_inform_exit_text2">플로니를 어떻게 사용하는지 모르겠어요</string>
-    <string name="mypage_main_inform_exit_text3">구독료가 비싸요</string>
-    <string name="mypage_main_inform_exit_text4">자주 사용하지 않게 돼요</string>
-    <string name="mypage_main_inform_exit_text5">다시 가입할 거예요</string>
-    <string name="mypage_main_inform_exit_text6">직접 입력하기</string>
-    <string name="mypage_main_inform_exit_text7">이유를 작성해 주세요 (100자 이내)</string>
+    <string name="mypage_main_inform_exit_info">잠깐! 탈퇴 시 가계부 기록이\n모두 삭제 됩니다.</string>
+    <string name="mypage_main_inform_exit_no_how_to_use">플로니를 어떻게 사용하는지 모르겠어요</string>
+    <string name="mypage_main_inform_exit_expensive">구독료가 비싸요</string>
+    <string name="mypage_main_inform_exit_no_already_use">자주 사용하지 않게 돼요</string>
+    <string name="mypage_main_inform_exit_re_login">다시 가입할 거예요</string>
+    <string name="mypage_main_inform_exit_direct_input">직접 입력하기</string>
+    <string name="mypage_main_inform_exit_direct_input_hint">이유를 작성해 주세요 (100자 이내)</string>
+    <string name="mypage_main_inform_exit_button">탈퇴하기</string>
+    <string name="mypage_main_inform_exit_blank_toast">탈퇴 이유를 작성해주세요.</string>
+    <string name="mypage_main_inform_exit_check_toast">탈퇴 이유를 선택해주세요.</string>
 
     <!--myPageActivity(회원정보 1-6, 회원탈퇴2단계)-->
-    <string name="mypage_main_inform_exit_2_title">마지막으로 비밀번호를\n입력해 주세요.</string>
-    <string name="mypage_main_inform_exit_2_text1">비밀번호</string>
-    <string name="mypage_main_inform_exit_2_text2">탈퇴하기</string>
+    <string name="mypage_main_inform_exit_input_password_title">마지막으로 비밀번호를\n입력해 주세요.</string>
+    <string name="mypage_main_inform_exit_input_password_hint">비밀번호</string>
+    <string name="mypage_main_inform_exit_input_password_button">탈퇴하기</string>
+    <string name="mypage_main_inform_exit_input_password_toast">비밀번호를 입력해 주세요.</string>
 
     <!--myPageActivity(회원정보 1-6, pop up 회원탈퇴)-->
     <string name="mypage_main_inform_exit_popup_title">탈퇴 전에 꼭 확인해 주세요</string>
-    <string name="mypage_main_inform_exit_popup_text1">-가계부 방장일 경우 팀원에게\n방장이 자동으로 위임되며 가계부를 나가게 됩니다.\n\n-가계부 팀원일 경우 즉시 가계부를 나가게 됩니다.\n\n-모든 사용자는 회원탈퇴 시 모든 가계부 및\n데이터, 개인정보가 즉시 파기됩니다.
+    <string name="mypage_main_inform_exit_popup_info">-가계부 방장일 경우 팀원에게\n방장이 자동으로 위임되며 가계부를 나가게 됩니다.\n\n-가계부 팀원일 경우 즉시 가계부를 나가게 됩니다.\n\n-모든 사용자는 회원탈퇴 시 모든 가계부 및\n데이터, 개인정보가 즉시 파기됩니다.
 \n\n그래도 탈퇴하시겠습니까?</string>
     <string name="mypage_main_inform_exit_popup_btn_exit">탈퇴하기</string>
     <string name="mypage_main_inform_exit_popup_btn_cancel">취소하기</string>
 
     <!--myPageActivity(회원정보 1-7, 탈퇴완료)-->
     <string name="mypage_main_inform_exit_complete_title">회원 탈퇴가\n무사히 완료되었어요</string>
-    <string name="mypage_main_inform_exit_complete_text1">이용해 주셔서 감사합니다.\n언제든 다시 돌아오세요!</string>
+    <string name="mypage_main_inform_exit_complete_info">이용해 주셔서 감사합니다.\n언제든 다시 돌아오세요!</string>
     <string name="mypage_main_inform_exit_complete_btn_close">닫기</string>
 
     <!--이미지 선택-->

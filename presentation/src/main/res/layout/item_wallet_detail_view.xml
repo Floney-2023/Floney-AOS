@@ -51,7 +51,7 @@
                 android:id="@+id/member_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(item.memberCount) + '명'}"
+                android:text="@{String.valueOf(item.memberCount)}"
                 android:textAppearance="@style/mypage_wallet_count" />
         </LinearLayout>
 

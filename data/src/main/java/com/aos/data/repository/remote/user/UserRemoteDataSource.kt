@@ -1,12 +1,15 @@
 package com.aos.data.repository.remote.user
 
+import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
+import com.aos.data.entity.response.user.DeleteWithdrawEntity
 import com.aos.data.entity.response.user.GetMypageSearchEntity
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
+import com.aos.model.user.DeleteWithdrawModel
 import com.aos.util.NetworkState
 
 interface UserRemoteDataSource {
@@ -67,4 +70,10 @@ interface UserRemoteDataSource {
     suspend fun getLogout(
         accessToken: String
     ): NetworkState<Void>
+
+    // 회원탈퇴
+    suspend fun deleteWithdraw(
+        accessToken: String,
+        deleteWithdrawBody: DeleteWithdrawBody
+    ): NetworkState<DeleteWithdrawEntity>
 }

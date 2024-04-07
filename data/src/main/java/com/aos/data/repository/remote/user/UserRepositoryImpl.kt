@@ -1,12 +1,15 @@
 package com.aos.data.repository.remote.user
 
+import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
+import com.aos.data.mapper.toDeleteWithdrawModel
 import com.aos.data.mapper.toGetReceiveMarketing
 import com.aos.data.mapper.toPostLoginModel
 import com.aos.data.mapper.toPostSignUpUserModel
 import com.aos.data.mapper.toUiMypageSearchModel
 import com.aos.data.util.RetrofitFailureStateException
+import com.aos.model.user.DeleteWithdrawModel
 import com.aos.model.user.GetReceiveMarketingModel
 import com.aos.model.user.PostLoginModel
 import com.aos.model.user.PostSignUpUserModel
@@ -226,6 +229,17 @@ class UserRepositoryImpl @Inject constructor(private val userRemoteDataSource: U
                     Result.failure(IllegalStateException("unKnownError"))
                 }
             }
+        }
+    }
+    override suspend fun deleteWithdraw(accessToken: String, type: String, reason: String?): Result<DeleteWithdrawModel> {
+        when (val data =
+            userRemoteDataSource.deleteWithdraw(accessToken, DeleteWithdrawBody(type,reason))) {
+            is NetworkState.Success -> return Result.success(data.body.toDeleteWithdrawModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
         }
     }
 }

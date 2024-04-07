@@ -15,8 +15,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import com.aos.data.util.SharedPreferenceUtil
+import com.aos.model.user.MyBooks
+import timber.log.Timber
+
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
+    private val prefs: SharedPreferenceUtil,
     private val mypageSearchUseCase : MypageSearchUseCase
 ): BaseViewModel() {
 
@@ -24,9 +29,10 @@ class MyPageViewModel @Inject constructor(
     private var _mypageInfo = MutableLiveData<UiMypageSearchModel>()
     val mypageInfo: LiveData<UiMypageSearchModel> get() = _mypageInfo
 
-    // 회원 이메일
-    private var _email = MutableLiveData<String>()
-    val email: LiveData<String> get() = _email
+    // 가계부 리스트
+    private var _mypageList = MutableLiveData<List<MyBooks>>()
+    val mypageList: LiveData<List<MyBooks>> get() = _mypageList
+
 
     // 회원 정보 페이지
     private var _informPage = MutableEventFlow<Boolean>()
@@ -37,6 +43,8 @@ class MyPageViewModel @Inject constructor(
     val settingPage: EventFlow<Boolean> get() = _settingPage
 
     init{
+
+       //prefs.getString("bookKey","")
         searchMypageItems()
     }
     // 마이페이지 정보 읽어오기
@@ -45,9 +53,9 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
             mypageSearchUseCase().onSuccess {
-
                 _mypageInfo.postValue(it)
-
+                _mypageList.postValue(it.myBooks)
+                Timber.e("tiem ${it.myBooks}")
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)

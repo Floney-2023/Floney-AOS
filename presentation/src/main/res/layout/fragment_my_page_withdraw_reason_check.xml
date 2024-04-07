@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.inform.withdraw.MyPageInformWithdrawReasonCheckViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.signup.SignUpAgreeFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="22dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_withdraw_reason_check_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/mypage_main_inform_exit_title"
+            android:textColor="@color/grayscale1"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@+id/iv_icon_back"
+            app:layout_constraintTop_toBottomOf="@+id/iv_icon_back" />
+
+        <TextView
+            android:id="@+id/mypage_main_inform_exit_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/mypage_main_inform_exit_info"
+            android:textColor="@color/grayscale6"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_withdraw_reason_check_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_withdraw_reason_check_title" />
+
+        <ImageView
+            android:id="@+id/iv_how_to_use_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:onClick="@{() -> vm.onClickHowToUseTerms()}"
+            android:src="@{vm.howToUseTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_main_inform_exit_no_how_to_use"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_mypage_main_inform_exit_no_how_to_use" />
+
+        <TextView
+            android:id="@+id/tv_mypage_main_inform_exit_no_how_to_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{() -> vm.onClickHowToUseTerms()}"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="@string/mypage_main_inform_exit_no_how_to_use"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@+id/mypage_main_inform_exit_info"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_main_inform_exit_info" />
+
+        <TextView
+            android:id="@+id/tv_mypage_main_inform_exit_expensive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{() -> vm.onClickExpensiveTerms()}"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="@string/mypage_main_inform_exit_expensive"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@+id/mypage_main_inform_exit_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypage_main_inform_exit_no_how_to_use" />
+
+        <ImageView
+            android:id="@+id/iv_expensive_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:onClick="@{() -> vm.onClickExpensiveTerms()}"
+            android:src="@{vm.expensiveTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_main_inform_exit_expensive"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_mypage_main_inform_exit_expensive" />
+
+        <TextView
+            android:id="@+id/tv_mypage_main_inform_exit_no_already_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{() -> vm.onClickNoAlreadyTerms()}"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="@string/mypage_main_inform_exit_no_already_use"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@+id/mypage_main_inform_exit_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypage_main_inform_exit_expensive" />
+        <ImageView
+            android:id="@+id/iv_no_already_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:onClick="@{() -> vm.onClickNoAlreadyTerms()}"
+            android:src="@{vm.noAlreadyTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_main_inform_exit_no_already_use"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_mypage_main_inform_exit_no_already_use" />
+
+        <TextView
+            android:id="@+id/tv_mypage_main_inform_exit_re_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{() -> vm.onClickReLoginTerms()}"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="@string/mypage_main_inform_exit_re_login"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@+id/mypage_main_inform_exit_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypage_main_inform_exit_no_already_use" />
+        <ImageView
+            android:id="@+id/iv_re_login_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:onClick="@{() -> vm.onClickReLoginTerms()}"
+            android:src="@{vm.reLoginTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_main_inform_exit_re_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_mypage_main_inform_exit_re_login" />
+
+        <TextView
+            android:id="@+id/tv_mypage_main_inform_exit_direct_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:onClick="@{() -> vm.onClickDirectInputTerms()}"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="@string/mypage_main_inform_exit_direct_input"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@+id/mypage_main_inform_exit_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypage_main_inform_exit_re_login" />
+        <ImageView
+            android:id="@+id/iv_exit_direct_terms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:onClick="@{() -> vm.onClickDirectInputTerms()}"
+            android:src="@{vm.directInputTerms ? @drawable/icon_check_box : @drawable/icon_check_box_outline_blank}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_main_inform_exit_direct_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_mypage_main_inform_exit_direct_input" />
+
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+            android:gravity="start|top"
+            android:hint="@string/mypage_main_inform_exit_direct_input_hint"
+            android:padding="16dp"
+            android:text="@{vm.directInputText}"
+            android:textAppearance="@style/login_edit_text"
+            app:layout_constraintEnd_toEndOf="@+id/iv_exit_direct_terms"
+            app:layout_constraintStart_toStartOf="@+id/tv_mypage_main_inform_exit_direct_input"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypage_main_inform_exit_direct_input"
+            app:visibility="@{vm.directInputTerms ? View.VISIBLE : View.GONE}" />
+
+         <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickExitButton()}"
+            android:text="@string/mypage_main_inform_exit_button"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_exit_direct_terms"
+            app:layout_constraintStart_toStartOf="@+id/tv_mypage_main_inform_exit_direct_input" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

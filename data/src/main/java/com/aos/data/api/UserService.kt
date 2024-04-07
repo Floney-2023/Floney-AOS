@@ -1,16 +1,21 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
+import com.aos.data.entity.response.user.DeleteWithdrawEntity
 import com.aos.data.entity.response.user.GetMypageSearchEntity
 import com.aos.data.entity.response.user.PostLoginEntity
 import com.aos.data.entity.response.user.PostSignUpUserEntity
+import com.aos.model.user.DeleteWithdrawModel
 import com.aos.util.NetworkState
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -90,4 +95,13 @@ interface UserService {
     suspend fun getLogout(
         @Query("accessToken") accessToken: String
     ): NetworkState<Void>
+
+    // 회원탈퇴
+
+    @HTTP(method = "DELETE", path="users", hasBody = true)
+    @Headers("Auth: false")
+    suspend fun deleteWithdraw(
+        @Query("accessToken") accessToken: String,
+        @Body deleteWithdrawBody: DeleteWithdrawBody
+    ): NetworkState<DeleteWithdrawEntity>
 }

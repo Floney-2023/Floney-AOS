@@ -8,6 +8,7 @@ import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentMyPageInformEmailMainBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.mypage.inform.email.login.version.MyPageInformEmailActivity
+import com.aos.floney.view.mypage.inform.withdraw.MyPageInformWithdrawInputPasswordFragmentDirections
 import com.aos.floney.view.mypage.setting.main.MyPageSettingMainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,8 +33,8 @@ class MyPageInformEmailMainFragment :
         repeatOnStarted {
             viewModel.pwChangePage.collect() {
                 if(it) {
-//                    val action = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformEmailPwChangeFragment()
-//                    findNavController().navigate(action)
+                    val action = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformEmailPwChangeFragment()
+                    findNavController().navigate(action)
                 }
             }
         }
@@ -50,6 +51,15 @@ class MyPageInformEmailMainFragment :
                 if(it) {
                     val activity = requireActivity() as MyPageInformEmailActivity
                     activity.startLoginActivity()
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.withDrawalPage.collect() {
+                if(it) {
+                    val action =
+                        MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformWithdrawReasonCheckFragment2()
+                    findNavController().navigate(action)
                 }
             }
         }

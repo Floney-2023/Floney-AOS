@@ -9,16 +9,28 @@ import com.aos.floney.databinding.ActivityMyPageBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.mypage.inform.email.login.version.MyPageInformEmailActivity
 import com.aos.floney.view.mypage.setting.MyPageSettingActivity
+import com.aos.model.user.MyBooks
+import com.aos.model.user.UiMypageSearchModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
+import androidx.databinding.library.baseAdapters.BR
 @AndroidEntryPoint
-class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page) {
+class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
     private lateinit var navController: NavController
+
+    override fun onItemClick(item: MyBooks) {
+        Timber.e("item $item")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setUpUi()
         setUpViewModelObserver()
+    }
+    private fun setUpUi() {
+        binding.setVariable(BR.eventHolder, this@MyPageActivity)
     }
 
     private fun setUpViewModelObserver() {

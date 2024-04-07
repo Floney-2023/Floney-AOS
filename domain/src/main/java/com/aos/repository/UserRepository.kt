@@ -1,5 +1,6 @@
 package com.aos.repository
 
+import com.aos.model.user.DeleteWithdrawModel
 import com.aos.model.user.GetReceiveMarketingModel
 import com.aos.model.user.PostLoginModel
 import com.aos.model.user.PostSignUpUserModel
@@ -29,4 +30,6 @@ interface UserRepository {
     suspend fun getMypageSearch(): Result<UiMypageSearchModel>
     // 로그아웃
     suspend fun getLogout(accessToken: String): Result<Void?>
+    // 회원탈퇴
+    suspend fun deleteWithdraw(accessToken: String, type:String, reason:String?): Result<DeleteWithdrawModel>
 }
