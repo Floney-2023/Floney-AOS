@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 import com.aos.floney.BR
+import timber.log.Timber
 
 open class BaseViewHolder(
     @LayoutRes layoutResId: Int,

@@ -30,7 +30,6 @@ class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgree
         repeatOnStarted {
             // 다음 페이지 이동
             viewModel.nextPage.collect {
-                Timber.e("nextPage $it")
                 if(it) {
                     val action =
                         SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)

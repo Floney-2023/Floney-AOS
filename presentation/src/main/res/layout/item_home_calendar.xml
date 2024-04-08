@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.home.MonthMoney" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.home.UiBookMonthModel.OnItemClickListener" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="54dp"
+        android:layout_height="66dp"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="@{item.day}"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/custom_oval_solid_primary1"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:text="@{item.day}"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:visibility="@{item.today ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@id/tv_date"
+            app:layout_constraintStart_toStartOf="@id/tv_date"
+            app:layout_constraintTop_toTopOf="@id/tv_date" />
+
+        <TextView
+            android:id="@+id/tv_cost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{item.expenses.outcome}"
+            android:textColor="@color/red"
+            android:textSize="9sp"
+            android:visibility="@{item.expenses.outcome.equals(`-0`) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/tv_date" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@{item.expenses.income}"
+            android:textColor="@color/blue1"
+            android:textSize="9sp"
+            android:visibility="@{item.expenses.income.equals(`+0`) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintTop_toBottomOf="@id/tv_cost" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

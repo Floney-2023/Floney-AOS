@@ -138,7 +138,6 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
                 animator1.cancel()
                 animator2.cancel()
                 animator3.cancel()
-                dismissLoadingDialog()
             }
         })
 
@@ -150,8 +149,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         loadingDialog.show()
     }
 
-    fun dismissLoadingDialog(){
-        Timber.e("dismissLoadingDialog")
+    private fun dismissLoadingDialog(){
         loadingDialog.dismiss()
     }
 }
