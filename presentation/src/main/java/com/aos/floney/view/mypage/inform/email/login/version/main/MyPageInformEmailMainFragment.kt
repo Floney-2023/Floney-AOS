@@ -33,16 +33,16 @@ class MyPageInformEmailMainFragment :
         repeatOnStarted {
             viewModel.pwChangePage.collect() {
                 if(it) {
-                    val action = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformEmailPwChangeFragment()
-                    findNavController().navigate(action)
+                    val pwchangeAction = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformEmailPwChangeFragment()
+                    findNavController().navigate(pwchangeAction)
                 }
             }
         }
         repeatOnStarted {
             viewModel.profileChangePage.collect() {
                 if(it) {
-                    val action = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformProfileChangeFragment()
-                    findNavController().navigate(action)
+                    val profileChangeAction = MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformProfileChangeFragment()
+                    findNavController().navigate(profileChangeAction)
                 }
             }
         }
@@ -57,9 +57,9 @@ class MyPageInformEmailMainFragment :
         repeatOnStarted {
             viewModel.withDrawalPage.collect() {
                 if(it) {
-                    val action =
-                        MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformWithdrawReasonCheckFragment2()
-                    findNavController().navigate(action)
+                    val withdrawAction =
+                        MyPageInformEmailMainFragmentDirections.actionMyPageInformEmailSettingFragmentToMyPageInformWithdrawReasonCheckFragment()
+                    findNavController().navigate(withdrawAction)
                 }
             }
         }

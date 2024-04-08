@@ -32,4 +32,6 @@ interface UserRepository {
     suspend fun getLogout(accessToken: String): Result<Void?>
     // 회원탈퇴
     suspend fun deleteWithdraw(accessToken: String, type:String, reason:String?): Result<DeleteWithdrawModel>
+    // 유저 비밀번호 검사
+    suspend fun postCheckPassword(password: String): Result<Void?>
 }

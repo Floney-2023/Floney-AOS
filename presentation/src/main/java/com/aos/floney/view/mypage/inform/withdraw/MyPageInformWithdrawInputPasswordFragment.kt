@@ -31,7 +31,18 @@ class MyPageInformWithdrawInputPasswordFragment :
             }
         }
         repeatOnStarted {
-            viewModel.nextPage.collect() {
+            viewModel.dialogPage.collect() {
+                if(it) {
+                    val exitDialogFragment = MyPageInformWithdrawDialogFragment { checked ->
+                        if (checked)
+                            viewModel.requestWithdraw()
+                    }
+                    exitDialogFragment.show(parentFragmentManager, "WithdrawDialog")
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.withdrawPage.collect() {
                 if(it) {
                     val action =
                         MyPageInformWithdrawInputPasswordFragmentDirections.actionMyPageInformWithdrawInputPasswordFragmentToMyPageInformWithdrawCompleteFragment()

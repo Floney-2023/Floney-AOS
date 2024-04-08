@@ -151,11 +151,11 @@ class MyPageInformWithdrawReasonCheckViewModel @Inject constructor() : BaseViewM
     fun onClickExitButton() {
         val checkedTermType = getCheckedTermType()
         if (checkedTermType != null) {
-            if (checkedTermType.equals("OTHER") && directInputText.value == "") {
+            if (checkedTermType.equals("OTHER") && directInputText.value!! == "") {
                 // 직접 입력 텍스트가 비어 있는 경우 Toast를 표시합니다.
                 baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_exit_blank_toast))
             } else {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     _nextPage.emit(checkedTermType)
                 }
             }

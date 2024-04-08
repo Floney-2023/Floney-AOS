@@ -24,7 +24,7 @@ class MyPageInformEmailActivity :
     }
 
     private fun setupJetpackNavigation() {
-        val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_mypage_email_container) as NavHostFragment
         navController = host.navController
 
     }

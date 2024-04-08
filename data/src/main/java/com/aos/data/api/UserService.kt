@@ -2,6 +2,7 @@ package com.aos.data.api
 
 import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
+import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
@@ -97,11 +98,17 @@ interface UserService {
     ): NetworkState<Void>
 
     // 회원탈퇴
-
     @HTTP(method = "DELETE", path="users", hasBody = true)
     @Headers("Auth: false")
     suspend fun deleteWithdraw(
         @Query("accessToken") accessToken: String,
         @Body deleteWithdrawBody: DeleteWithdrawBody
     ): NetworkState<DeleteWithdrawEntity>
+
+    // 유저 비밀번호 검사
+    @POST("users/password")
+    @Headers("Auth: true")
+    suspend fun postCheckPassword(
+        @Body postCheckPasswordBody: PostCheckPasswordBody
+    ): NetworkState<Void>
 }

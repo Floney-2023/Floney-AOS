@@ -10,6 +10,7 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.usecase.withdraw.CheckUserPasswordUseCase
 import com.aos.usecase.withdraw.WithdrawUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
-    private val withdrawUseCase: WithdrawUseCase
+    private val withdrawUseCase: WithdrawUseCase,
+    private val checkUserPasswordUseCase: CheckUserPasswordUseCase
 ): BaseViewModel() {
 
 
@@ -33,9 +35,13 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
     val back: EventFlow<Boolean> get() = _back
 
 
-    // 탈퇴하기
-    private var _nextPage = MutableEventFlow<Boolean>()
-    val nextPage: EventFlow<Boolean> get() = _nextPage
+    // 탈퇴 팝업
+    private var _dialogPage = MutableEventFlow<Boolean>()
+    val dialogPage: EventFlow<Boolean> get() = _dialogPage
+
+    // 탈퇴 완료
+    private var _withdrawPage = MutableEventFlow<Boolean>()
+    val withdrawPage: EventFlow<Boolean> get() = _withdrawPage
 
 
     // 비밀번호
@@ -56,9 +62,9 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
             // 비밀번호 넘기기
             viewModelScope.launch(Dispatchers.IO) {
                 baseEvent(Event.ShowLoading)
-                withdrawUseCase(prefs.getString("accessToken",""), type.value!!, reason.value).onSuccess {
+                checkUserPasswordUseCase(password.value!!).onSuccess {
                     baseEvent(Event.HideLoading)
-                    _nextPage.emit(true)
+                    _dialogPage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -69,6 +75,20 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
             baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_exit_input_password_toast))
         }
 
+    }
+    // 탈퇴 요청
+    fun requestWithdraw()
+    {
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            withdrawUseCase(prefs.getString("accessToken",""), type.value!!, reason.value).onSuccess {
+                baseEvent(Event.HideLoading)
+                _withdrawPage.emit(true)
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
     }
 
 }

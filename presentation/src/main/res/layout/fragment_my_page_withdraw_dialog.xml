@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.inform.withdraw.MyPageInformWithdrawDialogViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_radius_12_solid_white"
+        android:padding="28dp"
+        tools:context=".view.mypage.inform.withdraw.MyPageInformWithdrawDialogFragment">
+
+        <ImageView
+            android:id="@+id/iv_withdraw_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/item_error_dialog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_withdraw_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:text="@string/mypage_main_inform_exit_popup_title"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_withdraw_dialog" />
+
+        <TextView
+            android:id="@+id/tv_withdraw_dialog_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/floney_pretendard_regular"
+            android:gravity="center"
+            android:paddingBottom="14dp"
+            android:text="@string/mypage_main_inform_exit_popup_info"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_withdraw_dialog_title" />
+
+        <LinearLayout
+            android:id="@+id/li_withdraw_dialog_button_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:padding="1dp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_withdraw_dialog_info"
+            app:layout_constraintStart_toStartOf="@+id/tv_withdraw_dialog_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_withdraw_dialog_info">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_exit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+                android:elevation="0dp"
+                android:fontFamily="@font/floney_pretendard_bold"
+                android:stateListAnimator="@null"
+                android:text="@string/mypage_main_inform_exit_popup_btn_exit"
+                android:textAllCaps="false"
+                android:textAppearance="@style/mypage_wallet_count"
+                android:textSize="13sp"
+                android:onClick="@{() -> vm.onClickWithdrawButton()}"/>
+
+            <View
+                android:layout_width="12dp"
+                android:layout_height="match_parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/onboard_area1"
+                android:fontFamily="@font/floney_pretendard_bold"
+                android:stateListAnimator="@null"
+                android:text="@string/mypage_main_inform_exit_popup_btn_cancel"
+                android:textAllCaps="false"
+                android:textAppearance="@style/start_button"
+                android:textSize="13sp"
+                android:onClick="@{() -> vm.onClickCancelButton()}" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.user
 import com.aos.data.api.UserService
 import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
+import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
@@ -75,5 +76,7 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
     override suspend fun deleteWithdraw(accessToken: String, deleteWithdrawBody: DeleteWithdrawBody): NetworkState<DeleteWithdrawEntity> {
         return userService.deleteWithdraw(accessToken,deleteWithdrawBody)
     }
-
+    override suspend fun postCheckPassword(postCheckPasswordBody: PostCheckPasswordBody): NetworkState<Void> {
+        return userService.postCheckPassword(postCheckPasswordBody)
+    }
 }

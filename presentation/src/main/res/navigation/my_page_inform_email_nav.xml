@@ -21,24 +21,21 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/myPageInformEmailSettingFragment" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformEmailPwChangeFragment"
             app:destination="@id/myPageInformEmailPwChangeFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/myPageInformEmailSettingFragment" />
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformWithdrawReasonCheckFragment2"
+            android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformWithdrawReasonCheckFragment"
             app:destination="@id/myPageInformWithdrawReasonCheckFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/myPageInformEmailSettingFragment"/>
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/myPageInformEmailPwChangeFragment"
@@ -61,8 +58,7 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/myPageInformWithdrawReasonCheckFragment">
+            app:popExitAnim="@anim/nav_default_pop_exit_anim">
 
             <argument
                 android:name="type"
@@ -85,8 +81,7 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@id/myPageInformWithdrawInputPasswordFragment"/>
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/myPageInformWithdrawCompleteFragment"

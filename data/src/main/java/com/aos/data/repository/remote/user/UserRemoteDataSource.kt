@@ -2,6 +2,7 @@ package com.aos.data.repository.remote.user
 
 import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
+import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
@@ -76,4 +77,9 @@ interface UserRemoteDataSource {
         accessToken: String,
         deleteWithdrawBody: DeleteWithdrawBody
     ): NetworkState<DeleteWithdrawEntity>
+
+    // 유저 비밀번호 검사
+    suspend fun postCheckPassword(
+        postCheckPasswordBody: PostCheckPasswordBody
+    ): NetworkState<Void>
 }
