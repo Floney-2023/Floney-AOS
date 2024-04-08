@@ -26,9 +26,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
     private fun setUpViewModelObserver() {
         repeatOnStarted {
-            viewModel.nextPage.collect {
+            viewModel.existBook.collect {
                 if(it) {
                     startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    finish()
+                } else {
+                    startActivity(Intent(this@LoginActivity, BookAddActivity::class.java))
                     finish()
                 }
             }

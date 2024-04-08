@@ -9,6 +9,7 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.login.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val checkUserBookUseCase: CheckUserBookUseCase
 ): BaseViewModel() {
 
     var email = MutableLiveData<String>()
@@ -31,8 +33,9 @@ class LoginViewModel @Inject constructor(
     private var _clickSignUp = MutableEventFlow<Boolean>()
     val clickSignUp: EventFlow<Boolean> get() = _clickSignUp
 
-    private var _nextPage = MutableEventFlow<Boolean>()
-    val nextPage: EventFlow<Boolean> get() = _nextPage
+    // 가계부 존재 여부
+    private var _existBook = MutableEventFlow<Boolean>()
+    val existBook: EventFlow<Boolean> get() = _existBook
 
     // 회원가입 클릭
     private var _clickPasswordFind = MutableEventFlow<Boolean>()
@@ -48,7 +51,8 @@ class LoginViewModel @Inject constructor(
                         baseEvent(Event.HideLoading)
                         prefs.setString("accessToken", it.accessToken)
                         prefs.setString("refreshToken", it.refreshToken)
-                        _nextPage.emit(true)
+
+                        checkUserBooks()
                     }.onFailure {
                         baseEvent(Event.HideLoading)
                         baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -60,6 +64,22 @@ class LoginViewModel @Inject constructor(
             } else {
                 // 이메일이 비어있음
                 baseEvent(Event.ShowToastRes(R.string.sign_up_request_email_hint))
+            }
+        }
+    }
+
+    // 유저 가계부 유효 확인
+    private fun checkUserBooks() {
+        viewModelScope.launch {
+            checkUserBookUseCase().onSuccess {
+                if(it.bookKey != "") {
+                    prefs.setString("bookKey", it.bookKey)
+                    _existBook.emit(true)
+                } else {
+                    _existBook.emit(false)
+                }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }
     }

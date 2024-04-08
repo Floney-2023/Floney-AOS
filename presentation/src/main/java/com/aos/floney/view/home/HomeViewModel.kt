@@ -27,7 +27,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val checkUserBookUseCase: CheckUserBookUseCase,
     private val getMoneyHistoryDaysUseCase: GetMoneyHistoryDaysUseCase,
     private val getBookInfoUseCase: GetBookInfoUseCase,
 ) : BaseViewModel() {
@@ -54,10 +53,6 @@ class HomeViewModel @Inject constructor(
     private var _clickedShowType = MutableLiveData<String>("month")
     val clickedShowType: LiveData<String> get() = _clickedShowType
 
-    // 가계부 조회 후 프레그먼트 표시
-    private var _showCalendarFragment = MutableEventFlow<String>()
-    val showCalendarFragment: EventFlow<String> get() = _showCalendarFragment
-
     private var _getMoneyDayData = MutableEventFlow<UiBookDayModel>()
     val getMoneyDayData: EventFlow<UiBookDayModel> get() = _getMoneyDayData
 
@@ -67,44 +62,19 @@ class HomeViewModel @Inject constructor(
     private var _onClickedShowDetail = MutableLiveData<MonthMoney?>(null)
     val onClickedShowDetail: LiveData<MonthMoney?> get() = _onClickedShowDetail
 
-    private var isFirst = true
-
     init {
-        checkUserBooks()
+        getBookInfo(prefs.getString("bookKey", ""))
         getFormatDateMonth()
     }
 
     fun initCalendarMonth() {
 //        _calendar.value = Calendar.getInstance()
         _showDate.value = getFormatDateMonth()
-
-        viewModelScope.launch {
-            if (!isFirst) {
-                _showCalendarFragment.emit(getFormatDateMonth())
-            }
-        }
     }
 
     fun initCalendarDay() {
 //        _calendar.value = Calendar.getInstance()
         _showDate.value = getFormatDateDay()
-    }
-
-    // 유저 가계부 유효 확인
-    private fun checkUserBooks() {
-        viewModelScope.launch {
-            checkUserBookUseCase().onSuccess {
-                prefs.setString("bookKey", it.bookKey)
-                isFirst = false
-
-                // 캘린더 조회
-                _showCalendarFragment.emit(getFormatDateMonth())
-                // 가계부 정보 조회
-                getBookInfo(it.bookKey)
-            }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
-            }
-        }
     }
 
     // 가계부 정보 가져오기
@@ -209,7 +179,7 @@ class HomeViewModel @Inject constructor(
     }
 
     // 날짜 포멧 결과 가져오기
-    private fun getFormatDateMonth(): String {
+    fun getFormatDateMonth(): String {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(_calendar.value.time)
         val showDate = date.substring(0, 7).replace("-", ".")
         _showDate.postValue(showDate)

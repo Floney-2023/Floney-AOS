@@ -12,8 +12,10 @@ import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.util.NetworkState
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface BookService {

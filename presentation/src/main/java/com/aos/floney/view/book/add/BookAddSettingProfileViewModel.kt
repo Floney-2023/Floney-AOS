@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookAddSettingProfileViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
+    private val prefs: SharedPreferenceUtil,
     private val booksCreateUseCase: BooksCreateUseCase
 ): BaseViewModel() {
 
@@ -54,8 +56,7 @@ class BookAddSettingProfileViewModel @Inject constructor(
                 baseEvent(Event.ShowLoading)
                 booksCreateUseCase(bookName.value!!,bookUrl.value!!).onSuccess {
                     // 전송 성공
-
-                    it.bookKey
+                    prefs.setString("bookKey", it.bookKey)
                     inviteCode.postValue(it.code)
 
                     baseEvent(Event.HideLoading)
