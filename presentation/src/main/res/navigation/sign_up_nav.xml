@@ -6,7 +6,7 @@
     app:startDestination="@id/signUpAgreeFragment">
 
     <activity
-        android:id="@+id/signUpActivity"
+        android:id="@+id/myPageInformEmailActivity"
         android:name="com.aos.floney.view.signup.SignUpActivity"
         tools:layout="@layout/activity_sign_up"
         android:label="SignUpActivity" />

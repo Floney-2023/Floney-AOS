@@ -35,6 +35,18 @@
             android:name=".view.onboard.OnBoardActivity"
             android:exported="false" />
         <activity
+            android:name=".view.mypage.MyPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.setting.MyPageSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.inform.simple.login.version.MyPageInformSimpleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.inform.email.login.version.MyPageInformEmailActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
