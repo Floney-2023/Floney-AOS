@@ -28,5 +28,6 @@ data class MyBooks(
     val bookImg: String?,
     val bookKey: String,
     val name: String,
-    val memberCount: Int
+    val memberCount: Int,
+    val recentCheck: Boolean = false
 )

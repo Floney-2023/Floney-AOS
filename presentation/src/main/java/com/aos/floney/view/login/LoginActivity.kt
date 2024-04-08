@@ -29,7 +29,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         repeatOnStarted {
             viewModel.nextPage.collect {
                 if(it) {
-                    startActivity(Intent(this@LoginActivity, MyPageActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                 }
             }
         }

@@ -12,12 +12,6 @@
         <variable
             name="eventHolder"
             type="com.aos.model.user.UiMypageSearchModel.OnItemClickListener" />
-        <variable
-            name="vm"
-            type="com.aos.floney.view.mypage.MyPageViewModel" />
-        <variable
-            name="prefs"
-            type="com.aos.data.util.SharedPreferenceUtil" />
         <import type="android.view.View" />
 
     </data>
@@ -68,7 +62,7 @@
             android:id="@+id/bool_activated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@{item.bookKey.equals(prefs.getString(&quot;bookkey&quot;,&quot; &quot;)) ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}" />
+            android:src="@{item.recentCheck ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}" />
     </LinearLayout>
 </layout>
 

@@ -39,7 +39,8 @@ fun GetMypageSearchEntity.toUiMypageSearchModel(): UiMypageSearchModel {
             bookImg = it.bookImg,
             bookKey = it.bookKey,
             name = it.name,
-            memberCount = it.memberCount
+            memberCount = it.memberCount,
+            recentCheck = false
         )
     }
     return UiMypageSearchModel(

@@ -54,8 +54,15 @@ class MyPageViewModel @Inject constructor(
             baseEvent(Event.ShowLoading)
             mypageSearchUseCase().onSuccess {
 
-                val sortedBooks= it.myBooks.sortedByDescending { it.bookKey == prefs.getString("bookKey","") }
-                val updatedResult = it.copy(myBooks = sortedBooks)
+                var sortedBooks= it.myBooks.sortedByDescending { it.bookKey == prefs.getString("bookKey","") }
+
+                val updatedResult = it.copy(myBooks = sortedBooks.map { myBook ->
+                    if (myBook.bookKey == prefs.getString("bookKey", "")) {
+                        myBook.copy(recentCheck = true)
+                    } else {
+                        myBook.copy(recentCheck = false)
+                    }
+                })
 
                 _mypageInfo.postValue(updatedResult)
                 baseEvent(Event.HideLoading)
@@ -117,21 +124,22 @@ class MyPageViewModel @Inject constructor(
 
     }
 
-    // 최근 저장 가계부 확인
-    fun isBookActivated(bookKey: String): Boolean {
-        val savedBookKey = prefs.getString("bookKey", "")
-        Timber.e("item ${savedBookKey} ${bookKey}")
-        return bookKey == savedBookKey
-    }
-
     // 최근 저장 가계부 저장
     fun settingBookKey(bookKey: String){
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
             recentBookKeySaveUseCase(bookKey).onSuccess {
-                val sortedBooks= _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey}
-                val updatedResult = _mypageInfo.value!!.copy(myBooks = sortedBooks)
                 prefs.setString("bookKey",bookKey)
+
+                val sortedBooks= _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey}
+
+                val updatedResult = _mypageInfo.value!!.copy(myBooks = sortedBooks.map { myBook ->
+                    if (myBook.bookKey == bookKey) {
+                        myBook.copy(recentCheck = true)
+                    } else {
+                        myBook.copy(recentCheck = false)
+                    }
+                })
 
                 _mypageInfo.postValue(updatedResult)
                 baseEvent(Event.HideLoading)
