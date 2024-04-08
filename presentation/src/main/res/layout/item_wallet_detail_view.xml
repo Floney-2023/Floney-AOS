@@ -9,11 +9,15 @@
         <variable
             name="item"
             type="com.aos.model.user.MyBooks" />
-
         <variable
             name="eventHolder"
             type="com.aos.model.user.UiMypageSearchModel.OnItemClickListener" />
-
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.MyPageViewModel" />
+        <variable
+            name="prefs"
+            type="com.aos.data.util.SharedPreferenceUtil" />
         <import type="android.view.View" />
 
     </data>
@@ -23,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}"
-        android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+        android:background="@drawable/custom_radius_12_solid_grayscale_12"
         android:gravity="center_vertical"
         android:padding="20dp">
 
@@ -51,7 +55,7 @@
                 android:id="@+id/member_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(item.memberCount)}"
+                android:text="@{@string/member_count_format(item.memberCount)}"
                 android:textAppearance="@style/mypage_wallet_count" />
         </LinearLayout>
 
@@ -64,7 +68,7 @@
             android:id="@+id/bool_activated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@{item.bookKey.equals('3') ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}" />
+            android:src="@{item.bookKey.equals(prefs.getString(&quot;bookkey&quot;,&quot; &quot;)) ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}" />
     </LinearLayout>
 </layout>
 

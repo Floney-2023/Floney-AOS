@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.user
 import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostCheckPasswordBody
+import com.aos.data.entity.request.user.PostRecentBookkeySaveBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.mapper.toDeleteWithdrawModel
 import com.aos.data.mapper.toGetReceiveMarketing
@@ -247,6 +248,28 @@ class UserRepositoryImpl @Inject constructor(private val userRemoteDataSource: U
 
         when (val data =
             userRemoteDataSource.postCheckPassword(PostCheckPasswordBody(password))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun postRecentBookkeySave(bookKey: String): Result<Void?> {
+
+        when (val data =
+            userRemoteDataSource.postRecentBookkeySave(PostRecentBookkeySaveBody(bookKey))) {
             is NetworkState.Success -> {
                 return Result.success(data.body)
             }

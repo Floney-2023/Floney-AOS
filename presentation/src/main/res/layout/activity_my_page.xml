@@ -12,7 +12,7 @@
         <variable
             name="eventHolder"
             type="com.aos.model.user.UiMypageSearchModel.OnItemClickListener"/>
-
+        <import type="android.view.View" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -143,7 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="40"
-                    android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+                    android:background="@drawable/custom_radius_12_solid_grayscale_12"
                     android:orientation="vertical"
                     android:padding="25dp">
 
@@ -227,6 +227,24 @@
                     bind:items="@{vm.mypageInfo.myBooks}"
                     bind:viewModel="@{vm}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                <LinearLayout
+                    android:id="@+id/wallet_empty_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/item_dashed_border"
+                    android:gravity="center|center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:onClick="@{() -> vm.onClickBookAdd()}"
+                    android:visibility="@{vm.mypageInfo.myBooks.size() == 1 ? View.VISIBLE : View.GONE}">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/grayscale9"
+                        android:padding="5dp"
+                        android:src="@drawable/icon_add_wallet" />
+                </LinearLayout>
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_person_suppose_title"

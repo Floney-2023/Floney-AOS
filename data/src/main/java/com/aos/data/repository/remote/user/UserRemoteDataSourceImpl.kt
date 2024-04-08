@@ -5,6 +5,7 @@ import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
+import com.aos.data.entity.request.user.PostRecentBookkeySaveBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
@@ -78,5 +79,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
     }
     override suspend fun postCheckPassword(postCheckPasswordBody: PostCheckPasswordBody): NetworkState<Void> {
         return userService.postCheckPassword(postCheckPasswordBody)
+    }
+    override suspend fun postRecentBookkeySave(postRecentBookkeySaveBody: PostRecentBookkeySaveBody): NetworkState<Void> {
+        return userService.postRecentBookkeySave(postRecentBookkeySaveBody)
     }
 }

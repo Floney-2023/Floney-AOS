@@ -4,6 +4,7 @@ import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
+import com.aos.data.entity.request.user.PostRecentBookkeySaveBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
 import com.aos.data.entity.response.user.DeleteWithdrawEntity
@@ -81,5 +82,10 @@ interface UserRemoteDataSource {
     // 유저 비밀번호 검사
     suspend fun postCheckPassword(
         postCheckPasswordBody: PostCheckPasswordBody
+    ): NetworkState<Void>
+
+    // 최근 접근 가계부키 저장
+    suspend fun postRecentBookkeySave(
+        postRecentBookkeySaveBody: PostRecentBookkeySaveBody
     ): NetworkState<Void>
 }

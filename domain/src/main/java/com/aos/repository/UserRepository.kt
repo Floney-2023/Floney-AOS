@@ -34,4 +34,6 @@ interface UserRepository {
     suspend fun deleteWithdraw(accessToken: String, type:String, reason:String?): Result<DeleteWithdrawModel>
     // 유저 비밀번호 검사
     suspend fun postCheckPassword(password: String): Result<Void?>
+    // 최근 접근 가계부키 저장
+    suspend fun postRecentBookkeySave(bookKey: String): Result<Void?>
 }

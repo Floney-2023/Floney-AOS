@@ -4,6 +4,7 @@ import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
+import com.aos.data.entity.request.user.PostRecentBookkeySaveBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
@@ -110,5 +111,12 @@ interface UserService {
     @Headers("Auth: true")
     suspend fun postCheckPassword(
         @Body postCheckPasswordBody: PostCheckPasswordBody
+    ): NetworkState<Void>
+
+    // 최근 접근 가계부키 저장
+    @POST("users/bookKey")
+    @Headers("Auth: true")
+    suspend fun postRecentBookkeySave(
+        @Body postRecentBookkeySaveBody: PostRecentBookkeySaveBody
     ): NetworkState<Void>
 }

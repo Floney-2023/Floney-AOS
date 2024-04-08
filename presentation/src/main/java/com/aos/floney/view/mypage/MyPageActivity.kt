@@ -21,6 +21,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
 
     override fun onItemClick(item: MyBooks) {
         Timber.e("item $item")
+        viewModel.settingBookKey(item.bookKey)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

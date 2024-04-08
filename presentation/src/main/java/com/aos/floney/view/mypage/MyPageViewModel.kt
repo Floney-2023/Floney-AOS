@@ -17,12 +17,14 @@ import javax.inject.Inject
 
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.user.MyBooks
+import com.aos.usecase.mypage.RecentBookkeySaveUseCase
 import timber.log.Timber
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val mypageSearchUseCase : MypageSearchUseCase
+    private val mypageSearchUseCase : MypageSearchUseCase,
+    private val recentBookKeySaveUseCase : RecentBookkeySaveUseCase
 ): BaseViewModel() {
 
     // 회원 닉네임
@@ -43,8 +45,6 @@ class MyPageViewModel @Inject constructor(
     val settingPage: EventFlow<Boolean> get() = _settingPage
 
     init{
-
-       //prefs.getString("bookKey","")
         searchMypageItems()
     }
     // 마이페이지 정보 읽어오기
@@ -53,9 +53,11 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
             mypageSearchUseCase().onSuccess {
-                _mypageInfo.postValue(it)
-                _mypageList.postValue(it.myBooks)
-                Timber.e("tiem ${it.myBooks}")
+
+                val sortedBooks= it.myBooks.sortedByDescending { it.bookKey == prefs.getString("bookKey","") }
+                val updatedResult = it.copy(myBooks = sortedBooks)
+
+                _mypageInfo.postValue(updatedResult)
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)
@@ -114,4 +116,36 @@ class MyPageViewModel @Inject constructor(
     {
 
     }
+
+    // 최근 저장 가계부 확인
+    fun isBookActivated(bookKey: String): Boolean {
+        val savedBookKey = prefs.getString("bookKey", "")
+        Timber.e("item ${savedBookKey} ${bookKey}")
+        return bookKey == savedBookKey
+    }
+
+    // 최근 저장 가계부 저장
+    fun settingBookKey(bookKey: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            recentBookKeySaveUseCase(bookKey).onSuccess {
+                val sortedBooks= _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey}
+                val updatedResult = _mypageInfo.value!!.copy(myBooks = sortedBooks)
+                prefs.setString("bookKey",bookKey)
+
+                _mypageInfo.postValue(updatedResult)
+                baseEvent(Event.HideLoading)
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+
+    // 가계부 추가
+    fun onClickBookAdd()
+    {
+
+    }
+
 }
