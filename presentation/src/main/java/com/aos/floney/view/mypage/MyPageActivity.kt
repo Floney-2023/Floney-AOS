@@ -15,8 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 import androidx.databinding.library.baseAdapters.BR
-import com.aos.floney.view.book.add.BookAddInviteShareBottomSheetFragment
+import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
 import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
+import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 
 @AndroidEntryPoint
 class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
@@ -56,16 +57,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
             viewModel.searchMypageItems()
         }
         repeatOnStarted {
-            viewModel.bookAddBottomSheet.collect {
-                if(it){
+            viewModel.bookAddBottomSheet.collect { shouldShowBottomSheet ->
+                if (shouldShowBottomSheet) {
                     val bottomSheetFragment = MypageBookAddSelectBottomSheetFragment { checked ->
-                        if (checked) {
-
-                        }
-                        else {
-
-                        }
-
+                        val intentClass = if (checked) MyPageBookCreateActivity::class.java else MyPageBookCodeInputActivity::class.java
+                        startActivity(Intent(this@MyPageActivity, intentClass))
                     }
                     bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
                 }

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.bookadd.create.MyPageBookAddInputBookNameViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.mypage.bookadd.create.MyPageBookAddInputBookNameFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon_back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="1"
+                android:textColor="@color/grayscale2"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="/"
+                android:textColor="@color/grayscale6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="3"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/book_add_new_book_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/book_add_new_book_name_title"
+            android:textColor="@color/grayscale1"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/ll_page"
+            app:layout_constraintTop_toBottomOf="@id/ll_page" />
+
+        <TextView
+            android:id="@+id/book_add_new_book_name_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/book_add_new_book_name_info"
+            android:textColor="@color/grayscale6"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@+id/book_add_new_book_name_title"
+            app:layout_constraintTop_toBottomOf="@+id/book_add_new_book_name_title" />
+
+        <EditText
+            android:id="@+id/et_book_name"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+            android:fontFamily="@font/pretendard_regular"
+            android:hint="@string/book_add_new_book_name_input_hint"
+            android:paddingStart="20dp"
+            android:text="@={vm.bookName}"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/book_add_new_book_name_info" />
+
+        <TextView
+            android:id="@+id/book_add_new_book_name_input_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@string/book_add_new_book_name_input_info"
+            android:textColor="@color/grayscale6"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/et_book_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_book_name" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickNextPage()}"
+            android:text="@string/sign_up_next"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/et_book_name"
+            app:layout_constraintStart_toStartOf="@+id/et_book_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
