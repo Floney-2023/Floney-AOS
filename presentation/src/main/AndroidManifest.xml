@@ -47,6 +47,12 @@
             android:name=".view.mypage.inform.email.login.version.MyPageInformEmailActivity"
             android:exported="false" />
         <activity
+            android:name=".view.mypage.bookadd.create.MyPageBookCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>

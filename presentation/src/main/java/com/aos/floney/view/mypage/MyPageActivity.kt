@@ -15,6 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 import androidx.databinding.library.baseAdapters.BR
+import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
+import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
+import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
+
 @AndroidEntryPoint
 class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
     private lateinit var navController: NavController
@@ -51,6 +55,17 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         }
         repeatOnStarted {
             viewModel.searchMypageItems()
+        }
+        repeatOnStarted {
+            viewModel.bookAddBottomSheet.collect { shouldShowBottomSheet ->
+                if (shouldShowBottomSheet) {
+                    val bottomSheetFragment = MypageBookAddSelectBottomSheetFragment { checked ->
+                        val intentClass = if (checked) MyPageBookCreateActivity::class.java else MyPageBookCodeInputActivity::class.java
+                        startActivity(Intent(this@MyPageActivity, intentClass))
+                    }
+                    bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+                }
+            }
         }
     }
 }

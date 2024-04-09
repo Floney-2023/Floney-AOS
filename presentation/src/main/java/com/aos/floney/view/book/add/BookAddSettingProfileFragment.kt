@@ -28,9 +28,9 @@ class BookAddSettingProfileFragment : BaseFragment<FragmentBookAddSettingProfile
                 Timber.e("nextPage $it")
                 if(it) {
                     val code = viewModel.inviteCode.value ?: ""
-                    val action =
+                    val nextAction =
                         BookAddSettingProfileFragmentDirections.actionBookAddSettingProfileFragmentToBookAddCreateSuccessFragment(code)
-                    findNavController().navigate(action)
+                    findNavController().navigate(nextAction)
                 }
             }
         }

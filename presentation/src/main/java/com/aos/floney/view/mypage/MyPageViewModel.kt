@@ -44,6 +44,10 @@ class MyPageViewModel @Inject constructor(
     private var _settingPage = MutableEventFlow<Boolean>()
     val settingPage: EventFlow<Boolean> get() = _settingPage
 
+    // 가계부 추가 BottomSheet
+    // 설정 페이지
+    private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
+    val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
     init{
         searchMypageItems()
     }
@@ -153,7 +157,9 @@ class MyPageViewModel @Inject constructor(
     // 가계부 추가
     fun onClickBookAdd()
     {
-
+        viewModelScope.launch {
+            _bookAddBottomSheet.emit(true)
+        }
     }
 
 }

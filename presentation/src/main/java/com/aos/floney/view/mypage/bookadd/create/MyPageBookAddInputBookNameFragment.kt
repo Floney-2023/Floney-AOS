@@ -1,4 +1,4 @@
-package com.aos.floney.view.book.add
+package com.aos.floney.view.mypage.bookadd.create
 
 import android.os.Bundle
 import android.view.View
@@ -8,14 +8,16 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.FragmentBookAddInputBookNameBinding
+import com.aos.floney.databinding.FragmentMyPageBookAddInputBookNameBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.aos.floney.view.signup.SignUpEmailCodeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class BookAddInputBookNameFragment : BaseFragment<FragmentBookAddInputBookNameBinding, BookAddInputBookNameViewModel>(R.layout.fragment_book_add_input_book_name) {
+class MyPageBookAddInputBookNameFragment : BaseFragment<FragmentMyPageBookAddInputBookNameBinding, MyPageBookAddInputBookNameViewModel>(R.layout.fragment_my_page_book_add_input_book_name) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,11 +31,11 @@ class BookAddInputBookNameFragment : BaseFragment<FragmentBookAddInputBookNameBi
                 Timber.e("nextPage $it")
                 if(it) {
                     val bookName = viewModel.bookName.value ?: ""
-                    val settingProfileAction =
-                        BookAddInputBookNameFragmentDirections.actionBookAddInputBookNameFragmentToBookAddSettingProfileFragment(
+                    val action =
+                        MyPageBookAddInputBookNameFragmentDirections.actionMyPageBookAddInputBookNameFragmentToMyPageBookAddSettingProfileFragment(
                             bookName
                         )
-                    findNavController().navigate(settingProfileAction)
+                    findNavController().navigate(action)
                 }
             }
         }
@@ -41,7 +43,8 @@ class BookAddInputBookNameFragment : BaseFragment<FragmentBookAddInputBookNameBi
             // 이전 페이지 이동
             viewModel.back.collect {
                 if(it) {
-                    findNavController().popBackStack()
+                    val activity = requireActivity() as MyPageBookCreateActivity
+                    activity.startMyPageActivity()
                 }
             }
         }

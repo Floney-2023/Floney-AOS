@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.bookadd.MypageBookAddSelectViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_bottom_sheet"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <LinearLayout
+            android:id="@+id/bottom_sheet_book_add_inivite_share_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_book_add_invite_dialog_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/book_add_invite_select_dialog_title"
+                android:textColor="@color/grayscale1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_tv_book_add_invite_dialog_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/book_add_invite_select_dialog_info"
+                android:textColor="@color/grayscale8"
+                android:textSize="12sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/li_create_book_view"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="24dp"
+                android:background="@{vm.bookCreateTerms ? @drawable/custom_radius_12_solid_white_stroke_primary_2 : @drawable/custom_radius_12_solid_white_stroke_greyscale_8}"
+                android:onClick="@{() -> vm.onClickBookCreate()}">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/book_add_invite_select_dialog_create_select"
+                    android:textColor="@{vm.bookCreateTerms ? @color/grayscale2 : @color/grayscale8}"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@{vm.bookCreateTerms ? @drawable/icon_check_circle_disabled : @drawable/icon_check_circle_inactivated}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/li_invite_code_view"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="24dp"
+                android:background="@{vm.codeInputTerms ? @drawable/custom_radius_12_solid_white_stroke_primary_2 : @drawable/custom_radius_12_solid_white_stroke_greyscale_8}"
+                android:onClick="@{() -> vm.onClickCodeInput()}">
+
+                <TextView
+                    android:id="@+id/tv_invite_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/book_add_invite_select_dialog_input_select"
+                    android:textColor="@{vm.codeInputTerms ? @color/grayscale2 : @color/grayscale8}"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_invite_code_copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@{vm.codeInputTerms ? @drawable/icon_check_circle_disabled : @drawable/icon_check_circle_inactivated}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/appCompatButton"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/custom_radius_12_solid_primary1"
+                android:fontFamily="@font/pretendard_bold"
+                android:onClick="@{() -> vm.onClickAddButton()}"
+                android:text="@string/book_add_invite_select_dialog_add_button"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
