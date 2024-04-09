@@ -208,4 +208,10 @@
     <string name="book_add_invite_dialog_exit_button"><u>나중에 하기</u></string>
     <string name="book_add_invite_dialog_copy_text">참여 코드 복사가 완료되었습니다.</string>
 
+    <string name="book_add_invite_select_dialog_title">가계부 추가</string>
+    <string name="book_add_invite_select_dialog_info">새로운 가계부를 추가할 방법을\n선택해 주세요.</string>
+    <string name="book_add_invite_select_dialog_create_select">가계부 생성하기</string>
+    <string name="book_add_invite_select_dialog_input_select">코드 입력하기</string>
+    <string name="book_add_invite_select_dialog_add_button">추가하기</string>
+
 </resources>

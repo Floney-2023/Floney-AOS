@@ -15,6 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 import androidx.databinding.library.baseAdapters.BR
+import com.aos.floney.view.book.add.BookAddInviteShareBottomSheetFragment
+import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
+
 @AndroidEntryPoint
 class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
     private lateinit var navController: NavController
@@ -51,6 +54,22 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         }
         repeatOnStarted {
             viewModel.searchMypageItems()
+        }
+        repeatOnStarted {
+            viewModel.bookAddBottomSheet.collect {
+                if(it){
+                    val bottomSheetFragment = MypageBookAddSelectBottomSheetFragment { checked ->
+                        if (checked) {
+
+                        }
+                        else {
+
+                        }
+
+                    }
+                    bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+                }
+            }
         }
     }
 }
