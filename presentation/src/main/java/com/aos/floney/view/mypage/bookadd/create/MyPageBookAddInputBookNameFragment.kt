@@ -10,6 +10,7 @@ import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.FragmentBookAddInputBookNameBinding
 import com.aos.floney.databinding.FragmentMyPageBookAddInputBookNameBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.aos.floney.view.signup.SignUpEmailCodeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,8 @@ class MyPageBookAddInputBookNameFragment : BaseFragment<FragmentMyPageBookAddInp
             // 이전 페이지 이동
             viewModel.back.collect {
                 if(it) {
-                    findNavController().popBackStack()
+                    val activity = requireActivity() as MyPageBookCreateActivity
+                    activity.startMyPageActivity()
                 }
             }
         }

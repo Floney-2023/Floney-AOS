@@ -8,6 +8,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityMyPageBookCreateBinding
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.mypage.MyPageActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +30,10 @@ class MyPageBookCreateActivity :
     // 가계부 생성 완료 후, 홈 화면으로 이동
     fun startHomeActivity() {
         startActivity(Intent(this,  HomeActivity::class.java))
+        finishAffinity()
+    }
+    fun startMyPageActivity() {
+        startActivity(Intent(this, MyPageActivity::class.java))
         finishAffinity()
     }
 }
