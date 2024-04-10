@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.settlement.BookUsers" />
+        <variable
+            name="eventHolder"
+            type="com.aos.model.settlement.UiMemberSelectModel.OnItemClickListener" />
+        <import type="android.view.View" />
+
+    </data>
+    <LinearLayout
+        android:id="@+id/li_member_select_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}"
+        android:background="@{item.isCheck ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
+        android:gravity="center_vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/iv_member_img"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            setImageToUrl="@{item.profileImg}" />
+
+        <TextView
+            android:id="@+id/iv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@{item.nickname}"
+            android:textAppearance="@style/mypage_user_name" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_bool_activated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{item.isCheck ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}" />
+    </LinearLayout>
+</layout>
+

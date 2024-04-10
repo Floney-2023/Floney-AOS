@@ -1,7 +1,6 @@
 package com.aos.model.home
 
 import androidx.recyclerview.widget.DiffUtil
-import timber.log.Timber
 
 
 data class UiBookDayModel(

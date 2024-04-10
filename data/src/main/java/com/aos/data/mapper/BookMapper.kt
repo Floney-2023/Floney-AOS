@@ -6,6 +6,7 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
@@ -18,7 +19,10 @@ import com.aos.model.home.OurBookUsers
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.UiMemberSelectModel
+import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -215,4 +219,15 @@ fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
 
 fun GetSettleUpLastEntity.toGetsettleUpLastModel() : GetSettlementLastModel {
     return GetSettlementLastModel(passedDays = this.passedDays)
+}
+
+fun List<GetBooksUsersEntity>.toUiMemberSelectModel(): UiMemberSelectModel {
+    val myBookUsers = this.map {
+        BookUsers(
+            email = it.email, nickname = it.nickname, profileImg = it.profileImg, isCheck = false
+        )
+    }
+    return UiMemberSelectModel(
+        booksUsers = myBookUsers
+    )
 }

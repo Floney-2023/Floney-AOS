@@ -11,6 +11,7 @@ import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.util.NetworkState
 import retrofit2.http.Body
@@ -69,5 +70,12 @@ interface BookService {
     suspend fun getSettlementLast(
         @Query("bookKey") bookKey: String
     ): NetworkState<GetSettleUpLastEntity>
+
+    // 특정 가계부의 유저들 조회
+    @GET("books/users")
+    @Headers("Auth: true")
+    suspend fun getBooksUsers(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<List<GetBooksUsersEntity>>
 
 }

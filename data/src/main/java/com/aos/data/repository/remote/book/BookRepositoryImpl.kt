@@ -8,6 +8,7 @@ import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
 import com.aos.data.mapper.toPostBooksCreateModel
 import com.aos.data.mapper.toPostBooksJoinModel
+import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.util.RetrofitFailureStateException
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
@@ -16,6 +17,7 @@ import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
 import timber.log.Timber
@@ -116,5 +118,18 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
             is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
         }
     }
-
+    override suspend fun getBooksUsers(bookKey: String): Result<UiMemberSelectModel> {
+        when (val data =
+            bookDataSource.getBooksUsers(bookKey)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiMemberSelectModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
 }

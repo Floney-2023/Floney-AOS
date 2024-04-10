@@ -29,18 +29,18 @@ class SettleUpStartFragment : BaseFragment<FragmentSettleUpStartBinding, SettleU
 
     private fun setUpViewModelObserver() {
         repeatOnStarted {
-            // 다음 페이지 이동
+            // 정산 시작하기 이동
             viewModel.settleUpStartPage.collect {
                 if(it) {
-//                    val action =
-//                        SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
-//                    findNavController().navigate(action)
+                    val action =
+                        SettleUpStartFragmentDirections.actionSettleUpStartFragmentToSettleUpMemberSelectFragment()
+                    findNavController().navigate(action)
                 }
             }
         }
 
         repeatOnStarted {
-            // 이전 페이지 이동
+            // 정산 내역 보기 이동
             viewModel.settleUpSeePage.collect {
                 if(it) {
 

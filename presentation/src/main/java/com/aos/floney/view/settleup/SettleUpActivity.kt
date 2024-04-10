@@ -2,6 +2,7 @@ package com.aos.floney.view.settleup
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
@@ -21,7 +22,6 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
 
         setupJetpackNavigation()
     }
-
     private fun setupJetpackNavigation() {
 
         val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
@@ -30,8 +30,8 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
     }
 
     // 회원가입 완료 후 로그인 페이지로 이동
-    fun startLoginActivity() {
-        startActivity(Intent(this, LoginActivity::class.java))
+    fun startSettleUpActivity() {
+        startActivity(Intent(this, SettleUpActivity::class.java))
         finishAffinity()
     }
 

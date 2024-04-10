@@ -47,8 +47,8 @@ class SettleUpStartViewModel @Inject constructor(
             baseEvent(Event.ShowLoading)
             settlementLastUseCase(prefs.getString("bookKey","")).onSuccess {
                 // 전송 성공
-                baseEvent(Event.HideLoading)
                 _lastDay.postValue(it.passedDays.toInt())
+                baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))

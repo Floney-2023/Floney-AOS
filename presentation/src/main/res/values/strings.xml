@@ -225,6 +225,23 @@
     <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>
     <string name="settle_up_start_info">복잡하고 어려운 정산, 저희가 대신 해드릴게요</string>
     <string name="settle_up_start_button">정산하기</string>
-    <string name="settle_up_start_see"><u>정산 내역 보기</u></string>
+    <string name="settle_up_start_see_button"><u>정산 내역 보기</u></string>
+
+    <string name="settle_up_member_select_title">정산에 참여할 멤버를\n선택해주세요</string>
+    <string name="settle_up_member_select_button">다음으로</string>
+
+    <string name="settle_up_period_select_title">정산할 기간을\n설정해주세요</string>
+    <string name="settle_up_period_select_back_button">이전으로</string>
+    <string name="settle_up_period_select_next_button">다음으로</string>
+
+    <string name="settle_up_breakdown_select_title">정산할 내역을\n선택해주세요</string>
+    <string name="settle_up_breakdown_select_back_button">이전으로</string>
+    <string name="settle_up_breakdown_select_next_button">정산하기</string>
+
+    <string name="settle_up_complete_title">정산할 내역을\n선택해주세요</string>
+    <string name="settle_up_complete_info">소수점은 반올림되어 계산됩니다.</string>
+    <string name="settle_up_complete_total_expense">총 지출</string>
+    <string name="settle_up_complete_settlement_money">정산 금액</string>
+    <string name="settle_up_complete_share_button">공유하기</string>
 
 </resources>

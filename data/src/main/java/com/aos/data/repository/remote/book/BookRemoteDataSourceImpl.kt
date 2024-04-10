@@ -9,6 +9,7 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.util.NetworkState
 import javax.inject.Inject
@@ -47,5 +48,10 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         bookKey: String
     ): NetworkState<GetSettleUpLastEntity> {
         return bookService.getSettlementLast(bookKey)
+    }
+    override suspend fun getBooksUsers(
+        bookKey: String
+    ): NetworkState<List<GetBooksUsersEntity>> {
+        return bookService.getBooksUsers(bookKey)
     }
 }

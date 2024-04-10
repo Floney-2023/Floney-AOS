@@ -7,6 +7,7 @@ import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.UiMemberSelectModel
 
 interface BookRepository {
 
@@ -28,6 +29,9 @@ interface BookRepository {
     // 가계부 생성
     suspend fun postBooksCreate(name : String, profileImg : String): Result<PostBooksCreateModel>
 
-    /// 가계부의 마지막 정산일 조회
+    // 가계부의 마지막 정산일 조회
     suspend fun getSettlementLast(bookKey: String): Result<GetSettlementLastModel>
+
+    // 특정 가계부의 유저들 조회
+    suspend fun getBooksUsers(bookKey: String): Result<UiMemberSelectModel>
 }
