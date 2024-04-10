@@ -214,6 +214,7 @@
                 android:paddingEnd="4dp"
                 android:paddingBottom="10dp"
                 android:text="내역 추가"
+                android:onClick="@{() -> vm.onClickAddHistory()}"
                 android:textColor="@color/primary2"
                 app:layout_constraintBottom_toBottomOf="@id/tv_month_day"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,11 +1,14 @@
 package com.aos.floney.view.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import androidx.databinding.library.baseAdapters.BR
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
+import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.history.HistoryActivity
 import com.aos.model.home.DayMoney
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
@@ -38,6 +41,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                     viewModel.initCalendarDay()
                     fragmentManager.beginTransaction().replace(R.id.fl_container, HomeDayTypeFragment()).commit()
                 }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.clickedAddHistory.collect {
+                startActivity(Intent(this@HomeActivity, HistoryActivity::class.java))
             }
         }
     }

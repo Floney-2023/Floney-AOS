@@ -53,6 +53,10 @@ class HomeViewModel @Inject constructor(
     private var _clickedShowType = MutableLiveData<String>("month")
     val clickedShowType: LiveData<String> get() = _clickedShowType
 
+    // 내역추가
+    private var _clickedAddHistory = MutableEventFlow<Boolean>()
+    val clickedAddHistory: EventFlow<Boolean> get() = _clickedAddHistory
+
     private var _getMoneyDayData = MutableEventFlow<UiBookDayModel>()
     val getMoneyDayData: EventFlow<UiBookDayModel> get() = _getMoneyDayData
 
@@ -157,6 +161,13 @@ class HomeViewModel @Inject constructor(
     fun onClickShowType(type: String) {
         if (_clickedShowType.value != type) {
             _clickedShowType.value = type
+        }
+    }
+
+    // 캘린더, 일별 표시타입 변경
+    fun onClickAddHistory() {
+        viewModelScope.launch {
+            _clickedAddHistory.emit(true)
         }
     }
 

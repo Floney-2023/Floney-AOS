@@ -10,6 +10,7 @@ import com.aos.floney.databinding.FragmentMyPageWithdrawReasonCheckBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.signup.SignUpInputEmailFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MyPageInformWithdrawReasonCheckFragment :
