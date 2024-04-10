@@ -220,4 +220,11 @@
     <string name="my_page_book_add_invite_check_code_input_hint">코드를 입력하세요.</string>
     <string name="my_page_book_add_invite_check_code_complete_button_text">추가하기</string>
 
+    <!--10-1 정산 -->
+    <string name="settle_up_start">정산</string>
+    <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>
+    <string name="settle_up_start_info">복잡하고 어려운 정산, 저희가 대신 해드릴게요</string>
+    <string name="settle_up_start_button">정산하기</string>
+    <string name="settle_up_start_see"><u>정산 내역 보기</u></string>
+
 </resources>

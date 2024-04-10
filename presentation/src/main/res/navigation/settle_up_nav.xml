@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settle_up_nav"
+    app:startDestination="@id/settleUpStartFragment">
+
+    <activity
+        android:id="@+id/settleUpActivity"
+        android:name="com.aos.floney.view.settleup.SettleUpActivity"
+        tools:layout="@layout/activity_settle_up"
+        android:label="SettleUpActivity" />
+    <fragment
+        android:id="@+id/settleUpStartFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpStartFragment"
+        tools:layout="@layout/fragment_settle_up_start"
+        android:label="SettleUpStartFragment" >
+    </fragment>
+</navigation>

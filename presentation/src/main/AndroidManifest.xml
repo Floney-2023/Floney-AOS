@@ -53,6 +53,9 @@
             android:name=".view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity"
             android:exported="false" />
         <activity
+            android:name=".view.settleup.SettleUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>

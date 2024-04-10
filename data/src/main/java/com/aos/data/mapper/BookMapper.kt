@@ -6,6 +6,7 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.home.DayMoney
@@ -17,6 +18,7 @@ import com.aos.model.home.OurBookUsers
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import com.aos.model.settlement.GetSettlementLastModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -209,4 +211,8 @@ fun PostBooksJoinEntity.toPostBooksJoinModel(): PostBooksJoinModel {
 
 fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
     return PostBooksCreateModel(this.bookKey ?: "", this.code?: "")
+}
+
+fun GetSettleUpLastEntity.toGetsettleUpLastModel() : GetSettlementLastModel {
+    return GetSettlementLastModel(passedDays = this.passedDays)
 }

@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.book
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.mapper.toGetCheckUserBookModel
+import com.aos.data.mapper.toGetsettleUpLastModel
 import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
 import com.aos.data.mapper.toPostBooksCreateModel
@@ -14,6 +15,7 @@ import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
 import timber.log.Timber
@@ -95,6 +97,18 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         when (val data =
             bookDataSource.postBooksCreate(PostBooksCreateBody(name, profileImg))) {
             is NetworkState.Success -> return Result.success(data.body.toPostBooksCreateModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+
+    override suspend fun getSettlementLast(bookKey: String): Result<GetSettlementLastModel> {
+        when (val data =
+            bookDataSource.getSettlementLast(bookKey)) {
+            is NetworkState.Success -> return Result.success(data.body.toGetsettleUpLastModel())
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)
             )
