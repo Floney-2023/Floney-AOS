@@ -1,5 +1,6 @@
 package com.aos.floney.view.settleup
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,10 +12,14 @@ import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentSettleUpMemberSelectBinding
+import com.aos.floney.databinding.FragmentSettleUpPeriodSelectBinding
 import com.aos.floney.databinding.FragmentSettleUpStartBinding
 import com.aos.floney.databinding.FragmentSignUpAgreeBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
+import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
+import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.aos.model.home.MonthMoney
 import com.aos.model.settlement.BookUsers
@@ -27,11 +32,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class SettleUpMemberSelectFragment : BaseFragment<FragmentSettleUpMemberSelectBinding, SettleUpMemberSelectViewModel>(R.layout.fragment_settle_up_member_select) , UiMemberSelectModel.OnItemClickListener {
-
-    override fun onItemClick(item: BookUsers) {
-        viewModel.settingSettlementMember(item)
-    }
+class SettleUpPeriodSelectFragment : BaseFragment<FragmentSettleUpPeriodSelectBinding, SettleUpPeriodSelectViewModel>(R.layout.fragment_settle_up_period_select)  {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,17 +41,17 @@ class SettleUpMemberSelectFragment : BaseFragment<FragmentSettleUpMemberSelectBi
         setUpViewModelObserver()
     }
     private fun setUpUi() {
-        binding.setVariable(BR.eventHolder, this@SettleUpMemberSelectFragment)
+        binding.setVariable(BR.eventHolder, this@SettleUpPeriodSelectFragment)
     }
 
     private fun setUpViewModelObserver() {
         repeatOnStarted {
             // 다음 페이지 이동
             viewModel.nextPage.collect {
-                if(it.isNotEmpty()) {
-                    val action =
-                        SettleUpMemberSelectFragmentDirections.actionSettleUpMemberSelectFragmentToSettleUpPeriodSelectFragment(it)
-                    findNavController().navigate(action)
+                if(it) {
+//                    val action =
+//                        SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
+//                    findNavController().navigate(action)
                 }
             }
         }
@@ -61,6 +62,16 @@ class SettleUpMemberSelectFragment : BaseFragment<FragmentSettleUpMemberSelectBi
                 if(it) {
                     val activity = requireActivity() as SettleUpActivity
                     activity.startSettleUpActivity()
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.periodBottomSheetPage.collect {
+                if (it) {
+                    val bottomSheetFragment = SettleUpPeriodRangeSelectBottomSheetFragment { checked ->
+
+                    }
+                    bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
                 }
             }
         }

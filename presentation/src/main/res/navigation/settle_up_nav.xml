@@ -27,5 +27,23 @@
         android:id="@+id/settleUpMemberSelectFragment"
         android:name="com.aos.floney.view.settleup.SettleUpMemberSelectFragment"
         android:label="SettleUpMemberSelectFragment"
-        tools:layout="@layout/fragment_settle_up_member_select"/>
+        tools:layout="@layout/fragment_settle_up_member_select">
+        <action
+            android:id="@+id/action_settleUpMemberSelectFragment_to_settleUpPeriodSelectFragment"
+            app:destination="@id/settleUpPeriodSelectFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" >
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpPeriodSelectFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpPeriodSelectFragment"
+        android:label="SettleUpPeriodSelectFragment"
+        tools:layout="@layout/fragment_settle_up_period_select">
+        <argument
+            android:name="member"
+            app:argType="string[]" />
+    </fragment>
 </navigation>
