@@ -2,6 +2,7 @@ package com.aos.data.mapper
 
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
+import com.aos.data.entity.response.home.DayLiensResponse
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
@@ -17,6 +18,7 @@ import com.aos.model.home.OurBookUsers
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -46,7 +48,15 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
                     "${it.date.split("-")[0].toInt()}",
                     "${it.date.split("-")[1].toInt()}",
                     "${it.date.split("-")[2].toInt()}",
-                    tempExpenses!!,
+                    Expenses(
+                        date = it.date,
+                        outcome = if (!it.money.toString().equals("0.0")) {
+                            "-${NumberFormat.getNumberInstance().format(it.money)}"
+                        } else {
+                            ""
+                        },
+                        income = tempExpenses!!.income
+                    ),
                     todayDate == it.date
                 )
             )
@@ -55,7 +65,9 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
             tempOutcome = "-${NumberFormat.getNumberInstance().format(it.money)}"
             tempDay = it.date.split("-")[2].toInt().toString()
             tempExpenses = Expenses(
-                date = it.date, outcome = tempOutcome, income = if (it.categoryType == "INCOME") {
+                date = it.date,
+                outcome = tempOutcome,
+                income = if (!it.money.toString().equals("0.0")) {
                     "+${NumberFormat.getNumberInstance().format(it.money)}"
                 } else {
                     ""
@@ -114,32 +126,26 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
 
 // 일별 조회
 fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
-    this.dayLiensResponse.map {
+    val dayMoneyList: List<DayMoney> = this.dayLinesResponse.map {
         DayMoney(
-            money = NumberFormat.getNumberInstance().format(it.money),
+            money = if (it.lineCategory == "INCOME") {
+                "+ ${NumberFormat.getNumberInstance().format(it.money)}"
+            } else {
+                "- ${NumberFormat.getNumberInstance().format(it.money)}"
+            },
             description = it.description,
             lineCategory = it.lineCategory,
             lineSubCategory = it.lineSubCategory,
             assetSubCategory = it.assetSubCategory,
             exceptStatus = it.exceptStatus,
             writerEmail = it.writerEmail,
-            writerNickName = it.writerNickName,
+            writerNickName = it.writerNickname,
             writerProfileImg = it.writerProfileImg
         )
     }
-    val dayMoneyList = this.dayLiensResponse.map {
-        DayMoney(
-            money = NumberFormat.getNumberInstance().format(it.money),
-            description = it.description,
-            lineCategory = it.lineCategory,
-            lineSubCategory = it.lineSubCategory,
-            assetSubCategory = it.assetSubCategory,
-            exceptStatus = it.exceptStatus,
-            writerEmail = it.writerEmail,
-            writerNickName = it.writerNickName,
-            writerProfileImg = it.writerProfileImg
-        )
-    }
+
+    Timber.e("this.dayLiensResponse ${this.dayLinesResponse}")
+    Timber.e("dayMoneyList $dayMoneyList")
 
     var totalIncome = 0
     var totalOutcome = 0
@@ -204,9 +210,9 @@ fun GetBookInfoEntity.toUiBookInfoModel(): UiBookInfoModel {
 
 
 fun PostBooksJoinEntity.toPostBooksJoinModel(): PostBooksJoinModel {
-    return PostBooksJoinModel(this.bookKey ?: "", this.code?: "")
+    return PostBooksJoinModel(this.bookKey ?: "", this.code ?: "")
 }
 
 fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
-    return PostBooksCreateModel(this.bookKey ?: "", this.code?: "")
+    return PostBooksCreateModel(this.bookKey ?: "", this.code ?: "")
 }

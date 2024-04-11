@@ -56,10 +56,10 @@
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@{item.expenses.outcome}"
-            android:textColor="@color/red"
+            android:text="@{item.expenses.income}"
             android:textSize="9sp"
-            android:visibility="@{item.expenses.outcome.equals(`-0`) ? View.GONE : View.VISIBLE}"
+            android:textColor="@color/blue1"
+            android:visibility="@{item.expenses.income.equals(``) ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
         <TextView
@@ -70,10 +70,10 @@
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@{item.expenses.income}"
-            android:textColor="@color/blue1"
+            android:text="@{item.expenses.outcome}"
+            android:textColor="@color/red"
             android:textSize="9sp"
-            android:visibility="@{item.expenses.income.equals(`+0`) ? View.GONE : View.VISIBLE}"
+            android:visibility="@{item.expenses.outcome.equals(``) ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/tv_cost" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@ import com.aos.model.home.UiBookDayModel
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import com.aos.usecase.home.GetMoneyHistoryMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,8 +24,9 @@ class HomeDayTypeViewModel @Inject constructor(): BaseViewModel() {
     private var _getExtData = MutableLiveData<ExtData>()
     val getExtData: LiveData<ExtData> get() = _getExtData
 
-    fun updateMoneyDay(data: UiBookDayModel) {
-        _getDayList.value = data.data
-        _getExtData.value = data.extData
+    fun updateMoneyDay(item: UiBookDayModel) {
+        Timber.e("item ${item.data}")
+        _getDayList.value = item.data
+        _getExtData.value = item.extData
     }
 }

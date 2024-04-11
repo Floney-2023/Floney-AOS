@@ -15,7 +15,6 @@ class CalendarBottomSheetDialog(context: Context): BottomSheetDialog(context, R.
         super.onCreate(savedInstanceState)
 
         binding = DialogCalendarBinding.inflate(layoutInflater)
-        this.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         setContentView(binding.root)
     }
 

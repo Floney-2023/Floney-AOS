@@ -19,6 +19,7 @@ class HomeMonthTypeFragment : BaseFragment<FragmentHomeMonthTypeBinding, HomeMon
     private val activityViewModel: HomeViewModel by activityViewModels()
 
     override fun onItemClick(item: MonthMoney) {
+        Timber.e("item $item")
         if(item.day != "") {
             val activity = requireActivity() as HomeActivity
             activity.onClickCalendarItem(item)
