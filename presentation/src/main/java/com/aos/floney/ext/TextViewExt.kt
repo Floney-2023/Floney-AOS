@@ -8,8 +8,12 @@ import java.text.NumberFormat
 
 fun String.formatNumber(): String {
      return if(this != "") {
-        Timber.e("this $this")
-        DecimalFormat("###,###").format(this.replace(",", "").toLong())
+         val text = this.replace("원", "")
+         if(text != "") {
+             DecimalFormat("###,###").format(text.replace(",", "").toLong())
+         } else {
+             ""
+         }
     } else {
         ""
     }

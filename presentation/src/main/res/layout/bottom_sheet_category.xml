@@ -7,6 +7,9 @@
     <data>
         <import type="com.aos.model.book.UiBookCategory" />
         <variable
+            name="dialog"
+            type="com.aos.floney.view.history.CategoryBottomSheetDialog" />
+        <variable
             name="vm"
             type="com.aos.floney.view.history.HistoryViewModel" />
         <variable
@@ -21,16 +24,18 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="380dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             android:id="@+id/rv_category"
-            app:spanCount="3"
+            app:spanCount="4"
+            android:paddingEnd="8dp"
             bind:diffCallback="@{(Object)UiBookCategory.Companion}"
             bind:eventHolder="@{eventHolder}"
             bind:itemLayout="@{@layout/item_category}"
             tools:listitem="@layout/item_category"
             bind:items="@{vm.categoryList}"
             android:orientation="horizontal"
+            bind:viewModel="@{vm}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,6 +46,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="30dp"
+            android:onClick="@{() -> dialog.onClickChoiceBtn()}"
             android:background="@drawable/custom_radius_12_solid_primary1"
             android:fontFamily="@font/pretendard_semibold"
             android:gravity="center"

@@ -16,7 +16,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+// 내역 추가
+// 데이터 넘기기 우선 날짜만 
+// 캘린더 클릭 안하면 안 나옴
+// API 전송
 
+// 내역 수정
+// 데이터 넘기기
+//
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
@@ -54,15 +61,28 @@ class HistoryViewModel @Inject constructor(
     var _categoryList = MutableLiveData<List<UiBookCategory>>()
     val categoryList: LiveData<List<UiBookCategory>> get() = _categoryList
 
+    // 카테고리 선택 아이템 저장
+    private lateinit var categoryClickItem: UiBookCategory
+
+    // 자산, 지출, 수입, 이체 카테고리 조회에 사용
+    private var parent = ""
+
     init {
-        getBookCategory()
     }
 
-    private fun getBookCategory() {
-        viewModelScope.launch(Dispatchers.IO) { 
-            getBookCategoryUseCase(prefs.getString("bookKey", ""), "지출").onSuccess {
-                _categoryList.postValue(it)
-                Timber.e("it.${it}")
+    private fun getBookCategory(parent: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            Timber.e("parent $parent")
+            getBookCategoryUseCase(prefs.getString("bookKey", ""), parent).onSuccess { it ->
+                val item = it.map { innerItem ->
+                    UiBookCategory(
+                        innerItem.idx, innerItem.checked, innerItem.name, innerItem.default
+                    )
+                }
+
+                Timber.e("item $item")
+                _categoryList.postValue(item.toMutableList())
+                _onClickCategory.emit(true)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
@@ -76,22 +96,27 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
-
-    // 카테고리 표시 클릭
+    // 카테고리 자산 표시 클릭
     fun onClickCategory() {
-        viewModelScope.launch {
-            _onClickCategory.emit(true)
-        }
+        parent = "자산"
+        getBookCategory(parent)
+    }
+
+    // 카테고리 분류 표시 클릭
+    fun onClickCategoryDiv() {
+        parent = flow.value ?: "지출"
+        getBookCategory(parent)
     }
 
     // 지출, 수입, 이체 클릭
     fun onClickFlow(type: String) {
+        line.postValue("분류를 선택하세요")
         flow.postValue(type)
     }
 
     // 비용 입력 시 저장
     fun onCostTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        cost.postValue(s.toString().formatNumber())
+        cost.postValue("${s.toString().formatNumber()}원")
     }
 
     // 캘린더 날짜 선택 시 값 저장
@@ -114,9 +139,32 @@ class HistoryViewModel @Inject constructor(
         }"
     }
 
-    // 선택 버튼 클릭
-    fun onClickChoiceDate() {
+    // 캘린더 선택 버튼 클릭
+    fun onClickCalendarChoice() {
         date.postValue(tempDate)
+    }
+
+    // 선택 버튼 클릭
+    fun onClickCategoryChoiceDate() {
+        if(parent == "자산") {
+            // 자산 선택
+            asset.value = categoryClickItem.name
+        } else {
+            // 분류 선택
+            line.value = categoryClickItem.name
+        }
+    }
+
+    fun onClickCategoryItem(_item: UiBookCategory) {
+        categoryClickItem = _item
+
+        val item = _categoryList.value?.map {
+            UiBookCategory(
+                it.idx, false, it.name, it.default
+            )
+        } ?: listOf()
+        item[_item.idx].checked = !item[_item.idx].checked
+        _categoryList.postValue(item)
     }
 
 }

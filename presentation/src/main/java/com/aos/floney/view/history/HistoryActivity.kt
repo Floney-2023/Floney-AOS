@@ -42,13 +42,13 @@ class HistoryActivity :
         calendarBottomSheetDialog = CalendarBottomSheetDialog(this@HistoryActivity, DayDisableDecorator(this@HistoryActivity), {date ->
             viewModel.setCalendarDate(date)
         }, {
-            viewModel.onClickChoiceDate()
+            viewModel.onClickCalendarChoice()
         })
     }
 
     private fun setUpCategoryBottomSheet() {
-        categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, viewModel) {
-//            viewModel.setCalendarDate(date)
+        categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, viewModel, this@HistoryActivity) {
+            viewModel.onClickCategoryChoiceDate()
         }
     }
 

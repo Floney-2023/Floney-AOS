@@ -31,10 +31,13 @@ class CalendarBottomSheetDialog(
         super.onCreate(savedInstanceState)
 
         binding = BottomSheetCalendarBinding.inflate(layoutInflater)
+        binding.dialog = this
         setContentView(binding.root)
 
         setUpCalendarView()
+    }
 
+    fun onClickBtnChoice() {
         // 선택 버튼 클릭 리스너
         binding.btnChoice.setOnClickListener {
             clickedChoiceBtn()

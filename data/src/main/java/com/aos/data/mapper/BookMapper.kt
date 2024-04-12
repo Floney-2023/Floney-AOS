@@ -50,13 +50,11 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
                     "${it.date.split("-")[1].toInt()}",
                     "${it.date.split("-")[2].toInt()}",
                     Expenses(
-                        date = it.date,
-                        outcome = if (!it.money.toString().equals("0.0")) {
+                        date = it.date, outcome = if (!it.money.toString().equals("0.0")) {
                             "-${NumberFormat.getNumberInstance().format(it.money)}"
                         } else {
                             ""
-                        },
-                        income = tempExpenses!!.income
+                        }, income = tempExpenses!!.income
                     ),
                     todayDate == it.date
                 )
@@ -219,9 +217,10 @@ fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
 }
 
 fun List<GetBookCategoryEntity>.toUiBookCategory(): List<UiBookCategory> {
+    var idx = 0
     return this.map {
         UiBookCategory(
-            it.name, it.default
+            idx++, false, it.name, it.default
         )
     }
 }
