@@ -10,6 +10,7 @@ import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.home.DayMoney
@@ -22,10 +23,12 @@ import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.BookUsers
+import com.aos.model.settlement.Details
 import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.model.settlement.Outcomes
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
+import com.aos.model.settlement.UiSettlementAddModel
 import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -251,5 +254,25 @@ fun List<PostBooksOutcomesEntity>.toUiOutcomesSelectModel(): UiOutcomesSelectMod
     }
     return UiOutcomesSelectModel(
         outcomes = myBookOutcomes
+    )
+}
+fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
+
+    val details = this.details.map {
+        Details(
+            money = if (it.money.toInt() == 0 ) "" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong())}원",
+            userNickname = it.userNickname,
+            useruserProfileImg = it.userProfileImg,
+            moneyInfo = if (it.money > 0) "을 보내야해요." else if (it.money < 0) "을 받아야해요." else "정산할 금액이 없어요."
+        )
+    }
+    return UiSettlementAddModel(
+        id = this.id,
+        startDate = this.startDate,
+        endDate = this.endDate,
+        userCount = this.userCount,
+        totalOutcome ="${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}원",
+        outcome = "${NumberFormat.getNumberInstance().format(this.outcome.roundToLong())}원",
+        details = details
     )
 }

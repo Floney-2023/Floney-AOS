@@ -6,10 +6,11 @@ import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
-import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
+import com.aos.model.settlement.UiSettlementAddModel
+import com.aos.model.settlement.settleOutcomes
 import java.time.Duration
 
 interface BookRepository {
@@ -40,4 +41,8 @@ interface BookRepository {
 
     // 정산 지출 내역 조회
     suspend fun postBooksOutcomes(usersEmails : List<String>, startDate : String, endDate : String, bookKey: String) : Result<UiOutcomesSelectModel>
+
+    // 정산 추가
+    suspend fun postSettlementAdd(bookKey: String, startDate : String, endDate : String, usersEmails : List<String>, outcomes: List<settleOutcomes>) : Result<UiSettlementAddModel>
+
 }

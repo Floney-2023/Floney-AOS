@@ -52,22 +52,23 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
     private var _endDay = MutableLiveData<String>("")
     val endDay: LiveData<String> get() = _endDay
 
-    // 다음 정산 페이지
+    // 이전 페이지
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
 
     // 다음 정산 페이지
-    private var _nextPage = MutableEventFlow< Array<settleOutcomes>>()
-    val nextPage: EventFlow< Array<settleOutcomes>> get() = _nextPage
+    private var _nextPage = MutableEventFlow<Boolean>()
+    val nextPage: EventFlow<Boolean> get() = _nextPage
 
-    // 처음 정산하기 페이지
+
+    private var _outcome = MutableLiveData<LongArray>()
+    val outcome: LiveData<LongArray> get() = _outcome
+
+    private var _userEmail = MutableLiveData<Array<String>>()
+    val userEmail: LiveData<Array<String>> get() = _userEmail
+
     private var _settlementPage = MutableEventFlow<Boolean>()
     val settlementPage: EventFlow<Boolean> get() = _settlementPage
-
-    // bottomSheet 불러오기
-    // 처음 정산하기 페이지
-    private var _periodBottomSheetPage = MutableEventFlow<Boolean>()
-    val periodBottomSheetPage: EventFlow<Boolean> get() = _periodBottomSheetPage
 
     init {
         getOutcomesItems()
@@ -98,7 +99,6 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
             _settlementPage.emit(true)
         }
     }
-
     // 정산 내역 all check
     fun onClickedAllCheck()
     {
@@ -110,21 +110,35 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
         }
     }
     fun onClickedNextPage() {
-        viewModelScope.launch {
-            val selectedEmails: Array<settleOutcomes> = _outcomesList.value?.outcomes
-                ?.filter { it.isClick } // isCheck가 true인 사용자만 필터링
-                ?.map { settleOutcomes(it.money, it.userEmail) } // 각 사용자의 이메일만 추출하여 리스트로 변환
-                ?.toTypedArray() // 배열로 변환
-                ?: emptyArray()
+        val selectedEmails = getSelectedEmails()
+        val selectedOutcomes = getSelectedOutcomes()
 
+        _userEmail.value = selectedEmails
+        _outcome.value = selectedOutcomes
+
+        viewModelScope.launch {
             if (selectedEmails.isNotEmpty()) {
-                _nextPage.emit(selectedEmails)
+                _nextPage.emit(true)
             } else {
-                baseEvent(Event.ShowToastRes(R.string.settle_up_member_select_error_messsage))
+                baseEvent(Event.ShowToastRes(R.string.settle_up_outcomes_select_title))
             }
         }
     }
+    private fun getSelectedEmails(): Array<String> {
+        return _outcomesList.value?.outcomes
+            ?.filter { it.isClick }
+            ?.map { it.userEmail }
+            ?.toTypedArray()
+            ?: emptyArray()
+    }
 
+    private fun getSelectedOutcomes(): LongArray {
+        return _outcomesList.value?.outcomes
+            ?.filter { it.isClick }
+            ?.map { it.money }
+            ?.toLongArray() // LongArray로 변환
+            ?: LongArray(0) // null일 때 빈 LongArray 반환
+    }
 
     // 정산 내역 count
     fun settingSettlementOutcomes(bookUsers: Outcomes)

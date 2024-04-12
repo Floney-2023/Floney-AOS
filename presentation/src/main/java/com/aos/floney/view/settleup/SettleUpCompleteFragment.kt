@@ -6,20 +6,22 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
+import com.aos.floney.databinding.FragmentSettleUpCompleteBinding
 import com.aos.floney.databinding.FragmentSettleUpOutcomesSelectBinding
 import com.aos.floney.databinding.FragmentSettleUpPeriodSelectBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.model.settlement.BookUsers
+import com.aos.model.settlement.Details
 import com.aos.model.settlement.Outcomes
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
+import com.aos.model.settlement.UiSettlementAddModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class SettleUpOutcomesSelectFragment : BaseFragment<FragmentSettleUpOutcomesSelectBinding, SettleUpOutcomesSelectViewModel>(R.layout.fragment_settle_up_outcomes_select) , UiOutcomesSelectModel.OnItemClickListener {
-    override fun onItemClick(item: Outcomes) {
-        viewModel.settingSettlementOutcomes(item)
+class SettleUpCompleteFragment : BaseFragment<FragmentSettleUpCompleteBinding, SettleUpCompleteViewModel>(R.layout.fragment_settle_up_complete) , UiSettlementAddModel.OnItemClickListener {
+    override fun onItemClick(item: Details) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,7 +31,7 @@ class SettleUpOutcomesSelectFragment : BaseFragment<FragmentSettleUpOutcomesSele
         setUpViewModelObserver()
     }
     private fun setUpUi() {
-        binding.setVariable(BR.eventHolder, this@SettleUpOutcomesSelectFragment)
+        binding.setVariable(BR.eventHolder, this@SettleUpCompleteFragment)
     }
 
     private fun setUpViewModelObserver() {
@@ -45,16 +47,11 @@ class SettleUpOutcomesSelectFragment : BaseFragment<FragmentSettleUpOutcomesSele
         repeatOnStarted {
             // 다음 페이지 이동
             viewModel.nextPage.collect {
-                if(it) {
-                    val action = SettleUpOutcomesSelectFragmentDirections
-                        .actionSettleUpOutcomesSelectFragmentToSettleUpCompleteFragment(
-                            viewModel.memberArray.value!!,
-                            viewModel.startDate.value!!,
-                            viewModel.endDate.value!!,
-                            viewModel.outcome.value!!,
-                            viewModel.userEmail.value!!)
-                    findNavController().navigate(action)
-                }
+//                if(it) {
+//                    val action = SettleUp
+//                        .actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
+//                    findNavController().navigate(action)
+//                }
             }
         }
 

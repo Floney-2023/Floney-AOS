@@ -2,7 +2,6 @@ package com.aos.model.settlement
 
 import androidx.recyclerview.widget.DiffUtil
 
-
 data class UiOutcomesSelectModel(
     val outcomes: List<Outcomes>
 ) {

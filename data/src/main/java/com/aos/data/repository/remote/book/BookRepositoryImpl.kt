@@ -4,12 +4,14 @@ import com.aos.data.entity.request.book.Duration
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
+import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.mapper.toGetCheckUserBookModel
 import com.aos.data.mapper.toGetsettleUpLastModel
 import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
 import com.aos.data.mapper.toPostBooksCreateModel
 import com.aos.data.mapper.toPostBooksJoinModel
+import com.aos.data.mapper.toPostSettlementAddModel
 import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.mapper.toUiOutcomesSelectModel
 import com.aos.data.util.RetrofitFailureStateException
@@ -22,6 +24,8 @@ import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
+import com.aos.model.settlement.UiSettlementAddModel
+import com.aos.model.settlement.settleOutcomes
 import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
 import timber.log.Timber
@@ -140,6 +144,30 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         when (val data =
             bookDataSource.postBooksOutcomes(PostBooksOutcomesBody(userEmails, Duration(startDate, endDate), bookKey))) {
             is NetworkState.Success -> return Result.success(data.body.toUiOutcomesSelectModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+
+    override suspend fun postSettlementAdd(
+        bookKey: String,
+        startDate: String,
+        endDate: String,
+        usersEmails: List<String>,
+        outcomes: List<settleOutcomes>
+    ):  Result<UiSettlementAddModel> {
+        val outcomes = outcomes.map {
+            com.aos.data.entity.request.book.Outcomes(it.outcome.toDouble(),it.userEmail)
+        }
+        when (val data =
+            bookDataSource.postSettlementAdd(PostSettlementAddBody(bookKey, startDate, endDate, usersEmails, outcomes))) {
+            is NetworkState.Success -> return Result.success(data.body.toPostSettlementAddModel())
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)
             )
