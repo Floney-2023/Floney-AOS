@@ -4,14 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
-import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
-import com.aos.model.home.MonthMoney
 import com.aos.model.settlement.PeriodCalendar
-import com.aos.usecase.bookadd.BooksJoinUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,8 +31,11 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
     private var _showDate = MutableLiveData<String>()
     val showDate: LiveData<String> get() = _showDate
 
-    val _startDate = MutableLiveData<Calendar>()
-    val startDate: LiveData<Calendar> get() = _startDate
+    val _startDate = MutableLiveData<Calendar?>(null)
+    val startDate: LiveData<Calendar?> get() = _startDate
+
+    val _endDate = MutableLiveData<Calendar?>(null)
+    val endDate: LiveData<Calendar?> get() = _endDate
 
     // 이전 월 이동
     private var _clickedPreviousMonth = MutableEventFlow<String>()
@@ -72,7 +71,8 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
     // 날짜 정보 얻기
     fun getInformDateMonth(){
         _calendar.value.set(Calendar.DAY_OF_MONTH, 1)
-        _getCalendarList.postValue(generateCalendarDates())
+        generateCalendarDates()
+        _getCalendarList.postValue(_getCalendarList.value)
     }
     // 가계부 생성하기
     fun onClickBookCreate(){
@@ -105,7 +105,8 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
     fun onClickPreviousMonth() {
         viewModelScope.launch {
             updateCalendarMonth(-1)
-            _getCalendarList.postValue(generateCalendarDates())
+            generateCalendarDates() // 날짜 생성
+            updateAdjustCalendar() // 값 조정
             _clickedPreviousMonth.emit(getFormatDateMonth())
 
         }
@@ -115,7 +116,8 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
     fun onClickNextMonth() {
         viewModelScope.launch {
             updateCalendarMonth(1)
-            _getCalendarList.postValue(generateCalendarDates())
+            generateCalendarDates()
+            updateAdjustCalendar()
             _clickedPreviousMonth.emit(getFormatDateMonth())
         }
     }
@@ -126,7 +128,7 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
         _calendar.value.add(Calendar.MONTH, value)
     }
 
-    private fun generateCalendarDates(): List<PeriodCalendar> {
+    private fun generateCalendarDates() {
         // _calendar의 현재 상태를 저장
         val originalCalendar = _calendar.value.clone() as Calendar
 
@@ -146,8 +148,8 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
 
         // 작업 완료 후 _calendar를 원래 상태로 복원
         _calendar.value = originalCalendar
+        _getCalendarList.value = periodCalendars
 
-        return periodCalendars
     }
     private fun generatePeriodCalendar(calendar: Calendar, isMonth: Boolean, isClick: Boolean, isRange : Boolean): PeriodCalendar {
         return PeriodCalendar(
@@ -165,8 +167,8 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
         val periodCalendars = mutableListOf<PeriodCalendar>()
 
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-            periodCalendars.add(generatePeriodCalendar(calendar, false, false, false))
             calendar.add(Calendar.DATE, -1)
+            periodCalendars.add(generatePeriodCalendar(calendar, false, false, false))
         }
 
         return periodCalendars.asReversed()
@@ -201,7 +203,60 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
         _showDate.postValue(showDate)
         return date
     }
+    fun updateAdjustPeriod(item: PeriodCalendar) {
+        val clickItem = Calendar.getInstance().apply {
+            set(item.year, item.month - 1, item.day) // 월은 0부터 시작하므로 -1 해줍니다.
+        }
 
+        if (_startDate.value != null && _endDate.value != null) {
+            // startDate와 endDate가 모두 존재하는 경우
+            _startDate.value = clickItem
+            _endDate.value = null // endDate를 리셋합니다.
+        } else if (_startDate.value != null && clickItem.before(_startDate.value)) {
+            // startDate가 존재하고, item이 startDate보다 이전 날짜인 경우
+            _endDate.value = _startDate.value // startDate를 endDate로 설정합니다.
+            _startDate.value = clickItem
+        } else if (_startDate.value != null && clickItem.after(_startDate.value)) {
+            // startDate가 존재하고, item이 startDate보다 이후 날짜인 경우
+            _endDate.value = clickItem
+        } else if (_startDate.value != null && areCalendarsEqual(clickItem,_startDate.value!!)) {
+            // startDate가 존재하고, 클릭된 item이 같은 startDate인 경우.
+            _startDate.value = null
+        } else {
+            // startDate가 존재하지 않는 경우
+            _startDate.value = clickItem
+        }
+        updateAdjustCalendar()
+
+    }
+    fun updateAdjustCalendar() {
+        val updatedList = _getCalendarList.value?.map { calendarItem ->
+            val check = Calendar.getInstance().apply {
+                set(calendarItem.year, calendarItem.month - 1, calendarItem.day) // 월은 0부터 시작하므로 -1 해줍니다.
+            }
+            if (_startDate.value != null && _endDate.value != null) {
+                if (areCalendarsEqual(check, _startDate.value!!) || areCalendarsEqual(check, _endDate.value!!)) {
+                    calendarItem.copy(isClick = true, isRange = true)
+                } else if (check.after(_startDate.value) && check.before(_endDate.value)) {
+                    calendarItem.copy(isRange = true, isClick = false)
+                } else {
+                    calendarItem.copy(isRange = false, isClick = false)
+                }
+            } else if (_startDate.value != null && areCalendarsEqual(check, _startDate.value!!)) {
+                calendarItem.copy(isClick = true)
+            } else if (_startDate.value != null && !areCalendarsEqual(check, _startDate.value!!)) {
+                calendarItem.copy(isClick = false, isRange = false)
+            }   else {
+                calendarItem.copy(isClick = false, isRange = false)
+            }
+        }
+        return _getCalendarList.postValue(updatedList!!)
+    }
+    fun areCalendarsEqual(cal1: Calendar, cal2: Calendar): Boolean {
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
+    }
     // 날짜 선택 완료
     fun onClickPeriodSelect(){
 
