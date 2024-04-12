@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.aos.floney.view.history.HistoryViewModel" />
@@ -15,241 +18,286 @@
         tools:context=".view.history.HistoryActivity">
 
         <ImageView
+            android:id="@+id/iv_close"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/icon_close"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="20dp"
-            android:id="@+id/iv_close"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="금액"
-            android:layout_marginTop="52dp"
             android:layout_marginStart="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/tv_money"
+            android:layout_marginTop="52dp"
             android:fontFamily="@font/pretendard_medium"
+            android:text="금액"
             android:textColor="@color/grayscale6"
             android:textSize="14dp"
-            app:layout_constraintTop_toBottomOf="@id/iv_close"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_close" />
 
         <EditText
+            android:id="@+id/et_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintStart_toStartOf="@id/tv_money"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@null"
-            android:hint="금액을 입력하세요"
-            android:textColorHint="@color/grayscale9"
-            android:gravity="left|center_vertical"
-            android:textSize="36dp"
-            android:id="@+id/et_money"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_money"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
             android:fontFamily="@font/pretendard_semibold"
-            android:textColor="@color/primary2"/>
+            android:gravity="left|center_vertical"
+            android:hint="금액을 입력하세요"
+            android:inputType="number"
+            android:maxLength="18"
+            android:onTextChanged="@{vm.onCostTextChanged}"
+            android:selection="@{vm.cost.length()}"
+            android:text="@{vm.cost}"
+            android:textColor="@color/primary2"
+            android:textColorHint="@color/grayscale9"
+            android:textSize="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_money"
+            app:layout_constraintTop_toBottomOf="@id/tv_money" />
 
         <LinearLayout
+            android:id="@+id/ll_category"
             android:layout_width="0dp"
             android:layout_height="38dp"
-            android:background="@drawable/custom_radius_10_solid_grayscale_12"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:id="@+id/ll_category"
             android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_radius_10_solid_grayscale_12"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_money">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow == `지출` ? @drawable/custom_radius_8_solid_white : null}"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                 android:text="지출"
-                android:fontFamily="@font/pretendard_medium"
-                android:textColor="@color/grayscale2"
-                android:background="@drawable/custom_radius_8_solid_white"
-                android:gravity="center"
-                android:textSize="14dp"
-                android:layout_weight="1"/>
+                android:textColor="@{vm.flow == `지출` ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow == `수입` ? @drawable/custom_radius_8_solid_white : null}"
+                android:fontFamily="@font/pretendard_medium"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                 android:text="수입"
-                android:fontFamily="@font/pretendard_medium"
-                android:textColor="@color/grayscale2"
-                android:background="@drawable/custom_radius_8_solid_white"
-                android:gravity="center"
-                android:textSize="14dp"
-                android:layout_weight="1"/>
+                android:textColor="@{vm.flow == `수입` ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:text="이체"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow == `이체` ? @drawable/custom_radius_8_solid_white : null}"
                 android:fontFamily="@font/pretendard_medium"
-                android:textColor="@color/grayscale2"
-                android:background="@drawable/custom_radius_8_solid_white"
                 android:gravity="center"
-                android:textSize="14dp"
-                android:layout_weight="1"/>
+                android:onClick="@{() -> vm.onClickFlow(`이체`)}"
+                android:text="이체"
+                android:textColor="@{vm.flow == `이체` ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp" />
 
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="38dp"
+            android:fontFamily="@font/pretendard_medium"
             android:text="날짜"
             android:textColor="@color/grayscale4"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_category"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="38dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:id="@+id/tv_date"/>
+            app:layout_constraintTop_toBottomOf="@id/ll_category" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="30dp"
-            app:layout_constraintTop_toTopOf="@id/tv_date"
-            android:onClick="@{() -> vm.onClickShowCalendar()}"
-            app:layout_constraintBottom_toBottomOf="@id/tv_date"
-            android:text="분류를 선택하세요"
-            android:paddingStart="20dp"
             android:fontFamily="@font/pretendard_medium"
+            android:onClick="@{() -> vm.onClickShowCalendar()}"
+            android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/grayscale6"
-            android:textSize="14dp"/>
+            android:text="@{vm.date}"
+            android:textColor="@{vm.date.equals(`날짜를 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_date" />
 
         <TextView
+            android:id="@+id/tv_asset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/pretendard_medium"
             android:text="자산"
             android:textColor="@color/grayscale4"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="@id/tv_date"
-            app:layout_constraintTop_toBottomOf="@id/tv_date"
-            android:layout_marginTop="44dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:id="@+id/tv_asset"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="30dp"
-            app:layout_constraintTop_toTopOf="@id/tv_asset"
-            app:layout_constraintBottom_toBottomOf="@id/tv_asset"
-            android:text="자산을 선택하세요"
-            android:paddingStart="20dp"
             android:fontFamily="@font/pretendard_medium"
+            android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/grayscale6"
-            android:textSize="14dp"/>
+            android:text="@{vm.asset}"
+            android:textColor="@{vm.asset.equals(`자산을 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_asset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_asset" />
 
         <TextView
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/pretendard_medium"
             android:text="분류"
             android:textColor="@color/grayscale4"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="@id/tv_asset"
-            app:layout_constraintTop_toBottomOf="@id/tv_asset"
-            android:layout_marginTop="44dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:id="@+id/tv_category"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_asset" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="30dp"
-            app:layout_constraintTop_toTopOf="@id/tv_category"
-            app:layout_constraintBottom_toBottomOf="@id/tv_category"
-            android:text="분류을 선택하세요"
-            android:paddingStart="20dp"
             android:fontFamily="@font/pretendard_medium"
+            android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/grayscale6"
-            android:textSize="14dp"/>
+            android:text="@{vm.line}"
+            android:textColor="@{vm.line.equals(`분류를 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_category" />
 
         <TextView
+            android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="자산"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="내용"
             android:textColor="@color/grayscale4"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="@id/tv_category"
-            app:layout_constraintTop_toBottomOf="@id/tv_category"
-            android:layout_marginTop="44dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:id="@+id/tv_content"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="30dp"
-            app:layout_constraintTop_toTopOf="@id/tv_content"
-            app:layout_constraintBottom_toBottomOf="@id/tv_content"
-            android:text="내용을 입력하세요"
-            android:paddingStart="20dp"
+            android:background="@null"
             android:fontFamily="@font/pretendard_medium"
+            android:gravity="right|center_vertical"
+            android:hint="내용을 입력하세요"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/grayscale6"
-            android:textSize="14dp"/>
-        
+            android:text="@={vm.content}"
+            android:textColor="@color/grayscale2"
+            android:textColorHint="@color/grayscale6"
+            android:textSize="14sp"
+            app:constraintSet="@id/tv_content"
+            app:layout_constraintBottom_toBottomOf="@id/tv_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/tv_content"
+            app:layout_constraintTop_toTopOf="@id/tv_content" />
+
+
+        <TextView
+            android:id="@+id/tv_delete_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@{vm.flow.equals(`지출`) ? `예산에서 제외` : `자산에서 제외`}"
+            android:textColor="@color/grayscale4"
+            android:textSize="14dp"
+            android:visibility="@{vm.flow.equals(`이체`) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="@id/tv_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:background="@null"
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track_selector"
+            android:visibility="@{vm.flow.equals(`이체`) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_delete_plan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_delete_plan" />
+
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete"
             android:layout_width="118dp"
             android:layout_height="66dp"
             android:background="@color/grayscale2"
             android:fontFamily="@font/pretendard_medium"
-            android:textSize="14dp"
-            android:text="삭제"
             android:gravity="center"
+            android:text="삭제"
             android:textColor="@color/white"
-            android:id="@+id/btn_delete"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="66dp"
             android:background="@color/primary1"
             android:fontFamily="@font/pretendard_medium"
-            android:textSize="14dp"
-            android:text="저장하기"
             android:gravity="center"
+            android:text="저장하기"
             android:textColor="@color/white"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_delete"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_delete" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="작성자: 플로니"
-            app:layout_constraintBottom_toTopOf="@id/btn_delete"
-            android:fontFamily="@font/pretendard_medium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="36dp"
-            android:textColor="@color/grayscale8"/>
+            android:fontFamily="@font/pretendard_medium"
+            android:text="작성자: 플로니"
+            android:textColor="@color/grayscale8"
+            app:layout_constraintBottom_toTopOf="@id/btn_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

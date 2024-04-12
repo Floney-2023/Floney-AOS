@@ -4,12 +4,4 @@
         <item name="colorControlNormal">@color/grayscale9</item>
         <item name="colorControlActivated">@color/primary3</item>
     </style>
-
-    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:backgroundDimAmount">0.5</item>
-        <!-- 다른 필요한 스타일 항목 추가 가능 -->
-    </style>
 </resources>

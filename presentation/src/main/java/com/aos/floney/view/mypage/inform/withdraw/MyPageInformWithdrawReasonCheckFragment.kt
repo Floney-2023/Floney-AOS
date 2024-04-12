@@ -34,12 +34,12 @@ class MyPageInformWithdrawReasonCheckFragment :
                 if(it.isNotEmpty()) {
                     val reasonType = it
                     val reason = viewModel.directInputText.value ?: ""
-                    val withdrawPopupAction =
-                        MyPageInformWithdrawReasonCheckFragmentDirections.actionMyPageInformWithdrawReasonCheckFragmentToMyPageInformWithdrawInputPasswordFragment(
-                            reasonType,
-                            reason
-                        )
-                    findNavController().navigate(withdrawPopupAction)
+//                    val withdrawPopupAction =
+//                        MyPageInformWithdrawReasonCheckFragmentDirections.actionMyPageInformWithdrawReasonCheckFragmentToMyPageInformWithdrawInputPasswordFragment(
+//                            reasonType,
+//                            reason
+//                        )
+//                    findNavController().navigate(withdrawPopupAction)
                 }
             }
         }

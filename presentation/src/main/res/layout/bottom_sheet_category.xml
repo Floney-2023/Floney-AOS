@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.aos.floney.view.history.HistoryViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="490dp"
+            android:background="@drawable/custom_radius_top_left_right_12_solid_white"
+            android:theme="@style/CalenderViewCustom"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="12dp"
+            app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+            app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText"
+            app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+        
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:id="@+id/btn_choice"
+            android:layout_height="46dp"
+            android:gravity="center"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            android:text="선택"
+            android:textSize="14dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_radius_12_solid_primary1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
