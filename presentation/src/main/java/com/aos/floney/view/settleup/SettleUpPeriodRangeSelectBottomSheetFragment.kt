@@ -1,5 +1,6 @@
 package com.aos.floney.view.settleup
 
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.View
 import com.aos.floney.R
@@ -11,8 +12,10 @@ import com.aos.model.settlement.UiPeriodSelectModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import androidx.databinding.library.baseAdapters.BR
+import java.util.Calendar
+
 @AndroidEntryPoint
-class SettleUpPeriodRangeSelectBottomSheetFragment(private val onSelect: (Boolean) -> Unit) :
+class SettleUpPeriodRangeSelectBottomSheetFragment(private val onSelect: (String, String, String?) -> Unit) :
     BaseBottomSheetFragment<BottomSheetSettleUpPeriodSelectBinding, SettleUpPeriodRangeSelectViewModel>(R.layout.bottom_sheet_settle_up_period_select), UiPeriodSelectModel.OnItemClickListener {
     override fun onItemClick(item: PeriodCalendar) {
         viewModel.updateAdjustPeriod(item)
@@ -29,11 +32,15 @@ class SettleUpPeriodRangeSelectBottomSheetFragment(private val onSelect: (Boolea
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
-            // 추가하기 buttonClick
-            viewModel.addButton.collect {
+            // 선택하기 buttonClick
+            viewModel.selectButton.collect {
                 Timber.e("nextPage $it")
-                if(it) {
-                    onSelect(viewModel.bookCreateTerms.value!!)
+                if(it != "") {
+                    onSelect(viewModel.startDateFormat.value!!, viewModel.endDateFormat.value!!, it)
+                    dismiss()
+                }
+                else{
+                    dismiss()
                 }
             }
         }

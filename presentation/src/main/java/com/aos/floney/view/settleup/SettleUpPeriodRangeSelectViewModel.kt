@@ -27,15 +27,23 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
     // 날짜 데이터
     private val _calendar = MutableStateFlow<Calendar>(Calendar.getInstance())
 
-    // 표시 중인 날짜
+    // 달력 헤더 날짜
     private var _showDate = MutableLiveData<String>()
     val showDate: LiveData<String> get() = _showDate
 
+    // 시작 날짜
     val _startDate = MutableLiveData<Calendar?>(null)
     val startDate: LiveData<Calendar?> get() = _startDate
 
+    // 끝 날짜
     val _endDate = MutableLiveData<Calendar?>(null)
     val endDate: LiveData<Calendar?> get() = _endDate
+
+    private var _startDateFormat = MutableLiveData<String?>(null)
+    val startDateFormat: LiveData<String?> get() = _startDateFormat
+
+    private var _endDateFormat = MutableLiveData<String?>(null)
+    val endDateFormat: LiveData<String?> get() = _endDateFormat
 
     // 이전 월 이동
     private var _clickedPreviousMonth = MutableEventFlow<String>()
@@ -48,21 +56,9 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
     private var _getCalendarList = MutableLiveData<List<PeriodCalendar>>()
     val getCalendarList: LiveData<List<PeriodCalendar>> get() = _getCalendarList
 
-
-    // 가계부 초대 코드
-    var inviteCode = MutableLiveData<String>("")
-
-    // 가계부 생성하기 체크
-    private var _bookCreateTerms = MutableLiveData<Boolean>(true)
-    val bookCreateTerms: LiveData<Boolean> get() = _bookCreateTerms
-
-    // 코드 입력하기 체크
-    private var _codeInputTerms = MutableLiveData<Boolean>(false)
-    val codeInputTerms: LiveData<Boolean> get() = _codeInputTerms
-
-    // 추가 하기 버튼 클릭
-    private var _addButton = MutableEventFlow<Boolean>()
-    val addButton: EventFlow<Boolean> get() = _addButton
+    // 선택 하기 버튼 클릭
+    private var _selectButton = MutableEventFlow<String?>()
+    val selectButton: EventFlow<String?> get() = _selectButton
 
     init {
         getInformDateMonth()
@@ -74,32 +70,6 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
         generateCalendarDates()
         _getCalendarList.postValue(_getCalendarList.value)
     }
-    // 가계부 생성하기
-    fun onClickBookCreate(){
-        viewModelScope.launch {
-            withContext(Dispatchers.Default) {
-                _bookCreateTerms.postValue(true)
-                _codeInputTerms.postValue(false)
-            }
-        }
-    }
-
-    // 코드 입력하기
-    fun onClickCodeInput(){
-        viewModelScope.launch {
-            withContext(Dispatchers.Default) {
-                _bookCreateTerms.postValue(false)
-                _codeInputTerms.postValue(true)
-            }
-        }
-    }
-
-    fun onClickAddButton(){
-        viewModelScope.launch(Dispatchers.IO) {
-            _addButton.emit(true)
-        }
-    }
-
 
     // 이전 월 클릭
     fun onClickPreviousMonth() {
@@ -257,8 +227,50 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
                 cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
                 cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH)
     }
+    fun calendarToDateString(calendar: Calendar): String {
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) + 1
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        return String.format("%d.%02d.%02d", year, month, day)
+    }
+
+    fun getFormatPeriodDay(calendar: Calendar): String {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
+        return date
+    }
+
     // 날짜 선택 완료
     fun onClickPeriodSelect(){
+        settingFormatDate()
+        viewModelScope.launch {
+            val startDateString = startDate.value?.let { calendarToDateString(it) } ?: ""
+            val endDateString = endDate.value?.let { calendarToDateString(it) } ?: ""
 
+            val displayString = when {
+                startDateString.isNotEmpty() && endDateString.isNotEmpty() -> {
+                    if (startDate.value!!.get(Calendar.YEAR) == endDate.value!!.get(Calendar.YEAR)) {
+                        "$startDateString - ${endDateString.substring(5)}"
+                    } else {
+                        "$startDateString - $endDateString"
+                    }
+                }
+                startDateString.isNotEmpty() && endDateString.isEmpty() -> {
+                    startDateString
+                }
+                else -> {
+                    ""
+                }
+            }
+            Timber.e("haha ${displayString}")
+            _selectButton.emit(displayString)
+        }
+    }
+    fun settingFormatDate()
+    {
+        val startDateFormatted = startDate.value?.let { getFormatPeriodDay(it) } ?: ""
+        val endDateFormatted = endDate.value?.let { getFormatPeriodDay(it) } ?: startDateFormatted
+
+        _startDateFormat.value = startDateFormatted
+        _endDateFormat.value = endDateFormatted
     }
 }

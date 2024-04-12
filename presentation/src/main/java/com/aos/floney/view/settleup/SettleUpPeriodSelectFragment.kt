@@ -1,34 +1,13 @@
 package com.aos.floney.view.settleup
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
-import com.aos.floney.databinding.FragmentSettleUpMemberSelectBinding
 import com.aos.floney.databinding.FragmentSettleUpPeriodSelectBinding
-import com.aos.floney.databinding.FragmentSettleUpStartBinding
-import com.aos.floney.databinding.FragmentSignUpAgreeBinding
 import com.aos.floney.ext.repeatOnStarted
-import com.aos.floney.view.home.HomeActivity
-import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
-import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
-import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
-import com.aos.floney.view.signup.SignUpActivity
-import com.aos.model.home.MonthMoney
-import com.aos.model.settlement.BookUsers
-import com.aos.model.settlement.UiMemberSelectModel
-import com.aos.model.user.MyBooks
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -50,7 +29,7 @@ class SettleUpPeriodSelectFragment : BaseFragment<FragmentSettleUpPeriodSelectBi
             viewModel.nextPage.collect {
                 if(it) {
 //                    val action =
-//                        SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
+//                        .actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
 //                    findNavController().navigate(action)
                 }
             }
@@ -68,8 +47,9 @@ class SettleUpPeriodSelectFragment : BaseFragment<FragmentSettleUpPeriodSelectBi
         repeatOnStarted {
             viewModel.periodBottomSheetPage.collect {
                 if (it) {
-                    val bottomSheetFragment = SettleUpPeriodRangeSelectBottomSheetFragment { checked ->
-
+                    val bottomSheetFragment = SettleUpPeriodRangeSelectBottomSheetFragment { startDay, endDay, stringFormat ->
+                        if (stringFormat!=null)
+                            viewModel.settingSelectDay(stringFormat, startDay,endDay)
                     }
                     bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
                 }

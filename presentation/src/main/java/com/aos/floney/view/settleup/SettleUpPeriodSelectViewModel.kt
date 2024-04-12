@@ -5,20 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
-import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
-import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.UiMemberSelectModel
-import com.aos.model.user.MyBooks
 import com.aos.usecase.settlement.BooksUsersUseCase
-import com.aos.usecase.settlement.SettlementLastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,25 +27,17 @@ class SettleUpPeriodSelectViewModel @Inject constructor(
 
     var memberArray: LiveData<Array<String>> = stateHandle.getLiveData("member")
 
-    // 특정 가계부 유저 리스트
-    private var _booksUsersList = MutableLiveData<UiMemberSelectModel>()
-    val booksUsersList: LiveData<UiMemberSelectModel> get() = _booksUsersList
-
-
-
-    // 시작 날짜
-    private var _startDay = MutableLiveData<Int>(0)
-    val startDay: LiveData<Int> get() = _startDay
-
-    // 마지막 날짜
-    private var _endDay = MutableLiveData<Int>(0)
-    val endDay: LiveData<Int> get() = _endDay
-
     // 선택 날짜 String format
     private var _selectDay = MutableLiveData<String>("")
     val selectDay: LiveData<String> get() = _selectDay
 
-    // 이전 페이지
+    // 시작 날짜
+    private var _startDay = MutableLiveData<String>("")
+    val startDay: LiveData<String> get() = _startDay
+
+    // 끝 날짜
+    private var _endDay = MutableLiveData<String>("")
+    val endDay: LiveData<String> get() = _endDay
 
     // 다음 정산 페이지
     private var _back = MutableEventFlow<Boolean>()
@@ -68,11 +55,6 @@ class SettleUpPeriodSelectViewModel @Inject constructor(
     // 처음 정산하기 페이지
     private var _periodBottomSheetPage = MutableEventFlow<Boolean>()
     val periodBottomSheetPage: EventFlow<Boolean> get() = _periodBottomSheetPage
-
-
-    init {
-
-    }
 
     // bottomSheet 불러오기
     fun onClickedPeriodSelect(){
@@ -99,20 +81,13 @@ class SettleUpPeriodSelectViewModel @Inject constructor(
         }
     }
 
-    // 멤버 클릭 시, 정산 멤버 count
-    fun settingSettlementMember(bookUsers: BookUsers)
-    {
-        viewModelScope.launch(Dispatchers.IO) {
-            val updatedList = _booksUsersList.value?.booksUsers?.map { user ->
-                if (user.email == bookUsers.email) {
-                    user.copy(isCheck = !user.isCheck) // 선택된 멤버의 isCheck를 true로 설정
-                } else {
-                    user
-                }
-            }
-            _booksUsersList.postValue(_booksUsersList.value?.copy(booksUsers = updatedList!!))
+    // 날짜 선택 범위 text 세팅
+    fun settingSelectDay(settingFormat: String, startSelectDay: String, endSelectDay: String){
+        _startDay.value = startSelectDay
+        _endDay.value = endSelectDay
 
+        viewModelScope.launch(Dispatchers.IO) {
+            _selectDay.postValue(settingFormat)
         }
     }
-
 }

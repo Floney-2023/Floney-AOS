@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
-            android:layout_height="28dp"
+            android:layout_height="30dp"
             android:fontFamily="@font/pretendard_regular"
             android:background="@{item.isRange ? @color/grayscale12 : @color/white}"
             android:gravity="center"
