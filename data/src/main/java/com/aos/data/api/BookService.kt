@@ -5,9 +5,7 @@ import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
-import com.aos.data.entity.request.user.PostCheckEmailCodeBody
-import com.aos.data.entity.request.user.PostLoginBody
-import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
@@ -16,6 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface BookService {
@@ -61,5 +60,13 @@ interface BookService {
     suspend fun postBooksCreate(
         @Body postBooksCreateBody: PostBooksCreateBody
     ): NetworkState<PostBooksCreateEntity>
+
+    // 카테고리 조회하기
+    @GET("books/{bookKey}/categories")
+    @Headers("Auth: true")
+    suspend fun getBooksCategory(
+        @Path("bookKey") bookKey: String,
+        @Query("parent") parent: String
+    ): NetworkState<List<GetBookCategoryEntity>>
 
 }

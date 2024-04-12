@@ -1,14 +1,15 @@
 package com.aos.data.mapper
 
+import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
-import com.aos.data.entity.response.home.DayLiensResponse
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
+import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
 import com.aos.model.home.Expenses
 import com.aos.model.home.ExtData
@@ -215,4 +216,12 @@ fun PostBooksJoinEntity.toPostBooksJoinModel(): PostBooksJoinModel {
 
 fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
     return PostBooksCreateModel(this.bookKey ?: "", this.code ?: "")
+}
+
+fun List<GetBookCategoryEntity>.toUiBookCategory(): List<UiBookCategory> {
+    return this.map {
+        UiBookCategory(
+            it.name, it.default
+        )
+    }
 }

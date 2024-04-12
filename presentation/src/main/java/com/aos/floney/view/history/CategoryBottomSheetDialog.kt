@@ -1,36 +1,38 @@
 package com.aos.floney.view.history
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import com.aos.floney.R
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import com.aos.floney.BR
 import com.aos.floney.databinding.BottomSheetCategoryBinding
+import com.aos.model.book.UiBookCategory
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
-import com.prolificinteractive.materialcalendarview.format.TitleFormatter
-import org.threeten.bp.LocalDateTime
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.Date
-import java.util.logging.SimpleFormatter
 
 
 class CategoryBottomSheetDialog(
     context: Context,
-    private val dayViewDecorator: com.prolificinteractive.materialcalendarview.DayViewDecorator,
-    private val clickedDate: (String) -> Unit,
+    private val viewModel: HistoryViewModel,
     private val clickedChoiceBtn: () -> Unit,
-) : BottomSheetDialog(context) {
-
+) : BottomSheetDialog(context), UiBookCategory.OnItemClickListener {
     lateinit var binding: BottomSheetCategoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = BottomSheetCategoryBinding.inflate(layoutInflater)
+
+        with(binding) {
+            setVariable(BR.vm, viewModel)
+            setVariable(BR.eventHolder, this@CategoryBottomSheetDialog)
+            lifecycleOwner = this@CategoryBottomSheetDialog
+        }
+
+        viewModel.categoryList.observe(this@CategoryBottomSheetDialog) {
+            Timber.e("categoryList $it")
+        }
+
         setContentView(binding.root)
 
         // 선택 버튼 클릭 리스너
@@ -38,5 +40,11 @@ class CategoryBottomSheetDialog(
             clickedChoiceBtn()
             this.dismiss()
         }
+
+
+    }
+
+    override fun onItemClick(item: UiBookCategory) {
+        Timber.e("item $item")
     }
 }

@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.book
 import com.aos.data.api.BookService
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
@@ -41,6 +42,13 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         postBooksCreateBody : PostBooksCreateBody
     ): NetworkState<PostBooksCreateEntity> {
         return bookService.postBooksCreate(postBooksCreateBody)
+    }
+
+    override suspend fun getBookCategory(
+        bookKey: String,
+        parent: String,
+    ): NetworkState<List<GetBookCategoryEntity>> {
+        return bookService.getBooksCategory(bookKey, parent)
     }
 
 }

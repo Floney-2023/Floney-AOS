@@ -7,9 +7,11 @@ import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
 import com.aos.data.mapper.toPostBooksCreateModel
 import com.aos.data.mapper.toPostBooksJoinModel
+import com.aos.data.mapper.toUiBookCategory
 import com.aos.data.util.RetrofitFailureStateException
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
+import com.aos.model.book.UiBookCategory
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
@@ -95,6 +97,21 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         when (val data =
             bookDataSource.postBooksCreate(PostBooksCreateBody(name, profileImg))) {
             is NetworkState.Success -> return Result.success(data.body.toPostBooksCreateModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+
+    override suspend fun getBookCategory(
+        bookKey: String,
+        parent: String,
+    ): Result<List<UiBookCategory>> {
+        when (val data =
+            bookDataSource.getBookCategory(bookKey, parent)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiBookCategory())
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)
             )

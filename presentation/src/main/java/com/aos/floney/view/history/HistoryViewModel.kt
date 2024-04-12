@@ -1,22 +1,35 @@
 package com.aos.floney.view.history
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.formatNumber
+import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.model.book.UiBookCategory
+import com.aos.usecase.history.GetBookCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor() : BaseViewModel() {
+class HistoryViewModel @Inject constructor(
+    private val prefs: SharedPreferenceUtil,
+    private val getBookCategoryUseCase: GetBookCategoryUseCase
+) : BaseViewModel() {
 
     // 날짜 클릭 여부
     private var _showCalendar = MutableEventFlow<Boolean>()
     val showCalendar: EventFlow<Boolean> get() = _showCalendar
+
+    // 카테고리 클릭
+    private var _onClickCategory = MutableEventFlow<Boolean>()
+    val onClickCategory: EventFlow<Boolean> get() = _onClickCategory
 
     // 날짜
     private var tempDate = ""
@@ -37,10 +50,37 @@ class HistoryViewModel @Inject constructor() : BaseViewModel() {
     // 내용
     var content = MutableLiveData<String>()
 
+    // 내용
+    var _categoryList = MutableLiveData<List<UiBookCategory>>()
+    val categoryList: LiveData<List<UiBookCategory>> get() = _categoryList
+
+    init {
+        getBookCategory()
+    }
+
+    private fun getBookCategory() {
+        viewModelScope.launch(Dispatchers.IO) { 
+            getBookCategoryUseCase(prefs.getString("bookKey", ""), "지출").onSuccess {
+                _categoryList.postValue(it)
+                Timber.e("it.${it}")
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+
     // 날짜 표시 클릭
     fun onClickShowCalendar() {
         viewModelScope.launch {
             _showCalendar.emit(true)
+        }
+    }
+
+
+    // 카테고리 표시 클릭
+    fun onClickCategory() {
+        viewModelScope.launch {
+            _onClickCategory.emit(true)
         }
     }
 

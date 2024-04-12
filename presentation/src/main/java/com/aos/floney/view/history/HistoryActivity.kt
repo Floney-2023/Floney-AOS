@@ -14,24 +14,28 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.model.book.UiBookCategory
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 
 @AndroidEntryPoint
 class HistoryActivity :
-    BaseActivity<ActivityHistoryBinding, HistoryViewModel>(R.layout.activity_history) {
-    lateinit var calendarBottomSheetDialog: CalendarBottomSheetDialog
+    BaseActivity<ActivityHistoryBinding, HistoryViewModel>(R.layout.activity_history), UiBookCategory.OnItemClickListener {
+    private lateinit var calendarBottomSheetDialog: CalendarBottomSheetDialog
+    private lateinit var categoryBottomSheetDialog: CategoryBottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setUpViewModelObserver()
         setUpCalendarBottomSheet()
+        setUpCategoryBottomSheet()
     }
 
     private fun setUpCalendarBottomSheet() {
@@ -42,6 +46,12 @@ class HistoryActivity :
         })
     }
 
+    private fun setUpCategoryBottomSheet() {
+        categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, viewModel) {
+//            viewModel.setCalendarDate(date)
+        }
+    }
+
     private fun setUpViewModelObserver() {
         repeatOnStarted {
             viewModel.showCalendar.collect {
@@ -49,6 +59,13 @@ class HistoryActivity :
                     if(!calendarBottomSheetDialog.isShowing) {
                         calendarBottomSheetDialog.show()
                     }
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.onClickCategory.collect {
+                if(it) {
+                    categoryBottomSheetDialog.show()
                 }
             }
         }
@@ -70,5 +87,9 @@ class HistoryActivity :
                 }
             }
         }
+    }
+
+    override fun onItemClick(item: UiBookCategory) {
+        Timber.e("item $item")
     }
 }
