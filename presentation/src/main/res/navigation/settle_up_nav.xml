@@ -45,5 +45,23 @@
         <argument
             android:name="member"
             app:argType="string[]" />
+        <action
+            android:id="@+id/action_settleUpPeriodSelectFragment_to_settleUpOutcomesSelectFragment"
+            app:destination="@id/settleUpOutcomesSelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpOutcomesSelectFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpOutcomesSelectFragment"
+        android:label="SettleUpOutcomesSelectFragment"
+        tools:layout="@layout/fragment_settle_up_outcomes_select">
+        <argument
+            android:name="member"
+            app:argType="string[]"/>
+        <argument
+            android:name="startDay"
+            app:argType="string"/>
+        <argument
+            android:name="endDay"
+            app:argType="string"/>
     </fragment>
 </navigation>

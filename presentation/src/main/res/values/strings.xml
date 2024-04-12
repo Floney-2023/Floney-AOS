@@ -239,9 +239,11 @@
     <string name="settle_up_period_select_select_button">선택</string>
     <string name="settle_up_period_select_day_placeholder">%1$s</string>
 
-    <string name="settle_up_breakdown_select_title">정산할 내역을\n선택해주세요</string>
-    <string name="settle_up_breakdown_select_back_button">이전으로</string>
-    <string name="settle_up_breakdown_select_next_button">정산하기</string>
+    <string name="settle_up_outcomes_select_title">정산할 내역을\n선택해주세요</string>
+    <string name="settle_up_outcomes_all_check">전체선택</string>
+    <string name="settle_up_outcomes_select_money_text">%1$s원</string>
+    <string name="settle_up_outcomes_select_back_button">이전으로</string>
+    <string name="settle_up_outcomes_select_next_button">정산하기</string>
 
     <string name="settle_up_complete_title">정산할 내역을\n선택해주세요</string>
     <string name="settle_up_complete_info">소수점은 반올림되어 계산됩니다.</string>

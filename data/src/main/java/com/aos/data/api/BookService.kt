@@ -5,6 +5,7 @@ import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
@@ -13,6 +14,7 @@ import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.util.NetworkState
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -77,5 +79,12 @@ interface BookService {
     suspend fun getBooksUsers(
         @Query("bookKey") bookKey: String
     ): NetworkState<List<GetBooksUsersEntity>>
+
+    // 정산 지출 내역 조회
+    @POST("books/outcomes")
+    @Headers("Auth: true")
+    suspend fun postBooksOutcomes(
+        @Body postBooksOutcomesBody: PostBooksOutcomesBody
+    ): NetworkState<List<PostBooksOutcomesEntity>>
 
 }

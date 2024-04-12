@@ -1,5 +1,6 @@
 package com.aos.data.mapper
 
+import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
@@ -8,6 +9,7 @@ import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.home.DayMoney
@@ -21,12 +23,15 @@ import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.Outcomes
 import com.aos.model.settlement.UiMemberSelectModel
+import com.aos.model.settlement.UiOutcomesSelectModel
 import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.roundToLong
 
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
@@ -229,5 +234,22 @@ fun List<GetBooksUsersEntity>.toUiMemberSelectModel(): UiMemberSelectModel {
     }
     return UiMemberSelectModel(
         booksUsers = myBookUsers
+    )
+}
+fun List<PostBooksOutcomesEntity>.toUiOutcomesSelectModel(): UiOutcomesSelectModel {
+    val myBookOutcomes = this.mapIndexed { index, item ->
+        Outcomes(
+            id = index, // 인덱스를 id로 사용
+            money = item.money.roundToLong(),
+            category = "${item.category[0]} ‧ ${item.category[1]}",
+            assetType = item.assetType,
+            content = item.content,
+            img = item.img,
+            userEmail = item.userEmail,
+            isClick = false
+        )
+    }
+    return UiOutcomesSelectModel(
+        outcomes = myBookOutcomes
     )
 }

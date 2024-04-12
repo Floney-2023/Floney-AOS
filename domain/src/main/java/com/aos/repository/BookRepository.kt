@@ -6,8 +6,11 @@ import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.model.settlement.UiMemberSelectModel
+import com.aos.model.settlement.UiOutcomesSelectModel
+import java.time.Duration
 
 interface BookRepository {
 
@@ -34,4 +37,7 @@ interface BookRepository {
 
     // 특정 가계부의 유저들 조회
     suspend fun getBooksUsers(bookKey: String): Result<UiMemberSelectModel>
+
+    // 정산 지출 내역 조회
+    suspend fun postBooksOutcomes(usersEmails : List<String>, startDate : String, endDate : String, bookKey: String) : Result<UiOutcomesSelectModel>
 }
