@@ -1,6 +1,7 @@
 package com.aos.model.settlement
 
 import androidx.recyclerview.widget.DiffUtil
+import retrofit2.http.POST
 
 data class UiSettlementAddModel(
     val id: Long,

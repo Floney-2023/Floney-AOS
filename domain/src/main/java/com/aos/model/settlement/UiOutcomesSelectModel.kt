@@ -22,6 +22,7 @@ data class UiOutcomesSelectModel(
 data class Outcomes(
     val id: Int?,
     val money: Long,
+    val moneyFormat : String,
     val category: String,
     val assetType: String,
     val content: String,

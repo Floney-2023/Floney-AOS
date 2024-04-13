@@ -135,7 +135,7 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
     private fun getSelectedOutcomes(): LongArray {
         return _outcomesList.value?.outcomes
             ?.filter { it.isClick }
-            ?.map { it.money }
+            ?.map {  it.money }
             ?.toLongArray() // LongArray로 변환
             ?: LongArray(0) // null일 때 빈 LongArray 반환
     }

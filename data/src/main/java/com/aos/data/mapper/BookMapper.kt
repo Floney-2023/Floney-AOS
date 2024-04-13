@@ -34,6 +34,7 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
 // 유저 가계부 유효 확인
@@ -244,6 +245,7 @@ fun List<PostBooksOutcomesEntity>.toUiOutcomesSelectModel(): UiOutcomesSelectMod
         Outcomes(
             id = index, // 인덱스를 id로 사용
             money = item.money.roundToLong(),
+            moneyFormat ="${NumberFormat.getNumberInstance().format(item.money.roundToLong())}원" ,
             category = "${item.category[0]} ‧ ${item.category[1]}",
             assetType = item.assetType,
             content = item.content,
@@ -260,7 +262,7 @@ fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
 
     val details = this.details.map {
         Details(
-            money = if (it.money.toInt() == 0 ) "" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong())}원",
+            money = if (it.money.toInt() == 0 ) "" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong().absoluteValue)}원",
             userNickname = it.userNickname,
             useruserProfileImg = it.userProfileImg,
             moneyInfo = if (it.money > 0) "을 보내야해요." else if (it.money < 0) "을 받아야해요." else "정산할 금액이 없어요."
