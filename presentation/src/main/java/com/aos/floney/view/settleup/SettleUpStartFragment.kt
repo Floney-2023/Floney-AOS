@@ -43,7 +43,9 @@ class SettleUpStartFragment : BaseFragment<FragmentSettleUpStartBinding, SettleU
             // 정산 내역 보기 이동
             viewModel.settleUpSeePage.collect {
                 if(it) {
-
+                    val action =
+                        SettleUpStartFragmentDirections.actionSettleUpStartFragmentToSettleUpSeeFragment()
+                    findNavController().navigate(action)
                 }
             }
         }

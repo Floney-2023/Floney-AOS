@@ -7,6 +7,7 @@ data class UiSettlementAddModel(
     val id: Long,
     val startDate : String,
     val endDate : String,
+    val dateString : String,
     val userCount : Int,
     val totalOutcome : String,
     val outcome : String,

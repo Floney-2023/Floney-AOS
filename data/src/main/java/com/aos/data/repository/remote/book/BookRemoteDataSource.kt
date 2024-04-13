@@ -12,6 +12,7 @@ import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
@@ -28,4 +29,6 @@ interface BookRemoteDataSource {
     suspend fun getBooksUsers(bookKey: String): NetworkState<List<GetBooksUsersEntity>>
     suspend fun postBooksOutcomes(postBooksOutcomesBody : PostBooksOutcomesBody): NetworkState<List<PostBooksOutcomesEntity>>
     suspend fun postSettlementAdd(postSettlementAddBody : PostSettlementAddBody): NetworkState<PostSettlementAddEntity>
+    suspend fun getSettlementSee(bookKey: String): NetworkState<List<GetSettlementSeeEntity>>
+    suspend fun getSettlementDetailSee(id: Long): NetworkState<PostSettlementAddEntity>
 }

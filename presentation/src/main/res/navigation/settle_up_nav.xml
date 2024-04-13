@@ -22,6 +22,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_settleUpStartFragment_to_settleUpSeeFragment"
+            app:destination="@id/settleUpSeeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/settleUpMemberSelectFragment"
@@ -88,5 +95,27 @@
         <argument
             android:name="userEmail"
             app:argType="string[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpSeeFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpSeeFragment"
+        android:label="SettleUpSeeFragment"
+        tools:layout="@layout/fragment_settle_up_see" >
+        <action
+            android:id="@+id/action_settleUpSeeFragment_to_settleUpDetailSeeFragment"
+            app:destination="@id/settleUpDetailSeeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpDetailSeeFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpDetailSeeFragment"
+        android:label="SettleUpDetailSeeFragment"
+        tools:layout="@layout/fragment_settle_up_detail_see">
+        <argument
+            android:name="id"
+            app:argType="long"/>
     </fragment>
 </navigation>

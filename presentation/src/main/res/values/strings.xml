@@ -253,4 +253,20 @@
     <string name="settle_up_complete_settlement_money">정산 금액</string>
     <string name="settle_up_complete_share_button">공유하기</string>
 
+    <!--10-2 정산 내역 -->
+    <string name="settle_up_see_title">정산 내역</string>
+    <string name="settle_up_see_card_period">기간</string>
+    <string name="settle_up_see_card_total_money">총 금액</string>
+    <string name="settle_up_see_card_member">인원</string>
+    <string name="settle_up_see_card_settlement_money">정산 금액</string>
+    <string name="settle_up_see_card_settlement_one_member">1인</string>
+    <string name="settle_up_see_card_not_settlement">정산 내역이 없습니다.</string>
+
+
+    <string name="settle_up_detail_see_title">정산 영수증</string>
+    <string name="settle_up_detail_see_total_expense">총 지출</string>
+    <string name="settle_up_detail_see_settlement_money">정산 금액</string>
+    <string name="settle_up_detail_see_card_settlement_one_member">1인</string>
+    <string name="settle_up_detail_see_share_button">공유하기</string>
+
 </resources>

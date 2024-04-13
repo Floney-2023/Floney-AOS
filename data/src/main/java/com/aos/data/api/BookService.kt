@@ -15,6 +15,7 @@ import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
@@ -22,6 +23,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface BookService {
@@ -96,4 +98,17 @@ interface BookService {
         @Body postSettlementAddBody: PostSettlementAddBody
     ): NetworkState<PostSettlementAddEntity>
 
+    // 가계부의 정산 내역 조회
+    @GET("settlement")
+    @Headers("Auth: true")
+    suspend fun getSettlementSee(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<List<GetSettlementSeeEntity>>
+
+    // 정산 세부 내역 조회
+    @GET("settlement/{id}")
+    @Headers("Auth: true")
+    suspend fun getSettlementDetailSee(
+        @Path("id") id: Long
+    ): NetworkState<PostSettlementAddEntity>
 }

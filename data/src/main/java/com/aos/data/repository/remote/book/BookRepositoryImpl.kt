@@ -14,6 +14,7 @@ import com.aos.data.mapper.toPostBooksJoinModel
 import com.aos.data.mapper.toPostSettlementAddModel
 import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.mapper.toUiOutcomesSelectModel
+import com.aos.data.mapper.toUiSettlementSeeModel
 import com.aos.data.util.RetrofitFailureStateException
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
@@ -25,6 +26,7 @@ import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
+import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.settlement.settleOutcomes
 import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
@@ -167,6 +169,36 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         }
         when (val data =
             bookDataSource.postSettlementAdd(PostSettlementAddBody(bookKey, startDate, endDate, usersEmails, outcomes))) {
+            is NetworkState.Success -> return Result.success(data.body.toPostSettlementAddModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun getSettlementSee(bookKey: String): Result<UiSettlementSeeModel> {
+        when (val data =
+            bookDataSource.getSettlementSee(bookKey)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiSettlementSeeModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun getSettlementDetailSee(
+        id: Long
+    ):  Result<UiSettlementAddModel> {
+        when (val data =
+            bookDataSource.getSettlementDetailSee(id)) {
             is NetworkState.Success -> return Result.success(data.body.toPostSettlementAddModel())
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)

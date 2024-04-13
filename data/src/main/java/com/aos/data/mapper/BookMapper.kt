@@ -9,6 +9,7 @@ import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.model.book.PostBooksCreateModel
@@ -26,9 +27,11 @@ import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.Details
 import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.model.settlement.Outcomes
+import com.aos.model.settlement.Settlement
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
+import com.aos.model.settlement.UiSettlementSeeModel
 import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -272,9 +275,24 @@ fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
         id = this.id,
         startDate = this.startDate,
         endDate = this.endDate,
+        dateString = "${this.startDate.replace('-','.')} - ${this.endDate.replace('-','.')}",
         userCount = this.userCount,
         totalOutcome ="${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}원",
         outcome = "${NumberFormat.getNumberInstance().format(this.outcome.roundToLong())}원",
         details = details
+    )
+}
+fun List<GetSettlementSeeEntity>.toUiSettlementSeeModel(): UiSettlementSeeModel {
+    val myBookSettlements = this.map {
+        Settlement(
+            id = it.id,
+            dateString = "${it.startDate.replace('-','.')} - ${it.endDate.replace('-','.')}",
+            userCount = "${it.userCount}명",
+            totalOutcome = "${NumberFormat.getNumberInstance().format(it.totalOutcome)}원",
+            outcome = "${NumberFormat.getNumberInstance().format(it.outcome)}원"
+        )
+    }
+    return UiSettlementSeeModel(
+        settlementList = myBookSettlements
     )
 }

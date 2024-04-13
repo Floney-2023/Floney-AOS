@@ -10,6 +10,7 @@ import com.aos.model.settlement.GetSettlementLastModel
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
+import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.settlement.settleOutcomes
 import java.time.Duration
 
@@ -45,4 +46,9 @@ interface BookRepository {
     // 정산 추가
     suspend fun postSettlementAdd(bookKey: String, startDate : String, endDate : String, usersEmails : List<String>, outcomes: List<settleOutcomes>) : Result<UiSettlementAddModel>
 
+    // 가계부의 정산 내역 조회
+    suspend fun getSettlementSee(bookKey: String): Result<UiSettlementSeeModel>
+
+    // 정산 세부 내역 조회
+    suspend fun getSettlementDetailSee(id: Long): Result<UiSettlementAddModel>
 }
