@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.RecyclerView
 import com.aos.floney.BR
+import com.aos.floney.base.BaseViewModel
 import com.aos.floney.databinding.BottomSheetCategoryBinding
 import com.aos.model.book.UiBookCategory
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -21,6 +22,13 @@ class CategoryBottomSheetDialog(
     private val clickedChoiceBtn: () -> Unit,
 ) : BottomSheetDialog(context), UiBookCategory.OnItemClickListener {
     lateinit var binding: BottomSheetCategoryBinding
+
+    override fun onStart() {
+        super.onStart()
+        Timber.e("start")
+
+        viewModel.initCategoryDialog()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +56,14 @@ class CategoryBottomSheetDialog(
     }
 
     fun onClickChoiceBtn() {
-        // 선택 버튼 클릭 리스너
-        binding.btnChoice.setOnClickListener {
+        if(viewModel.isClickedCategoryItem()) {
+            // 선택 버튼 클릭 리스너
             clickedChoiceBtn()
             this.dismiss()
         }
     }
 
     override fun onItemClick(item: UiBookCategory) {
-        Timber.e("item $item")
         viewModel.onClickCategoryItem(item)
     }
 }

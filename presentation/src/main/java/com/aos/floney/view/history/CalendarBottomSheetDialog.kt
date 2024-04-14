@@ -40,10 +40,8 @@ class CalendarBottomSheetDialog(
 
     fun onClickBtnChoice() {
         // 선택 버튼 클릭 리스너
-        binding.btnChoice.setOnClickListener {
-            onClickedChoiceBtn()
-            this.dismiss()
-        }
+        onClickedChoiceBtn()
+        this.dismiss()
     }
 
     private fun setUpCalendarView() {

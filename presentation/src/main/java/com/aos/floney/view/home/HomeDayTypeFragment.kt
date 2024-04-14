@@ -50,6 +50,11 @@ class HomeDayTypeFragment : BaseFragment<FragmentHomeDayTypeBinding, HomeDayType
                 viewModel.updateMoneyDay(it)
             }
         }
+        repeatOnStarted {
+            viewModel.clickAddHistory.collect {
+                activityViewModel.onClickAddHistory()
+            }
+        }
     }
 
     override fun onItemClick(item: DayMoney) {

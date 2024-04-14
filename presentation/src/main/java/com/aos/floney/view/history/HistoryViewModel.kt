@@ -77,7 +77,7 @@ class HistoryViewModel @Inject constructor(
     val categoryList: LiveData<List<UiBookCategory>> get() = _categoryList
 
     // 카테고리 선택 아이템 저장
-    private lateinit var categoryClickItem: UiBookCategory
+    private var categoryClickItem: UiBookCategory? = null
 
     // 자산, 지출, 수입, 이체 카테고리 조회에 사용
     private var parent = ""
@@ -96,9 +96,15 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             getBookCategoryUseCase(prefs.getString("bookKey", ""), parent).onSuccess { it ->
                 val item = it.map { innerItem ->
-                    UiBookCategory(
-                        innerItem.idx, innerItem.checked, innerItem.name, innerItem.default
-                    )
+                    if(innerItem.name == asset.value || innerItem.name == line.value){
+                        UiBookCategory(
+                            innerItem.idx, true, innerItem.name, innerItem.default
+                        )
+                    } else {
+                        UiBookCategory(
+                            innerItem.idx, innerItem.checked, innerItem.name, innerItem.default
+                        )
+                    }
                 }
 
                 Timber.e("item $item")
@@ -210,17 +216,19 @@ class HistoryViewModel @Inject constructor(
 
     // 캘린더 선택 버튼 클릭
     fun onClickCalendarChoice() {
-        date.postValue(tempDate)
+        if(tempDate != "") {
+            date.postValue(tempDate)
+        }
     }
 
     // 선택 버튼 클릭
     fun onClickCategoryChoiceDate() {
         if (parent == "자산") {
             // 자산 선택
-            asset.value = categoryClickItem.name
+            asset.value = categoryClickItem?.name
         } else {
             // 분류 선택
-            line.value = categoryClickItem.name
+            line.value = categoryClickItem?.name
         }
     }
 
@@ -234,6 +242,20 @@ class HistoryViewModel @Inject constructor(
         } ?: listOf()
         item[_item.idx].checked = !item[_item.idx].checked
         _categoryList.postValue(item)
+    }
+
+    fun isClickedCategoryItem(): Boolean {
+        Timber.e("categoryClickItem $categoryClickItem")
+        return if(categoryClickItem != null) {
+            true
+        } else {
+            baseEvent(Event.ShowToast("카테고리 항목을 선택해주세요"))
+            false
+        }
+    }
+
+    fun initCategoryDialog() {
+        categoryClickItem = null
     }
 
 }
