@@ -1,6 +1,7 @@
 package com.aos.floney.view.history
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -30,16 +31,29 @@ class HistoryActivity :
     private lateinit var calendarBottomSheetDialog: CalendarBottomSheetDialog
     private lateinit var categoryBottomSheetDialog: CategoryBottomSheetDialog
 
+    override fun onStart() {
+        super.onStart()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setUpViewModelObserver()
-        setUpCalendarBottomSheet()
+        setUpCalendarBottomSheet(getIntentAddData())
         setUpCategoryBottomSheet()
     }
 
-    private fun setUpCalendarBottomSheet() {
-        calendarBottomSheetDialog = CalendarBottomSheetDialog(this@HistoryActivity, DayDisableDecorator(this@HistoryActivity), {date ->
+    private fun getIntentAddData(): String {
+        val date = intent.getStringExtra("date") ?: ""
+        val nickname = intent.getStringExtra("nickname") ?: ""
+
+        viewModel.setIntentAddData(date, nickname)
+
+        return date
+    }
+
+    private fun setUpCalendarBottomSheet(date: String) {
+        calendarBottomSheetDialog = CalendarBottomSheetDialog(this@HistoryActivity, date, DayDisableDecorator(this@HistoryActivity), {date ->
             viewModel.setCalendarDate(date)
         }, {
             viewModel.onClickCalendarChoice()

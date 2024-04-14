@@ -16,7 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home), UiBookDayModel.OnItemClickListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home),
+    UiBookDayModel.OnItemClickListener {
     private val fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,21 +33,31 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
 
     private fun setUpViewModelObserver() {
         viewModel.clickedShowType.observe(this) { showType ->
-            when(showType) {
+            when (showType) {
                 "month" -> {
                     viewModel.initCalendarMonth()
-                    fragmentManager.beginTransaction().replace(R.id.fl_container, HomeMonthTypeFragment()).commit()
+                    fragmentManager.beginTransaction()
+                        .replace(R.id.fl_container, HomeMonthTypeFragment()).commit()
                 }
+
                 "day" -> {
                     viewModel.initCalendarDay()
-                    fragmentManager.beginTransaction().replace(R.id.fl_container, HomeDayTypeFragment()).commit()
+                    fragmentManager.beginTransaction()
+                        .replace(R.id.fl_container, HomeDayTypeFragment()).commit()
                 }
             }
         }
 
         repeatOnStarted {
+            // 내역추가
             viewModel.clickedAddHistory.collect {
-                startActivity(Intent(this@HomeActivity, HistoryActivity::class.java))
+                startActivity(
+                    Intent(
+                        this@HomeActivity,
+                        HistoryActivity::class.java
+                    ).putExtra("date", viewModel.getClickDate())
+                        .putExtra("nickname", viewModel.getMyNickname())
+                )
             }
         }
     }

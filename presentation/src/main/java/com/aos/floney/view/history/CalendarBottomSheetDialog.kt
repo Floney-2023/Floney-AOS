@@ -20,9 +20,10 @@ import java.util.logging.SimpleFormatter
 
 class CalendarBottomSheetDialog(
     context: Context,
+    private val clickedDate: String,
     private val dayViewDecorator: com.prolificinteractive.materialcalendarview.DayViewDecorator,
-    private val clickedDate: (String) -> Unit,
-    private val clickedChoiceBtn: () -> Unit,
+    private val onClickedDate: (String) -> Unit,
+    private val onClickedChoiceBtn: () -> Unit,
 ) : BottomSheetDialog(context) {
 
     lateinit var binding: BottomSheetCalendarBinding
@@ -40,7 +41,7 @@ class CalendarBottomSheetDialog(
     fun onClickBtnChoice() {
         // 선택 버튼 클릭 리스너
         binding.btnChoice.setOnClickListener {
-            clickedChoiceBtn()
+            onClickedChoiceBtn()
             this.dismiss()
         }
     }
@@ -50,17 +51,14 @@ class CalendarBottomSheetDialog(
             addDecorator(dayViewDecorator)
             setWeekDayFormatter(ArrayWeekDayFormatter(context.resources.getTextArray(R.array.custom_weekdays)))
             setTitleFormatter(MyTitleFormatter())
-            val date = CalendarDay.today().date.apply {
-                withYear(2024)
-                withMonth(4)
-                withDayOfMonth(15)
-            }
-            currentDate = CalendarDay.from(2024, 12, 25)
-            selectedDate = CalendarDay.from(2024, 12, 25)
+
+            val date = clickedDate.split(".")
+            currentDate = CalendarDay.from(date[0].toInt(), date[1].toInt(), date[2].toInt())
+            selectedDate = CalendarDay.from(date[0].toInt(), date[1].toInt(), date[2].toInt())
         }
 
         binding.calendar.setOnDateChangedListener { widget, date, selected ->
-            clickedDate(date.toString().replace("CalendarDay",""))
+            onClickedDate(date.toString().replace("CalendarDay",""))
         }
     }
 

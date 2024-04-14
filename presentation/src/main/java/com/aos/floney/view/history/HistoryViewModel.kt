@@ -11,11 +11,13 @@ import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
 import com.aos.usecase.history.GetBookCategoryUseCase
+import com.aos.usecase.history.PostBooksLinesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+
 // 내역 추가
 // 데이터 넘기기 우선 날짜만 
 // 캘린더 클릭 안하면 안 나옴
@@ -27,7 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val getBookCategoryUseCase: GetBookCategoryUseCase
+    private val getBookCategoryUseCase: GetBookCategoryUseCase,
+    private val postBooksLinesUseCase: PostBooksLinesUseCase
 ) : BaseViewModel() {
 
     // 날짜 클릭 여부
@@ -42,6 +45,10 @@ class HistoryViewModel @Inject constructor(
     private var tempDate = ""
     var date = MutableLiveData<String>("날짜를 선택하세요")
 
+    // 닉네임
+    private val _nickname = MutableLiveData<String>()
+    val nickname: LiveData<String> get() = _nickname
+
     // 금액
     var cost = MutableLiveData<String>("")
 
@@ -55,7 +62,7 @@ class HistoryViewModel @Inject constructor(
     var line = MutableLiveData<String>("분류를 선택하세요")
 
     // 내용
-    var content = MutableLiveData<String>()
+    var content = MutableLiveData<String>("")
 
     // 내용
     var _categoryList = MutableLiveData<List<UiBookCategory>>()
@@ -67,12 +74,18 @@ class HistoryViewModel @Inject constructor(
     // 자산, 지출, 수입, 이체 카테고리 조회에 사용
     private var parent = ""
 
-    init {
+    // 예산/자산 제외 설정 여부
+    private var deleteChecked = false
+
+    // 내역 추가 시에는 날짜만 세팅함
+    fun setIntentAddData(clickDate: String, nickname: String) {
+        date.value = clickDate
+        _nickname.value = nickname
     }
 
+    // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory(parent: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            Timber.e("parent $parent")
             getBookCategoryUseCase(prefs.getString("bookKey", ""), parent).onSuccess { it ->
                 val item = it.map { innerItem ->
                     UiBookCategory(
@@ -87,6 +100,45 @@ class HistoryViewModel @Inject constructor(
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }
+    }
+
+    // 가계부 내역 추가(저장버튼 클릭)
+    fun onClickSaveBtn() {
+        if (isAllInputData()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                postBooksLinesUseCase(
+                    bookKey = prefs.getString("bookKey", ""),
+                    money = cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2)
+                        .toInt(),
+                    flow = flow.value!!,
+                    asset = asset.value!!,
+                    line = line.value!!,
+                    lineDate = date.value!!,
+                    description = content.value!!,
+                    except = deleteChecked,
+                    nickname = nickname.value!!,
+                    repeatDuration = "NONE"
+                ).onSuccess {
+                    Timber.e("it $it")
+                }.onFailure {
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                }
+            }
+        } else {
+            baseEvent(Event.ShowToast("모든 값을 입력해 주세요"))
+        }
+    }
+
+    // 모든 데이터 입력 되었는지 체크
+    private fun isAllInputData(): Boolean {
+        Timber.e("cost.value ${cost.value}")
+        Timber.e("flow.value ${flow.value}")
+        Timber.e("cost.value ${asset.value}")
+        Timber.e("cost.value ${line.value}")
+        Timber.e("lineDate.value ${date.value}")
+        Timber.e("descriptuon.value ${content.value}")
+        Timber.e("except.value ${deleteChecked}")
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
     }
 
     // 날짜 표시 클릭
@@ -116,7 +168,16 @@ class HistoryViewModel @Inject constructor(
 
     // 비용 입력 시 저장
     fun onCostTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        cost.postValue("${s.toString().formatNumber()}원")
+        if (count == 0) {
+            cost.postValue("${s.toString().formatNumber()}")
+        } else {
+            cost.postValue("${s.toString().formatNumber()}원")
+        }
+    }
+
+    // 예산/자산 제외 스위치 값 저장
+    fun onDeleteCheckedChange(checked: Boolean) {
+        deleteChecked = checked
     }
 
     // 캘린더 날짜 선택 시 값 저장
@@ -146,7 +207,7 @@ class HistoryViewModel @Inject constructor(
 
     // 선택 버튼 클릭
     fun onClickCategoryChoiceDate() {
-        if(parent == "자산") {
+        if (parent == "자산") {
             // 자산 선택
             asset.value = categoryClickItem.name
         } else {

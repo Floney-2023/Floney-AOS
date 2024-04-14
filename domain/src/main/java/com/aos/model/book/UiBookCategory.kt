@@ -15,8 +15,6 @@ data class UiBookCategory(
 
     companion object : DiffUtil.ItemCallback<UiBookCategory>() {
         override fun areItemsTheSame(oldItem: UiBookCategory, newItem: UiBookCategory): Boolean {
-            Timber.e("oldItem.hashCode() ${oldItem.hashCode()}")
-            Timber.e("newItem.hashCode() ${newItem.hashCode()}")
             return oldItem.hashCode() == newItem.hashCode()
         }
 

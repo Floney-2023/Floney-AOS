@@ -5,12 +5,15 @@ import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.request.book.PostBooksLinesBody
+import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.util.NetworkState
 import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -68,5 +71,12 @@ interface BookService {
         @Path("bookKey") bookKey: String,
         @Query("parent") parent: String
     ): NetworkState<List<GetBookCategoryEntity>>
+
+    // 가계부 내역 추가
+    @POST("books/lines")
+    @Headers("Auth: true")
+    suspend fun postBooksLines(
+        @Body moneyData: PostBooksLinesBody
+    ): NetworkState<PostBooksLinesEntity>
 
 }

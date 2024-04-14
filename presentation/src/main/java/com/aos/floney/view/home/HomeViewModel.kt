@@ -66,6 +66,8 @@ class HomeViewModel @Inject constructor(
     private var _onClickedShowDetail = MutableLiveData<MonthMoney?>(null)
     val onClickedShowDetail: LiveData<MonthMoney?> get() = _onClickedShowDetail
 
+    private lateinit var myNickname: String
+
     init {
         getBookInfo(prefs.getString("bookKey", ""))
         getFormatDateMonth()
@@ -85,6 +87,13 @@ class HomeViewModel @Inject constructor(
     private fun getBookInfo(code: String) {
         viewModelScope.launch {
             getBookInfoUseCase(code).onSuccess {
+                // 내 닉네임 저장
+                it.ourBookUsers.forEach {
+                    if(it.me) {
+                        myNickname = it.name
+                    }
+                }
+
                 _bookInfo.postValue(it)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -203,5 +212,26 @@ class HomeViewModel @Inject constructor(
         val showDate = date.substring(5, 10).replace("-", ".")
         _showDate.postValue(showDate)
         return date
+    }
+
+    // 선택된 날짜 가져오기
+    fun getClickDate(): String {
+        val year = _calendar.value.get(Calendar.YEAR)
+        val month = if((_calendar.value.get(Calendar.MONTH) + 1) < 10) {
+            "0${_calendar.value.get(Calendar.MONTH) + 1}"
+        } else {
+            _calendar.value.get(Calendar.MONTH) + 1
+        }
+        val day = if(_calendar.value.get(Calendar.DATE) < 10) {
+            "0${_calendar.value.get(Calendar.DATE)}"
+        } else {
+            _calendar.value.get(Calendar.DATE)
+        }
+        return "$year.$month.$day"
+    }
+
+    // 내 닉네임 가져오기
+    fun getMyNickname(): String {
+        return myNickname
     }
 }

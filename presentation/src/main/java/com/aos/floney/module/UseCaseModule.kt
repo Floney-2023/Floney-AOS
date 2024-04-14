@@ -3,6 +3,7 @@ package com.aos.floney.module
 import com.aos.repository.BookRepository
 import com.aos.repository.UserRepository
 import com.aos.usecase.history.GetBookCategoryUseCase
+import com.aos.usecase.history.PostBooksLinesUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
@@ -48,5 +49,8 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideGetBookCategoryUseCase(bookRepository: BookRepository) = GetBookCategoryUseCase(bookRepository)
+    @Provides
+    @Singleton
+    fun providePostBooksLinesUseCase(bookRepository: BookRepository) = PostBooksLinesUseCase(bookRepository)
 
 }
