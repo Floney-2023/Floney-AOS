@@ -142,7 +142,10 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
                 RetrofitFailureStateException(data.error, data.code)
             )
             is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
-            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+            is NetworkState.UnknownError -> {
+                Timber.e("asdasd ${data.t?.message}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
         }
     }
 

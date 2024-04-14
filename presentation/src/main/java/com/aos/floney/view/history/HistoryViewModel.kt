@@ -33,9 +33,17 @@ class HistoryViewModel @Inject constructor(
     private val postBooksLinesUseCase: PostBooksLinesUseCase
 ) : BaseViewModel() {
 
+    // 내역 추가 결과
+    private var _postBooksLines = MutableEventFlow<Boolean>()
+    val postBooksLines: EventFlow<Boolean> get() = _postBooksLines
+
     // 날짜 클릭 여부
     private var _showCalendar = MutableEventFlow<Boolean>()
     val showCalendar: EventFlow<Boolean> get() = _showCalendar
+
+    // 닫기 클릭
+    private var _onClickCloseBtn = MutableEventFlow<Boolean>()
+    val onClickCloseBtn: EventFlow<Boolean> get() = _onClickCloseBtn
 
     // 카테고리 클릭
     private var _onClickCategory = MutableEventFlow<Boolean>()
@@ -113,13 +121,13 @@ class HistoryViewModel @Inject constructor(
                     flow = flow.value!!,
                     asset = asset.value!!,
                     line = line.value!!,
-                    lineDate = date.value!!,
+                    lineDate = date.value!!.replace(".", "-"),
                     description = content.value!!,
                     except = deleteChecked,
                     nickname = nickname.value!!,
                     repeatDuration = "NONE"
                 ).onSuccess {
-                    Timber.e("it $it")
+                    _postBooksLines.emit(true)
                 }.onFailure {
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                 }
@@ -131,14 +139,14 @@ class HistoryViewModel @Inject constructor(
 
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
-        Timber.e("cost.value ${cost.value}")
-        Timber.e("flow.value ${flow.value}")
-        Timber.e("cost.value ${asset.value}")
-        Timber.e("cost.value ${line.value}")
-        Timber.e("lineDate.value ${date.value}")
-        Timber.e("descriptuon.value ${content.value}")
-        Timber.e("except.value ${deleteChecked}")
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+    }
+
+    // 닫기 버튼 클릭
+    fun onClickCloseBtn() {
+        viewModelScope.launch {
+            _onClickCloseBtn.emit(true)
+        }
     }
 
     // 날짜 표시 클릭

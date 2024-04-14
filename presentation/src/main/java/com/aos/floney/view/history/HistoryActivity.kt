@@ -15,6 +15,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -80,6 +81,23 @@ class HistoryActivity :
             viewModel.onClickCategory.collect {
                 if(it) {
                     categoryBottomSheetDialog.show()
+                }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.postBooksLines.collect {
+                if(it) {
+                    startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                    finish()
+                }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.onClickCloseBtn.collect {
+                if(it) {
+                    finish()
                 }
             }
         }

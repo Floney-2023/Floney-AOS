@@ -220,7 +220,7 @@ fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
 
 fun PostBooksLinesEntity.toPostBooksLinesModel(): PostBooksLinesModel {
     return PostBooksLinesModel(
-        money = this.money,
+        money = this.money.toInt(),
         flow = this.flow,
         asset = this.asset,
         line = this.line,
