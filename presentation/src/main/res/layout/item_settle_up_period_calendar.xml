@@ -19,13 +19,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="58dp"
+        android:layout_height="54dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}">
 
         <View
             android:id="@+id/tv_range_left"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="38dp"
             android:fontFamily="@font/pretendard_regular"
             android:background="@{item.leftRange ? @color/grayscale12 : @color/white}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,7 @@
         <View
             android:id="@+id/tv_range_right"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="38dp"
             android:fontFamily="@font/pretendard_regular"
             android:background="@{item.rightRange ? @color/grayscale12 : @color/white}"
             app:layout_constraintBottom_toBottomOf="parent"

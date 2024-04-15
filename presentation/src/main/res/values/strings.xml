@@ -248,6 +248,7 @@
     <string name="settle_up_period_select_text">%1$s-%1$s</string>
     <string name="settle_up_period_select_select_button">선택</string>
     <string name="settle_up_period_select_day_placeholder">%1$s</string>
+    <string name="settle_up_period_select_error_messsage">내역이 없습니다. 기간을 다시 설정해주세요.</string>
 
     <string name="settle_up_outcomes_select_title">정산할 내역을\n선택해주세요</string>
     <string name="settle_up_outcomes_all_check">전체선택</string>

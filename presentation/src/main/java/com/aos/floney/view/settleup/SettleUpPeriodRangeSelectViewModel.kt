@@ -216,7 +216,7 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
                     calendarItem.copy(isRightRange = false, isLeftRange = false, isClick = false)
                 }
             } else if (_startDate.value != null && areCalendarsEqual(check, _startDate.value!!)) {
-                calendarItem.copy(isClick = true)
+                calendarItem.copy(isClick = true, isRightRange = false, isLeftRange = false)
             } else {
                 calendarItem.copy(isClick = false, isRightRange = false, isLeftRange = false)
             }
