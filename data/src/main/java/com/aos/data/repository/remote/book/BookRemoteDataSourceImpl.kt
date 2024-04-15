@@ -3,12 +3,19 @@ package com.aos.data.repository.remote.book
 import com.aos.data.api.BookService
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.request.book.PostBooksOutcomesBody
+import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.data.entity.response.settlement.GetBooksUsersEntity
+import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
+import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
 import javax.inject.Inject
 
@@ -42,5 +49,34 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
     ): NetworkState<PostBooksCreateEntity> {
         return bookService.postBooksCreate(postBooksCreateBody)
     }
-
+    override suspend fun getSettlementLast(
+        bookKey: String
+    ): NetworkState<GetSettleUpLastEntity> {
+        return bookService.getSettlementLast(bookKey)
+    }
+    override suspend fun getBooksUsers(
+        bookKey: String
+    ): NetworkState<List<GetBooksUsersEntity>> {
+        return bookService.getBooksUsers(bookKey)
+    }
+    override suspend fun postBooksOutcomes(
+        postBooksOutcomesBody : PostBooksOutcomesBody
+    ): NetworkState<List<PostBooksOutcomesEntity>> {
+        return bookService.postBooksOutcomes(postBooksOutcomesBody)
+    }
+    override suspend fun postSettlementAdd(
+        postSettlementAddBody : PostSettlementAddBody
+    ): NetworkState<PostSettlementAddEntity> {
+        return bookService.postSettlementAdd(postSettlementAddBody)
+    }
+    override suspend fun getSettlementSee(
+        bookKey: String
+    ): NetworkState<List<GetSettlementSeeEntity>> {
+        return bookService.getSettlementSee(bookKey)
+    }
+    override suspend fun getSettlementDetailSee(
+        id : Long
+    ): NetworkState<PostSettlementAddEntity> {
+        return bookService.getSettlementDetailSee(id)
+    }
 }

@@ -1,11 +1,17 @@
 package com.aos.data.mapper
 
+import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.data.entity.response.settlement.GetBooksUsersEntity
+import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
+import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.home.DayMoney
@@ -17,10 +23,22 @@ import com.aos.model.home.OurBookUsers
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import com.aos.model.settlement.BookUsers
+import com.aos.model.settlement.Details
+import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.Outcomes
+import com.aos.model.settlement.Settlement
+import com.aos.model.settlement.UiMemberSelectModel
+import com.aos.model.settlement.UiOutcomesSelectModel
+import com.aos.model.settlement.UiSettlementAddModel
+import com.aos.model.settlement.UiSettlementSeeModel
+import timber.log.Timber
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.absoluteValue
+import kotlin.math.roundToLong
 
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
@@ -209,4 +227,72 @@ fun PostBooksJoinEntity.toPostBooksJoinModel(): PostBooksJoinModel {
 
 fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
     return PostBooksCreateModel(this.bookKey ?: "", this.code?: "")
+}
+
+fun GetSettleUpLastEntity.toGetsettleUpLastModel() : GetSettlementLastModel {
+    return GetSettlementLastModel(passedDays = this.passedDays)
+}
+
+fun List<GetBooksUsersEntity>.toUiMemberSelectModel(): UiMemberSelectModel {
+    val myBookUsers = this.map {
+        BookUsers(
+            email = it.email, nickname = it.nickname, profileImg = it.profileImg, isCheck = false
+        )
+    }
+    return UiMemberSelectModel(
+        booksUsers = myBookUsers
+    )
+}
+fun List<PostBooksOutcomesEntity>.toUiOutcomesSelectModel(): UiOutcomesSelectModel {
+    val myBookOutcomes = this.mapIndexed { index, item ->
+        Outcomes(
+            id = index, // 인덱스를 id로 사용
+            money = item.money.roundToLong(),
+            moneyFormat ="${NumberFormat.getNumberInstance().format(item.money.roundToLong())}원" ,
+            category = "${item.category[0]} ‧ ${item.category[1]}",
+            assetType = item.assetType,
+            content = item.content,
+            img = item.img,
+            userEmail = item.userEmail,
+            isClick = false
+        )
+    }
+    return UiOutcomesSelectModel(
+        outcomes = myBookOutcomes
+    )
+}
+fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
+
+    val details = this.details.map {
+        Details(
+            money = if (it.money.toInt() == 0 ) "" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong().absoluteValue)}원",
+            userNickname = it.userNickname,
+            useruserProfileImg = it.userProfileImg,
+            moneyInfo = if (it.money > 0) "을 보내야해요." else if (it.money < 0) "을 받아야해요." else "정산할 금액이 없어요."
+        )
+    }
+    return UiSettlementAddModel(
+        id = this.id,
+        startDate = this.startDate,
+        endDate = this.endDate,
+        dateString = "${this.startDate.replace('-','.')} - ${this.endDate.replace('-','.')}",
+        userCount = this.userCount,
+        totalOutcome ="${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}원",
+        outcome = "${NumberFormat.getNumberInstance().format(this.outcome.roundToLong())}원",
+        details = details
+    )
+}
+fun List<GetSettlementSeeEntity>.toUiSettlementSeeModel(): UiSettlementSeeModel {
+    val myBookSettlements = this.map {
+        Settlement(
+            id = it.id,
+            dateString = "${it.startDate.replace('-','.')} - ${it.endDate.replace('-','.')}",
+            userCount = "${it.userCount}명",
+            totalOutcome = "${NumberFormat.getNumberInstance().format(it.totalOutcome)}원",
+            outcome = "${NumberFormat.getNumberInstance().format(it.outcome)}원"
+        )
+    }
+    return UiSettlementSeeModel(
+        settlementList = myBookSettlements
+    )
 }

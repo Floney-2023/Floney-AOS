@@ -5,17 +5,25 @@ import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.request.book.PostBooksOutcomesBody
+import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.data.entity.response.settlement.GetBooksUsersEntity
+import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
+import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
+import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface BookService {
@@ -62,4 +70,45 @@ interface BookService {
         @Body postBooksCreateBody: PostBooksCreateBody
     ): NetworkState<PostBooksCreateEntity>
 
+    // 가계부의 마지막 정산일 조회
+    @GET("books/settlement/last")
+    @Headers("Auth: true")
+    suspend fun getSettlementLast(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<GetSettleUpLastEntity>
+
+    // 특정 가계부의 유저들 조회
+    @GET("books/users")
+    @Headers("Auth: true")
+    suspend fun getBooksUsers(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<List<GetBooksUsersEntity>>
+
+    // 정산 지출 내역 조회
+    @POST("books/outcomes")
+    @Headers("Auth: true")
+    suspend fun postBooksOutcomes(
+        @Body postBooksOutcomesBody: PostBooksOutcomesBody
+    ): NetworkState<List<PostBooksOutcomesEntity>>
+
+    // 정산 추가
+    @POST("settlement")
+    @Headers("Auth: true")
+    suspend fun postSettlementAdd(
+        @Body postSettlementAddBody: PostSettlementAddBody
+    ): NetworkState<PostSettlementAddEntity>
+
+    // 가계부의 정산 내역 조회
+    @GET("settlement")
+    @Headers("Auth: true")
+    suspend fun getSettlementSee(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<List<GetSettlementSeeEntity>>
+
+    // 정산 세부 내역 조회
+    @GET("settlement/{id}")
+    @Headers("Auth: true")
+    suspend fun getSettlementDetailSee(
+        @Path("id") id: Long
+    ): NetworkState<PostSettlementAddEntity>
 }

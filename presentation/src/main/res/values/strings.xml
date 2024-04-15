@@ -220,4 +220,64 @@
     <string name="my_page_book_add_invite_check_code_input_hint">코드를 입력하세요.</string>
     <string name="my_page_book_add_invite_check_code_complete_button_text">추가하기</string>
 
+    <string-array name="custom_weekdays">
+        <item>월</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+        <item>토</item>
+        <item>일</item>
+    </string-array>
+
+    <!--10-1 정산 -->
+    <string name="settle_up_start">정산</string>
+    <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>
+    <string name="settle_up_start_info">복잡하고 어려운 정산, 저희가 대신 해드릴게요</string>
+    <string name="settle_up_start_button">정산하기</string>
+    <string name="settle_up_start_see_button"><u>정산 내역 보기</u></string>
+
+    <string name="settle_up_member_select_title">정산에 참여할 멤버를\n선택해주세요</string>
+    <string name="settle_up_member_select_button">다음으로</string>
+    <string name="settle_up_member_select_error_messsage">멤버를 선택해주세요.</string>
+
+    <string name="settle_up_period_select_title">정산할 기간을\n설정해주세요</string>
+    <string name="settle_up_period_select_hint">기간을 설정해주세요.</string>
+    <string name="settle_up_period_select_back_button">이전으로</string>
+    <string name="settle_up_period_select_next_button">다음으로</string>
+    <string name="settle_up_period_select_text">%1$s-%1$s</string>
+    <string name="settle_up_period_select_select_button">선택</string>
+    <string name="settle_up_period_select_day_placeholder">%1$s</string>
+    <string name="settle_up_period_select_error_messsage">내역이 없습니다. 기간을 다시 설정해주세요.</string>
+
+    <string name="settle_up_outcomes_select_title">정산할 내역을\n선택해주세요</string>
+    <string name="settle_up_outcomes_all_check">전체선택</string>
+    <string name="settle_up_outcomes_select_money_text">%1$s원</string>
+    <string name="settle_up_outcomes_select_back_button">이전으로</string>
+    <string name="settle_up_outcomes_select_next_button">정산하기</string>
+
+    <string name="settle_up_complete_title">정산이\n완료되었어요!</string>
+    <string name="settle_up_complete_info">소수점은 반올림되어 계산됩니다.</string>
+    <string name="settle_up_complete_member_count">1인</string>
+    <string name="settle_up_complete_total_expense">총 지출</string>
+    <string name="settle_up_complete_total_expense_format">%1$s원</string>
+    <string name="settle_up_complete_settlement_money">정산 금액</string>
+    <string name="settle_up_complete_share_button">공유하기</string>
+
+    <!--10-2 정산 내역 -->
+    <string name="settle_up_see_title">정산 내역</string>
+    <string name="settle_up_see_card_period">기간</string>
+    <string name="settle_up_see_card_total_money">총 금액</string>
+    <string name="settle_up_see_card_member">인원</string>
+    <string name="settle_up_see_card_settlement_money">정산 금액</string>
+    <string name="settle_up_see_card_settlement_one_member">1인</string>
+    <string name="settle_up_see_card_not_settlement">정산 내역이 없습니다.</string>
+
+
+    <string name="settle_up_detail_see_title">정산 영수증</string>
+    <string name="settle_up_detail_see_total_expense">총 지출</string>
+    <string name="settle_up_detail_see_settlement_money">정산 금액</string>
+    <string name="settle_up_detail_see_card_settlement_one_member">1인</string>
+    <string name="settle_up_detail_see_share_button">공유하기</string>
+
 </resources>

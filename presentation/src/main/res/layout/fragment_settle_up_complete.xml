@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.aos.model.settlement.UiSettlementAddModel" />
+        <variable
+            name="vm"
+            type="com.aos.floney.view.settleup.SettleUpCompleteViewModel" />
+        <variable
+            name="eventHolder"
+            type="com.aos.model.settlement.UiSettlementAddModel.OnItemClickListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".view.signup.SignUpAgreeFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_exit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="22dp"
+            android:onClick="@{() -> vm.onClickedExit()}"
+            android:padding="5dp"
+            android:src="@drawable/icon_exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="68dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="4"
+                android:textColor="@color/grayscale2"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="/"
+                android:textColor="@color/grayscale6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="4"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_settle_up_complete_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/settle_up_complete_title"
+            android:textColor="@color/grayscale1"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/ll_page"
+            app:layout_constraintTop_toBottomOf="@id/ll_page" />
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/icon_settlement_complete"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_title" />
+
+        <TextView
+            android:id="@+id/tv_settle_up_complete_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/settle_up_complete_info"
+            android:textColor="@color/grayscale8"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_title" />
+
+        <TextView
+            android:id="@+id/tv_settle_up_complete_total_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/settle_up_complete_total_expense"
+            android:textColor="@color/grayscale2"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_info" />
+
+        <TextView
+            android:id="@+id/tv_settle_up_complete_all_expense_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="28dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@{vm.settlementModel.totalOutcome}"
+            android:textColor="@color/grayscale2"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_info" />
+
+        <ImageView
+            android:id="@+id/iv_top_dottedLine"
+            android:layout_width="0dp"
+            android:layout_height="1.5dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:layerType="software"
+            android:src="@drawable/custom_view_dotted_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_all_expense_money" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_member_select_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="3dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@+id/iv_top_dottedLine"
+            app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_total_expense"
+            app:layout_constraintTop_toBottomOf="@+id/iv_top_dottedLine"
+            bind:diffCallback="@{(Object)UiSettlementAddModel.Companion}"
+            bind:eventHolder="@{eventHolder}"
+            bind:itemLayout="@{@layout/item_settlement_complete_user_view}"
+            bind:items="@{vm.settlementModel.details}"
+            bind:viewModel="@{vm}" />
+
+        <ImageView
+            android:id="@+id/iv_bottom_dottedLine"
+            android:layout_width="0dp"
+            android:layout_height="1.5dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="24dp"
+            android:layerType="software"
+            android:src="@drawable/custom_view_dotted_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_member_select_view" />
+
+        <TextView
+            android:id="@+id/tv_settle_up_complete_settlement_money_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/settle_up_complete_settlement_money"
+            android:textColor="@color/grayscale2"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_info"
+            app:layout_constraintTop_toBottomOf="@+id/iv_bottom_dottedLine" />
+
+        <TextView
+            android:id="@+id/tv_settle_up_complete_settlement_money_one_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/settle_up_complete_member_count"
+            android:textColor="@color/grayscale6"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
+            app:layout_constraintEnd_toStartOf="@+id/tv_settle_up_complete_settlement_money"
+            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
+
+        <TextView
+            android:id="@+id/tv_settle_up_complete_settlement_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@{vm.settlementModel.outcome}"
+            android:textColor="@color/primary2"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:background="@color/background2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:fillViewport="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_line">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_settlement_member_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                bind:diffCallback="@{(Object)UiSettlementAddModel.Companion}"
+                bind:eventHolder="@{eventHolder}"
+                bind:itemLayout="@{@layout/item_settlement_complete_detail_view}"
+                bind:items="@{vm.settlementModel.details}"
+                bind:viewModel="@{vm}" />
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:background="@color/primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickedSharePage()}"
+            android:text="@string/settle_up_complete_share_button"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
