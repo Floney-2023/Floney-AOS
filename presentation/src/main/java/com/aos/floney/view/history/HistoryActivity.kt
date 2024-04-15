@@ -39,9 +39,8 @@ class HistoryActivity :
         super.onCreate(savedInstanceState)
 
         setUpViewModelObserver()
-        setUpCalendarBottomSheet(getIntentAddData())
+        setUpCalendarBottomSheet()
         setUpCategoryBottomSheet()
-        getModifyData()
     }
 
     // 내역 추가 데이터 가져오기
@@ -55,13 +54,26 @@ class HistoryActivity :
     }
 
     // 내역 수정 데이터 가져오기
-    private fun getModifyData() {
+    private fun getModifyData(): String {
+        var date = ""
         intent.intentSerializable("dayItem", DayMoneyModifyItem::class.java)
-            ?.let { viewModel.setIntentModifyData(it) }
+            ?.let {
+                viewModel.setIntentModifyData(it)
+                date = it.lineDate
+            }
+
+        Timber.e("date $date")
+        return date
     }
 
     // 캘린더 bottomSheet 구현
-    private fun setUpCalendarBottomSheet(date: String) {
+    private fun setUpCalendarBottomSheet() {
+        val date = if(getIntentAddData() == "") {
+            getModifyData()
+        } else {
+            getIntentAddData()
+        }
+
         calendarBottomSheetDialog = CalendarBottomSheetDialog(this@HistoryActivity, date, DayDisableDecorator(this@HistoryActivity), {date ->
             viewModel.setCalendarDate(date)
         }, {

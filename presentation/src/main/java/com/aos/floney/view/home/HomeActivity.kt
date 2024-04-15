@@ -68,22 +68,26 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         viewModel.onClickShowDetail(item)
     }
 
+    // 일별내역 아이템 클릭
+    fun onClickDayItem(item: DayMoney) { startActivity(
+        Intent(
+            this@HomeActivity,
+            HistoryActivity::class.java
+        ).putExtra("dayItem", DayMoneyModifyItem(
+            id = item.id,
+            money = item.money,
+            description = item.description,
+            lineDate = viewModel.getClickDate(),
+            lineCategory = item.lineCategory,
+            lineSubCategory = item.lineSubCategory,
+            assetSubCategory = item.assetSubCategory,
+            exceptStatus = item.exceptStatus,
+            writerNickName = item.writerNickName
+        ))
+    )
+    }
+
     override fun onItemClick(item: DayMoney) {
-        startActivity(
-            Intent(
-                this@HomeActivity,
-                HistoryActivity::class.java
-            ).putExtra("dayItem", DayMoneyModifyItem(
-                id = item.id,
-                money = item.money,
-                description = item.description,
-                lineDate = viewModel.getClickDate(),
-                lineCategory = item.lineCategory,
-                lineSubCategory = item.lineSubCategory,
-                assetSubCategory = item.assetSubCategory,
-                exceptStatus = item.exceptStatus,
-                writerNickName = item.writerNickName
-            ))
-        )
+        onClickDayItem(item)
     }
 }

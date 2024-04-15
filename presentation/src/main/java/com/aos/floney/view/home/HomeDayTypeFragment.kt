@@ -58,7 +58,7 @@ class HomeDayTypeFragment : BaseFragment<FragmentHomeDayTypeBinding, HomeDayType
     }
 
     override fun onItemClick(item: DayMoney) {
-        Timber.e("item $item")
+        val activity = requireActivity() as HomeActivity
+        activity.onClickDayItem(item)
     }
-
 }

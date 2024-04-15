@@ -3,6 +3,7 @@ package com.aos.floney.ext
 import android.text.Editable
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
+import timber.log.Timber
 
 @BindingAdapter("bind:setSelection")
 fun EditText.setSelection(str: String) {
@@ -11,5 +12,8 @@ fun EditText.setSelection(str: String) {
     } else {
         0
     }
-    this.setSelection(textLength)
+
+    if(this.text.toString().isNotEmpty()) {
+        this.setSelection(textLength)
+    }
 }
