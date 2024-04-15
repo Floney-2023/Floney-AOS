@@ -1,5 +1,6 @@
 package com.aos.repository
 
+import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
@@ -45,5 +46,19 @@ interface BookRepository {
         nickname: String,
         repeatDuration: String
     ): Result<PostBooksLinesModel>
+
+    // 가계부 내역 수정
+    suspend fun postBooksLinesChange(
+        lineId: Int,
+        bookKey: String,
+        money: Int,
+        flow: String,
+        asset: String,
+        line: String,
+        lineDate: String,
+        description: String,
+        except: Boolean,
+        nickname: String,
+    ): Result<PostBooksChangeModel>
 
 }

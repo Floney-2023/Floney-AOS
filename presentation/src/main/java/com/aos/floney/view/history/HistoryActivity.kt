@@ -14,9 +14,12 @@ import androidx.core.content.ContextCompat
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
+import com.aos.floney.ext.intentSerializable
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
+import com.aos.model.home.DayMoney
+import com.aos.model.home.DayMoneyModifyItem
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -32,18 +35,16 @@ class HistoryActivity :
     private lateinit var calendarBottomSheetDialog: CalendarBottomSheetDialog
     private lateinit var categoryBottomSheetDialog: CategoryBottomSheetDialog
 
-    override fun onStart() {
-        super.onStart()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setUpViewModelObserver()
         setUpCalendarBottomSheet(getIntentAddData())
         setUpCategoryBottomSheet()
+        getModifyData()
     }
 
+    // 내역 추가 데이터 가져오기
     private fun getIntentAddData(): String {
         val date = intent.getStringExtra("date") ?: ""
         val nickname = intent.getStringExtra("nickname") ?: ""
@@ -53,6 +54,13 @@ class HistoryActivity :
         return date
     }
 
+    // 내역 수정 데이터 가져오기
+    private fun getModifyData() {
+        intent.intentSerializable("dayItem", DayMoneyModifyItem::class.java)
+            ?.let { viewModel.setIntentModifyData(it) }
+    }
+
+    // 캘린더 bottomSheet 구현
     private fun setUpCalendarBottomSheet(date: String) {
         calendarBottomSheetDialog = CalendarBottomSheetDialog(this@HistoryActivity, date, DayDisableDecorator(this@HistoryActivity), {date ->
             viewModel.setCalendarDate(date)
@@ -61,6 +69,7 @@ class HistoryActivity :
         })
     }
 
+    // 카테고리 bottomSheet 구현
     private fun setUpCategoryBottomSheet() {
         categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, viewModel, this@HistoryActivity) {
             viewModel.onClickCategoryChoiceDate()
@@ -101,12 +110,20 @@ class HistoryActivity :
                 }
             }
         }
+
+        repeatOnStarted {
+            viewModel.postModifyBooksLines.collect {
+                if(it) {
+                    startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                    finish()
+                }
+            }
+        }
     }
 
+    // 캘린더 일자 배경 커스텀 클래스
     inner class DayDisableDecorator(context: Context) : DayViewDecorator {
         private val drawable = ContextCompat.getDrawable(context, R.drawable.calendar_selector)
-        private val unselectedTextColor = ContextCompat.getColor(context, R.color.grayscale2)
-        private val selectedTextColor = ContextCompat.getColor(context, R.color.white)
         override fun shouldDecorate(day: CalendarDay): Boolean {
             // 휴무일 || 이전 날짜
             return true

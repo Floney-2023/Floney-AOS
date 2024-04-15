@@ -10,6 +10,7 @@ import com.aos.floney.databinding.ActivityHomeBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.history.HistoryActivity
 import com.aos.model.home.DayMoney
+import com.aos.model.home.DayMoneyModifyItem
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,6 +69,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     }
 
     override fun onItemClick(item: DayMoney) {
-        Timber.e("item $item")
+        startActivity(
+            Intent(
+                this@HomeActivity,
+                HistoryActivity::class.java
+            ).putExtra("dayItem", DayMoneyModifyItem(
+                id = item.id,
+                money = item.money,
+                description = item.description,
+                lineDate = viewModel.getClickDate(),
+                lineCategory = item.lineCategory,
+                lineSubCategory = item.lineSubCategory,
+                assetSubCategory = item.assetSubCategory,
+                exceptStatus = item.exceptStatus,
+                writerNickName = item.writerNickName
+            ))
+        )
     }
 }

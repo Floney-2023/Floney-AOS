@@ -3,6 +3,7 @@ package com.aos.model.book
 import androidx.recyclerview.widget.DiffUtil
 import timber.log.Timber
 
+
 data class UiBookCategory(
     val idx: Int,
     var checked: Boolean = false,

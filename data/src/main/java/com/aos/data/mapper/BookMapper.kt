@@ -2,12 +2,14 @@ package com.aos.data.mapper
 
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
@@ -129,6 +131,7 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
 fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
     val dayMoneyList: List<DayMoney> = this.dayLinesResponse.map {
         DayMoney(
+            id = it.id,
             money = if (it.lineCategory == "INCOME") {
                 "+ ${NumberFormat.getNumberInstance().format(it.money)}"
             } else {
@@ -229,6 +232,19 @@ fun PostBooksLinesEntity.toPostBooksLinesModel(): PostBooksLinesModel {
         except = this.except,
         nickname = this.nickname,
         repeatDuration = this.repeatDuration
+    )
+}
+
+fun PostBooksChangeEntity.toPostBooksLinesChangeModel(): PostBooksChangeModel {
+    return PostBooksChangeModel(
+        money = this.money,
+        flow = this.flow,
+        asset = this.asset,
+        line = this.line,
+        lineDate = this.lineDate,
+        description = this.description,
+        except = this.except,
+        nickname = this.nickname
     )
 }
 

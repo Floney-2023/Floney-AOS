@@ -1,5 +1,6 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
@@ -8,6 +9,7 @@ import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
@@ -78,5 +80,12 @@ interface BookService {
     suspend fun postBooksLines(
         @Body moneyData: PostBooksLinesBody
     ): NetworkState<PostBooksLinesEntity>
+
+    // 가계부 내역 수정
+    @POST("books/lines/change")
+    @Headers("Auth: true")
+    suspend fun postBooksLinesChange(
+        @Body moneyData: PostBooksChangeBody
+    ): NetworkState<PostBooksChangeEntity>
 
 }
