@@ -12,6 +12,7 @@
         <variable
             name="eventHolder"
             type="com.aos.model.settlement.UiSettlementSeeModel.OnItemClickListener"/>
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,5 +62,15 @@
                 bind:itemLayout="@{@layout/item_settlement_see_view}"
                 bind:items="@{vm.settlementList.settlementList}"
                 bind:viewModel="@{vm}" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="86dp"
+            android:src="@drawable/icon_settlement_see"
+            android:visibility="@{vm.settlementList.settlementList.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settlement_see_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

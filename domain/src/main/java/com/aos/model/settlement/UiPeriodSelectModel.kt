@@ -27,5 +27,6 @@ data class PeriodCalendar(
     val day: Int,
     val isMonth : Boolean,
     val isClick: Boolean,
-    val isRange: Boolean
+    val isRightRange: Boolean,
+    val isLeftRange: Boolean
 )
