@@ -22,12 +22,33 @@
         android:layout_height="58dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}">
 
+        <View
+            android:id="@+id/tv_range_left"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:background="@{item.leftRange ? @color/grayscale12 : @color/white}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_range_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/tv_range_right"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:background="@{item.rightRange ? @color/grayscale12 : @color/white}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_range_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:id="@+id/tv_date"
+            android:id="@+id/tv_base_text"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:fontFamily="@font/pretendard_regular"
-            android:background="@{item.isRange ? @color/grayscale12 : @color/white}"
             android:gravity="center"
             android:text="@{@string/settle_up_period_select_day_placeholder(item.day)}"
             android:textSize="14dp"
@@ -37,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_click_text"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:background="@drawable/custom_oval_solid_primary5"
@@ -48,8 +69,8 @@
             android:textSize="14dp"
             android:visibility="@{item.isClick ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/tv_date"
-            app:layout_constraintStart_toStartOf="@id/tv_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 

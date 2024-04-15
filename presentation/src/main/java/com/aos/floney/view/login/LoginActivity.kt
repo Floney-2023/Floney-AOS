@@ -12,6 +12,7 @@ import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.password.find.PasswordFindActivity
+import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,7 +30,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         repeatOnStarted {
             viewModel.existBook.collect {
                 if(it) {
-                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, SettleUpActivity::class.java))
                     finish()
                 } else {
                     startActivity(Intent(this@LoginActivity, BookAddActivity::class.java))

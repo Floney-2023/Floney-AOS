@@ -121,14 +121,15 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
         _getCalendarList.value = periodCalendars
 
     }
-    private fun generatePeriodCalendar(calendar: Calendar, isMonth: Boolean, isClick: Boolean, isRange : Boolean): PeriodCalendar {
+    private fun generatePeriodCalendar(calendar: Calendar, isMonth: Boolean, isClick: Boolean, isRightRange : Boolean, isLeftRange : Boolean): PeriodCalendar {
         return PeriodCalendar(
             year = calendar.get(Calendar.YEAR),
             month = calendar.get(Calendar.MONTH) + 1, // Calendar.MONTH는 0부터 시작하므로 +1
             day = calendar.get(Calendar.DAY_OF_MONTH),
             isMonth = isMonth,
             isClick = isClick,
-            isRange = isRange
+            isRightRange = isRightRange,
+            isLeftRange = isLeftRange
         )
     }
 
@@ -138,7 +139,7 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
 
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             calendar.add(Calendar.DATE, -1)
-            periodCalendars.add(generatePeriodCalendar(calendar, false, false, false))
+            periodCalendars.add(generatePeriodCalendar(calendar, false, false, false, false))
         }
 
         return periodCalendars.asReversed()
@@ -148,7 +149,7 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
         val periodCalendars = mutableListOf<PeriodCalendar>()
         // 해당 날짜가 속한 주의 토요일까지 이동하지만, 다음 달로 넘어가지 않도록 확인
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-            periodCalendars.add(generatePeriodCalendar(calendar, false, false, false))
+            periodCalendars.add(generatePeriodCalendar(calendar, false, false, false, false))
             calendar.add(Calendar.DATE, 1)
         }
         return periodCalendars
@@ -160,7 +161,7 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
         val currentMonth = calendar.get(Calendar.MONTH)
 
         while (calendar.get(Calendar.MONTH) == currentMonth) {
-            periodCalendars.add(generatePeriodCalendar(calendar, true, false, false))
+            periodCalendars.add(generatePeriodCalendar(calendar, true, false, false, false))
             calendar.add(Calendar.DATE, 1)
         }
         return periodCalendars
@@ -205,19 +206,19 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
                 set(calendarItem.year, calendarItem.month - 1, calendarItem.day) // 월은 0부터 시작하므로 -1 해줍니다.
             }
             if (_startDate.value != null && _endDate.value != null) {
-                if (areCalendarsEqual(check, _startDate.value!!) || areCalendarsEqual(check, _endDate.value!!)) {
-                    calendarItem.copy(isClick = true, isRange = true)
+                if (areCalendarsEqual(check, _startDate.value!!)) {
+                    calendarItem.copy(isClick = true, isRightRange = true, isLeftRange = false)
+                } else if (areCalendarsEqual(check, _endDate.value!!)) {
+                    calendarItem.copy(isClick = true, isRightRange = false, isLeftRange = true)
                 } else if (check.after(_startDate.value) && check.before(_endDate.value)) {
-                    calendarItem.copy(isRange = true, isClick = false)
+                    calendarItem.copy(isRightRange = true, isLeftRange = true, isClick = false)
                 } else {
-                    calendarItem.copy(isRange = false, isClick = false)
+                    calendarItem.copy(isRightRange = false, isLeftRange = false, isClick = false)
                 }
             } else if (_startDate.value != null && areCalendarsEqual(check, _startDate.value!!)) {
                 calendarItem.copy(isClick = true)
-            } else if (_startDate.value != null && !areCalendarsEqual(check, _startDate.value!!)) {
-                calendarItem.copy(isClick = false, isRange = false)
-            }   else {
-                calendarItem.copy(isClick = false, isRange = false)
+            } else {
+                calendarItem.copy(isClick = false, isRightRange = false, isLeftRange = false)
             }
         }
         return _getCalendarList.postValue(updatedList!!)
