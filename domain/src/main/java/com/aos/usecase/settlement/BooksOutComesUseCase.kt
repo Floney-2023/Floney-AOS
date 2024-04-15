@@ -17,7 +17,7 @@ class BooksOutComesUseCase @Inject constructor(
         startDate : String,
         endDate : String,
         bookKey : String
-    ): Result<UiOutcomesSelectModel> {
+    ): Result<UiOutcomesSelectModel?> {
         return bookRepository.postBooksOutcomes(usersEmails, startDate, endDate, bookKey)
     }
 

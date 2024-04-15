@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.UiMemberSelectModel
+import com.aos.usecase.settlement.BooksOutComesUseCase
 import com.aos.usecase.settlement.BooksUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +24,7 @@ import javax.inject.Inject
 class SettleUpPeriodSelectViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
-    private val booksUsersUseCase : BooksUsersUseCase
+    private val booksOutComesUseCase : BooksOutComesUseCase
 ): BaseViewModel() {
 
 
@@ -64,8 +67,24 @@ class SettleUpPeriodSelectViewModel @Inject constructor(
     }
     // 정산 내역 체크하러 가기
     fun onClickedNextPage() {
-        viewModelScope.launch {
-            _nextPage.emit(true)
+        val userEmails = memberArray.value!!.map { it }
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            booksOutComesUseCase(userEmails, startDay.value!!, endDay.value!!, prefs.getString("bookKey","")).onSuccess {
+                if (it!!.outcomes.isEmpty())
+                {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToastRes(R.string.settle_up_period_select_error_messsage))
+                }
+                else {
+                    // 내역 존재 시 이동
+                    _nextPage.emit(true)
+                    baseEvent(Event.HideLoading)
+                }
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
         }
     }
     // 이전 페이지로
