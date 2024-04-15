@@ -29,7 +29,10 @@
             android:id="@+id/iv_member_img"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            setImageToUrl="@{item.profileImg}" />
+            android:background="@drawable/background_circle_image"
+            android:clipToOutline="true"
+            setImageToUrl="@{item.profileImg}"
+            />
 
         <TextView
             android:id="@+id/iv_name"
