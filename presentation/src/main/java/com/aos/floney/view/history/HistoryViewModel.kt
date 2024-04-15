@@ -113,17 +113,20 @@ class HistoryViewModel @Inject constructor(
     // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory() {
         viewModelScope.launch(Dispatchers.IO) {
-            Timber.e("flow.value ${flow.value}")
             getBookCategoryUseCase(prefs.getString("bookKey", ""), parent).onSuccess { it ->
+                // 카테고리 선택 값 초기화
+                categoryClickItem = null
+
                 val tempValue = if (parent == "자산") {
                     asset.value
                 } else {
                     line.value
                 }
-                Timber.e("tempValue $tempValue")
 
                 val item = it.map { innerItem ->
                     if (innerItem.name == tempValue) {
+                        categoryClickItem = innerItem
+
                         UiBookCategory(
                             innerItem.idx, true, innerItem.name, innerItem.default
                         )
@@ -134,7 +137,6 @@ class HistoryViewModel @Inject constructor(
                     }
                 }
 
-                Timber.e("item $item")
                 _categoryList.postValue(item.toMutableList())
                 _onClickCategory.emit(true)
             }.onFailure {
@@ -312,11 +314,6 @@ class HistoryViewModel @Inject constructor(
             baseEvent(Event.ShowToast("카테고리 항목을 선택해주세요"))
             false
         }
-    }
-
-    // 카테고리 선택 값 초기화
-    fun initCategoryDialog() {
-        categoryClickItem = null
     }
 
     // 카테고리 가져오기 영문 -> 한글

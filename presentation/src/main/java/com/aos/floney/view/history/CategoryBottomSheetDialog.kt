@@ -23,13 +23,6 @@ class CategoryBottomSheetDialog(
 ) : BottomSheetDialog(context), UiBookCategory.OnItemClickListener {
     lateinit var binding: BottomSheetCategoryBinding
 
-    override fun onStart() {
-        super.onStart()
-        Timber.e("start")
-
-        viewModel.initCategoryDialog()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = BottomSheetCategoryBinding.inflate(layoutInflater)
