@@ -30,7 +30,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         repeatOnStarted {
             viewModel.existBook.collect {
                 if(it) {
-                    startActivity(Intent(this@LoginActivity, SettleUpActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     finish()
                 } else {
                     startActivity(Intent(this@LoginActivity, BookAddActivity::class.java))

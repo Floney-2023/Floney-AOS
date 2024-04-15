@@ -106,6 +106,7 @@
             android:id="@+id/tv_settle_up_complete_total_expense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="32dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/settle_up_complete_total_expense"
@@ -144,7 +145,9 @@
             android:id="@+id/rv_member_select_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="14dp"
+            android:layout_marginEnd="3dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="@+id/iv_top_dottedLine"
@@ -173,6 +176,7 @@
             android:id="@+id/tv_settle_up_complete_settlement_money_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/settle_up_complete_settlement_money"
@@ -185,14 +189,14 @@
             android:id="@+id/tv_settle_up_complete_settlement_money_one_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="4dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/settle_up_complete_member_count"
             android:textColor="@color/grayscale6"
             android:textSize="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
             app:layout_constraintEnd_toStartOf="@+id/tv_settle_up_complete_settlement_money"
-            app:layout_constraintTop_toBottomOf="@+id/iv_bottom_dottedLine" />
+            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
 
         <TextView
             android:id="@+id/tv_settle_up_complete_settlement_money"
@@ -203,8 +207,9 @@
             android:text="@{vm.settlementModel.outcome}"
             android:textColor="@color/primary2"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_one_text" />
+            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
 
         <View
             android:id="@+id/v_line"
