@@ -17,9 +17,10 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom_navigation">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/nav_host_fragment_container"
@@ -30,6 +31,38 @@
                 app:navGraph="@navigation/settle_up_nav" />
 
         </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="76dp"
+                android:background="#FFFFFF"
+                app:itemActiveIndicatorStyle="@android:color/transparent"
+                app:itemIconTint="@drawable/bottom_navigation_setting"
+                app:itemRippleColor="@android:color/transparent"
+                app:itemTextColor="@color/bottom_gray"
+                app:labelVisibilityMode="labeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/nav_menu" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_add_history"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/icon_add_circle"
+            app:layout_constraintBottom_toBottomOf="@id/ll_bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ll_bottom_navigation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

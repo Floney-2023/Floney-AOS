@@ -15,16 +15,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 import androidx.databinding.library.baseAdapters.BR
+import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
 import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
 import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
+import com.aos.floney.view.settleup.SettleUpActivity
 
 @AndroidEntryPoint
 class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
-    private lateinit var navController: NavController
-
     override fun onItemClick(item: MyBooks) {
-        Timber.e("item $item")
         viewModel.settingBookKey(item.bookKey)
     }
 
@@ -33,6 +32,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
 
         setUpUi()
         setUpViewModelObserver()
+        setUpBottomNavigation()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@MyPageActivity)
@@ -65,6 +65,45 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
                     }
                     bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
                 }
+            }
+        }
+    }
+
+    private fun setUpBottomNavigation() {
+        // 가운데 메뉴(제보하기)에 대한 터치 이벤트를 막기 위한 로직
+        binding.bottomNavigationView.apply {
+            menu.getItem(2).isEnabled = false
+            selectedItemId = R.id.mypageFragment
+        }
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.homeFragment -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    false
+                }
+                R.id.analysisFragment -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    false
+                }
+                R.id.settleUpFragment -> {
+                    startActivity(Intent(this, SettleUpActivity::class.java))
+                    finish()
+                    false
+                }
+
+                else -> false
+            }
+        }
+
+        binding.bottomNavigationView.setOnItemReselectedListener {
+            when (it.itemId) {
+                R.id.homeFragment -> {}
+                R.id.analysisFragment -> {}
+                R.id.settleUpFragment -> {}
+                R.id.mypageFragment -> {}
             }
         }
     }

@@ -10,7 +10,9 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySettleUpBinding
 import com.aos.floney.databinding.ActivitySignUpBinding
 import com.aos.floney.view.book.add.BookAddActivity
+import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.login.LoginActivity
+import com.aos.floney.view.mypage.MyPageActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +23,7 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         super.onCreate(savedInstanceState)
 
         setupJetpackNavigation()
+        setUpBottomNavigation()
     }
     private fun setupJetpackNavigation() {
 
@@ -38,6 +41,45 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
     fun startBookAddActivity() {
         startActivity(Intent(this, BookAddActivity::class.java))
         finishAffinity()
+    }
+
+    private fun setUpBottomNavigation() {
+        // 가운데 메뉴(제보하기)에 대한 터치 이벤트를 막기 위한 로직
+        binding.bottomNavigationView.apply {
+            menu.getItem(2).isEnabled = false
+            selectedItemId = R.id.settleUpFragment
+        }
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.homeFragment -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    false
+                }
+                R.id.analysisFragment -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    false
+                }
+                R.id.mypageFragment -> {
+                    startActivity(Intent(this, MyPageActivity::class.java))
+                    finish()
+                    false
+                }
+
+                else -> false
+            }
+        }
+
+        binding.bottomNavigationView.setOnItemReselectedListener {
+            when (it.itemId) {
+                R.id.homeFragment -> {}
+                R.id.analysisFragment -> {}
+                R.id.settleUpFragment -> {}
+                R.id.mypageFragment -> {}
+            }
+        }
     }
 
 }
