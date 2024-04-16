@@ -25,14 +25,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_email"
             android:layout_width="0dp"
             android:layout_height="46dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="20dp"
+            android:inputType="textEmailAddress"
             android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+            android:backgroundTint="@null"
             android:fontFamily="@font/pretendard_medium"
             android:hint="@string/email"
             android:paddingStart="20dp"
@@ -61,14 +63,13 @@
                 android:id="@+id/pw_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="14sp"
+                android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
                 android:fontFamily="@font/pretendard_medium"
                 android:hint="비밀번호"
-                android:text="@={vm.password}"
-                android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
                 android:inputType="textPassword"
                 android:paddingStart="20dp"
-                android:textAppearance="@style/login_edit_text" />
+                android:text="@={vm.password}"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton

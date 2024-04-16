@@ -1,8 +1,13 @@
 package com.aos.data.repository.remote.book
 
 import com.aos.data.api.BookService
+import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.request.book.PostBooksLinesBody
+import com.aos.data.entity.request.book.PostBooksLinesEntity
+import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
@@ -49,6 +54,22 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
     ): NetworkState<PostBooksCreateEntity> {
         return bookService.postBooksCreate(postBooksCreateBody)
     }
+
+    override suspend fun getBookCategory(
+        bookKey: String,
+        parent: String,
+    ): NetworkState<List<GetBookCategoryEntity>> {
+        return bookService.getBooksCategory(bookKey, parent)
+    }
+
+    override suspend fun postBooksLines(moneyData: PostBooksLinesBody): NetworkState<PostBooksLinesEntity> {
+        return bookService.postBooksLines(moneyData)
+    }
+
+    override suspend fun postBooksLinesChange(moneyData: PostBooksChangeBody): NetworkState<PostBooksChangeEntity> {
+        return bookService.postBooksLinesChange(moneyData)
+    }
+
     override suspend fun getSettlementLast(
         bookKey: String
     ): NetworkState<GetSettleUpLastEntity> {

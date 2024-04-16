@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import timber.log.Timber
 
 data class UiBookInfoModel(
-    val bookImg: String,
+    val bookImg: String? = "",
     val bookName: String,
     val startDay: String,
     val seeProfileStatus: Boolean,

@@ -1,7 +1,12 @@
 package com.aos.data.repository.remote.book
 
+import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.request.book.PostBooksLinesBody
+import com.aos.data.entity.request.book.PostBooksLinesEntity
+import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
@@ -25,6 +30,10 @@ interface BookRemoteDataSource {
     suspend fun getBookInfo(bookKey: String): NetworkState<GetBookInfoEntity>
     suspend fun postBooksJoin(postBooksJoinBody : PostBooksJoinBody): NetworkState<PostBooksJoinEntity>
     suspend fun postBooksCreate(postBooksCreateBody : PostBooksCreateBody): NetworkState<PostBooksCreateEntity>
+    suspend fun getBookCategory(bookKey: String, parent: String): NetworkState<List<GetBookCategoryEntity>>
+    suspend fun postBooksLines(moneyData: PostBooksLinesBody): NetworkState<PostBooksLinesEntity>
+    suspend fun postBooksLinesChange(moneyData: PostBooksChangeBody): NetworkState<PostBooksChangeEntity>
+
     suspend fun getSettlementLast(bookKey: String): NetworkState<GetSettleUpLastEntity>
     suspend fun getBooksUsers(bookKey: String): NetworkState<List<GetBooksUsersEntity>>
     suspend fun postBooksOutcomes(postBooksOutcomesBody : PostBooksOutcomesBody): NetworkState<List<PostBooksOutcomesEntity>>

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetBookInfoEntity(
-    val bookImg: String,
+    val bookImg: String? = "",
     val bookName: String,
     val startDay: String,
     val seeProfileStatus: Boolean,

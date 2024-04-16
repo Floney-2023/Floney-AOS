@@ -1,7 +1,10 @@
 package com.aos.repository
 
+import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
+import com.aos.model.book.PostBooksLinesModel
+import com.aos.model.book.UiBookCategory
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
@@ -29,10 +32,41 @@ interface BookRepository {
     suspend fun getBookInfo(bookKey: String): Result<UiBookInfoModel>
 
     // 가계부 참여
-    suspend fun postBooksJoin(code : String): Result<PostBooksJoinModel>
+    suspend fun postBooksJoin(code: String): Result<PostBooksJoinModel>
 
     // 가계부 생성
-    suspend fun postBooksCreate(name : String, profileImg : String): Result<PostBooksCreateModel>
+    suspend fun postBooksCreate(name: String, profileImg: String): Result<PostBooksCreateModel>
+
+    // 가계부 생성
+    suspend fun getBookCategory(bookKey: String, parent: String): Result<List<UiBookCategory>>
+
+    // 가계부 내역 추가
+    suspend fun postBooksLines(
+        bookKey: String,
+        money: Int,
+        flow: String,
+        asset: String,
+        line: String,
+        lineDate: String,
+        description: String,
+        except: Boolean,
+        nickname: String,
+        repeatDuration: String
+    ): Result<PostBooksLinesModel>
+
+    // 가계부 내역 수정
+    suspend fun postBooksLinesChange(
+        lineId: Int,
+        bookKey: String,
+        money: Int,
+        flow: String,
+        asset: String,
+        line: String,
+        lineDate: String,
+        description: String,
+        except: Boolean,
+        nickname: String,
+    ): Result<PostBooksChangeModel>
 
     // 가계부의 마지막 정산일 조회
     suspend fun getSettlementLast(bookKey: String): Result<GetSettlementLastModel>

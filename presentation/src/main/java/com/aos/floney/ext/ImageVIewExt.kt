@@ -9,7 +9,11 @@ import timber.log.Timber
 @BindingAdapter("setImageToUrl")
 fun ImageView.setImageToUrl(url: String?) {
     url?.let {
-        if(it != "user_default") {
+        if(it.equals("user_default")) {
+            Glide.with(this)
+                .load(R.drawable.icon_default_profile)
+                .into(this)
+        } else if(it != "") {
             Glide.with(this)
                 .load(url)
                 .into(this)

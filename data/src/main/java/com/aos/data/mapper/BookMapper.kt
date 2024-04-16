@@ -1,5 +1,8 @@
 package com.aos.data.mapper
 
+import com.aos.data.entity.request.book.PostBooksLinesEntity
+import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
@@ -7,6 +10,7 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
+import com.aos.model.book.PostBooksChangeModel
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
@@ -14,6 +18,8 @@ import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
+import com.aos.model.book.PostBooksLinesModel
+import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
 import com.aos.model.home.Expenses
 import com.aos.model.home.ExtData
@@ -23,6 +29,7 @@ import com.aos.model.home.OurBookUsers
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import timber.log.Timber
 import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.Details
 import com.aos.model.settlement.GetSettlementLastModel
@@ -64,7 +71,13 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
                     "${it.date.split("-")[0].toInt()}",
                     "${it.date.split("-")[1].toInt()}",
                     "${it.date.split("-")[2].toInt()}",
-                    tempExpenses!!,
+                    Expenses(
+                        date = it.date, outcome = if (!it.money.toString().equals("0.0")) {
+                            "-${NumberFormat.getNumberInstance().format(it.money)}"
+                        } else {
+                            ""
+                        }, income = tempExpenses!!.income
+                    ),
                     todayDate == it.date
                 )
             )
@@ -73,7 +86,9 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
             tempOutcome = "-${NumberFormat.getNumberInstance().format(it.money)}"
             tempDay = it.date.split("-")[2].toInt().toString()
             tempExpenses = Expenses(
-                date = it.date, outcome = tempOutcome, income = if (it.categoryType == "INCOME") {
+                date = it.date,
+                outcome = tempOutcome,
+                income = if (!it.money.toString().equals("0.0")) {
                     "+${NumberFormat.getNumberInstance().format(it.money)}"
                 } else {
                     ""
@@ -132,32 +147,27 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
 
 // 일별 조회
 fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
-    this.dayLiensResponse.map {
+    val dayMoneyList: List<DayMoney> = this.dayLinesResponse.map {
         DayMoney(
-            money = NumberFormat.getNumberInstance().format(it.money),
+            id = it.id,
+            money = if (it.lineCategory == "INCOME") {
+                "+ ${NumberFormat.getNumberInstance().format(it.money)}"
+            } else {
+                "- ${NumberFormat.getNumberInstance().format(it.money)}"
+            },
             description = it.description,
             lineCategory = it.lineCategory,
             lineSubCategory = it.lineSubCategory,
             assetSubCategory = it.assetSubCategory,
             exceptStatus = it.exceptStatus,
             writerEmail = it.writerEmail,
-            writerNickName = it.writerNickName,
+            writerNickName = it.writerNickname,
             writerProfileImg = it.writerProfileImg
         )
     }
-    val dayMoneyList = this.dayLiensResponse.map {
-        DayMoney(
-            money = NumberFormat.getNumberInstance().format(it.money),
-            description = it.description,
-            lineCategory = it.lineCategory,
-            lineSubCategory = it.lineSubCategory,
-            assetSubCategory = it.assetSubCategory,
-            exceptStatus = it.exceptStatus,
-            writerEmail = it.writerEmail,
-            writerNickName = it.writerNickName,
-            writerProfileImg = it.writerProfileImg
-        )
-    }
+
+    Timber.e("this.dayLiensResponse ${this.dayLinesResponse}")
+    Timber.e("dayMoneyList $dayMoneyList")
 
     var totalIncome = 0
     var totalOutcome = 0
@@ -222,11 +232,47 @@ fun GetBookInfoEntity.toUiBookInfoModel(): UiBookInfoModel {
 
 
 fun PostBooksJoinEntity.toPostBooksJoinModel(): PostBooksJoinModel {
-    return PostBooksJoinModel(this.bookKey ?: "", this.code?: "")
+    return PostBooksJoinModel(this.bookKey ?: "", this.code ?: "")
 }
 
 fun PostBooksCreateEntity.toPostBooksCreateModel(): PostBooksCreateModel {
-    return PostBooksCreateModel(this.bookKey ?: "", this.code?: "")
+    return PostBooksCreateModel(this.bookKey ?: "", this.code ?: "")
+}
+
+fun PostBooksLinesEntity.toPostBooksLinesModel(): PostBooksLinesModel {
+    return PostBooksLinesModel(
+        money = this.money.toInt(),
+        flow = this.flow,
+        asset = this.asset,
+        line = this.line,
+        lineDate = this.lineDate,
+        description = this.description,
+        except = this.except,
+        nickname = this.nickname,
+        repeatDuration = this.repeatDuration
+    )
+}
+
+fun PostBooksChangeEntity.toPostBooksLinesChangeModel(): PostBooksChangeModel {
+    return PostBooksChangeModel(
+        money = this.money,
+        flow = this.flow,
+        asset = this.asset,
+        line = this.line,
+        lineDate = this.lineDate,
+        description = this.description,
+        except = this.except,
+        nickname = this.nickname
+    )
+}
+
+fun List<GetBookCategoryEntity>.toUiBookCategory(): List<UiBookCategory> {
+    var idx = 0
+    return this.map {
+        UiBookCategory(
+            idx++, false, it.name, it.default
+        )
+    }
 }
 
 fun GetSettleUpLastEntity.toGetsettleUpLastModel() : GetSettlementLastModel {

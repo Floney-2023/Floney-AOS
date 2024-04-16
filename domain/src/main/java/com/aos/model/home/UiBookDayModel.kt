@@ -1,6 +1,8 @@
 package com.aos.model.home
 
 import androidx.recyclerview.widget.DiffUtil
+import timber.log.Timber
+import java.io.Serializable
 
 
 data class UiBookDayModel(
@@ -23,6 +25,7 @@ data class UiBookDayModel(
 }
 
 data class DayMoney(
+    val id: Int,
     val money: String,
     val description: String,
     val lineCategory: String,
@@ -33,3 +36,16 @@ data class DayMoney(
     val writerNickName: String,
     val writerProfileImg: String
 )
+
+// 내역 수정 전달 아이템
+data class DayMoneyModifyItem(
+    val id: Int,
+    val money: String,
+    val description: String,
+    val lineDate: String,
+    val lineCategory: String,
+    val lineSubCategory: String,
+    val assetSubCategory: String,
+    val exceptStatus: Boolean,
+    val writerNickName: String
+): Serializable

@@ -10,6 +10,7 @@ import com.aos.floney.databinding.FragmentMyPageWithdrawReasonCheckBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.signup.SignUpInputEmailFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MyPageInformWithdrawReasonCheckFragment :
@@ -31,8 +32,8 @@ class MyPageInformWithdrawReasonCheckFragment :
         repeatOnStarted {
             viewModel.nextPage.collect() {
                 if(it.isNotEmpty()) {
-//                    val reasonType = it
-//                    val reason = viewModel.directInputText.value ?: ""
+                    val reasonType = it
+                    val reason = viewModel.directInputText.value ?: ""
 //                    val withdrawPopupAction =
 //                        MyPageInformWithdrawReasonCheckFragmentDirections.actionMyPageInformWithdrawReasonCheckFragmentToMyPageInformWithdrawInputPasswordFragment(
 //                            reasonType,

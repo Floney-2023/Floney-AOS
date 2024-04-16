@@ -1,10 +1,15 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
+import com.aos.data.entity.request.book.PostBooksLinesBody
+import com.aos.data.entity.request.book.PostBooksLinesEntity
+import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
@@ -20,6 +25,7 @@ import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
 import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -69,6 +75,28 @@ interface BookService {
     suspend fun postBooksCreate(
         @Body postBooksCreateBody: PostBooksCreateBody
     ): NetworkState<PostBooksCreateEntity>
+
+    // 카테고리 조회하기
+    @GET("books/{bookKey}/categories")
+    @Headers("Auth: true")
+    suspend fun getBooksCategory(
+        @Path("bookKey") bookKey: String,
+        @Query("parent") parent: String
+    ): NetworkState<List<GetBookCategoryEntity>>
+
+    // 가계부 내역 추가
+    @POST("books/lines")
+    @Headers("Auth: true")
+    suspend fun postBooksLines(
+        @Body moneyData: PostBooksLinesBody
+    ): NetworkState<PostBooksLinesEntity>
+
+    // 가계부 내역 수정
+    @POST("books/lines/change")
+    @Headers("Auth: true")
+    suspend fun postBooksLinesChange(
+        @Body moneyData: PostBooksChangeBody
+    ): NetworkState<PostBooksChangeEntity>
 
     // 가계부의 마지막 정산일 조회
     @GET("books/settlement/last")

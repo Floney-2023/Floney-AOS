@@ -3,7 +3,6 @@
     <item>
         <shape android:shape="oval">
             <solid android:color="@color/primary5"/>
-            <stroke android:width="10dp" android:color="@android:color/transparent"/>
         </shape>
     </item>
 </selector>
