@@ -10,6 +10,7 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
@@ -99,5 +100,10 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         id : Long
     ): NetworkState<PostSettlementAddEntity> {
         return bookService.getSettlementDetailSee(id)
+    }
+    override suspend fun getBooksInfo(
+        bookKey: String
+    ): NetworkState<GetBooksInfoEntity> {
+        return bookService.getBooksInfo(bookKey)
     }
 }

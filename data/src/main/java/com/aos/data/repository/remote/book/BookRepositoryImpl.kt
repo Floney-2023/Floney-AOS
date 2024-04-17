@@ -17,6 +17,7 @@ import com.aos.data.mapper.toPostBooksLinesChangeModel
 import com.aos.data.mapper.toPostBooksLinesModel
 import com.aos.data.mapper.toUiBookCategory
 import com.aos.data.mapper.toPostSettlementAddModel
+import com.aos.data.mapper.toUiBookSettingModel
 import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.mapper.toUiOutcomesSelectModel
 import com.aos.data.mapper.toUiSettlementSeeModel
@@ -26,6 +27,7 @@ import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
@@ -290,6 +292,20 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         when (val data =
             bookDataSource.getSettlementDetailSee(id)) {
             is NetworkState.Success -> return Result.success(data.body.toPostSettlementAddModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun getBooksInfo(bookKey: String): Result<UiBookSettingModel> {
+        when (val data =
+            bookDataSource.getBooksInfo(bookKey)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiBookSettingModel())
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)
             )

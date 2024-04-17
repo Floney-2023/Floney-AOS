@@ -5,6 +5,7 @@ import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
@@ -85,4 +86,7 @@ interface BookRepository {
 
     // 정산 세부 내역 조회
     suspend fun getSettlementDetailSee(id: Long): Result<UiSettlementAddModel>
+
+    // 가계부 설정 조회하기
+    suspend fun getBooksInfo(bookKey: String): Result<UiBookSettingModel>
 }

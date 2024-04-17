@@ -230,6 +230,24 @@
         <item>일</item>
     </string-array>
 
+    <!--7-1 가계부설정 -->
+    <string name="book_setting_title">가계부 설정</string>
+    <string name="book_setting_user">사용자</string>
+    <string name="book_setting_calendar">캘린더</string>
+    <string name="book_setting_carryInfo">이월 설정</string>
+    <string name="book_setting_carryInfo_yes">이월 있음</string>
+    <string name="book_setting_carryInfo_no">이월 없음</string>
+    <string name="book_setting_repeat">반복 내역 설정</string>
+    <string name="book_setting_favorite">즐겨찾기 설정</string>
+    <string name="book_setting_init"><u>가계부 초기화하기</u></string>
+    <string name="book_setting_asset_title">예산·자산</string>
+    <string name="book_setting_asset">예산 설정</string>
+    <string name="book_setting_start_money">초기 자산 설정</string>
+    <string name="book_setting_category">분류항목 관리</string>
+    <string name="book_setting_money">화폐 설정</string>
+    <string name="book_setting_excel">엑셀 내보내기</string>
+    <string name="book_setting_invite_friend">친구 초대하기</string>
+
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>
     <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>

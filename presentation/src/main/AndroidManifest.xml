@@ -59,6 +59,9 @@
             android:name=".view.settleup.SettleUpActivity"
             android:exported="false" />
         <activity
+            android:name=".view.book.setting.BookSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>

@@ -4,6 +4,7 @@ import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
+import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
@@ -16,10 +17,12 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
+import com.aos.model.book.MyBookUsers
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.DayMoney
 import com.aos.model.home.Expenses
 import com.aos.model.home.ExtData
@@ -339,5 +342,22 @@ fun List<GetSettlementSeeEntity>.toUiSettlementSeeModel(): UiSettlementSeeModel 
     }
     return UiSettlementSeeModel(
         settlementList = myBookSettlements
+    )
+}
+
+fun GetBooksInfoEntity.toUiBookSettingModel(): UiBookSettingModel {
+    val myBookUsers = this.ourBookUsers.map {
+        val roleString = if (it.me) "${it.role}·나" else it.role
+        MyBookUsers(
+            name = it.name, profileImg = it.profileImg, role = roleString, me = it.me
+        )
+    }
+    return UiBookSettingModel(
+        bookName = this.bookName,
+        bookImg = this.bookImg,
+        startDay = "${this.startDay.replace('-','.')} 개설",
+        seeProfileStatus = this.seeProfileStatus,
+        carryOver = this.carryOver,
+        ourBookUsers = myBookUsers
     )
 }

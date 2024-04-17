@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/book_setting_nav"
+    app:startDestination="@id/bookSettingMainFragment">
+
+    <activity
+        android:id="@+id/bookSettingActivity"
+        android:name="com.aos.floney.view.book.setting.BookSettingActivity"
+        tools:layout="@layout/activity_book_setting"
+        android:label="BookSettingActivity" />
+    <fragment
+        android:id="@+id/bookSettingMainFragment"
+        android:name="com.aos.floney.view.book.setting.BookSettingMainFragment"
+        tools:layout="@layout/fragment_book_setting_main"
+        android:label="BookSettingMainFragment" />
+
+
+</navigation>

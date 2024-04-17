@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.book.MyBookUsers" />
+        <variable
+            name="eventHolder"
+            type="com.aos.model.book.UiBookSettingModel.OnItemClickListener" />
+        <import type="android.view.View" />
+
+    </data>
+    <LinearLayout
+        android:id="@+id/wallet_detail_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}"
+        android:background="@drawable/custom_radius_12_solid_grayscale_12"
+        android:gravity="center_vertical"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/book_img"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/background_circle_image"
+            android:clipToOutline="true"
+            setImageToUrl="@{item.profileImg}" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{item.name}"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp"/>
+
+            <TextView
+                android:id="@+id/tv_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.role}"
+                android:textColor="@color/grayscale5"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

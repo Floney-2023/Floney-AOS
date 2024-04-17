@@ -15,6 +15,7 @@ import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
@@ -139,4 +140,12 @@ interface BookService {
     suspend fun getSettlementDetailSee(
         @Path("id") id: Long
     ): NetworkState<PostSettlementAddEntity>
+
+    // 가계부 설정 조회하기
+    @GET("books/info")
+    @Headers("Auth: true")
+    suspend fun getBooksInfo(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<GetBooksInfoEntity>
+
 }
