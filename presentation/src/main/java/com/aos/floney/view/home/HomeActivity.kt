@@ -99,7 +99,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         onClickDayItem(item)
     }
 
-    fun setUpBottomNavigation() {
+    private fun setUpBottomNavigation() {
         // 가운데 메뉴(제보하기)에 대한 터치 이벤트를 막기 위한 로직
         binding.bottomNavigationView.apply {
             menu.getItem(2).isEnabled = false

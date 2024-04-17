@@ -45,7 +45,6 @@ class RoundedBarChartRenderer(
                 // 스택이 있는 경우
                 var accumulatedValue = 0f
 
-                Timber.e("vals $vals")
                 for (stackIndex in vals.indices) {
                     val value = vals[stackIndex]
 //                    val left = entry.x - barWidth / 2

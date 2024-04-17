@@ -30,8 +30,10 @@ class AnalyzeOutComeFragment : BaseFragment<FragmentAnalyzeOutComeBinding, Analy
         barData.barWidth = 20f
 
         binding.chartStackHorizontal.data = barData
-//        binding.chartStackHorizontal.renderer = RoundedBarChartRenderer(binding.chartStackHorizontal, binding.chartStackHorizontal.animator, binding.chartStackHorizontal.viewPortHandler)
+        binding.chartStackHorizontal.renderer = RoundedBarChartRenderer(binding.chartStackHorizontal, binding.chartStackHorizontal.animator, binding.chartStackHorizontal.viewPortHandler)
         binding.chartStackHorizontal.invalidate()
+
+        binding.barChart.setData(listOf(40, 40, 20))
     }
 
     private fun setUpChart() {
