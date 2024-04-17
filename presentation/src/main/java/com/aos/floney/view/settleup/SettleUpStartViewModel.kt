@@ -44,13 +44,10 @@ class SettleUpStartViewModel @Inject constructor(
     // 정산 내역 날짜 불러오기
     fun getSettleUpInform(){
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             settlementLastUseCase(prefs.getString("bookKey","")).onSuccess {
                 // 전송 성공
                 _lastDay.postValue(it.passedDays.toInt())
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }

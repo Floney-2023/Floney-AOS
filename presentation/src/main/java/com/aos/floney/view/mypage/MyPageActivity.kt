@@ -79,17 +79,23 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.homeFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
                     finish()
                     false
                 }
                 R.id.analysisFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
                     finish()
                     false
                 }
                 R.id.settleUpFragment -> {
-                    startActivity(Intent(this, SettleUpActivity::class.java))
+                    val intent = Intent(this, SettleUpActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
                     finish()
                     false
                 }

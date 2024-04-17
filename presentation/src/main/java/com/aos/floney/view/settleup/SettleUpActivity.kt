@@ -53,17 +53,23 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.homeFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
                     finish()
                     false
                 }
                 R.id.analysisFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
                     finish()
                     false
                 }
                 R.id.mypageFragment -> {
-                    startActivity(Intent(this, MyPageActivity::class.java))
+                    val intent = Intent(this, MyPageActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    startActivity(intent)
                     finish()
                     false
                 }
