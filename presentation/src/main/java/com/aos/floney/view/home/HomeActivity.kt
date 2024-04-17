@@ -9,6 +9,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.settleup.SettleUpActivity
@@ -108,7 +109,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.analysisFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    startActivity(Intent(this, AnalyzeActivity::class.java))
                     finish()
                     false
                 }

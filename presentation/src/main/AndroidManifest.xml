@@ -17,6 +17,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.analyze.AnalyzeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_analyze"
+            android:theme="@style/Theme.Floney" />
+        <activity
             android:name=".view.history.HistoryActivity"
             android:exported="false" />
         <activity

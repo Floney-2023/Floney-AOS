@@ -9,6 +9,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySettleUpBinding
 import com.aos.floney.databinding.ActivitySignUpBinding
+import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.login.LoginActivity
@@ -58,7 +59,7 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
                     false
                 }
                 R.id.analysisFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    startActivity(Intent(this, AnalyzeActivity::class.java))
                     finish()
                     false
                 }

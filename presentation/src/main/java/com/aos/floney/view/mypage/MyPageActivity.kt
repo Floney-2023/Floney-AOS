@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 import androidx.databinding.library.baseAdapters.BR
+import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
 import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
@@ -84,7 +85,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
                     false
                 }
                 R.id.analysisFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    startActivity(Intent(this, AnalyzeActivity::class.java))
                     finish()
                     false
                 }
