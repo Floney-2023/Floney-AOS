@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/iv_back"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginStart="20dp"
@@ -60,7 +60,7 @@
                     android:textSize="22dp"
                     android:textColor="@color/grayscale2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_back" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/li_user_inform_view"
@@ -184,6 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
                     android:text="@string/book_setting_carryInfo"
                     android:textSize="14dp"
                     android:textColor="@color/grayscale2"
@@ -209,7 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:onClick="@{() -> vm.onClickNoticePage()}"
+                    android:onClick="@{() -> vm.onClickRepeat()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
@@ -230,7 +231,7 @@
                     android:id="@+id/li_book_setting_favorite"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{() -> vm.onClickReviewPage()}"
+                    android:onClick="@{() -> vm.onClickFavorite()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
@@ -249,14 +250,15 @@
 
 
                 <LinearLayout
-                    android:id="@+id/li_private_role"
+                    android:id="@+id/li_book_setting_init"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{() -> vm.onClickPrivateRolePage()}"
+                    android:onClick="@{() -> vm.onClickBookInit()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
+                    android:visibility='@{vm.bookSettingInfo.ourBookUsers[0].role.equals("방장·나") ? View.VISIBLE : View.GONE}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_book_setting_favorite">
@@ -281,7 +283,7 @@
                     android:textSize="16dp"
                     android:textColor="@color/grayscale2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/li_private_role" />
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_init" />
 
 
                 <LinearLayout
@@ -301,6 +303,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:onClick="@{() -> vm.onClickAssetSetting()}"
                         android:text="@string/book_setting_asset"
                         android:textSize="14dp"
                         android:textColor="@color/grayscale2" />
@@ -310,7 +313,7 @@
                     android:id="@+id/li_book_setting_start_money"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{() -> vm.onClickUsageRightPage()}"
+                    android:onClick="@{() -> vm.onClickSTartMoneySetting()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
@@ -332,7 +335,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="20dp"
-                    android:onClick="@{() -> vm.onClickUsageRightPage()}"
+                    android:onClick="@{() -> vm.onClickSettingCategory()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
@@ -366,12 +369,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="18dp"
-                    android:onClick="@{() -> vm.onClickUsageRightPage()}"
+                    android:onClick="@{() -> vm.onClickSettingMoney()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="24dp"
                     android:paddingBottom="16dp"
+                    android:visibility='@{vm.bookSettingInfo.ourBookUsers[0].role.equals("방장") ? View.VISIBLE : View.GONE}'
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_book_setting_category">
@@ -400,7 +404,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="18dp"
-                    android:onClick="@{() -> vm.onClickUsageRightPage()}"
+                    android:onClick="@{() -> vm.onClickExcelExport()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
@@ -434,8 +438,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="18dp"
-                    android:layout_marginBottom="50dp"
-                    android:onClick="@{() -> vm.onClickUsageRightPage()}"
+                    android:layout_marginBottom="70dp"
+                    android:onClick="@{() -> vm.onClickInviteFriend()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
@@ -462,7 +466,30 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right"/>
+                        android:src="@drawable/icon_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_exit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> vm.onClickBookInit()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility='@{vm.bookSettingInfo.ourBookUsers[0].role.equals("팀원·나") ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_invite_friend">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/book_setting_exit"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

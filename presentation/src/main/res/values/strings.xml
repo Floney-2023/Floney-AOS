@@ -240,6 +240,7 @@
     <string name="book_setting_repeat">반복 내역 설정</string>
     <string name="book_setting_favorite">즐겨찾기 설정</string>
     <string name="book_setting_init"><u>가계부 초기화하기</u></string>
+    <string name="book_setting_exit"><u>가계부 나가기</u></string>
     <string name="book_setting_asset_title">예산·자산</string>
     <string name="book_setting_asset">예산 설정</string>
     <string name="book_setting_start_money">초기 자산 설정</string>

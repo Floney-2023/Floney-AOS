@@ -62,7 +62,11 @@ class BookSettingMainViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
             booksSettingGetUseCase(prefs.getString("bookKey","")).onSuccess {
-                _bookSettingInfo.postValue(it)
+
+                // me가 true인 항목이 맨 앞에 오도록 정렬
+                val sortedList = it.ourBookUsers.sortedByDescending { it.me }
+                _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
+
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)
@@ -78,42 +82,46 @@ class BookSettingMainViewModel @Inject constructor(
         }
     }
 
-    // 설정 페이지 이동
-    fun onClickSettingPage()
-    {
-        viewModelScope.launch {
-            _settingPage.emit(true)
-        }
-    }
-
-    // 회원 정보 페이지 이동
+    // 가계부 상세 설정 페이지 이동
     fun onClickInformPage()
     {
-        viewModelScope.launch {
-            _informPage.emit(true)
-        }
+
     }
 
-    // 문의 하기 페이지 이동
-    fun onClickAnswerPage()
+    // 이월설정
+    fun onClickCarryInfoSetting()
     {
 
     }
 
-    // 공지 사항 페이지 이동
-    fun onClickNoticePage()
+    // 반복내역 설정
+    fun onClickRepeat()
+    {
+
+    }
+    // 즐겨찾기 설정
+    fun onClickFavorite()
+    {
+
+    }
+    // 가계부 초기화하기
+    fun onClickBookInit()
+    {
+
+    }
+    // 예산 설정
+    fun onClickAssetSetting()
+    {
+
+    }
+    // 초기 자산 설정
+    fun onClickSTartMoneySetting()
     {
 
     }
 
-    // 리뷰 작성하기 페이지 이동
-    fun onClickReviewPage()
-    {
-
-    }
-
-    // 개인 정보 처리방침 페이지 이동
-    fun onClickPrivateRolePage()
+    // 분류항목 관리
+    fun onClickSettingCategory()
     {
 
     }
@@ -123,12 +131,21 @@ class BookSettingMainViewModel @Inject constructor(
     {
 
     }
-    // 가계부 추가
-    fun onClickBookAdd()
+
+    // 화폐 설정
+    fun onClickSettingMoney()
     {
-        viewModelScope.launch {
-            _bookAddBottomSheet.emit(true)
-        }
+
+    }
+    // 엑셀 내보내기
+    fun onClickExcelExport()
+    {
+
+    }
+    // 친구 추가
+    fun onClickInviteFriend()
+    {
+
     }
 
 }

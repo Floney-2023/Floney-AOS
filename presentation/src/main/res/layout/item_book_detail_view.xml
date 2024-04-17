@@ -19,7 +19,6 @@
         android:id="@+id/wallet_detail_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}"
         android:background="@drawable/custom_radius_12_solid_grayscale_12"
         android:gravity="center_vertical"
