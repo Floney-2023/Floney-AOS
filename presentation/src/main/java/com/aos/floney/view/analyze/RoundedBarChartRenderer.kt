@@ -3,6 +3,7 @@ package com.aos.floney.view.analyze
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.RectF
 import com.github.mikephil.charting.animation.ChartAnimator
 import com.github.mikephil.charting.charts.BarChart
@@ -24,10 +25,16 @@ class RoundedBarChartRenderer(
         val phaseX = mAnimator.phaseX
         val phaseY = mAnimator.phaseY
         val barWidth = mChart.barData.barWidth
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = 0xFF6200EE.toInt() // 예제 색상
+            style = Paint.Style.FILL
+        }
+
 
         for (i in 0 until dataSet.entryCount) {
             val entry = dataSet.getEntryForIndex(i)
             val vals = entry.yVals  // 스택된 값들을 가져옵니다.
+            val total = entry.yVals.sum() // 데이터 총합 계산
 
             if (vals == null) {
                 // 스택이 없는 경우
@@ -51,26 +58,69 @@ class RoundedBarChartRenderer(
 //                    val right = entry.x + barWidth / 2
 //                    val top = (accumulatedValue + value) * phaseY
 //                    val bottom = accumulatedValue * phaseY
-                    val left = accumulatedValue * phaseX
-                    val right = (accumulatedValue + value) * phaseX
-                    val top = 100f
+                    val width = phaseX * (value.toFloat() / total)
+                    val left = accumulatedValue
+                    val right = left + width
                     val bottom = 0f
+                    val top = phaseY.toFloat() // 뷰의 높이
+
+                    accumulatedValue += width
+
+                    // 바의 색상 설정
+                    paint.color = when (index) {
+                        0 -> Color.parseColor("#FFDE31")
+                        1 -> Color.parseColor("#FF965B")
+                        2 -> Color.parseColor("#E56E73")
+                        else -> Color.TRANSPARENT
+                    }
+
 
                     Timber.e("value $value")
                     Timber.e("left $left")
                     Timber.e("right $right")
-                    Timber.e("top $top")
                     Timber.e("bottom $bottom")
+                    Timber.e("top $top")
+                    Timber.e("stackIndex $stackIndex")
+                    if(stackIndex == 0) {
+                        val path = Path()
+                        // 특정 모서리에만 라운드 적용
+                        // 왼쪽 하단 시작점
+                        // 왼쪽 하단부터 시작
+                        path.moveTo(right, bottom)
 
-                    accumulatedValue += value
+                        path.lineTo(left + 20, bottom)
 
-                    barRect.set(left, top, right, bottom )
-                    val radius = 20f
+                        path.moveTo(right, bottom)
 
-                    // 여기서 색상을 적용합니다.
-                    mRenderPaint.style = Paint.Style.FILL_AND_STROKE // 또는 FILL_AND_STROKE
-                    mRenderPaint.color = dataSet.colors.getOrNull(stackIndex) ?: dataSet.getColor(i)
-                    c.drawRoundRect(left, top, right, bottom, radius, radius, mRenderPaint)
+                        path.lineTo(right, top)
+
+                        path.lineTo(left + 20, top)
+
+                        path.cubicTo(left, top, left, bottom, left + 20, bottom)
+
+                        path.close()
+
+                        c.drawPath(path, paint)
+                    } else if(stackIndex == vals.size - 1){
+                        val path = Path()
+                        path.moveTo(left, bottom)
+
+                        path.lineTo(right - 20, bottom)
+
+                        path.moveTo(left, bottom)
+
+                        path.lineTo(left, top)
+
+                        path.lineTo(right - 20, top)
+
+                        path.cubicTo(right, top, right, bottom, right - 20, bottom)
+
+                        path.close()
+
+                        c.drawPath(path, paint)
+                    } else {
+                        c.drawRect(left, top, right, bottom, paint)
+                    }
                 }
             }
         }

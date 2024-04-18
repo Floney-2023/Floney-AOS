@@ -27,7 +27,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/pretendard_bold"
             android:lineHeight="33dp"
-            android:text="총 0원을\n소비했어요"
+            android:text="@{vm.postAnalyzeCategoryResult.total}"
             android:textColor="@color/grayscale1"
             android:textSize="22sp"
             android:layout_marginStart="24dp"
@@ -41,7 +41,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:lineHeight="18dp"
             android:id="@+id/tv_different_cash"
-            android:text="저번달 대비 0원을\n더 사용했어요"
+            android:text="@{vm.postAnalyzeCategoryResult.differance}"
             android:textColor="@color/grayscale6"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
@@ -58,7 +58,7 @@
 
 
         <com.aos.floney.view.analyze.AnalyzeBarChart
-            android:id="@+id/barChart"
+            android:id="@+id/chart_stack_horizontal"
             android:layout_width="match_parent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -69,25 +69,18 @@
             app:layout_constraintTop_toBottomOf="@id/tv_different_cash"
             android:layout_centerInParent="true" />
 
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/chart_stack_horizontal"
-            android:clipToOutline="true"
-            android:visibility="gone"
-            android:layout_marginTop="28dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_different_cash"/>
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="0dp"
+            android:layout_marginTop="28dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/chart_stack_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            bind:diffCallback="@{(Object)UiAnalyzeCategoryModel.Companion}"
+            bind:itemLayout="@{@layout/item_analyze}"
             bind:eventHolder="@{eventHolder}"
+            bind:items="@{vm.postAnalyzeCategoryResult.analyzeResult}"
             app:layout_constraintStart_toStartOf="parent"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

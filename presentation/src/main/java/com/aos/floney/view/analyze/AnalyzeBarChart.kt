@@ -8,15 +8,18 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import timber.log.Timber
+import kotlin.random.Random
 
-class AnalyzeBarChart (context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class AnalyzeBarChart(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFF6200EE.toInt() // 예제 색상
         style = Paint.Style.FILL
     }
 
-    private var data = listOf(40, 40, 20) // 차트 데이터
-    private val total = data.sum() // 데이터 총합 계산
+    private var data = arrayListOf<Float>(10f, 20f, 30f, 30f, 30f) // 차트 데이터
+    private var total = data.sum() // 데이터 총합 계산
+    private var colorArr = listOf<Int>()
+    private var colorIdx = 0
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -24,6 +27,7 @@ class AnalyzeBarChart (context: Context, attrs: AttributeSet? = null) : View(con
         var individualWidth = 0f
 
         for ((index, value) in data.withIndex()) {
+            Timber.e("value $value")
             val width = width * (value.toFloat() / total)
             val left = individualWidth
             val right = left + width
@@ -33,14 +37,23 @@ class AnalyzeBarChart (context: Context, attrs: AttributeSet? = null) : View(con
             individualWidth += width
 
             // 바의 색상 설정
-            paint.color = when (index) {
-                0 -> Color.parseColor("#FFDE31")
-                1 -> Color.parseColor("#FF965B")
-                2 -> Color.parseColor("#E56E73")
-                else -> Color.TRANSPARENT
+            paint.color = if (index == 0) {
+                Color.parseColor("#FFDE31")
+            } else if (index == 1 && value.toInt() == 0) {
+                Color.parseColor("#FFFFFF")
+            } else if (index == 1) {
+                Color.parseColor("#FF965B")
+            } else if (index == 2) {
+                Color.parseColor("#E56E73")
+            } else {
+                if(colorArr.isEmpty()) {
+                    Color.TRANSPARENT
+                } else {
+                    colorArr[colorIdx++]
+                }
             }
 
-            Timber.e("data.size - 1 ${data.size - 1}")
+
             if(index == 0) {
                 val path = Path()
                 // 특정 모서리에만 라운드 적용
@@ -84,8 +97,22 @@ class AnalyzeBarChart (context: Context, attrs: AttributeSet? = null) : View(con
         }
     }
 
-    fun setData(newData: List<Int>) {
-        data = newData
-        invalidate()
+    fun setData(newData: List<Float>, colorTempArr: List<Int>) {
+        data.clear()
+
+        newData.forEachIndexed { index, fl ->
+            if(newData.size -1 == index && fl < 1) {
+                data.add(fl + 2)
+            } else {
+                data.add(fl)
+            }
+        }
+
+        total = data.sum()
+        colorArr = colorTempArr
+    }
+
+    fun clearColorIdx() {
+        colorIdx = 0
     }
 }

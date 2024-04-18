@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 data class UiAnalyzeCategoryModel(
     val total: String,
     val differance: String,
+    val size: Int,
     val analyzeResult: List<AnalyzeResult>
 ) {
 
@@ -25,5 +26,9 @@ data class UiAnalyzeCategoryModel(
 
 data class AnalyzeResult(
     val category: String,
-    val money: Double
+    val money: Double,
+    val uiMoney: String,
+    val percent: Double,
+    val uiPercent: String,
+    val color: Int
 )
