@@ -18,6 +18,7 @@ import com.aos.model.home.OurBookUsers
 import com.aos.model.settlement.Details
 import com.aos.model.settlement.UiSettlementAddModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class BookSettingMainFragment :
@@ -41,6 +42,27 @@ class BookSettingMainFragment :
                 if(it) {
                     val activity = requireActivity() as BookSettingActivity
                     activity.startHomeActivity()
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.settingPage.collect() {
+                if(it) {
+                    val settingAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingEditFragment(
+                        viewModel.bookSettingInfo.value!!.bookImg,
+                        viewModel.bookSettingInfo.value!!.seeProfileStatus,
+                        if (viewModel.bookSettingInfo.value!!.ourBookUsers[0].role.equals("방장·나")) true else false,
+                        viewModel.bookSettingInfo.value!!.ourBookUsers.size
+                    )
+                    findNavController().navigate(settingAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.currencyPage.collect(){
+                if(it){
+                    val currencyAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingCurrencyFragment()
+                    findNavController().navigate(currencyAction)
                 }
             }
         }

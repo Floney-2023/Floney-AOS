@@ -3,9 +3,11 @@ package com.aos.data.repository.remote.book
 import com.aos.data.api.BookService
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
+import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
@@ -22,6 +24,7 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
+import com.aos.usecase.booksetting.BooksDeleteUseCase
 import com.aos.util.NetworkState
 import javax.inject.Inject
 
@@ -105,5 +108,21 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         bookKey: String
     ): NetworkState<GetBooksInfoEntity> {
         return bookService.getBooksInfo(bookKey)
+    }
+    override suspend fun postBooksName(
+        postBooksNameBody: PostBooksNameBody
+    ): NetworkState<Void> {
+        return bookService.postBooksName(postBooksNameBody)
+    }
+    override suspend fun deleteBooks(
+        bookKey: String
+    ): NetworkState<Void> {
+        return bookService.deleteBooks(bookKey)
+    }
+
+    override suspend fun postBooksInfoSeeProfile(
+        postBooksInfoSeeProfileBody : PostBooksInfoSeeProfileBody
+    ): NetworkState<Void> {
+        return bookService.postBooksInfoSeeProfile(postBooksInfoSeeProfileBody)
     }
 }

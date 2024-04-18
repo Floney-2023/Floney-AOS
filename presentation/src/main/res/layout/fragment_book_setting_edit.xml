@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.book.setting.BookSettingEditViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.book.setting.BookSettingActivity">
+
+        <ImageView
+            android:id="@+id/iv_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="24dp"
+            android:padding="20dp"
+            android:src="@drawable/icon_chevron_left"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_book_setting_edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:text="@string/book_setting_edit_title"
+            android:textAppearance="@style/mypage_inform_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_book_setting_edit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="38dp"
+            android:text="@string/book_setting_edit_name"
+            android:textAppearance="@style/mypage_user_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_book_setting_edit_title" />
+
+        <LinearLayout
+            android:id="@+id/li_my_page_inform_email_nickname_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_book_setting_edit_name">
+
+            <EditText
+                android:id="@+id/et_nickname_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:hint="@string/book_setting_edit_hint"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+                android:padding="16dp"
+                android:text="@={vm.bookName}"/>
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/nickname_change_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:background="@drawable/onboard_area1"
+                android:text="@string/book_setting_edit_edit_button"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:onClick="@{() -> vm.onClickBookNameChange()}"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/li_book_setting_edit_edit_profile_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            android:onClick="@{() -> vm.onClickProfileImgChange()}"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/li_my_page_inform_email_nickname_view"
+            app:layout_constraintStart_toStartOf="@+id/li_my_page_inform_email_nickname_view"
+            app:layout_constraintTop_toBottomOf="@+id/li_my_page_inform_email_nickname_view">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/book_setting_edit_edit_profile_change"
+                android:textAppearance="@style/mypage_user_email" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_chevron_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/li_profile_see"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/li_book_setting_edit_edit_profile_change"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/li_book_setting_edit_edit_profile_change"
+            app:layout_constraintTop_toBottomOf="@+id/li_book_setting_edit_edit_profile_change">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/book_setting_edit_edit_see_profile"
+                android:textAppearance="@style/mypage_user_email" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sw_category_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{vm.profileCheck}"
+                android:onClick="@{() -> vm.onClickMarketingTerms()}"
+                android:textOff=""
+                android:textOn=""
+                android:thumb="@drawable/icon_style_toggle_thumb"
+                app:switchMinWidth="0dp"
+                app:thumbTextPadding="24dp"
+                app:thumbTint="@null"
+                app:track="@drawable/icon_style_toggle_btn"
+                app:trackTint="@null" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/li_book_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:orientation="horizontal"
+            android:visibility='@{vm.roleCheck ? View.VISIBLE : View.GONE}'
+            app:layout_constraintEnd_toEndOf="@+id/li_profile_see"
+            app:layout_constraintStart_toStartOf="@+id/li_profile_see"
+            app:layout_constraintTop_toBottomOf="@+id/li_profile_see">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> vm.onClickDelete()}"
+                android:text="@string/book_setting_edit_edit_delete"
+                android:textAppearance="@style/first_onboard_passbtn" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

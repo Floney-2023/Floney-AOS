@@ -14,7 +14,57 @@
         android:id="@+id/bookSettingMainFragment"
         android:name="com.aos.floney.view.book.setting.BookSettingMainFragment"
         tools:layout="@layout/fragment_book_setting_main"
-        android:label="BookSettingMainFragment" />
+        android:label="BookSettingMainFragment" >
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingEditFragment"
+            app:destination="@id/bookSettingEditFragment" />
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingCurrencyFragment"
+            app:destination="@id/bookSettingCurrencyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingEditFragment"
+        android:name="com.aos.floney.view.book.setting.BookSettingEditFragment"
+        tools:layout="@layout/fragment_book_setting_edit"
+        android:label="BookSettingEditFragment" >
+        <action
+            android:id="@+id/action_bookSettingEditFragment_to_bookSettingProfileChangeFragment"
+            app:destination="@id/bookSettingProfileChangeFragment" />
+
+        <argument
+            android:name="profileImg"
+            app:argType="string" />
+        <argument
+            android:name="profileCheck"
+            app:argType="boolean" />
+        <argument
+            android:name="roleCheck"
+            app:argType="boolean" />
+        <argument
+            android:name="bookCount"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingProfileChangeFragment"
+        android:name="com.aos.floney.view.book.setting.BookSettingProfileChangeFragment"
+        android:label="BookSettingProfileChangeFragment"
+        tools:layout="@layout/fragment_book_setting_edit_profilechange" >
+        <argument
+            android:name="profileImg"
+            app:argType="string" />
+        <argument
+            android:name="profileCheck"
+            app:argType="boolean" />
+        <argument
+            android:name="roleCheck"
+            app:argType="boolean" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingCurrencyFragment"
+        android:name="com.aos.floney.view.book.setting.BookSettingCurrencyFragment"
+        android:label="BookSettingCurrencyFragment"
+        tools:layout="@layout/fragment_book_setting_currency" />
 
 
 </navigation>

@@ -89,4 +89,13 @@ interface BookRepository {
 
     // 가계부 설정 조회하기
     suspend fun getBooksInfo(bookKey: String): Result<UiBookSettingModel>
+
+    // 가계부 이름 변경
+    suspend fun postBooksName(name: String, bookKey: String): Result<Void?>
+
+    // 가계부 삭제
+    suspend fun deleteBooks(bookKey: String): Result<Void?>
+
+    // 내역 프로필 보기 설정
+    suspend fun postBooksInfoSeeProfile(bookKey: String, seeProfileStatus: Boolean): Result<Void?>
 }

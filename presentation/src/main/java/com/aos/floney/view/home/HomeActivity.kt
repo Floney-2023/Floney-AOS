@@ -71,7 +71,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             viewModel.settingPage.collect {
                 if(it) {
                     startActivity(Intent(this@HomeActivity, BookSettingActivity::class.java))
-                    finish()
                 }
             }
         }

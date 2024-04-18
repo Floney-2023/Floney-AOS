@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_bold"
                 android:text="@{item.name}"
                 android:textColor="@color/grayscale2"
                 android:textSize="14dp"/>
@@ -53,7 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.role}"
-                android:textColor="@color/grayscale5"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textColor="@color/grayscale6"
                 android:textSize="12dp" />
         </LinearLayout>
     </LinearLayout>

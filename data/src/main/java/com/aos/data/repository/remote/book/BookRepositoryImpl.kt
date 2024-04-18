@@ -3,8 +3,10 @@ package com.aos.data.repository.remote.book
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.Duration
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
+import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.mapper.toGetCheckUserBookModel
@@ -313,6 +315,69 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
             is NetworkState.UnknownError ->{
                 Timber.e("UnknownError ${data.errorState}, ${data.t}")
                 return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun postBooksName(name: String, bookKey: String): Result<Void?> {
+        when (val data =
+            bookDataSource.postBooksName(PostBooksNameBody(name, bookKey))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun deleteBooks(bookKey: String): Result<Void?> {
+        when (val data =
+            bookDataSource.deleteBooks(bookKey)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun postBooksInfoSeeProfile(bookKey: String, seeProfileStatus : Boolean): Result<Void?> {
+        when (val data =
+            bookDataSource.postBooksInfoSeeProfile(PostBooksInfoSeeProfileBody(bookKey,seeProfileStatus))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
             }
         }
     }

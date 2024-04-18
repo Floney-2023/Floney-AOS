@@ -8,6 +8,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.ActivityBookSettingBinding
+import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +32,13 @@ class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSetting
     // 홈 화면으로 이동
     fun startHomeActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
+        finishAffinity()
+    }
+
+    // 가계부 추가 생성 화면으로 이동
+
+    fun startBookAddActivity() {
+        startActivity(Intent(this, BookAddActivity::class.java))
         finishAffinity()
     }
 }

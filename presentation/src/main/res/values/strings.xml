@@ -249,6 +249,18 @@
     <string name="book_setting_excel">엑셀 내보내기</string>
     <string name="book_setting_invite_friend">친구 초대하기</string>
 
+    <string name="book_setting_edit_title">가계부 편집</string>
+    <string name="book_setting_edit_name">가계부 이름</string>
+    <string name="book_setting_edit_hint">이름을 입력하세요.</string>
+    <string name="book_setting_edit_edit_button">변경하기</string>
+    <string name="book_setting_edit_edit_profile_change">프로필 이미지 변경</string>
+    <string name="book_setting_edit_edit_see_profile">내역 프로필 보기</string>
+    <string name="book_setting_edit_edit_delete"><u>가계부 삭제</u></string>
+    <string name="book_setting_edit_request">가계부 이름을 입력해주세요.</string>
+
+    <string name="book_setting_currency_title">화폐 설정</string>
+    <string name="book_setting_currency_info">찾으시는 화폐 단위가 없나요?\n원하시는 화폐를 플로니에게 알려주세요.</string>
+
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>
     <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>

@@ -2,9 +2,11 @@ package com.aos.data.repository.remote.book
 
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
+import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
@@ -42,4 +44,7 @@ interface BookRemoteDataSource {
     suspend fun getSettlementSee(bookKey: String): NetworkState<List<GetSettlementSeeEntity>>
     suspend fun getSettlementDetailSee(id: Long): NetworkState<PostSettlementAddEntity>
     suspend fun getBooksInfo(bookKey: String): NetworkState<GetBooksInfoEntity>
+    suspend fun postBooksName(postBooksNameBody: PostBooksNameBody): NetworkState<Void>
+    suspend fun deleteBooks(bookKey: String): NetworkState<Void>
+    suspend fun postBooksInfoSeeProfile(postBooksInfoSeeProfileBody : PostBooksInfoSeeProfileBody) : NetworkState<Void>
 }

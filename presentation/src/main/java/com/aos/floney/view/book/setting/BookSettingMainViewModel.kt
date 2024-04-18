@@ -53,6 +53,12 @@ class BookSettingMainViewModel @Inject constructor(
     // 설정 페이지
     private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
     val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
+
+
+    // 회원 정보 페이지
+    private var _currencyPage = MutableEventFlow<Boolean>()
+    val currencyPage: EventFlow<Boolean> get() = _currencyPage
+
     init{
         searchBookSettingItems()
     }
@@ -85,7 +91,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 가계부 상세 설정 페이지 이동
     fun onClickInformPage()
     {
-
+        viewModelScope.launch {
+            _settingPage.emit(true)
+        }
     }
 
     // 이월설정
@@ -135,7 +143,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 화폐 설정
     fun onClickSettingMoney()
     {
-
+        viewModelScope.launch {
+            _currencyPage.emit(true)
+        }
     }
     // 엑셀 내보내기
     fun onClickExcelExport()
