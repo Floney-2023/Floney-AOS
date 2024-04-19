@@ -68,10 +68,10 @@ class BookSettingMainFragment :
             }
         }
         repeatOnStarted {
-            viewModel.bookAddBottomSheet.collect() {
+            viewModel.assetPage.collect() {
                 if(it) {
                     val inviteCode = ""
-                    val bottomSheetFragment = BookAddInviteShareBottomSheetFragment.newInstance(inviteCode)
+                    val bottomSheetFragment = BookSettingAssetBottomSheetFragment()
                     bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
                 }
             }

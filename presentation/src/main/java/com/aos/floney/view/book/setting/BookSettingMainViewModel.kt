@@ -49,10 +49,9 @@ class BookSettingMainViewModel @Inject constructor(
     private var _settingPage = MutableEventFlow<Boolean>()
     val settingPage: EventFlow<Boolean> get() = _settingPage
 
-    // 가계부 추가 BottomSheet
-    // 설정 페이지
-    private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
-    val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
+    // 초기 자산 페이지
+    private var _assetPage = MutableEventFlow<Boolean>()
+    val assetPage: EventFlow<Boolean> get() = _assetPage
 
 
     // 회원 정보 페이지
@@ -125,7 +124,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 초기 자산 설정
     fun onClickSTartMoneySetting()
     {
-
+        viewModelScope.launch {
+            _assetPage.emit(true)
+        }
     }
 
     // 분류항목 관리

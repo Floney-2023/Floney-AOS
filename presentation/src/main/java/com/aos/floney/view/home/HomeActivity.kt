@@ -117,23 +117,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.analysisFragment -> {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
+                    startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                     false
                 }
                 R.id.settleUpFragment -> {
-                    val intent = Intent(this, SettleUpActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
+                    startActivity(Intent(this, SettleUpActivity::class.java))
                     finish()
                     false
                 }
                 R.id.mypageFragment -> {
-                    val intent = Intent(this, MyPageActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
+                    startActivity(Intent(this, MyPageActivity::class.java))
                     finish()
                     false
                 }

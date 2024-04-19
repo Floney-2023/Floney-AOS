@@ -274,6 +274,11 @@
     <string name="book_setting_exit_dialog_cancel_button">취소하기</string>
     <string name="book_setting_exit_dialog_cancel_error">모든 사용자가 나가야 가계부 삭제가 가능합니다.</string>
 
+    <string name="book_setting_bottom_asset_title">초기 자산 설정</string>
+    <string name="book_setting_bottom_asset_info">현재 모아놓은 자산을 입력해 주세요.\n플로니가 앞으로의 자산 흐름을 보여드릴게요.</string>
+    <string name="book_setting_bottom_asset_hint">초기 자산을 입력하세요.</string>
+    <string name="book_setting_bottom_asset_save">저장하기</string>
+    <string name="book_setting_bottom_asset_init"><u>초기화하기</u></string>
 
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>
