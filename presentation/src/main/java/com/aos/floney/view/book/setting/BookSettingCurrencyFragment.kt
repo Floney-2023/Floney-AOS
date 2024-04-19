@@ -15,6 +15,7 @@ import com.aos.floney.databinding.FragmentSettleUpMemberSelectBinding
 import com.aos.floney.databinding.FragmentSettleUpStartBinding
 import com.aos.floney.databinding.FragmentSignUpAgreeBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.aos.model.book.Currency
@@ -33,7 +34,23 @@ import timber.log.Timber
 class BookSettingCurrencyFragment : BaseFragment<FragmentBookSettingCurrencyBinding, BookSettingCurrencyViewModel>(R.layout.fragment_book_setting_currency) , UiBookCurrencyModel.OnItemClickListener {
 
     override fun onItemClick(item: Currency) {
-        viewModel.settingCurrency(item)
+
+        // 화폐 단위를 문자열로 조합
+        val currencyString = "${item.code}(${item.symbol})"
+
+        // 문자열 리소스에 동적으로 값을 삽입
+        val dialogInfo = getString(R.string.book_setting_currency_dialog_info, currencyString)
+
+        val exitDialogFragment = WarningPopupDialog(
+            getString(R.string.book_setting_currency_dialog_title),
+            dialogInfo,
+            getString(R.string.book_setting_currency_dialog_left_button),
+            getString(R.string.book_setting_currency_dialog_right_button)
+        ) { checked ->
+            if (checked)
+                viewModel.settingCurrency(item)
+        }
+        exitDialogFragment.show(parentFragmentManager, "initDialog")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,6 +69,15 @@ class BookSettingCurrencyFragment : BaseFragment<FragmentBookSettingCurrencyBind
             viewModel.back.collect {
                 if(it) {
                     findNavController().popBackStack()
+                }
+            }
+        }
+        repeatOnStarted {
+            // 초기화 후, 홈 화면으로
+            viewModel.init.collect {
+                if(it) {
+                    val activity = requireActivity() as BookSettingActivity
+                    activity.startHomeActivity()
                 }
             }
         }

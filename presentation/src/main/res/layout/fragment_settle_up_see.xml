@@ -48,11 +48,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_member_select_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="34dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

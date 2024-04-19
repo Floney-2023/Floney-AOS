@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.book
 import com.aos.data.api.BookService
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
@@ -12,8 +13,10 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
+import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
@@ -124,5 +127,23 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         postBooksInfoSeeProfileBody : PostBooksInfoSeeProfileBody
     ): NetworkState<Void> {
         return bookService.postBooksInfoSeeProfile(postBooksInfoSeeProfileBody)
+    }
+
+    override suspend fun deleteBooksInfoAll(
+        bookKey: String
+    ): NetworkState<Void> {
+        return bookService.deleteBooksInfoAll(bookKey)
+    }
+
+    override suspend fun postBooksInfoCurrency(
+        postBooksInfoCurrency : PostBooksInfoCurrencyBody
+    ): NetworkState<PostBooksInfoCurrencyEntity> {
+        return bookService.postBooksInfoCurrency(postBooksInfoCurrency)
+    }
+
+    override suspend fun getBooksInfoCurrency(
+        bookKey : String
+    ): NetworkState<GetBooksInfoCurrencyEntity> {
+        return bookService.getBooksInfoCurrency(bookKey)
     }
 }

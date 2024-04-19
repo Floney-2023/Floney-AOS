@@ -9,6 +9,7 @@ import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingMainBinding
 import com.aos.floney.databinding.FragmentMyPageInformEmailMainBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.add.BookAddInviteShareBottomSheetFragment
 import com.aos.floney.view.mypage.inform.email.login.version.MyPageInformEmailActivity
 import com.aos.floney.view.mypage.inform.withdraw.MyPageInformWithdrawInputPasswordFragmentDirections
 import com.aos.floney.view.mypage.setting.main.MyPageSettingMainFragmentDirections
@@ -63,6 +64,15 @@ class BookSettingMainFragment :
                 if(it){
                     val currencyAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingCurrencyFragment()
                     findNavController().navigate(currencyAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.bookAddBottomSheet.collect() {
+                if(it) {
+                    val inviteCode = ""
+                    val bottomSheetFragment = BookAddInviteShareBottomSheetFragment.newInstance(inviteCode)
+                    bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
                 }
             }
         }

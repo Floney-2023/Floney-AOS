@@ -5,6 +5,7 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
@@ -14,8 +15,10 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
+import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
@@ -162,10 +165,32 @@ interface BookService {
     ): NetworkState<Void>
 
     // 내역 프로필 보기 설정
-
     @POST("books/info/seeProfile")
     @Headers("Auth: true")
     suspend fun postBooksInfoSeeProfile(
         @Body postBooksInfoSeeProfile : PostBooksInfoSeeProfileBody
     ): NetworkState<Void>
+
+    // 가계부 초기화
+    @HTTP(method = "DELETE", path="books/info/delete/all", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBooksInfoAll(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<Void>
+
+    // 화폐설정 변경
+    @POST("books/info/currency")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoCurrency(
+        @Body postBooksInfoCurrencyBody : PostBooksInfoCurrencyBody
+    ): NetworkState<PostBooksInfoCurrencyEntity>
+
+    // 화폐설정 조회
+
+    @GET("books/info/currency")
+    @Headers("Auth: true")
+    suspend fun getBooksInfoCurrency(
+        @Query("bookKey") bookKey : String
+    ): NetworkState<GetBooksInfoCurrencyEntity>
+
 }

@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
-            android:text="@{item.country + `(` + item.unit + `)`}"
+            android:text="@{item.code + `(` + item.symbol + `)`}"
             android:textAppearance="@style/mypage_user_name"
             android:textColor="@{item.isCheck ? @color/primary2 : @color/grayscale6}"
             app:fontFamily="@{item.isCheck}"

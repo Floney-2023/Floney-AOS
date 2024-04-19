@@ -1,7 +1,9 @@
 package com.aos.repository
 
+import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
+import com.aos.model.book.PostBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookCategory
@@ -98,4 +100,13 @@ interface BookRepository {
 
     // 내역 프로필 보기 설정
     suspend fun postBooksInfoSeeProfile(bookKey: String, seeProfileStatus: Boolean): Result<Void?>
+
+    // 가계부 초기화
+    suspend fun deleteBooksInfoAll(bookKey: String): Result<Void?>
+
+    // 화폐설정 변경
+    suspend fun postBooksInfoCurrency(currency: String, bookKey: String): Result<PostBooksInfoCurrencyModel>
+
+    // 화폐설정 조회
+    suspend fun getBooksInfoCurrency(bookKey: String): Result<GetBooksInfoCurrencyModel>
 }

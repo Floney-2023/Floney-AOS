@@ -4,8 +4,10 @@ import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
+import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
+import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
@@ -17,8 +19,10 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
+import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.PostBooksCreateModel
+import com.aos.model.book.PostBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookCategory
@@ -360,4 +364,12 @@ fun GetBooksInfoEntity.toUiBookSettingModel(): UiBookSettingModel {
         carryOver = this.carryOver,
         ourBookUsers = myBookUsers
     )
+}
+
+fun PostBooksInfoCurrencyEntity.toPostBooksInfoCurrencyModel() : PostBooksInfoCurrencyModel {
+    return PostBooksInfoCurrencyModel(myBookCurrency = this.myBookCurrency ?:"")
+}
+
+fun GetBooksInfoCurrencyEntity.toGetBooksInfoCurrencyModel() : GetBooksInfoCurrencyModel {
+    return GetBooksInfoCurrencyModel(myBookCurrency = this.myBookCurrency ?: "")
 }
