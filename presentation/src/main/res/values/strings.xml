@@ -261,6 +261,12 @@
     <string name="book_setting_currency_title">화폐 설정</string>
     <string name="book_setting_currency_info">찾으시는 화폐 단위가 없나요?\n원하시는 화폐를 플로니에게 알려주세요.</string>
 
+    <string name="book_setting_exit_dialog_title">가계부 삭제</string>
+    <string name="book_setting_exit_dialog_info">team의 가계부를 정말 삭제하시겠습니까?\n작성된 내역은 모두 삭제되며 복구할 수 없습니다.</string>
+    <string name="book_setting_exit_dialog_delete_button">삭제하기</string>
+    <string name="book_setting_exit_dialog_cancel_button">취소하기</string>
+    <string name="book_setting_exit_dialog_cancel_error">모든 사용자가 나가야 가계부 삭제가 가능합니다.</string>
+
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>
     <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>

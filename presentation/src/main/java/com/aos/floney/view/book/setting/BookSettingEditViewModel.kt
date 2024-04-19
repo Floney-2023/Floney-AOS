@@ -13,6 +13,7 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.booksetting.BooksDeleteUseCase
 import com.aos.usecase.booksetting.BooksInfoSeeProfileUseCase
 import com.aos.usecase.booksetting.BooksNameChangeUseCase
+import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.logout.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,8 @@ class BookSettingEditViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val booksNameChangeUseCase : BooksNameChangeUseCase,
     private val booksDeleteUseCase : BooksDeleteUseCase,
-    private val booksInfoSeeProfileUseCase : BooksInfoSeeProfileUseCase
+    private val booksInfoSeeProfileUseCase : BooksInfoSeeProfileUseCase,
+    private val checkUserBookUseCase: CheckUserBookUseCase
 ): BaseViewModel() {
 
     // 프로필 보여지기 ON/OFF
@@ -53,6 +55,10 @@ class BookSettingEditViewModel @Inject constructor(
     // 가계부 삭제 페이지 이동
     private var _deletePage = MutableEventFlow<Boolean>()
     val deletePage: EventFlow<Boolean> get() = _deletePage
+
+    // 가계부 삭제 팝업 이동
+    private var _deletePopup = MutableEventFlow<Boolean>()
+    val deletePopup: EventFlow<Boolean> get() = _deletePopup
 
 
 
@@ -107,15 +113,40 @@ class BookSettingEditViewModel @Inject constructor(
     fun onClickDelete()
     {
         viewModelScope.launch {
-            if(prefs.getString("bookKey","").isNotEmpty()) {
-                baseEvent(Event.ShowLoading)
-                booksDeleteUseCase(prefs.getString("bookKey","")).onSuccess {
-                    baseEvent(Event.HideLoading)
-                    _deletePage.emit(true)
-                }.onFailure {
-                    baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            _deletePopup.emit(true)
+        }
+    }
+
+    fun deleteBook(){
+        if (bookCount.value == 1){
+            viewModelScope.launch {
+                if(prefs.getString("bookKey","").isNotEmpty()) {
+                    baseEvent(Event.ShowLoading)
+                    booksDeleteUseCase(prefs.getString("bookKey","")).onSuccess {
+                        baseEvent(Event.HideLoading)
+                        settingBookKey()
+                    }.onFailure {
+                        baseEvent(Event.HideLoading)
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    }
                 }
+            }
+        }
+        else {
+            baseEvent(Event.ShowToastRes(R.string.book_setting_exit_dialog_cancel_error))
+        }
+    }
+    fun settingBookKey(){
+        viewModelScope.launch {
+            checkUserBookUseCase().onSuccess {
+                if(it.bookKey != "") {
+                    prefs.setString("bookKey", it.bookKey)
+                    _deletePage.emit(true)
+                } else {
+                    _deletePage.emit(false)
+                }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }
     }
