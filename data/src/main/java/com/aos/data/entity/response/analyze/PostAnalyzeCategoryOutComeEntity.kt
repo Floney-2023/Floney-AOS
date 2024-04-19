@@ -3,7 +3,7 @@ package com.aos.data.entity.response.analyze
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PostAnalyzeCategoryEntity(
+data class PostAnalyzeCategoryOutComeEntity(
     val total: Double,
     val differance: Double,
     val analyzeResult: List<AnalyzeResult>

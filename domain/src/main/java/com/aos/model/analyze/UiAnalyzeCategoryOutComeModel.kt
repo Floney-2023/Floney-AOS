@@ -2,7 +2,7 @@ package com.aos.model.analyze
 
 import androidx.recyclerview.widget.DiffUtil
 
-data class UiAnalyzeCategoryModel(
+data class UiAnalyzeCategoryOutComeModel(
     val total: String,
     val differance: String,
     val size: Int,

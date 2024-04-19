@@ -1,9 +1,11 @@
 package com.aos.data.mapper
 
 import android.graphics.Color
-import com.aos.data.entity.response.analyze.PostAnalyzeCategoryEntity
+import com.aos.data.entity.response.analyze.PostAnalyzeCategoryInComeEntity
+import com.aos.data.entity.response.analyze.PostAnalyzeCategoryOutComeEntity
 import com.aos.model.analyze.AnalyzeResult
-import com.aos.model.analyze.UiAnalyzeCategoryModel
+import com.aos.model.analyze.UiAnalyzeCategoryInComeModel
+import com.aos.model.analyze.UiAnalyzeCategoryOutComeModel
 import timber.log.Timber
 import java.text.NumberFormat
 import kotlin.math.pow
@@ -32,14 +34,14 @@ private val randomColorArr = arrayListOf<Int>()
 private var stepIdx = 0
 private var colorIdx = 0
 
-fun PostAnalyzeCategoryEntity.toUiAnalyzeModel(): UiAnalyzeCategoryModel {
+fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutComeModel {
     colorIdx = 0
     stepIdx = 0
     colorUsedArr.clear()
     randomColorArr.clear()
     getRandomColor(this.analyzeResult.size)
 
-    return UiAnalyzeCategoryModel(
+    return UiAnalyzeCategoryOutComeModel(
         total = "총 ${NumberFormat.getNumberInstance().format(this.total)}원을\n소비했어요",
         differance = "${
             if (this.differance > this.total) {
@@ -55,7 +57,7 @@ fun PostAnalyzeCategoryEntity.toUiAnalyzeModel(): UiAnalyzeCategoryModel {
                 money = it.money,
                 uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}원",
                 percent = (it.money / total) * 100.0,
-                uiPercent = "${(it.money / total) * 100.0}%",
+                uiPercent = "${((it.money / total) * 100.0).round(1)}%",
                 color = when (stepIdx) {
                     0 -> {
                         stepIdx++
@@ -73,8 +75,55 @@ fun PostAnalyzeCategoryEntity.toUiAnalyzeModel(): UiAnalyzeCategoryModel {
                     }
 
                     else -> {
-                        Timber.e("randomColorArr $randomColorArr")
-                        Timber.e("colorIdx $colorIdx")
+                        randomColorArr[colorIdx++]
+                    }
+                }
+            )
+        }
+    )
+}
+
+fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeModel {
+    colorIdx = 0
+    stepIdx = 0
+    colorUsedArr.clear()
+    randomColorArr.clear()
+    getRandomColor(this.analyzeResult.size)
+
+    return UiAnalyzeCategoryInComeModel(
+        total = "총 ${NumberFormat.getNumberInstance().format(this.total)}원을\n소비했어요",
+        differance = "${
+            if (this.differance > this.total) {
+                "저번달 대비 ${NumberFormat.getNumberInstance().format(this.differance - total)}원을\n덜 사용했어요"
+            } else {
+                "저번달 대비 ${NumberFormat.getNumberInstance().format(this.total - differance)}원을\n더 사용했어요"
+            }
+        }",
+        size = this.analyzeResult.size,
+        analyzeResult = this.analyzeResult.map {
+            AnalyzeResult(
+                category = it.category,
+                money = it.money,
+                uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}원",
+                percent = (it.money / total) * 100.0,
+                uiPercent = "${((it.money / total) * 100.0).round(1)}%",
+                color = when (stepIdx) {
+                    0 -> {
+                        stepIdx++
+                        Color.parseColor("#4C97FF")
+                    }
+
+                    1 -> {
+                        stepIdx++
+                        Color.parseColor("#35347F")
+                    }
+
+                    2 -> {
+                        stepIdx++
+                        Color.parseColor("#9B8BFF")
+                    }
+
+                    else -> {
                         randomColorArr[colorIdx++]
                     }
                 }
@@ -93,10 +142,7 @@ fun getRandomColor(repeat: Int): List<Int> {
                 colorUsedArr.add(random)
                 randomColorArr.add(colorArr[random])
             }
-            Timber.e("random $random")
-            Timber.e("colorUsedArr $colorUsedArr")
         }
-        Timber.e("randomColorArr $randomColorArr")
     }
     return randomColorArr
 }

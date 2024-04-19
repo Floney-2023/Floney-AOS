@@ -1,6 +1,8 @@
 package com.aos.floney.view.mypage.setting
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -29,6 +31,11 @@ class MyPageSettingActivity : BaseActivity<ActivityMyPageSettingBinding, MyPageS
     }
     fun startMypageActivity() {
         startActivity(Intent(this, MyPageActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         finishAffinity()
     }
 }

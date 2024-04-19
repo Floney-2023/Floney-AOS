@@ -8,9 +8,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import timber.log.Timber
-import kotlin.random.Random
 
-class AnalyzeBarChart(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class AnalyzeOutComeBarChart(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFF6200EE.toInt() // 예제 색상
         style = Paint.Style.FILL
@@ -106,6 +105,10 @@ class AnalyzeBarChart(context: Context, attrs: AttributeSet? = null) : View(cont
             } else {
                 data.add(fl)
             }
+        }
+
+        if(newData.size == 1) {
+            data.add(0f)
         }
 
         total = data.sum()
