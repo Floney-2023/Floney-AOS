@@ -290,6 +290,10 @@
     <string name="book_setting_bottom_carryinfo_on">ON</string>
     <string name="book_setting_bottom_carryinfo_off">OFF</string>
 
+    <string name="book_setting_budget_title">예산 설정</string>
+    <string name="book_setting_budget_hint">예산을 입력하세요.</string>
+    <string name="book_setting_budget_error">숫자를 입력해주세요.</string>
+
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>
     <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>

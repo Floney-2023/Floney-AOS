@@ -4,6 +4,7 @@ import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.Duration
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
 import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
@@ -24,6 +25,7 @@ import com.aos.data.mapper.toPostBooksLinesChangeModel
 import com.aos.data.mapper.toPostBooksLinesModel
 import com.aos.data.mapper.toUiBookCategory
 import com.aos.data.mapper.toPostSettlementAddModel
+import com.aos.data.mapper.toUiBookBudgetModel
 import com.aos.data.mapper.toUiBookSettingModel
 import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.mapper.toUiOutcomesSelectModel
@@ -35,6 +37,7 @@ import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
+import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -461,6 +464,41 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     override suspend fun postBooksInfoCarryOver(status: Boolean, bookKey: String): Result<Void?> {
         when (val data =
             bookDataSource.postBooksInfoCarryOver(PostBooksInfoCarryOverBody(status, bookKey))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun getBooksBudget(bookKey: String, date: String): Result<UiBookBudgetModel> {
+        when (val data =
+            bookDataSource.getBooksBudget(bookKey, date)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiBookBudgetModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun postBooksInfoBudget(bookKey: String, budget: Int, date: String): Result<Void?> {
+        when (val data =
+            bookDataSource.postBooksInfoBudget(PostBooksInfoBudgetBody(bookKey, budget, date))) {
             is NetworkState.Success -> {
                 return Result.success(data.body)
             }

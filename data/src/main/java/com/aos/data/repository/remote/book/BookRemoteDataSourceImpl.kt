@@ -4,6 +4,7 @@ import com.aos.data.api.BookService
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
 import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
@@ -15,6 +16,7 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
@@ -159,5 +161,18 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody
     ): NetworkState<Void> {
         return bookService.postBooksInfoCarryOver(postBooksInfoCarryOverBody)
+    }
+
+    override suspend fun getBooksBudget(
+        bookKey : String,
+        date : String
+    ): NetworkState<GetBooksBudgetEntity> {
+        return bookService.getBooksBudget(bookKey, date)
+    }
+
+    override suspend fun postBooksInfoBudget(
+        postBooksInfoBudgetBody: PostBooksInfoBudgetBody
+    ): NetworkState<Void> {
+        return bookService.postBooksInfoBudget(postBooksInfoBudgetBody)
     }
 }

@@ -78,5 +78,13 @@ class BookSettingMainFragment :
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.budgetPage.collect() {
+                if(it) {
+                    val budgetAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingBudgetFragment()
+                    findNavController().navigate(budgetAction)
+                }
+            }
+        }
     }
 }

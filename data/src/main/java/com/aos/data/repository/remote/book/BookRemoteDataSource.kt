@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.book
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
 import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
@@ -14,6 +15,7 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
@@ -57,5 +59,6 @@ interface BookRemoteDataSource {
     suspend fun getBooksInfoCurrency(bookKey : String): NetworkState<GetBooksInfoCurrencyEntity>
     suspend fun postBooksInfoAsset(postBooksInfoAssetBody: PostBooksInfoAssetBody): NetworkState<Void>
     suspend fun postBooksInfoCarryOver(postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody): NetworkState<Void>
-
+    suspend fun getBooksBudget(bookKey : String, date: String): NetworkState<GetBooksBudgetEntity>
+    suspend fun postBooksInfoBudget(postBooksInfoBudgetBody: PostBooksInfoBudgetBody): NetworkState<Void>
 }

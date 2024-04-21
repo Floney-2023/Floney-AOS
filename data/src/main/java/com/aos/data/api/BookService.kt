@@ -6,6 +6,7 @@ import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
 import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
@@ -17,6 +18,7 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
@@ -208,4 +210,18 @@ interface BookService {
         @Body postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody
     ): NetworkState<Void>
 
+    // 예산조회하기
+    @GET("books/budget")
+    @Headers("Auth: true")
+    suspend fun getBooksBudget(
+        @Query("bookKey") bookKey : String,
+        @Query("startYear") date : String
+    ): NetworkState<GetBooksBudgetEntity>
+
+    // 가계부 예산 설정하기
+    @POST("books/info/budget")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoBudget(
+        @Body PostBooksInfoBudgetBody : PostBooksInfoBudgetBody
+    ): NetworkState<Void>
 }

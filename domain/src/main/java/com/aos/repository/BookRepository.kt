@@ -6,6 +6,7 @@ import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
+import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -115,4 +116,11 @@ interface BookRepository {
 
     // 가계부 이월설정 On/Off
     suspend fun postBooksInfoCarryOver(status: Boolean, bookKey: String): Result<Void?>
+
+    // 예산조회하기
+    suspend fun getBooksBudget(bookKey: String, date: String): Result<UiBookBudgetModel>
+
+    // 가계부 예산 설정하기
+    suspend fun postBooksInfoBudget(bookKey: String, budget: Int, date: String): Result<Void?>
+
 }

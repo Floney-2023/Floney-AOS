@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_bookSettingMainFragment_to_bookSettingCurrencyFragment"
             app:destination="@id/bookSettingCurrencyFragment" />
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingBudgetFragment"
+            app:destination="@id/bookSettingBudgetFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookSettingEditFragment"
@@ -68,6 +71,11 @@
         android:name="com.aos.floney.view.book.setting.BookSettingCurrencyFragment"
         android:label="BookSettingCurrencyFragment"
         tools:layout="@layout/fragment_book_setting_currency" />
+    <fragment
+        android:id="@+id/bookSettingBudgetFragment"
+        android:name="com.aos.floney.view.book.setting.BookSettingBudgetFragment"
+        android:label="BookSettingBudgetFragment"
+        tools:layout="@layout/fragment_book_setting_budget"  />
 
 
 </navigation>

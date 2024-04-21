@@ -55,9 +55,14 @@ class BookSettingMainViewModel @Inject constructor(
     val assetPage: EventFlow<Boolean> get() = _assetPage
 
 
-    // 회원 정보 페이지
+    // 화폐 정보 페이지
     private var _currencyPage = MutableEventFlow<Boolean>()
     val currencyPage: EventFlow<Boolean> get() = _currencyPage
+
+    // 예산 페이지
+    private var _budgetPage = MutableEventFlow<Boolean>()
+    val budgetPage: EventFlow<Boolean> get() = _budgetPage
+
 
     init{
         searchBookSettingItems()
@@ -129,7 +134,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 예산 설정
     fun onClickAssetSetting()
     {
-
+        viewModelScope.launch {
+            _budgetPage.emit(true)
+        }
     }
     // 초기 자산 설정
     fun onClickSTartMoneySetting()
