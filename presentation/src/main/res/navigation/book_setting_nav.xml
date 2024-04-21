@@ -43,6 +43,9 @@
         <argument
             android:name="bookCount"
             app:argType="integer" />
+        <argument
+            android:name="bookName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/bookSettingProfileChangeFragment"

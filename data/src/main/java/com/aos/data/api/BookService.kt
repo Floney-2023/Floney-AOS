@@ -5,6 +5,8 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
 import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
@@ -186,11 +188,24 @@ interface BookService {
     ): NetworkState<PostBooksInfoCurrencyEntity>
 
     // 화폐설정 조회
-
     @GET("books/info/currency")
     @Headers("Auth: true")
     suspend fun getBooksInfoCurrency(
         @Query("bookKey") bookKey : String
     ): NetworkState<GetBooksInfoCurrencyEntity>
+
+    // 가계부 자산 설정하기
+    @POST("books/info/asset")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoAsset(
+        @Body postBooksInfoAssetBody : PostBooksInfoAssetBody
+    ): NetworkState<Void>
+
+    // 가계부 이월 설정 on/off
+    @POST("books/info/carryOver")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoCarryOver(
+        @Body postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody
+    ): NetworkState<Void>
 
 }

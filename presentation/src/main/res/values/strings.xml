@@ -277,8 +277,18 @@
     <string name="book_setting_bottom_asset_title">초기 자산 설정</string>
     <string name="book_setting_bottom_asset_info">현재 모아놓은 자산을 입력해 주세요.\n플로니가 앞으로의 자산 흐름을 보여드릴게요.</string>
     <string name="book_setting_bottom_asset_hint">초기 자산을 입력하세요.</string>
+    <string name="book_setting_bottom_asset_error">숫자를 입력해주세요.</string>
+    <string name="book_setting_bottom_asset_succcess">초기 자산 설정이 완료되었습니다.</string>
     <string name="book_setting_bottom_asset_save">저장하기</string>
     <string name="book_setting_bottom_asset_init"><u>초기화하기</u></string>
+
+    <string name="book_setting_bottom_carryinfo_title">이월 설정</string>
+    <string name="book_setting_bottom_carryinfo_total_income">지난달 총수입</string>
+    <string name="book_setting_bottom_carryinfo_total_outcome">지난달 총지출</string>
+    <string name="book_setting_bottom_carryinfo_next_start_money">다음달 시작금액</string>
+    <string name="book_setting_bottom_carryinfo_info">이월 설정은 지난 달에 기록된 수입에서 지출을 차감한 금액을\n다음 달로 넘기는 기능입니다.\n\n남은 금액이 마이너스인 경우 지출로 기록되며\n플러스인 경우는 수입으로 기록 됩니다.</string>
+    <string name="book_setting_bottom_carryinfo_on">ON</string>
+    <string name="book_setting_bottom_carryinfo_off">OFF</string>
 
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>

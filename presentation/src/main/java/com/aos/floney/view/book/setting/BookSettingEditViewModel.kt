@@ -36,10 +36,14 @@ class BookSettingEditViewModel @Inject constructor(
     // 방장이면 True, 팀원이면 False
     var roleCheck: LiveData<Boolean> = stateHandle.getLiveData("roleCheck")
 
+    // 가계부 프로필 이미지
     var profileImg: LiveData<String> = stateHandle.getLiveData("profileImg")
 
     // 가계부 개수
     var bookCount: LiveData<Int> = stateHandle.getLiveData("bookCount")
+
+    // 가계부 이름
+    var bookHintName: LiveData<String> = stateHandle.getLiveData("bookName")
 
     // 뒤로가기
     private var _back = MutableEventFlow<Boolean>()

@@ -3,6 +3,8 @@ package com.aos.data.repository.remote.book
 import com.aos.data.api.BookService
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
 import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
@@ -145,5 +147,17 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         bookKey : String
     ): NetworkState<GetBooksInfoCurrencyEntity> {
         return bookService.getBooksInfoCurrency(bookKey)
+    }
+
+    override suspend fun postBooksInfoAsset(
+        postBooksInfoAssetBody: PostBooksInfoAssetBody
+    ): NetworkState<Void> {
+        return bookService.postBooksInfoAsset(postBooksInfoAssetBody)
+    }
+
+    override suspend fun postBooksInfoCarryOver(
+        postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody
+    ): NetworkState<Void> {
+        return bookService.postBooksInfoCarryOver(postBooksInfoCarryOverBody)
     }
 }

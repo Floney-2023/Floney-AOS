@@ -25,42 +25,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
             android:fillViewport="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/iv_back">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/iv_back"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="22dp"
-                    android:src="@drawable/icon_back"
-                    android:onClick="@{() -> vm.onClickPreviousPage()}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_mypage_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="18dp"
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_title"
-                    android:textSize="22dp"
                     android:textColor="@color/grayscale2"
+                    android:textSize="22dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_back" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/li_user_inform_view"
@@ -113,9 +117,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendard_medium"
-                            android:textColor="@color/grayscale3"
                             android:text="@{vm.bookSettingInfo.startDay}"
-                            android:textAppearance="@style/mypage_user_email" />
+                            android:textAppearance="@style/mypage_user_email"
+                            android:textColor="@color/grayscale3" />
                     </LinearLayout>
 
                     <ImageView
@@ -136,8 +140,8 @@
                     android:layout_marginTop="40dp"
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_user"
-                    android:textSize="16dp"
                     android:textColor="@color/grayscale2"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_user_inform_view" />
 
@@ -148,8 +152,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="22dp"
                     android:layout_marginEnd="25dp"
-                    android:orientation="vertical"
                     android:background="@drawable/custom_radius_12_solid_grayscale_12"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_user_title">
@@ -175,8 +179,8 @@
                     android:layout_marginTop="40dp"
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_calendar"
-                    android:textSize="16dp"
                     android:textColor="@color/grayscale2"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/li_user_view" />
 
@@ -186,13 +190,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:fontFamily="@font/pretendard_regular"
                     android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
                     android:text="@string/book_setting_carryInfo"
-                    android:textSize="14dp"
                     android:textColor="@color/grayscale2"
-                    android:fontFamily="@font/pretendard_regular"
+                    android:textSize="14dp"
                     app:layout_constraintStart_toStartOf="@+id/tv_calendar_title"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_calendar_title"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_calendar_title" />
 
                 <TextView
                     android:id="@+id/tv_book_setting_carryInfo_check"
@@ -200,13 +204,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
                     android:background="@{vm.bookSettingInfo.carryOver ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
+                    android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
                     android:padding="6dp"
                     android:text="@{vm.bookSettingInfo.carryOver ? @string/book_setting_carryInfo_yes : @string/book_setting_carryInfo_no}"
+                    android:textColor="@{vm.bookSettingInfo.carryOver ? @color/primary2 : @color/grayscale2}"
                     android:textSize="10dp"
-                    android:textColor="@{vm.bookSettingInfo.carryOver ? @color/primary4 : @color/grayscale2}"
+                    app:fontFamily="@{vm.bookSettingInfo.carryOver}"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_book_setting_carryInfo"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_book_setting_carryInfo"/>
+                    app:layout_constraintTop_toTopOf="@+id/tv_book_setting_carryInfo" />
 
                 <LinearLayout
                     android:id="@+id/li_repeat_view"
@@ -225,10 +231,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/book_setting_repeat"
                         android:fontFamily="@font/pretendard_regular"
-                        android:textSize="14dp"
-                        android:textColor="@color/grayscale2" />
+                        android:text="@string/book_setting_repeat"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -247,10 +253,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/book_setting_favorite"
                         android:fontFamily="@font/pretendard_regular"
-                        android:textSize="14dp"
-                        android:textColor="@color/grayscale2" />
+                        android:text="@string/book_setting_favorite"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
 
@@ -286,8 +292,8 @@
                     android:layout_marginTop="30dp"
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_asset_title"
-                    android:textSize="16dp"
                     android:textColor="@color/grayscale2"
+                    android:textSize="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_book_setting_init" />
 
@@ -309,11 +315,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
                         android:onClick="@{() -> vm.onClickAssetSetting()}"
                         android:text="@string/book_setting_asset"
-                        android:fontFamily="@font/pretendard_regular"
-                        android:textSize="14dp"
-                        android:textColor="@color/grayscale2" />
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -332,10 +338,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/book_setting_start_money"
                         android:fontFamily="@font/pretendard_regular"
-                        android:textSize="14dp"
-                        android:textColor="@color/grayscale2" />
+                        android:text="@string/book_setting_start_money"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -369,7 +375,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right"/>
+                        android:src="@drawable/icon_chevron_right" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -404,7 +410,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right"/>
+                        android:src="@drawable/icon_chevron_right" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -438,7 +444,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right"/>
+                        android:src="@drawable/icon_chevron_right" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -501,6 +507,7 @@
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

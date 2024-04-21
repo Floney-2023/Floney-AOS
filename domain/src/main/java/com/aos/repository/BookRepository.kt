@@ -109,4 +109,10 @@ interface BookRepository {
 
     // 화폐설정 조회
     suspend fun getBooksInfoCurrency(bookKey: String): Result<GetBooksInfoCurrencyModel>
+
+    // 가계부 자산 설정하기
+    suspend fun postBooksInfoAsset(bookKey: String, asset: Int): Result<Void?>
+
+    // 가계부 이월설정 On/Off
+    suspend fun postBooksInfoCarryOver(status: Boolean, bookKey: String): Result<Void?>
 }

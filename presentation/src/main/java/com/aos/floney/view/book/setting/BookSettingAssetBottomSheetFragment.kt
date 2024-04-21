@@ -30,33 +30,11 @@ class BookSettingAssetBottomSheetFragment :
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
-            // 코드 공유하기 페이지
-            viewModel.inviteCodeShare.collect {
-                Timber.e("nextPage $it")
-                if(it) {
-
-                }
-            }
-        }
-        repeatOnStarted {
             // 나중에 하기 -> Bottomsheet 닫기
-            viewModel.inviteCodeExit.collect {
+            viewModel.initAssetSheet.collect {
                 Timber.e("nextPage $it")
                 if(it) {
                     dismiss()
-                }
-            }
-        }
-        repeatOnStarted {
-            // 초대 코드 클립보드 복사
-            viewModel.inviteCodeCopy.collect {
-                Timber.e("nextPage $it")
-                if(it) {
-                    val code = viewModel.inviteCode.value ?: ""
-                    val clipboard: ClipboardManager =
-                        requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip = ClipData.newPlainText("label", code)
-                    clipboard.setPrimaryClip(clip)
                 }
             }
         }

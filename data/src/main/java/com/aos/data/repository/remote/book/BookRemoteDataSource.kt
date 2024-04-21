@@ -2,6 +2,8 @@ package com.aos.data.repository.remote.book
 
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
 import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
 import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
@@ -53,5 +55,7 @@ interface BookRemoteDataSource {
     suspend fun deleteBooksInfoAll(bookKey: String): NetworkState<Void>
     suspend fun postBooksInfoCurrency(postBooksInfoCurrency : PostBooksInfoCurrencyBody): NetworkState<PostBooksInfoCurrencyEntity>
     suspend fun getBooksInfoCurrency(bookKey : String): NetworkState<GetBooksInfoCurrencyEntity>
+    suspend fun postBooksInfoAsset(postBooksInfoAssetBody: PostBooksInfoAssetBody): NetworkState<Void>
+    suspend fun postBooksInfoCarryOver(postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody): NetworkState<Void>
 
 }

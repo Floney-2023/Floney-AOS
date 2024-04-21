@@ -20,6 +20,7 @@ import com.aos.model.book.UiBookSettingModel
 import com.aos.model.user.MyBooks
 import com.aos.usecase.booksetting.BooksSettingGetUseCase
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 @HiltViewModel
@@ -41,9 +42,9 @@ class BookSettingMainViewModel @Inject constructor(
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
 
-    // 회원 정보 페이지
-    private var _informPage = MutableEventFlow<Boolean>()
-    val informPage: EventFlow<Boolean> get() = _informPage
+    // 이월 설정 페이지
+    private var _carryInfoPage = MutableEventFlow<Boolean>()
+    val carryInfoPage: EventFlow<Boolean> get() = _carryInfoPage
 
     // 설정 페이지
     private var _settingPage = MutableEventFlow<Boolean>()
@@ -79,6 +80,13 @@ class BookSettingMainViewModel @Inject constructor(
             }
         }
     }
+
+    fun changeCarryOver(carryOver : Boolean){
+        viewModelScope.launch {
+            val currentInfo = bookSettingInfo.value
+            _bookSettingInfo.postValue(currentInfo?.copy(carryOver = carryOver))
+        }
+    }
     // 이전 페이지 이동
     fun onClickPreviousPage()
     {
@@ -98,7 +106,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 이월설정
     fun onClickCarryInfoSetting()
     {
-
+        viewModelScope.launch {
+            _carryInfoPage.emit(true)
+        }
     }
 
     // 반복내역 설정
