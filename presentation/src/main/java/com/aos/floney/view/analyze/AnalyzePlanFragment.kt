@@ -16,6 +16,14 @@ class AnalyzePlanFragment : BaseFragment<FragmentAnalyzePlanBinding, AnalyzePlan
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setUpCircleBarChart()
+    }
+
+    // 최대는 194
+    // 1% = 1.94
+    private fun setUpCircleBarChart() {
+        binding.circleView.setProgress(1.94f * 50)
     }
 
 }
