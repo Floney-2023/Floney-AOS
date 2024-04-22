@@ -1,4 +1,4 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.edit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,6 @@ import com.aos.usecase.booksetting.BooksDeleteUseCase
 import com.aos.usecase.booksetting.BooksInfoSeeProfileUseCase
 import com.aos.usecase.booksetting.BooksNameChangeUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
-import com.aos.usecase.logout.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

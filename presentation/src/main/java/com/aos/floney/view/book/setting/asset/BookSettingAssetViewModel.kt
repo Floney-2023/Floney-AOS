@@ -1,4 +1,4 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.asset
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle

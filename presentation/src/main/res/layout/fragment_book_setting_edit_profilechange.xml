@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.aos.floney.view.book.setting.BookSettingProfileChangeViewModel" />
+            type="com.aos.floney.view.book.setting.edit.BookSettingProfileChangeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

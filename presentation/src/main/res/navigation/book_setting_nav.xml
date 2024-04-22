@@ -24,10 +24,13 @@
         <action
             android:id="@+id/action_bookSettingMainFragment_to_bookSettingBudgetFragment"
             app:destination="@id/bookSettingBudgetFragment" />
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingCategoryFragment"
+            app:destination="@id/bookSettingCategoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookSettingEditFragment"
-        android:name="com.aos.floney.view.book.setting.BookSettingEditFragment"
+        android:name="com.aos.floney.view.book.setting.edit.BookSettingEditFragment"
         tools:layout="@layout/fragment_book_setting_edit"
         android:label="BookSettingEditFragment" >
         <action
@@ -52,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookSettingProfileChangeFragment"
-        android:name="com.aos.floney.view.book.setting.BookSettingProfileChangeFragment"
+        android:name="com.aos.floney.view.book.setting.edit.BookSettingProfileChangeFragment"
         android:label="BookSettingProfileChangeFragment"
         tools:layout="@layout/fragment_book_setting_edit_profilechange" >
         <argument
@@ -68,14 +71,19 @@
     </fragment>
     <fragment
         android:id="@+id/bookSettingCurrencyFragment"
-        android:name="com.aos.floney.view.book.setting.BookSettingCurrencyFragment"
+        android:name="com.aos.floney.view.book.setting.currency.BookSettingCurrencyFragment"
         android:label="BookSettingCurrencyFragment"
         tools:layout="@layout/fragment_book_setting_currency" />
     <fragment
         android:id="@+id/bookSettingBudgetFragment"
-        android:name="com.aos.floney.view.book.setting.BookSettingBudgetFragment"
+        android:name="com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment"
         android:label="BookSettingBudgetFragment"
         tools:layout="@layout/fragment_book_setting_budget"  />
+    <fragment
+        android:id="@+id/bookSettingCategoryFragment"
+        android:name="com.aos.floney.view.book.setting.category.BookSettingCategoryFragment"
+        android:label="BookSettingCategoryFragment"
+        tools:layout="@layout/fragment_book_setting_category" />
 
 
 </navigation>

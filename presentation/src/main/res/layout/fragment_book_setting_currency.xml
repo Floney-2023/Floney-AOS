@@ -10,7 +10,7 @@
 
         <variable
             name="vm"
-            type="com.aos.floney.view.book.setting.BookSettingCurrencyViewModel" />
+            type="com.aos.floney.view.book.setting.currency.BookSettingCurrencyViewModel" />
 
         <variable
             name="eventHolder"

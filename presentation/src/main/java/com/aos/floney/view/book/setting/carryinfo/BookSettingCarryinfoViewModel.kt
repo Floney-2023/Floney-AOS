@@ -1,17 +1,13 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.carryinfo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
-import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
-import com.aos.floney.ext.formatNumber
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
-import com.aos.usecase.booksetting.BooksInfoAssetUseCase
 import com.aos.usecase.booksetting.BooksInfoCarryOverUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

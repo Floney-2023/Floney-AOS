@@ -8,6 +8,8 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingMainBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.asset.BookSettingAssetBottomSheetFragment
+import com.aos.floney.view.book.setting.carryinfo.BookSettingCarryInfoSheetFragment
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.UiBookSettingModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -83,6 +85,14 @@ class BookSettingMainFragment :
                 if(it) {
                     val budgetAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingBudgetFragment()
                     findNavController().navigate(budgetAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.categoryPage.collect() {
+                if(it) {
+                    val categoryAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingCategoryFragment()
+                    findNavController().navigate(categoryAction)
                 }
             }
         }

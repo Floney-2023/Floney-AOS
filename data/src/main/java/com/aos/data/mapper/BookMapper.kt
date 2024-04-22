@@ -56,6 +56,7 @@ import java.util.Locale
 import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
+import com.aos.data.util.SharedPreferenceUtil
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
     return GetCheckUserBookModel(this.bookKey ?: "")

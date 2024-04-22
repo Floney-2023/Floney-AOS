@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.aos.floney.view.book.setting.BookSettingBudgetBottomSheetViewModel" />
+            type="com.aos.floney.view.book.setting.budget.BookSettingBudgetBottomSheetViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

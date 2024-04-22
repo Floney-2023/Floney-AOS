@@ -1,11 +1,10 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.budget
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
-import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.formatNumber
 import com.aos.floney.ext.parseErrorMsg
@@ -15,7 +14,6 @@ import com.aos.model.book.BudgetItem
 import com.aos.usecase.booksetting.BooksInfoBudgetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.serialization.StringFormat
 import javax.inject.Inject
 
 @HiltViewModel

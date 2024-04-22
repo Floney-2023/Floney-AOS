@@ -1,10 +1,9 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.currency
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
-import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
@@ -12,18 +11,11 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.Currency
 import com.aos.model.book.CurrencyInform
 import com.aos.model.book.UiBookCurrencyModel
-import com.aos.model.settlement.BookUsers
-import com.aos.model.settlement.UiMemberSelectModel
-import com.aos.model.user.MyBooks
 import com.aos.usecase.booksetting.BooksCurrencyChangeUseCase
 import com.aos.usecase.booksetting.BooksInitUseCase
-import com.aos.usecase.settlement.BooksUsersUseCase
-import com.aos.usecase.settlement.SettlementLastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,5 +1,6 @@
 package com.aos.data.repository.remote.book
 
+import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
@@ -30,6 +31,7 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
+import com.aos.model.book.UiBookCategory
 import com.aos.util.NetworkState
 
 interface BookRemoteDataSource {
@@ -61,4 +63,6 @@ interface BookRemoteDataSource {
     suspend fun postBooksInfoCarryOver(postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody): NetworkState<Void>
     suspend fun getBooksBudget(bookKey : String, date: String): NetworkState<GetBooksBudgetEntity>
     suspend fun postBooksInfoBudget(postBooksInfoBudgetBody: PostBooksInfoBudgetBody): NetworkState<Void>
+    suspend fun deleteBookCategory(bookKey:String, deleteBookCategoryBody: DeleteBookCategoryBody): NetworkState<Void>
+
 }

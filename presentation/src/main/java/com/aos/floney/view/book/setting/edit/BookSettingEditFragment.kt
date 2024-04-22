@@ -1,4 +1,4 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.edit
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingEditBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.common.WarningPopupDialog
 import dagger.hilt.android.AndroidEntryPoint
 

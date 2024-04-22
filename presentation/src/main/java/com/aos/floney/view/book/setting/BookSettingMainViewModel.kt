@@ -63,6 +63,9 @@ class BookSettingMainViewModel @Inject constructor(
     private var _budgetPage = MutableEventFlow<Boolean>()
     val budgetPage: EventFlow<Boolean> get() = _budgetPage
 
+    // 카테고리 페이지
+    private var _categoryPage = MutableEventFlow<Boolean>()
+    val categoryPage: EventFlow<Boolean> get() = _categoryPage
 
     init{
         searchBookSettingItems()
@@ -149,7 +152,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 분류항목 관리
     fun onClickSettingCategory()
     {
-
+        viewModelScope.launch {
+            _categoryPage.emit(true)
+        }
     }
 
     // 이용 약관 페이지 이동

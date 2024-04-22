@@ -1,5 +1,6 @@
 package com.aos.data.repository.remote.book
 
+import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.Duration
 import com.aos.data.entity.request.book.PostBooksCreateBody
@@ -499,6 +500,27 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     override suspend fun postBooksInfoBudget(bookKey: String, budget: Int, date: String): Result<Void?> {
         when (val data =
             bookDataSource.postBooksInfoBudget(PostBooksInfoBudgetBody(bookKey, budget, date))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun deleteBookCategory(bookKey: String, parent:String, name:String): Result<Void?> {
+        when (val data =
+            bookDataSource.deleteBookCategory(bookKey, DeleteBookCategoryBody(parent, name))) {
             is NetworkState.Success -> {
                 return Result.success(data.body)
             }

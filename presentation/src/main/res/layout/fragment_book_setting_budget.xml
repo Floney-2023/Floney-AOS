@@ -8,7 +8,7 @@
         <import type="com.aos.model.book.UiBookBudgetModel" />
         <variable
             name="vm"
-            type="com.aos.floney.view.book.setting.BookSettingBudgetViewModel" />
+            type="com.aos.floney.view.book.setting.budget.BookSettingBudgetViewModel" />
         <variable
             name="eventHolder"
             type="com.aos.model.book.UiBookBudgetModel.OnItemClickListener"/>

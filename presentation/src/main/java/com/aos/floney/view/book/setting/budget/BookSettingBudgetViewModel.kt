@@ -1,4 +1,4 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.budget
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

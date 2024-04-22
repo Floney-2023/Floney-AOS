@@ -1,5 +1,6 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
@@ -222,6 +223,14 @@ interface BookService {
     @POST("books/info/budget")
     @Headers("Auth: true")
     suspend fun postBooksInfoBudget(
-        @Body PostBooksInfoBudgetBody : PostBooksInfoBudgetBody
+        @Body postBooksInfoBudgetBody : PostBooksInfoBudgetBody
+    ): NetworkState<Void>
+
+    // 하위 카테고리 삭제
+    @HTTP(method = "DELETE", path="books/{bookKey}/categories", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBookCategory(
+        @Path("bookKey") bookKey: String,
+        @Body deleteBookCategoryBody: DeleteBookCategoryBody
     ): NetworkState<Void>
 }

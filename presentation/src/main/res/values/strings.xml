@@ -294,6 +294,13 @@
     <string name="book_setting_budget_hint">예산을 입력하세요.</string>
     <string name="book_setting_budget_error">숫자를 입력해주세요.</string>
 
+    <string name="book_setting_category_title">분류 항목 관리</string>
+    <string name="book_setting_category_info">가계부를 적을 때 선택하는 항목들을\n추가, 삭제 할 수 있어요</string>
+    <string name="book_setting_category_dialog_title">분류항목 삭제</string>
+    <string name="book_setting_category_dialog_info">‘%1$s’ 항목을 삭제하시겠습니까?\n해당 항목으로 작성된 모든 내역이 삭제됩니다.</string>
+    <string name="book_setting_category_dialog_left_button">삭제하기</string>
+    <string name="book_setting_category_dialog_right_button">취소하기</string>
+
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>
     <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>
