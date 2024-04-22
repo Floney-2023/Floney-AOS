@@ -1,13 +1,18 @@
 package com.aos.data.mapper
 
 import android.graphics.Color
+import com.aos.data.entity.response.analyze.PostAnalyzeBudgetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryInComeEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryOutComeEntity
 import com.aos.model.analyze.AnalyzeResult
 import com.aos.model.analyze.UiAnalyzeCategoryInComeModel
 import com.aos.model.analyze.UiAnalyzeCategoryOutComeModel
+import com.aos.model.analyze.UiAnalyzePlanModel
 import timber.log.Timber
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -41,13 +46,18 @@ fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutCom
     randomColorArr.clear()
     getRandomColor(this.analyzeResult.size)
 
-    return UiAnalyzeCategoryOutComeModel(
-        total = "총 ${NumberFormat.getNumberInstance().format(this.total)}원을\n소비했어요",
+    return UiAnalyzeCategoryOutComeModel(total = "총 ${
+        NumberFormat.getNumberInstance().format(this.total)
+    }원을\n소비했어요",
         differance = "${
             if (this.differance > this.total) {
-                "저번달 대비 ${NumberFormat.getNumberInstance().format(this.differance - total)}원을\n덜 사용했어요"
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(this.differance - total)
+                }원을\n덜 사용했어요"
             } else {
-                "저번달 대비 ${NumberFormat.getNumberInstance().format(this.total - differance)}원을\n더 사용했어요"
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(this.total - differance)
+                }원을\n더 사용했어요"
             }
         }",
         size = this.analyzeResult.size,
@@ -79,8 +89,7 @@ fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutCom
                     }
                 }
             )
-        }
-    )
+        })
 }
 
 fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeModel {
@@ -90,13 +99,18 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
     randomColorArr.clear()
     getRandomColor(this.analyzeResult.size)
 
-    return UiAnalyzeCategoryInComeModel(
-        total = "총 ${NumberFormat.getNumberInstance().format(this.total)}원을\n소비했어요",
+    return UiAnalyzeCategoryInComeModel(total = "총 ${
+        NumberFormat.getNumberInstance().format(this.total)
+    }원을\n소비했어요",
         differance = "${
             if (this.differance > this.total) {
-                "저번달 대비 ${NumberFormat.getNumberInstance().format(this.differance - total)}원을\n덜 사용했어요"
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(this.differance - total)
+                }원을\n덜 사용했어요"
             } else {
-                "저번달 대비 ${NumberFormat.getNumberInstance().format(this.total - differance)}원을\n더 사용했어요"
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(this.total - differance)
+                }원을\n더 사용했어요"
             }
         }",
         size = this.analyzeResult.size,
@@ -128,7 +142,31 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
                     }
                 }
             )
-        }
+        })
+}
+
+fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
+    val tempLeftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}원".substring(
+        1, "${NumberFormat.getNumberInstance().format(this.leftMoney)}원".length
+    )
+
+    // 남은 일 수 계산 
+    val calendar = Calendar.getInstance()
+    val today = calendar.get(Calendar.DAY_OF_MONTH)
+    val lastDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+    val enemyDay = lastDayOfMonth - today + 1
+
+    return UiAnalyzePlanModel(
+        initBudget = "${NumberFormat.getNumberInstance().format(this.initBudget)}원",
+        leftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}원",
+        percent = if (this.leftMoney < 0) {
+            "100"
+        } else {
+            ((this.leftMoney / this.initBudget) * 100).toInt().toString()
+        },
+        divMoney = "${
+            NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).round(2))
+        }원".replace("-", "")
     )
 }
 

@@ -17,13 +17,19 @@ class AnalyzePlanFragment : BaseFragment<FragmentAnalyzePlanBinding, AnalyzePlan
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpCircleBarChart()
+        setUpViewModelObserver()
     }
 
     // 최대는 194
     // 1% = 1.94
-    private fun setUpCircleBarChart() {
-        binding.circleView.setProgress(1.94f * 50)
+    private fun setUpCircleBarChart(value: Float) {
+        binding.circleView.setProgress(1.94f * value)
+    }
+
+    private fun setUpViewModelObserver() {
+        viewModel.postAnalyzePlan.observe(viewLifecycleOwner) {
+            setUpCircleBarChart(it.percent.toFloat())
+        }
     }
 
 }

@@ -29,13 +29,13 @@ class CustomCircleBarView: View {
         paint.strokeCap = Paint.Cap.ROUND
         paint.isAntiAlias = true
 
-        canvas.drawArc(265f, 150f, 835f, 700f, 0f, 360f, false, paint)
+        canvas.drawArc(270f, 140f, 810f, 660f, 0f, 360f, false, paint)
 
 
         // 2. 파란 원(프로그레스)
         paint.color = Color.parseColor("#31C690")
         // sweepAngle 매개변수 위치에 위에서 선언한 numProgress 변수를 넣어준다.
-        canvas.drawArc(265f, 150f, 835f, 700f, -190f, numProgress  , false, paint)
+        canvas.drawArc(270f, 140f, 810f, 660f, -190f, numProgress  , false, paint)
 
     }
 
