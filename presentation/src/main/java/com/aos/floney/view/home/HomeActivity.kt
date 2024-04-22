@@ -12,6 +12,7 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeActivity
+import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.settleup.SettleUpActivity
@@ -70,6 +71,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                     overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
                 } else {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                }
+            }
+        }
+        repeatOnStarted {
+            // 가계부 설정 페이지 이동
+            viewModel.settingPage.collect {
+                if(it) {
+                    startActivity(Intent(this@HomeActivity, BookSettingActivity::class.java))
                 }
             }
         }
@@ -147,6 +156,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                     } else {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
+                    finish()
                     false
                 }
 

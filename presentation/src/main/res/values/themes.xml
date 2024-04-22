@@ -183,11 +183,18 @@
         <item name="android:textColor">#FAFAFA</item>
     </style>
 
-    <style name="start_button">
-        <item name="android:fontFamily">@font/pretendard_semibold</item>
-        <item name="fontFamily">@font/pretendard_semibold</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#FFFFFF</item>
+    <style name="right_button">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="left_button">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/grayscale6</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <!--LoginActivity-->
@@ -207,16 +214,19 @@
     </style>
 
     <style name="login_popup_text1">
+    <style name="popup_title">
         <item name="android:fontFamily">@font/pretendard_bold</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#0D0D0D</item>
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/grayscale1</item>
     </style>
 
     <style name="login_popup_text2">
+    <style name="popup_info">
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">#0D0D0D</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/grayscale1</item>
     </style>
 
     <!--SignupActivity-->
@@ -276,58 +286,58 @@
 
     <!--MypageActivity-->
     <style name="mypage_header_text">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_inform_text">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_user_name">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/grayscale2</item>
         <item name="android:fontFamily">@font/floney_pretendard_semibold</item>
         <item name="fontFamily">@font/floney_pretendard_semibold</item>
     </style>
 
     <style name="mypage_card_view_1">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/grayscale2</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_card_view_2">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_card_view_1_write">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/grayscale3</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="mypage_card_view_2_write">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="mypage_user_email">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/grayscale3</item>
-        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
@@ -379,7 +389,7 @@
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:background">@drawable/onboard_area1</item>
         <item name="android:padding">16dp</item>
-        <item name="android:textAppearance">@style/start_button</item>
+        <item name="android:textAppearance">@style/right_button</item>
     </style>
 
     <!--item_toast_sample-->

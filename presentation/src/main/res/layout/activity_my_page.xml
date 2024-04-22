@@ -94,21 +94,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_mypage_title">
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cv_profile_card_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            app:cardCornerRadius="100dp">
 
-                            <ImageView
-                                android:id="@+id/iv_profile"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/background_circle_image"
-                                android:clipToOutline="true"
-                                android:src="@drawable/icon_basic_profile" />
-                        </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/iv_profile"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/background_circle_image"
+                            android:clipToOutline="true"
+                            setImageToUrl="@{vm.mypageInfo.profileImg}" />
+
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -134,8 +128,8 @@
                         </LinearLayout>
 
                         <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
+                            android:layout_width="257dp"
+                            android:layout_height="3dp"
                             android:layout_weight="1" />
 
                         <ImageView

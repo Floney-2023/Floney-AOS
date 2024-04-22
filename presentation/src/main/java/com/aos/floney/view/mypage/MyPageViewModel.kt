@@ -55,7 +55,6 @@ class MyPageViewModel @Inject constructor(
     fun searchMypageItems()
     {
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             mypageSearchUseCase().onSuccess {
 
                 var sortedBooks= it.myBooks.sortedByDescending { it.bookKey == prefs.getString("bookKey","") }
@@ -69,9 +68,7 @@ class MyPageViewModel @Inject constructor(
                 })
 
                 _mypageInfo.postValue(updatedResult)
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }

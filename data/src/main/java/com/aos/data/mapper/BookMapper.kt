@@ -4,7 +4,12 @@ import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
+import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
+import com.aos.data.entity.response.book.GetBooksInfoEntity
+import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
+import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
@@ -16,10 +21,16 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
+import com.aos.model.book.BudgetItem
+import com.aos.model.book.GetBooksInfoCurrencyModel
+import com.aos.model.book.MyBookUsers
 import com.aos.model.book.PostBooksCreateModel
+import com.aos.model.book.PostBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
+import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.DayMoney
 import com.aos.model.home.Expenses
 import com.aos.model.home.ExtData
@@ -45,6 +56,9 @@ import java.util.Calendar
 import java.util.Locale
 import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
+
+import com.aos.data.util.SharedPreferenceUtil
+import com.aos.model.book.PostBooksCategoryAddModel
 
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
@@ -340,4 +354,52 @@ fun List<GetSettlementSeeEntity>.toUiSettlementSeeModel(): UiSettlementSeeModel 
     return UiSettlementSeeModel(
         settlementList = myBookSettlements
     )
+}
+
+fun GetBooksInfoEntity.toUiBookSettingModel(): UiBookSettingModel {
+    val myBookUsers = this.ourBookUsers.map {
+        val roleString = if (it.me) "${it.role}·나" else it.role
+        MyBookUsers(
+            name = it.name, profileImg = it.profileImg, role = roleString, me = it.me
+        )
+    }
+    return UiBookSettingModel(
+        bookName = this.bookName,
+        bookImg = this.bookImg,
+        startDay = "${this.startDay.replace('-','.')} 개설",
+        seeProfileStatus = this.seeProfileStatus,
+        carryOver = this.carryOver,
+        ourBookUsers = myBookUsers
+    )
+}
+
+fun PostBooksInfoCurrencyEntity.toPostBooksInfoCurrencyModel() : PostBooksInfoCurrencyModel {
+    return PostBooksInfoCurrencyModel(myBookCurrency = this.myBookCurrency ?:"")
+}
+
+fun GetBooksInfoCurrencyEntity.toGetBooksInfoCurrencyModel() : GetBooksInfoCurrencyModel {
+    return GetBooksInfoCurrencyModel(myBookCurrency = this.myBookCurrency ?: "")
+}
+
+fun GetBooksBudgetEntity.toUiBookBudgetModel(): UiBookBudgetModel {
+    val budgetList = listOf(
+        BudgetItem("1", "${NumberFormat.getNumberInstance().format(this.january.toInt())}원", this.january > 0.0),
+        BudgetItem("2","${NumberFormat.getNumberInstance().format(this.february.toInt())}원", this.february > 0.0),
+        BudgetItem("3","${NumberFormat.getNumberInstance().format(this.march.toInt())}원", this.march > 0.0),
+        BudgetItem("4", "${NumberFormat.getNumberInstance().format(this.april.toInt())}원", this.april > 0.0),
+        BudgetItem("5", "${NumberFormat.getNumberInstance().format(this.may.toInt())}원", this.may > 0.0),
+        BudgetItem("6", "${NumberFormat.getNumberInstance().format(this.june.toInt())}원", this.june > 0.0),
+        BudgetItem("7", "${NumberFormat.getNumberInstance().format(this.july.toInt())}원", this.july > 0.0),
+        BudgetItem("8", "${NumberFormat.getNumberInstance().format(this.august.toInt())}원", this.august > 0.0),
+        BudgetItem("9","${NumberFormat.getNumberInstance().format(this.september.toInt())}원", this.september > 0.0),
+        BudgetItem("10", "${NumberFormat.getNumberInstance().format(this.october.toInt())}원", this.october > 0.0),
+        BudgetItem("11", "${NumberFormat.getNumberInstance().format(this.november.toInt())}원", this.november > 0.0),
+        BudgetItem("12", "${NumberFormat.getNumberInstance().format(this.december.toInt())}원", this.december > 0.0)
+    )
+    return UiBookBudgetModel(
+        budgetList = budgetList
+    )
+}
+fun PostBooksCategoryAddEntity.toPostBooksCategoryAddModel() : PostBooksCategoryAddModel {
+    return PostBooksCategoryAddModel(name = this.name ?: "")
 }

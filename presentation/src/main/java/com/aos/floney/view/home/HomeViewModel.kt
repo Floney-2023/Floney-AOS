@@ -68,6 +68,10 @@ class HomeViewModel @Inject constructor(
 
     private lateinit var myNickname: String
 
+    // 설정 페이지
+    private var _settingPage = MutableEventFlow<Boolean>()
+    val settingPage: EventFlow<Boolean> get() = _settingPage
+
     init {
         getBookInfo(prefs.getString("bookKey", ""))
         getFormatDateMonth()
@@ -233,5 +237,12 @@ class HomeViewModel @Inject constructor(
     // 내 닉네임 가져오기
     fun getMyNickname(): String {
         return myNickname
+    }
+
+    // 가계부 설정 페이지 이동
+    fun onClickSettingPage(){
+        viewModelScope.launch {
+            _settingPage.emit(true)
+        }
     }
 }

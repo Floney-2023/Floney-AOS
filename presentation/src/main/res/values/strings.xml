@@ -44,6 +44,7 @@
     <string name="find_pw">비밀번호 찾기</string>
     <string name="sign_up">회원가입 하기</string>
     <string name="simple_login">간편 로그인</string>
+    <string name="currency_error">화폐 단위를 불러오지 못했습니다.</string>
 
     <!--PasswordFindActivity-->
     <string name="find_password_text">가입한 이메일 주소를 입력하세요.\n로그인 가능한 임시 비밀번호를 보내드립니다.</string>
@@ -229,6 +230,76 @@
         <item>토</item>
         <item>일</item>
     </string-array>
+
+    <!--7-1 가계부설정 -->
+    <string name="book_setting_title">가계부 설정</string>
+    <string name="book_setting_user">사용자</string>
+    <string name="book_setting_calendar">캘린더</string>
+    <string name="book_setting_carryInfo">이월 설정</string>
+    <string name="book_setting_carryInfo_yes">이월 있음</string>
+    <string name="book_setting_carryInfo_no">이월 없음</string>
+    <string name="book_setting_repeat">반복 내역 설정</string>
+    <string name="book_setting_favorite">즐겨찾기 설정</string>
+    <string name="book_setting_init"><u>가계부 초기화하기</u></string>
+    <string name="book_setting_exit"><u>가계부 나가기</u></string>
+    <string name="book_setting_asset_title">예산·자산</string>
+    <string name="book_setting_asset">예산 설정</string>
+    <string name="book_setting_start_money">초기 자산 설정</string>
+    <string name="book_setting_category">분류항목 관리</string>
+    <string name="book_setting_money">화폐 설정</string>
+    <string name="book_setting_excel">엑셀 내보내기</string>
+    <string name="book_setting_invite_friend">친구 초대하기</string>
+
+    <string name="book_setting_edit_title">가계부 편집</string>
+    <string name="book_setting_edit_name">가계부 이름</string>
+    <string name="book_setting_edit_hint">이름을 입력하세요.</string>
+    <string name="book_setting_edit_edit_button">변경하기</string>
+    <string name="book_setting_edit_edit_profile_change">프로필 이미지 변경</string>
+    <string name="book_setting_edit_edit_see_profile">내역 프로필 보기</string>
+    <string name="book_setting_edit_edit_delete"><u>가계부 삭제</u></string>
+    <string name="book_setting_edit_request">가계부 이름을 입력해주세요.</string>
+
+    <string name="book_setting_currency_title">화폐 설정</string>
+    <string name="book_setting_currency_info">찾으시는 화폐 단위가 없나요?\n원하시는 화폐를 플로니에게 알려주세요.</string>
+
+    <string name="book_setting_currency_dialog_title">가계부가 초기화됩니다</string>
+    <string name="book_setting_currency_dialog_info">화폐 단위를 %1$s으로 변경하시겠습니까?\n변경 시, 가계부가 초기화됩니다.</string>
+    <string name="book_setting_currency_dialog_left_button">초기화하기</string>
+    <string name="book_setting_currency_dialog_right_button">취소하기</string>
+
+
+    <string name="book_setting_exit_dialog_title">가계부 삭제</string>
+    <string name="book_setting_exit_dialog_info">%1$s의 가계부를 정말 삭제하시겠습니까?\n작성된 내역은 모두 삭제되며 복구할 수 없습니다.</string>
+    <string name="book_setting_exit_dialog_delete_button">삭제하기</string>
+    <string name="book_setting_exit_dialog_cancel_button">취소하기</string>
+    <string name="book_setting_exit_dialog_cancel_error">모든 사용자가 나가야 가계부 삭제가 가능합니다.</string>
+
+    <string name="book_setting_bottom_asset_title">초기 자산 설정</string>
+    <string name="book_setting_bottom_asset_info">현재 모아놓은 자산을 입력해 주세요.\n플로니가 앞으로의 자산 흐름을 보여드릴게요.</string>
+    <string name="book_setting_bottom_asset_hint">초기 자산을 입력하세요.</string>
+    <string name="book_setting_bottom_asset_error">숫자를 입력해주세요.</string>
+    <string name="book_setting_bottom_asset_succcess">초기 자산 설정이 완료되었습니다.</string>
+    <string name="book_setting_bottom_asset_save">저장하기</string>
+    <string name="book_setting_bottom_asset_init"><u>초기화하기</u></string>
+
+    <string name="book_setting_bottom_carryinfo_title">이월 설정</string>
+    <string name="book_setting_bottom_carryinfo_total_income">지난달 총수입</string>
+    <string name="book_setting_bottom_carryinfo_total_outcome">지난달 총지출</string>
+    <string name="book_setting_bottom_carryinfo_next_start_money">다음달 시작금액</string>
+    <string name="book_setting_bottom_carryinfo_info">이월 설정은 지난 달에 기록된 수입에서 지출을 차감한 금액을\n다음 달로 넘기는 기능입니다.\n\n남은 금액이 마이너스인 경우 지출로 기록되며\n플러스인 경우는 수입으로 기록 됩니다.</string>
+    <string name="book_setting_bottom_carryinfo_on">ON</string>
+    <string name="book_setting_bottom_carryinfo_off">OFF</string>
+
+    <string name="book_setting_budget_title">예산 설정</string>
+    <string name="book_setting_budget_hint">예산을 입력하세요.</string>
+    <string name="book_setting_budget_error">숫자를 입력해주세요.</string>
+
+    <string name="book_setting_category_title">분류 항목 관리</string>
+    <string name="book_setting_category_info">가계부를 적을 때 선택하는 항목들을\n추가, 삭제 할 수 있어요</string>
+    <string name="book_setting_category_dialog_title">분류항목 삭제</string>
+    <string name="book_setting_category_dialog_info">‘%1$s’ 항목을 삭제하시겠습니까?\n해당 항목으로 작성된 모든 내역이 삭제됩니다.</string>
+    <string name="book_setting_category_dialog_left_button">삭제하기</string>
+    <string name="book_setting_category_dialog_right_button">취소하기</string>
 
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>

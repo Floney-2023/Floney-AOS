@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.aos.model.book.UiBookSettingModel" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.book.setting.BookSettingMainViewModel" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.book.UiBookSettingModel.OnItemClickListener" />
+
+        <import type="android.view.View" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:fillViewport="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_back">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_mypage_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="18dp"
+                    android:fontFamily="@font/floney_pretendard_bold"
+                    android:text="@string/book_setting_title"
+                    android:textColor="@color/grayscale2"
+                    android:textSize="22dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/li_user_inform_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/custom_radius_8_solid_primary10"
+                    android:onClick="@{() -> vm.onClickInformPage()}"
+                    android:padding="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mypage_title">
+
+
+                    <ImageView
+                        android:id="@+id/iv_profile"
+                        setImageToUrl="@{vm.bookSettingInfo.bookImg}"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/background_circle_image"
+                        android:clipToOutline="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <LinearLayout
+                        android:id="@+id/li_book_info_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_book_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="@font/floney_pretendard_bold"
+                            android:text="@{vm.bookSettingInfo.bookName}"
+                            android:textAppearance="@style/mypage_user_name" />
+
+                        <TextView
+                            android:id="@+id/tv_start_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendard_medium"
+                            android:text="@{vm.bookSettingInfo.startDay}"
+                            android:textAppearance="@style/mypage_user_email"
+                            android:textColor="@color/grayscale3" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/icon_chevron_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_user_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/floney_pretendard_bold"
+                    android:text="@string/book_setting_user"
+                    android:textColor="@color/grayscale2"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_user_inform_view" />
+
+                <LinearLayout
+                    android:id="@+id/li_user_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_marginEnd="25dp"
+                    android:background="@drawable/custom_radius_12_solid_grayscale_12"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_user_title">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_wallet_item_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        bind:diffCallback="@{(Object)UiBookSettingModel.Companion}"
+                        bind:eventHolder="@{eventHolder}"
+                        bind:itemLayout="@{@layout/item_book_detail_view}"
+                        bind:items="@{vm.bookSettingInfo.ourBookUsers}"
+                        bind:viewModel="@{vm}" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_calendar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="40dp"
+                    android:fontFamily="@font/floney_pretendard_bold"
+                    android:text="@string/book_setting_calendar"
+                    android:textColor="@color/grayscale2"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/li_user_view" />
+
+
+                <TextView
+                    android:id="@+id/tv_book_setting_carryInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
+                    android:text="@string/book_setting_carryInfo"
+                    android:textColor="@color/grayscale2"
+                    android:textSize="14dp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_calendar_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_calendar_title" />
+
+                <TextView
+                    android:id="@+id/tv_book_setting_carryInfo_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:background="@{vm.bookSettingInfo.carryOver ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
+                    android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
+                    android:padding="6dp"
+                    android:text="@{vm.bookSettingInfo.carryOver ? @string/book_setting_carryInfo_yes : @string/book_setting_carryInfo_no}"
+                    android:textColor="@{vm.bookSettingInfo.carryOver ? @color/primary2 : @color/grayscale2}"
+                    android:textSize="10dp"
+                    app:fontFamily="@{vm.bookSettingInfo.carryOver}"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_book_setting_carryInfo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_book_setting_carryInfo" />
+
+                <LinearLayout
+                    android:id="@+id/li_repeat_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:onClick="@{() -> vm.onClickRepeat()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_book_setting_carryInfo">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@string/book_setting_repeat"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_favorite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> vm.onClickFavorite()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_repeat_view">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@string/book_setting_favorite"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_init"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> vm.onClickBookInit()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility='@{vm.bookSettingInfo.ourBookUsers[0].role.equals("방장·나") ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_favorite">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@string/book_setting_init"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_book_setting_asset_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="30dp"
+                    android:fontFamily="@font/floney_pretendard_bold"
+                    android:text="@string/book_setting_asset_title"
+                    android:textColor="@color/grayscale2"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_init" />
+
+
+                <LinearLayout
+                    android:id="@+id/li_usage_right"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="14dp"
+                    android:onClick="@{() -> vm.onClickUsageRightPage()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_book_setting_asset_title">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:onClick="@{() -> vm.onClickAssetSetting()}"
+                        android:text="@string/book_setting_asset"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_start_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> vm.onClickSTartMoneySetting()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_usage_right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@string/book_setting_start_money"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:onClick="@{() -> vm.onClickSettingCategory()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_start_money">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:text="@string/book_setting_category"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="16dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/icon_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="18dp"
+                    android:onClick="@{() -> vm.onClickSettingMoney()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="16dp"
+                    android:visibility='@{vm.bookSettingInfo.ourBookUsers[0].role.equals("방장·나") ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_category">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:text="@string/book_setting_money"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="16dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/icon_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_excel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="18dp"
+                    android:onClick="@{() -> vm.onClickExcelExport()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_money">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:text="@string/book_setting_excel"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="16dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/icon_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_invite_friend"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="70dp"
+                    android:onClick="@{() -> vm.onClickInviteFriend()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_excel">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:text="@string/book_setting_invite_friend"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="16dp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/icon_chevron_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/li_book_setting_exit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="@{() -> vm.onClickBookInit()}"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility='@{vm.bookSettingInfo.ourBookUsers[0].role.equals("팀원·나") ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/li_book_setting_invite_friend">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@string/book_setting_exit"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
