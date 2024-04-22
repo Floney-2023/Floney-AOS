@@ -9,6 +9,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.settleup.SettleUpActivity
@@ -65,6 +66,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                 )
             }
         }
+        repeatOnStarted {
+            // 가계부 설정 페이지 이동
+            viewModel.settingPage.collect {
+                if(it) {
+                    startActivity(Intent(this@HomeActivity, BookSettingActivity::class.java))
+                }
+            }
+        }
     }
 
     // 캘린더 아이템이 표시됨
@@ -108,23 +117,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.analysisFragment -> {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
+                    startActivity(Intent(this, HomeActivity::class.java))
                     finish()
                     false
                 }
                 R.id.settleUpFragment -> {
-                    val intent = Intent(this, SettleUpActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
+                    startActivity(Intent(this, SettleUpActivity::class.java))
                     finish()
                     false
                 }
                 R.id.mypageFragment -> {
-                    val intent = Intent(this, MyPageActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                    startActivity(intent)
+                    startActivity(Intent(this, MyPageActivity::class.java))
                     finish()
                     false
                 }

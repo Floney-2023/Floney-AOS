@@ -186,7 +186,7 @@
             android:fontFamily="@font/pretendard_bold"
             android:onClick="@{() -> vm.onClickPwChangeCheck()}"
             android:text="확인"
-            android:textAppearance="@style/start_button"
+            android:textAppearance="@style/right_button"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/new_password_check_view"
             app:layout_constraintStart_toStartOf="@+id/new_password_check_view"

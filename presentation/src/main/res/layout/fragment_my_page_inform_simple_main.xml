@@ -87,7 +87,7 @@
                 android:layout_weight="8"
                 android:background="@drawable/onboard_area1"
                 android:text="@string/mypage_main_inform_change_button"
-                android:textAppearance="@style/start_button"
+                android:textAppearance="@style/right_button"
                 android:textSize="14sp" />
         </LinearLayout>
 

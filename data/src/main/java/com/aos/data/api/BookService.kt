@@ -1,21 +1,31 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.book.DeleteBookCategoryBody
+import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksInfoAssetBody
+import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
+import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
+import com.aos.data.entity.request.book.PostBooksInfoCurrencyBody
+import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
+import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.request.book.PostSettlementAddBody
-import com.aos.data.entity.request.user.PostCheckEmailCodeBody
-import com.aos.data.entity.request.user.PostLoginBody
-import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
+import com.aos.data.entity.response.book.GetBooksInfoEntity
+import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
+import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
 import com.aos.data.entity.response.home.GetCheckUserBookEntity
 import com.aos.data.entity.response.settlement.GetBooksUsersEntity
@@ -25,8 +35,8 @@ import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
 import retrofit2.http.Body
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -139,4 +149,98 @@ interface BookService {
     suspend fun getSettlementDetailSee(
         @Path("id") id: Long
     ): NetworkState<PostSettlementAddEntity>
+
+    // 가계부 설정 조회하기
+    @GET("books/info")
+    @Headers("Auth: true")
+    suspend fun getBooksInfo(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<GetBooksInfoEntity>
+
+    // 가계부 이름 변경
+    @POST("books/name")
+    @Headers("Auth: true")
+    suspend fun postBooksName(
+        @Body postBooksNameBody : PostBooksNameBody
+    ): NetworkState<Void>
+
+    // 가계부 삭제
+    @HTTP(method = "DELETE", path="books/delete", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBooks(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<Void>
+
+    // 내역 프로필 보기 설정
+    @POST("books/info/seeProfile")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoSeeProfile(
+        @Body postBooksInfoSeeProfile : PostBooksInfoSeeProfileBody
+    ): NetworkState<Void>
+
+    // 가계부 초기화
+    @HTTP(method = "DELETE", path="books/info/delete/all", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBooksInfoAll(
+        @Query("bookKey") bookKey: String
+    ): NetworkState<Void>
+
+    // 화폐설정 변경
+    @POST("books/info/currency")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoCurrency(
+        @Body postBooksInfoCurrencyBody : PostBooksInfoCurrencyBody
+    ): NetworkState<PostBooksInfoCurrencyEntity>
+
+    // 화폐설정 조회
+    @GET("books/info/currency")
+    @Headers("Auth: true")
+    suspend fun getBooksInfoCurrency(
+        @Query("bookKey") bookKey : String
+    ): NetworkState<GetBooksInfoCurrencyEntity>
+
+    // 가계부 자산 설정하기
+    @POST("books/info/asset")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoAsset(
+        @Body postBooksInfoAssetBody : PostBooksInfoAssetBody
+    ): NetworkState<Void>
+
+    // 가계부 이월 설정 on/off
+    @POST("books/info/carryOver")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoCarryOver(
+        @Body postBooksInfoCarryOverBody: PostBooksInfoCarryOverBody
+    ): NetworkState<Void>
+
+    // 예산조회하기
+    @GET("books/budget")
+    @Headers("Auth: true")
+    suspend fun getBooksBudget(
+        @Query("bookKey") bookKey : String,
+        @Query("startYear") date : String
+    ): NetworkState<GetBooksBudgetEntity>
+
+    // 가계부 예산 설정하기
+    @POST("books/info/budget")
+    @Headers("Auth: true")
+    suspend fun postBooksInfoBudget(
+        @Body postBooksInfoBudgetBody : PostBooksInfoBudgetBody
+    ): NetworkState<Void>
+
+    // 하위 카테고리 삭제
+    @HTTP(method = "DELETE", path="books/{bookKey}/categories", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBookCategory(
+        @Path("bookKey") bookKey: String,
+        @Body deleteBookCategoryBody: DeleteBookCategoryBody
+    ): NetworkState<Void>
+
+    // 카테고리 추가하기
+    @POST("books/{bookKey}/categories")
+    @Headers("Auth: true")
+    suspend fun postBooksCategoryAdd(
+        @Path("bookKey") bookKey: String,
+        @Body postBooksCategoryAddBody: PostBooksCategoryAddBody
+    ): NetworkState<PostBooksCategoryAddEntity>
 }
