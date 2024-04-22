@@ -10,6 +10,7 @@ import com.aos.floney.databinding.FragmentBookSettingCategoryBinding
 import com.aos.floney.databinding.FragmentBookSettingCurrencyBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.setting.BookSettingActivity
+import com.aos.floney.view.book.setting.BookSettingMainFragmentDirections
 import com.aos.floney.view.book.setting.currency.BookSettingCurrencyViewModel
 import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.model.book.Currency
@@ -51,11 +52,20 @@ class BookSettingCategoryFragment : BaseFragment<FragmentBookSettingCategoryBind
             // 이전 페이지로
             viewModel.back.collect {
                 if(it) {
-                    findNavController().popBackStack()
+                    val activity = requireActivity() as BookCategoryActivity
+                    activity.startBookSettingActivity()
                 }
             }
         }
-
+        repeatOnStarted {
+            // 분류항목 추가 페이지로
+            viewModel.addPage.collect {
+                if(it) {
+                    val addAction = BookSettingCategoryFragmentDirections.actionBookSettingCategoryFragmentToBookSettingCategoryAddFragment()
+                    findNavController().navigate(addAction)
+                }
+            }
+        }
     }
 
 }

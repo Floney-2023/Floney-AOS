@@ -59,48 +59,22 @@ class BookSettingCategoryViewModel @Inject constructor(
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
 
-    // 내역 모드 추가 / 수정
+    // 추가 페이지
+    private var _addPage = MutableEventFlow<Boolean>()
+    val addPage: EventFlow<Boolean> get() = _addPage
+
+    // 분류 항목 관리 모드 편집 / 완료
     var edit = MutableLiveData<Boolean>(false)
 
-    // 금액
-    var cost = MutableLiveData<String>("")
-
-    // 지출, 수입, 이체
-    var flow = MutableLiveData<String>("지출")
-
-    // 자산
-    var asset = MutableLiveData<String>("자산을 선택하세요")
-
-    // 분류
-    var line = MutableLiveData<String>("분류를 선택하세요")
-
-    // 내용
-    var content = MutableLiveData<String>("")
+    // 자산, 지출, 수입, 이체
+    var flow = MutableLiveData<String>("자산")
 
     // 내용
     var _categoryList = MutableLiveData<List<UiBookCategory>>()
     val categoryList: LiveData<List<UiBookCategory>> get() = _categoryList
 
-    // 카테고리 선택 아이템 저장
-    private var categoryClickItem: UiBookCategory? = null
-
-    // 자산, 지출, 수입, 이체 카테고리 조회에 사용
-    private var parent = ""
-
-    // 예산/자산 제외 설정 여부
-    private var deleteChecked = false
-
-    // 내역 수정 시 해당 아이템 Id
-    private var modifyId = 0
-
     init {
         getBookCategory()
-    }
-
-    // 내역 추가 시에는 날짜만 세팅함
-    fun setIntentAddData(clickDate: String, nickname: String) {
-        date.value = clickDate
-        _nickname.value = nickname
     }
 
     fun onClickPreviousPage() {
@@ -122,7 +96,9 @@ class BookSettingCategoryViewModel @Inject constructor(
 
     // 저장버튼 클릭
     fun onClickSaveBtn() {
-
+        viewModelScope.launch {
+            _addPage.emit(true)
+        }
     }
     // 편집버튼 클릭
     fun onClickEdit(){
@@ -155,48 +131,6 @@ class BookSettingCategoryViewModel @Inject constructor(
     // 자산, 지출, 수입, 이체 클릭
     fun onClickFlow(type: String) {
         flow.postValue(type)
-        parent = type
         getBookCategory()
-    }
-
-    fun onClickCategoryItem(_item: UiBookCategory) {
-        categoryClickItem = _item
-
-        val item = _categoryList.value?.map {
-            UiBookCategory(
-                it.idx, false, it.name, it.default
-            )
-        } ?: listOf()
-        item[_item.idx].checked = !item[_item.idx].checked
-        _categoryList.postValue(item)
-    }
-
-    // 카테고리 선택 여부 확인
-    fun isClickedCategoryItem(): Boolean {
-        return if (categoryClickItem != null) {
-            true
-        } else {
-            baseEvent(Event.ShowToast("카테고리 항목을 선택해주세요"))
-            false
-        }
-    }
-
-    // 카테고리 가져오기 영문 -> 한글
-    private fun getCategory(category: String): String {
-        return when (category) {
-            "INCOME" -> {
-                "수입"
-            }
-
-            "OUTCOME" -> {
-                "지출"
-            }
-
-            "TRANSFER" -> {
-                "이체"
-            }
-
-            else -> ""
-        }
     }
 }

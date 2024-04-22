@@ -1,6 +1,7 @@
 package com.aos.repository
 
 import com.aos.model.book.GetBooksInfoCurrencyModel
+import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksInfoCurrencyModel
@@ -125,5 +126,8 @@ interface BookRepository {
 
     // 하위 카테고리 삭제
     suspend fun deleteBookCategory(bookKey: String,  parent: String, name: String): Result<Void?>
+
+    // 카테고리 추가하기
+    suspend fun postBooksCategoryAdd(bookKey: String, parent: String, name: String): Result<PostBooksCategoryAddModel>
 
 }

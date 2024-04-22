@@ -2,6 +2,7 @@ package com.aos.data.repository.remote.book
 
 import com.aos.data.api.BookService
 import com.aos.data.entity.request.book.DeleteBookCategoryBody
+import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
@@ -20,6 +21,7 @@ import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
+import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
@@ -182,5 +184,12 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         deleteBookCategoryBody: DeleteBookCategoryBody
     ): NetworkState<Void> {
         return bookService.deleteBookCategory(bookKey, deleteBookCategoryBody)
+    }
+
+    override suspend fun postBooksCategoryAdd(
+        bookKey: String,
+        postBooksCategoryAddBody: PostBooksCategoryAddBody
+    ): NetworkState<PostBooksCategoryAddEntity> {
+        return bookService.postBooksCategoryAdd(bookKey, postBooksCategoryAddBody)
     }
 }

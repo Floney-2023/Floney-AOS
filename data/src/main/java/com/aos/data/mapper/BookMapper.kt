@@ -7,6 +7,7 @@ import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
+import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
@@ -57,6 +58,8 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.model.book.PostBooksCategoryAddModel
+
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
     return GetCheckUserBookModel(this.bookKey ?: "")
@@ -396,4 +399,7 @@ fun GetBooksBudgetEntity.toUiBookBudgetModel(): UiBookBudgetModel {
     return UiBookBudgetModel(
         budgetList = budgetList
     )
+}
+fun PostBooksCategoryAddEntity.toPostBooksCategoryAddModel() : PostBooksCategoryAddModel {
+    return PostBooksCategoryAddModel(name = this.name ?: "")
 }

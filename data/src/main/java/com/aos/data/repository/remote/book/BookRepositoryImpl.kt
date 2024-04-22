@@ -3,6 +3,7 @@ package com.aos.data.repository.remote.book
 import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.Duration
+import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
@@ -17,6 +18,7 @@ import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.mapper.toGetBooksInfoCurrencyModel
 import com.aos.data.mapper.toGetCheckUserBookModel
 import com.aos.data.mapper.toGetsettleUpLastModel
+import com.aos.data.mapper.toPostBooksCategoryAddModel
 import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
 import com.aos.data.mapper.toPostBooksCreateModel
@@ -33,6 +35,7 @@ import com.aos.data.mapper.toUiOutcomesSelectModel
 import com.aos.data.mapper.toUiSettlementSeeModel
 import com.aos.data.util.RetrofitFailureStateException
 import com.aos.model.book.GetBooksInfoCurrencyModel
+import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksInfoCurrencyModel
@@ -536,6 +539,20 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
                 } else {
                     Result.failure(IllegalStateException("unKnownError"))
                 }
+            }
+        }
+    }
+    override suspend fun postBooksCategoryAdd(bookKey: String, parent: String, name: String): Result<PostBooksCategoryAddModel> {
+        when (val data =
+            bookDataSource.postBooksCategoryAdd(bookKey, PostBooksCategoryAddBody(parent, name))) {
+            is NetworkState.Success -> return Result.success(data.body.toPostBooksCategoryAddModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
             }
         }
     }

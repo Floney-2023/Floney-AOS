@@ -91,8 +91,8 @@ class BookSettingMainFragment :
         repeatOnStarted {
             viewModel.categoryPage.collect() {
                 if(it) {
-                    val categoryAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingCategoryFragment()
-                    findNavController().navigate(categoryAction)
+                    val activity = requireActivity() as BookSettingActivity
+                    activity.startBookCategoryActivity()
                 }
             }
         }

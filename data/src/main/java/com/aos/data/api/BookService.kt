@@ -1,6 +1,7 @@
 package com.aos.data.api
 
 import com.aos.data.entity.request.book.DeleteBookCategoryBody
+import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
@@ -22,6 +23,7 @@ import com.aos.data.entity.request.book.PostSettlementAddBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
+import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.PostBooksJoinEntity
@@ -233,4 +235,12 @@ interface BookService {
         @Path("bookKey") bookKey: String,
         @Body deleteBookCategoryBody: DeleteBookCategoryBody
     ): NetworkState<Void>
+
+    // 카테고리 추가하기
+    @POST("books/{bookKey}/categories")
+    @Headers("Auth: true")
+    suspend fun postBooksCategoryAdd(
+        @Path("bookKey") bookKey: String,
+        @Body postBooksCategoryAddBody: PostBooksCategoryAddBody
+    ): NetworkState<PostBooksCategoryAddEntity>
 }

@@ -1,4 +1,4 @@
-package com.aos.floney.view.book.setting
+package com.aos.floney.view.book.setting.category
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,12 +9,12 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.ActivityBookSettingBinding
 import com.aos.floney.view.book.add.BookAddActivity
-import com.aos.floney.view.book.setting.category.BookCategoryActivity
+import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSettingViewModel>(R.layout.activity_book_setting) {
+class BookCategoryActivity : BaseActivity<ActivityBookSettingBinding, BookCategoryViewModel>(R.layout.activity_book_category) {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSetting
 
     private fun setupJetpackNavigation() {
 
-        val host = supportFragmentManager.findFragmentById(R.id.nav_host_book_setting_fragment_container) as NavHostFragment
+        val host = supportFragmentManager.findFragmentById(R.id.nav_host_book_category_fragment_container) as NavHostFragment
         navController = host.navController
 
     }
@@ -36,15 +36,9 @@ class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSetting
         finishAffinity()
     }
 
-    // 가계부 추가 생성 화면으로 이동
-
-    fun startBookAddActivity() {
-        startActivity(Intent(this, BookAddActivity::class.java))
+    // 가계부 설정 화면으로 이동
+    fun startBookSettingActivity() {
+        startActivity(Intent(this, BookSettingActivity::class.java))
         finishAffinity()
-    }
-
-    // 분류 항목 관리 화면으로 이동
-    fun startBookCategoryActivity(){
-        startActivity(Intent(this, BookCategoryActivity::class.java))
     }
 }
