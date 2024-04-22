@@ -1,5 +1,6 @@
 package com.aos.floney.ext
 
+import android.graphics.Color
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.aos.floney.R
@@ -22,7 +23,10 @@ fun ImageView.setImageToUrl(url: String?) {
                 .load(R.drawable.icon_default_profile)
                 .into(this)
         }
-
     }
+}
 
+@BindingAdapter("bind:setImageColor")
+fun ImageView.setImageColor(color: Int) {
+    this.setBackgroundColor(color)
 }

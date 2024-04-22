@@ -53,8 +53,6 @@ q
 Apresentation/src/main/java/com/aos/floney/base/BaseListAdapter.kt,0\0\004bfc940ec7085ec8a37ae1671ea92958dc412a
 Q
 !data/src/main/AndroidManifest.xml,f\a\fa20ad08e770fe0392ec3df5be8c6bde6c35d607
-n
->presentation/src/main/java/com/aos/floney/base/BaseFragment.kt,a\5\a5694f50cd0d4ac4d952921e812d5d18d6c82758
 y
 Ipresentation/src/main/java/com/aos/floney/view/onboard/OnBoardActivity.kt,1\a\1aa29072b5d351be77ea3d2a4b0ef53f7d831446
 X

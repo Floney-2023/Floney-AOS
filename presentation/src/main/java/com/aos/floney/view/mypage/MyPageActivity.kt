@@ -1,6 +1,8 @@
 package com.aos.floney.view.mypage
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.navigation.NavController
 import com.aos.floney.R
@@ -15,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 import androidx.databinding.library.baseAdapters.BR
+import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
 import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
@@ -43,6 +46,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
             viewModel.informPage.collect {
                 if(it) {
                     startActivity(Intent(this@MyPageActivity, MyPageInformEmailActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                 }
             }
         }
@@ -50,6 +58,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
             viewModel.settingPage.collect {
                 if(it) {
                     startActivity(Intent(this@MyPageActivity, MyPageSettingActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                 }
             }
         }
@@ -62,6 +75,11 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
                     val bottomSheetFragment = MypageBookAddSelectBottomSheetFragment { checked ->
                         val intentClass = if (checked) MyPageBookCreateActivity::class.java else MyPageBookCodeInputActivity::class.java
                         startActivity(Intent(this@MyPageActivity, intentClass))
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
                     }
                     bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
                 }
@@ -80,16 +98,31 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
             when (it.itemId) {
                 R.id.homeFragment -> {
                     startActivity(Intent(this, HomeActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                     finish()
                     false
                 }
                 R.id.analysisFragment -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    startActivity(Intent(this, AnalyzeActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                     finish()
                     false
                 }
                 R.id.settleUpFragment -> {
                     startActivity(Intent(this, SettleUpActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                     finish()
                     false
                 }

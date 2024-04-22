@@ -1,6 +1,8 @@
 package com.aos.floney.view.book.add
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -30,6 +32,11 @@ class BookAddActivity : BaseActivity<ActivityBookAddBinding, BookAddViewModel>(R
     // 가계부 초대되거나, 생성 완료 후, 홈 화면으로 이동
     fun startHomeActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         finishAffinity()
     }
 }

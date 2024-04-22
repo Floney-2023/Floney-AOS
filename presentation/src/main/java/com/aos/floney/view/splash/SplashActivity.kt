@@ -1,6 +1,8 @@
 package com.aos.floney.view.splash
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -32,9 +34,19 @@ class SplashActivity :
             if (SharedPreferenceUtil(this).getBoolean(getString(R.string.is_first), true)) {
                 val intent = Intent(this@SplashActivity, OnBoardActivity::class.java)
                 startActivity(intent)
+                if (Build.VERSION.SDK_INT >= 34) {
+                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                } else {
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                }
             } else {
                 val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                 startActivity(intent)
+                if (Build.VERSION.SDK_INT >= 34) {
+                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                } else {
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                }
             }
             finish()
         }, 2000)

@@ -1,6 +1,8 @@
 package com.aos.floney.view.mypage.bookadd.codeinput
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -30,10 +32,20 @@ class MyPageBookCodeInputActivity :
     // 가계부 초대된 후, 홈 화면으로 이동
     fun startHomeActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         finishAffinity()
     }
     fun startMyPageActivity() {
         startActivity(Intent(this, MyPageActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         finishAffinity()
     }
 }

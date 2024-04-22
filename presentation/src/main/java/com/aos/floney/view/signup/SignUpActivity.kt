@@ -1,6 +1,8 @@
 package com.aos.floney.view.signup
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
@@ -32,11 +34,21 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>(R.la
     // 회원가입 완료 후 로그인 페이지로 이동
     fun startLoginActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         finishAffinity()
     }
 
     fun startBookAddActivity() {
         startActivity(Intent(this, BookAddActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         finishAffinity()
     }
 

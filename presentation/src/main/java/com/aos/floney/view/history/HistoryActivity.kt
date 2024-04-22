@@ -1,10 +1,12 @@
 package com.aos.floney.view.history
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
@@ -110,6 +112,11 @@ class HistoryActivity :
             viewModel.postBooksLines.collect {
                 if(it) {
                     startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                     finish()
                 }
             }
@@ -127,6 +134,11 @@ class HistoryActivity :
             viewModel.postModifyBooksLines.collect {
                 if(it) {
                     startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                     finish()
                 }
             }
