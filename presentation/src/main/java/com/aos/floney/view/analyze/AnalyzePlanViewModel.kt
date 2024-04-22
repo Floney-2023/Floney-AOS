@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
+import com.aos.floney.util.EventFlow
+import com.aos.floney.util.MutableEventFlow
 import com.aos.model.analyze.UiAnalyzePlanModel
 import com.aos.usecase.analyze.PostAnalyzeIPlanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +26,9 @@ class AnalyzePlanViewModel @Inject constructor(
     private var _postAnalyzePlan = MutableLiveData<UiAnalyzePlanModel>(UiAnalyzePlanModel("", "0원", "0", ""))
     val postAnalyzePlan: LiveData<UiAnalyzePlanModel> get() = _postAnalyzePlan
 
+    private var _onClickSetBudget = MutableEventFlow<Boolean>()
+    val onClickSetBudget : EventFlow<Boolean> get() = _onClickSetBudget
+
     init {
         postAnalyzePlan()
     }
@@ -40,6 +45,12 @@ class AnalyzePlanViewModel @Inject constructor(
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                 baseEvent(Event.HideLoading)
             }
+        }
+    }
+
+    fun onClickSetBudget() {
+        viewModelScope.launch {
+            _onClickSetBudget.emit(true)
         }
     }
 

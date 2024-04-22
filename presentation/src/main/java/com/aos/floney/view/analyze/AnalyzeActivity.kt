@@ -6,6 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -13,14 +15,39 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityAnalyzeBinding
+import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.home.HomeDayTypeFragment
 import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.settleup.SettleUpActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R.layout.activity_analyze) {
+class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R.layout.activity_analyze), BookSettingBudgetFragment.OnFragmentInteractionListener{
+
+    override fun onRestart() {
+        super.onRestart()
+
+        Timber.e("onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.e("onDestroy")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.e("onResume")
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Timber.e("onStart")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,5 +133,21 @@ class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R
                 }
             }
         }
+
+        viewModel.onClickSetBudget.observe(this) {
+            if(it) {
+                binding.flContainer2.isVisible = true
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
+                    .replace(R.id.fl_container2, BookSettingBudgetFragment()).commit()
+            } else {
+                binding.flContainer2.isVisible = false
+            }
+
+        }
+    }
+
+    override fun onFragmentRemoved() {
+        viewModel.onClickSetBudget(false)
     }
 }

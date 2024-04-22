@@ -162,7 +162,7 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
         percent = if (this.leftMoney < 0) {
             "100"
         } else {
-            ((this.leftMoney / this.initBudget) * 100).toInt().toString()
+            (((this.initBudget - this.leftMoney) / this.initBudget) * 100).toInt().toString()
         },
         divMoney = "${
             NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).round(2))

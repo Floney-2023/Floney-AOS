@@ -1,43 +1,22 @@
-package com.aos.floney.view.book.setting.budget
+package com.aos.floney.view.analyze
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingBudgetBinding
 import com.aos.floney.ext.repeatOnStarted
-import com.aos.floney.view.analyze.AnalyzeViewModel
 import com.aos.model.book.BudgetItem
 import com.aos.model.book.UiBookBudgetModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import java.lang.Exception
-import java.lang.IllegalStateException
 
 @AndroidEntryPoint
-class BookSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding, BookSettingBudgetViewModel>(R.layout.fragment_book_setting_budget) , UiBookBudgetModel.OnItemClickListener {
-
-    private var listener: OnFragmentInteractionListener? = null
-
-    interface OnFragmentInteractionListener {
-        fun onFragmentRemoved()
-    }
+class AnalyzeSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding, AnalyzeSettingBudgetViewModel>(R.layout.fragment_book_setting_budget) , UiBookBudgetModel.OnItemClickListener {
 
     override fun onItemClick(item: BudgetItem) {
         viewModel.settingBudget(item)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement OnFragmentInteractionListener")
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +26,7 @@ class BookSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding,
         setUpViewModelObserver()
     }
     private fun setUpUi() {
-        binding.setVariable(BR.eventHolder, this@BookSettingBudgetFragment)
+        binding.setVariable(BR.eventHolder, this@AnalyzeSettingBudgetFragment)
     }
 
     private fun setUpViewModelObserver() {
@@ -55,11 +34,7 @@ class BookSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding,
             // 이전 페이지 이동
             viewModel.back.collect {
                 if(it) {
-                    try {
-                        findNavController().popBackStack()
-                    } catch (e: Exception) {
-                        listener?.onFragmentRemoved()
-                    }
+                    findNavController().popBackStack()
                 }
             }
         }
@@ -68,7 +43,7 @@ class BookSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding,
             // 예산 설정 bottomSheet
             viewModel.budgetSettingPage.collect {
                 if(it.month!="") {
-                    val bottomSheetFragment = BookSettingBudgetBottomSheetFragment(
+                    val bottomSheetFragment = AnalyzeSettingBudgetBottomSheetFragment(
                         it, viewModel.convertToDateString(it.month)) { updateBudgetMoney ->
                         viewModel.updateBudget(it, updateBudgetMoney)
                     }
