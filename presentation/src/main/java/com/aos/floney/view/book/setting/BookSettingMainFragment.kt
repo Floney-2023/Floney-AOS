@@ -11,6 +11,7 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.add.BookAddInviteShareBottomSheetFragment
 import com.aos.floney.view.book.setting.asset.BookSettingAssetBottomSheetFragment
 import com.aos.floney.view.book.setting.carryinfo.BookSettingCarryInfoSheetFragment
+import com.aos.floney.view.book.setting.excel.BookSettingExcelBottomSheetFragment
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.UiBookSettingModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,14 +83,6 @@ class BookSettingMainFragment :
             }
         }
         repeatOnStarted {
-            viewModel.budgetPage.collect() {
-                if(it) {
-                    val budgetAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingBudgetFragment()
-                    findNavController().navigate(budgetAction)
-                }
-            }
-        }
-        repeatOnStarted {
             viewModel.categoryPage.collect() {
                 if(it) {
                     val activity = requireActivity() as BookSettingActivity
@@ -102,6 +95,22 @@ class BookSettingMainFragment :
                 if(it) {
                     val bottomSheetFragment = BookAddInviteShareBottomSheetFragment()
                     bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.excelPage.collect() {
+                if(it) {
+                    val excelFragment = BookSettingExcelBottomSheetFragment()
+                    excelFragment.show(parentFragmentManager, excelFragment.tag)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.repeatPage.collect() {
+                if(it) {
+                    val repeatAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingRepeatFragment()
+                    findNavController().navigate(repeatAction)
                 }
             }
         }

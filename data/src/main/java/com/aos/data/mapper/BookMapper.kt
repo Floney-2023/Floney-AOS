@@ -2,6 +2,7 @@ package com.aos.data.mapper
 
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
@@ -59,6 +60,7 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
 import com.aos.model.book.PostBooksCategoryAddModel
+import com.aos.model.book.UiBookRepeatModel
 
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
@@ -405,4 +407,20 @@ fun PostBooksCategoryAddEntity.toPostBooksCategoryAddModel() : PostBooksCategory
 }
 fun GetBooksCodeEntity.toGetBooksCodeModel(): GetBooksCodeModel {
     return GetBooksCodeModel(this.code ?: "")
+}
+fun List<GetBookRepeatEntity>.toUiBookRepeatModel(): List<UiBookRepeatModel> {
+    return this.map {
+        val repeatDurationInKorean = when (it.repeatDuration) {
+            "NONE" -> ""
+            "EVERYDAY" -> "매일"
+            "WEEK" -> "매주"
+            "MONTH" -> "매달"
+            "WEEKDAY" -> "주중"
+            "WEEKEND" -> "주말"
+            else -> it.repeatDuration // 만약 매칭되는 값이 없을 경우 기본값 사용
+        }
+        UiBookRepeatModel(
+            it.id, it.description, repeatDurationInKorean, it.lineSubCategory, it.assetSubCategory, it.money.toInt(), false
+        )
+    }
 }

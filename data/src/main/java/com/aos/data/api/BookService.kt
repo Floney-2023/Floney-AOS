@@ -20,6 +20,7 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
 import com.aos.data.entity.request.settlement.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
@@ -251,4 +252,22 @@ interface BookService {
     suspend fun getBooksCode(
         @Query("bookKey") bookKey : String
     ): NetworkState<GetBooksCodeEntity>
+
+    // 가계부 엑셀 다운로드
+
+    // 반복 내역 조회
+    @GET("books/repeat")
+    @Headers("Auth: true")
+    suspend fun getBooksRepeat(
+        @Query("bookKey") bookKey: String,
+        @Query("categoryType") categoryType: String
+    ): NetworkState<List<GetBookRepeatEntity>>
+
+    // 반복 내역 삭제
+    @HTTP(method = "DELETE", path="books/repeat", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBooksRepeat(
+        @Query("repeatLineId") repeatLineId: Int
+    ): NetworkState<Void>
+
 }

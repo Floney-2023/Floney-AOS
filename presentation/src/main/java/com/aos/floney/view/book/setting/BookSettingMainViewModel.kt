@@ -67,9 +67,18 @@ class BookSettingMainViewModel @Inject constructor(
     private var _categoryPage = MutableEventFlow<Boolean>()
     val categoryPage: EventFlow<Boolean> get() = _categoryPage
 
+    // 엑셀 내보내기 페이지
+    private var _excelPage = MutableEventFlow<Boolean>()
+    val excelPage: EventFlow<Boolean> get() = _excelPage
+
     // 친구 초대 페이지
     private var _invitePage = MutableEventFlow<Boolean>()
     val invitePage: EventFlow<Boolean> get() = _invitePage
+
+
+    // 친구 초대 페이지
+    private var _repeatPage = MutableEventFlow<Boolean>()
+    val repeatPage: EventFlow<Boolean> get() = _repeatPage
 
     init{
         searchBookSettingItems()
@@ -126,7 +135,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 반복내역 설정
     fun onClickRepeat()
     {
-
+        viewModelScope.launch {
+            _repeatPage.emit(true)
+        }
     }
     // 즐겨찾기 설정
     fun onClickFavorite()
@@ -161,12 +172,6 @@ class BookSettingMainViewModel @Inject constructor(
         }
     }
 
-    // 이용 약관 페이지 이동
-    fun onClickUsageRightPage()
-    {
-
-    }
-
     // 화폐 설정
     fun onClickSettingMoney()
     {
@@ -177,7 +182,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 엑셀 내보내기
     fun onClickExcelExport()
     {
-
+        viewModelScope.launch {
+            _excelPage.emit(true)
+        }
     }
 
     // 친구 추가

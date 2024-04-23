@@ -10,6 +10,7 @@ import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
@@ -133,4 +134,10 @@ interface BookRepository {
 
     // 가계부 코드 조회
     suspend fun getBooksCode(bookKey: String): Result<GetBooksCodeModel>
+
+    // 반복 내역 조회
+    suspend fun getBooksRepeat(bookKey: String, categoryType: String): Result<List<UiBookRepeatModel>>
+
+    // 반복 내역 삭제
+    suspend fun deleteBooksRepeat(repeatLineId: Int): Result<Void?>
 }

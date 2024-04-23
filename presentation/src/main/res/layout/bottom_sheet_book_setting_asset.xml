@@ -55,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
+                android:fontFamily="@font/pretendard_regular"
                 android:text="@string/book_setting_bottom_asset_info"
                 android:textColor="@color/grayscale6"
                 android:textSize="12sp"

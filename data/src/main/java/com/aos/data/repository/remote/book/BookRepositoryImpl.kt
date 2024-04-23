@@ -31,6 +31,7 @@ import com.aos.data.mapper.toPostBooksLinesModel
 import com.aos.data.mapper.toUiBookCategory
 import com.aos.data.mapper.toPostSettlementAddModel
 import com.aos.data.mapper.toUiBookBudgetModel
+import com.aos.data.mapper.toUiBookRepeatModel
 import com.aos.data.mapper.toUiBookSettingModel
 import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.mapper.toUiOutcomesSelectModel
@@ -46,6 +47,7 @@ import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
@@ -572,6 +574,41 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
             is NetworkState.UnknownError ->{
                 Timber.e("UnknownError ${data.errorState}, ${data.t}")
                 return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun getBooksRepeat(
+        bookKey: String,
+        categoryType: String,
+    ): Result<List<UiBookRepeatModel>> {
+        when (val data = bookDataSource.getBooksRepeat(bookKey, categoryType)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiBookRepeatModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+    override suspend fun deleteBooksRepeat(repeatLineId: Int): Result<Void?> {
+        when (val data =
+            bookDataSource.deleteBooksRepeat(repeatLineId)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
             }
         }
     }

@@ -18,6 +18,7 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
 import com.aos.data.entity.request.settlement.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
@@ -197,5 +198,18 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         bookKey: String
     ): NetworkState<GetBooksCodeEntity> {
         return bookService.getBooksCode(bookKey)
+    }
+
+    override suspend fun getBooksRepeat(
+        bookKey: String,
+        categoryType: String
+    ): NetworkState<List<GetBookRepeatEntity>> {
+        return bookService.getBooksRepeat(bookKey, categoryType)
+    }
+
+    override suspend fun deleteBooksRepeat(
+        repeatLineId: Int
+    ): NetworkState<Void> {
+        return bookService.deleteBooksRepeat(repeatLineId)
     }
 }

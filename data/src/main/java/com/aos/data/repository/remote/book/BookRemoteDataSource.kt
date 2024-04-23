@@ -17,6 +17,7 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
 import com.aos.data.entity.request.settlement.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
@@ -68,5 +69,6 @@ interface BookRemoteDataSource {
     suspend fun deleteBookCategory(bookKey:String, deleteBookCategoryBody: DeleteBookCategoryBody): NetworkState<Void>
     suspend fun postBooksCategoryAdd(bookKey:String, postBooksCategoryAddBody: PostBooksCategoryAddBody): NetworkState<PostBooksCategoryAddEntity>
     suspend fun getBooksCode(bookKey:String): NetworkState<GetBooksCodeEntity>
-
+    suspend fun getBooksRepeat(bookKey : String, categoryType : String): NetworkState<List<GetBookRepeatEntity>>
+    suspend fun deleteBooksRepeat(repeatLineId:Int): NetworkState<Void>
 }
