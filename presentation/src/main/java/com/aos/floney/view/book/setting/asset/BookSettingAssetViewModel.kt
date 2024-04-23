@@ -10,6 +10,7 @@ import com.aos.floney.ext.formatNumber
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.usecase.booksetting.BooksCodeCheckUseCase
 import com.aos.usecase.booksetting.BooksInfoAssetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class BookSettingAssetViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
+    private val booksCodeCheckUseCase: BooksCodeCheckUseCase,
     private val booksInfoAssetUseCase: BooksInfoAssetUseCase
 ): BaseViewModel() {
 
@@ -31,6 +33,22 @@ class BookSettingAssetViewModel @Inject constructor(
 
     // 금액
     var cost = MutableLiveData<String>("")
+
+    init {
+        //settingInitAsset()
+    }
+
+    // 초기 자산 불러오기
+    fun settingInitAsset() {
+        viewModelScope.launch {
+            booksCodeCheckUseCase(
+                prefs.getString("bookKey","")).onSuccess {
+
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
 
     // 초기 자산 설정
     fun onClickSaveButton(){

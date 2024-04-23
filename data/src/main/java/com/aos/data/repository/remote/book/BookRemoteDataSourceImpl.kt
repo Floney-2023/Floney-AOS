@@ -16,9 +16,10 @@ import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
-import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
+import com.aos.data.entity.request.settlement.PostSettlementAddBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -34,7 +35,6 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
-import com.aos.usecase.booksetting.BooksDeleteUseCase
 import com.aos.util.NetworkState
 import javax.inject.Inject
 
@@ -191,5 +191,11 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         postBooksCategoryAddBody: PostBooksCategoryAddBody
     ): NetworkState<PostBooksCategoryAddEntity> {
         return bookService.postBooksCategoryAdd(bookKey, postBooksCategoryAddBody)
+    }
+
+    override suspend fun getBooksCode(
+        bookKey: String
+    ): NetworkState<GetBooksCodeEntity> {
+        return bookService.getBooksCode(bookKey)
     }
 }

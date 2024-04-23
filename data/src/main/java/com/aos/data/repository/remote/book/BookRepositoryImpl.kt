@@ -2,7 +2,7 @@ package com.aos.data.repository.remote.book
 
 import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
-import com.aos.data.entity.request.book.Duration
+import com.aos.data.entity.request.settlement.Duration
 import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
@@ -13,8 +13,10 @@ import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksNameBody
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
-import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.request.settlement.Outcomes
+import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
+import com.aos.data.entity.request.settlement.PostSettlementAddBody
+import com.aos.data.mapper.toGetBooksCodeModel
 import com.aos.data.mapper.toGetBooksInfoCurrencyModel
 import com.aos.data.mapper.toGetCheckUserBookModel
 import com.aos.data.mapper.toGetsettleUpLastModel
@@ -34,6 +36,7 @@ import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.mapper.toUiOutcomesSelectModel
 import com.aos.data.mapper.toUiSettlementSeeModel
 import com.aos.data.util.RetrofitFailureStateException
+import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
@@ -273,7 +276,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         outcomes: List<settleOutcomes>
     ):  Result<UiSettlementAddModel> {
         val outcomes = outcomes.map {
-            com.aos.data.entity.request.book.Outcomes(it.outcome.toDouble(),it.userEmail)
+            Outcomes(it.outcome.toDouble(),it.userEmail)
         }
         when (val data =
             bookDataSource.postSettlementAdd(PostSettlementAddBody(bookKey, startDate, endDate, usersEmails, outcomes))) {
@@ -546,6 +549,22 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         when (val data =
             bookDataSource.postBooksCategoryAdd(bookKey, PostBooksCategoryAddBody(parent, name))) {
             is NetworkState.Success -> return Result.success(data.body.toPostBooksCategoryAddModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun getBooksCode(bookKey: String): Result<GetBooksCodeModel> {
+        when (val data =
+            bookDataSource.getBooksCode(bookKey)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body.toGetBooksCodeModel())
+            }
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)
             )

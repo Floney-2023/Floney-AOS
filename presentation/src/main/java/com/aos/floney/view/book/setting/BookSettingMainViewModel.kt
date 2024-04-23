@@ -67,6 +67,10 @@ class BookSettingMainViewModel @Inject constructor(
     private var _categoryPage = MutableEventFlow<Boolean>()
     val categoryPage: EventFlow<Boolean> get() = _categoryPage
 
+    // 친구 초대 페이지
+    private var _invitePage = MutableEventFlow<Boolean>()
+    val invitePage: EventFlow<Boolean> get() = _invitePage
+
     init{
         searchBookSettingItems()
     }
@@ -175,10 +179,13 @@ class BookSettingMainViewModel @Inject constructor(
     {
 
     }
+
     // 친구 추가
     fun onClickInviteFriend()
     {
-
+        viewModelScope.launch {
+            _invitePage.emit(true)
+        }
     }
 
 }

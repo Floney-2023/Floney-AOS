@@ -3,8 +3,8 @@ package com.aos.data.mapper
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -22,6 +22,7 @@ import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.model.book.BudgetItem
+import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.PostBooksCreateModel
@@ -57,7 +58,6 @@ import java.util.Locale
 import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
-import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.book.PostBooksCategoryAddModel
 
 // 유저 가계부 유효 확인
@@ -402,4 +402,7 @@ fun GetBooksBudgetEntity.toUiBookBudgetModel(): UiBookBudgetModel {
 }
 fun PostBooksCategoryAddEntity.toPostBooksCategoryAddModel() : PostBooksCategoryAddModel {
     return PostBooksCategoryAddModel(name = this.name ?: "")
+}
+fun GetBooksCodeEntity.toGetBooksCodeModel(): GetBooksCodeModel {
+    return GetBooksCodeModel(this.code ?: "")
 }

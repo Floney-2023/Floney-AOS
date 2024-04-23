@@ -15,9 +15,10 @@ import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
-import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
+import com.aos.data.entity.request.settlement.PostSettlementAddBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -33,7 +34,6 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
-import com.aos.model.book.UiBookCategory
 import com.aos.util.NetworkState
 
 interface BookRemoteDataSource {
@@ -67,5 +67,6 @@ interface BookRemoteDataSource {
     suspend fun postBooksInfoBudget(postBooksInfoBudgetBody: PostBooksInfoBudgetBody): NetworkState<Void>
     suspend fun deleteBookCategory(bookKey:String, deleteBookCategoryBody: DeleteBookCategoryBody): NetworkState<Void>
     suspend fun postBooksCategoryAdd(bookKey:String, postBooksCategoryAddBody: PostBooksCategoryAddBody): NetworkState<PostBooksCategoryAddEntity>
+    suspend fun getBooksCode(bookKey:String): NetworkState<GetBooksCodeEntity>
 
 }

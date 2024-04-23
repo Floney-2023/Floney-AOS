@@ -18,9 +18,10 @@ import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
-import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
+import com.aos.data.entity.request.settlement.PostSettlementAddBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -243,4 +244,11 @@ interface BookService {
         @Path("bookKey") bookKey: String,
         @Body postBooksCategoryAddBody: PostBooksCategoryAddBody
     ): NetworkState<PostBooksCategoryAddEntity>
+
+    // 가계부 코드 조회
+    @GET("books/code")
+    @Headers("Auth: true")
+    suspend fun getBooksCode(
+        @Query("bookKey") bookKey : String
+    ): NetworkState<GetBooksCodeEntity>
 }

@@ -8,6 +8,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingMainBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.add.BookAddInviteShareBottomSheetFragment
 import com.aos.floney.view.book.setting.asset.BookSettingAssetBottomSheetFragment
 import com.aos.floney.view.book.setting.carryinfo.BookSettingCarryInfoSheetFragment
 import com.aos.model.book.MyBookUsers
@@ -93,6 +94,14 @@ class BookSettingMainFragment :
                 if(it) {
                     val activity = requireActivity() as BookSettingActivity
                     activity.startBookCategoryActivity()
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.invitePage.collect() {
+                if(it) {
+                    val bottomSheetFragment = BookAddInviteShareBottomSheetFragment()
+                    bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
                 }
             }
         }

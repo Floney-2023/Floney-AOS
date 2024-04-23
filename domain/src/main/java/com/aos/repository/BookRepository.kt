@@ -1,5 +1,6 @@
 package com.aos.repository
 
+import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
@@ -130,4 +131,6 @@ interface BookRepository {
     // 카테고리 추가하기
     suspend fun postBooksCategoryAdd(bookKey: String, parent: String, name: String): Result<PostBooksCategoryAddModel>
 
+    // 가계부 코드 조회
+    suspend fun getBooksCode(bookKey: String): Result<GetBooksCodeModel>
 }

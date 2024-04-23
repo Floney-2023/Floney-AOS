@@ -3,6 +3,7 @@ package com.aos.floney.view.book.add
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
@@ -23,23 +24,10 @@ class BookAddInviteShareBottomSheetFragment :
     BaseBottomSheetFragment<BottomSheetBookAddInviteShareBinding,BookAddInviteShareViewModel>
         (R.layout.bottom_sheet_book_add_invite_share) {
 
-    companion object {
-        private const val ARG_INVITE_CODE = "invite_code"
-
-        fun newInstance(inviteCode: String): BookAddInviteShareBottomSheetFragment {
-            val fragment = BookAddInviteShareBottomSheetFragment()
-            val args = Bundle()
-            args.putString(ARG_INVITE_CODE, inviteCode)
-            fragment.arguments = args
-            return fragment
-        }
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModelObserver()
 
-        // Arguments에서 데이터 읽어오기
-        viewModel.inviteCode.postValue(arguments?.getString(ARG_INVITE_CODE))
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
@@ -47,7 +35,7 @@ class BookAddInviteShareBottomSheetFragment :
             viewModel.inviteCodeShare.collect {
                 Timber.e("nextPage $it")
                 if(it) {
-
+                    onSharedBtnClicked()
                 }
             }
         }
@@ -73,5 +61,12 @@ class BookAddInviteShareBottomSheetFragment :
                 }
             }
         }
+    }
+    private fun onSharedBtnClicked() {
+        val code = viewModel.inviteCode.value ?: ""
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/html"
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, code)
+        startActivity(Intent.createChooser(sharingIntent, "Share using text"))
     }
 }
