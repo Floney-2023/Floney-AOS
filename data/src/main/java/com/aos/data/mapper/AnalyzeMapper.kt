@@ -187,7 +187,5 @@ fun getRandomColor(repeat: Int): List<Int> {
 
 fun Double.round(decimals: Int): Double {
     val factor = 10.0.pow(decimals)
-    Timber.e("factor $factor")
-    Timber.e("double $this")
     return (this * factor).roundToInt() / factor
 }
