@@ -7,6 +7,7 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksExcelBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
@@ -36,6 +37,7 @@ import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
+import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HTTP
@@ -43,6 +45,7 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.io.File
 
 interface BookService {
 
@@ -254,6 +257,11 @@ interface BookService {
     ): NetworkState<GetBooksCodeEntity>
 
     // 가계부 엑셀 다운로드
+    @POST("books/excel")
+    @Headers("Auth: true")
+    suspend fun postBooksExcel(
+        @Body postBooksExcelBody: PostBooksExcelBody
+    ): NetworkState<ResponseBody>
 
     // 반복 내역 조회
     @GET("books/repeat")

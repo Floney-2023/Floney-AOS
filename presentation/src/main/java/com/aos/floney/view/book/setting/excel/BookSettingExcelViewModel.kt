@@ -14,10 +14,13 @@ import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoneyModifyItem
 import com.aos.usecase.booksetting.BooksCategoryAddUseCase
 import com.aos.usecase.booksetting.BooksCategoryDeleteUseCase
+import com.aos.usecase.booksetting.BooksExcelUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -25,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BookSettingExcelViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val booksCategoryAddUseCase: BooksCategoryAddUseCase
+    private val booksExcelUseCase: BooksExcelUseCase
 ) : BaseViewModel() {
 
     // 이전 페이지
@@ -33,9 +36,9 @@ class BookSettingExcelViewModel @Inject constructor(
     val back: EventFlow<Boolean> get() = _back
 
 
-    // 이전 페이지
-    private var _completePage = MutableEventFlow<String>()
-    val completePage: EventFlow<String> get() = _completePage
+    // 내보내기 엑셀
+    private var _completePage = MutableEventFlow<ResponseBody>()
+    val completePage: EventFlow<ResponseBody> get() = _completePage
 
     // 자산, 지출, 수입, 이체
     var flow = MutableLiveData<String>("이번달")
@@ -50,12 +53,12 @@ class BookSettingExcelViewModel @Inject constructor(
     fun onClickAddComplete() {
         if (flow.value!="") {
             viewModelScope.launch(Dispatchers.IO) {
-                booksCategoryAddUseCase(
+                booksExcelUseCase(
                     bookKey = prefs.getString("bookKey", ""),
                     getExcelDuration(flow.value!!),
                     getCurrentDate(flow.value!!)
                 ).onSuccess {
-                    _completePage.emit(it.name)
+                    _completePage.emit(it)
                 }.onFailure {
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                 }

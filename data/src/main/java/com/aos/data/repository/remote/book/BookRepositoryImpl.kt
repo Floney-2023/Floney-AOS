@@ -5,6 +5,7 @@ import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.settlement.Duration
 import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksExcelBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
@@ -61,7 +62,9 @@ import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.settlement.settleOutcomes
 import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
+import okhttp3.ResponseBody
 import timber.log.Timber
+import java.io.File
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRemoteDataSource) :
@@ -610,6 +613,21 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
                     Result.failure(IllegalStateException("unKnownError"))
                 }
             }
+        }
+    }
+    override suspend fun postBooksExcel(
+        bookKey: String,
+        excelDuration: String,
+        currentDate : String
+    ): Result<ResponseBody> {
+        when (val data = bookDataSource.postBooksExcel(PostBooksExcelBody(bookKey, excelDuration, currentDate))) {
+            is NetworkState.Success -> return Result.success(data.body)
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
         }
     }
 }

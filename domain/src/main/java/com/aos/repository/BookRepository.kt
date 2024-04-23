@@ -22,6 +22,8 @@ import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
 import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.settlement.settleOutcomes
+import okhttp3.ResponseBody
+import java.io.File
 import java.time.Duration
 
 interface BookRepository {
@@ -140,4 +142,7 @@ interface BookRepository {
 
     // 반복 내역 삭제
     suspend fun deleteBooksRepeat(repeatLineId: Int): Result<Void?>
+
+    // 가계부 엑셀 다운로드
+    suspend fun postBooksExcel(bookKey: String, excelDuration: String, currentDate: String): Result<ResponseBody>
 }

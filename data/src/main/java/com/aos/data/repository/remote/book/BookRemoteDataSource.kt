@@ -4,6 +4,7 @@ import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksExcelBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
@@ -36,6 +37,8 @@ import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
+import okhttp3.ResponseBody
+import java.io.File
 
 interface BookRemoteDataSource {
 
@@ -71,4 +74,5 @@ interface BookRemoteDataSource {
     suspend fun getBooksCode(bookKey:String): NetworkState<GetBooksCodeEntity>
     suspend fun getBooksRepeat(bookKey : String, categoryType : String): NetworkState<List<GetBookRepeatEntity>>
     suspend fun deleteBooksRepeat(repeatLineId:Int): NetworkState<Void>
+    suspend fun postBooksExcel(postBooksExcelBody: PostBooksExcelBody): NetworkState<ResponseBody>
 }
