@@ -27,28 +27,6 @@ import timber.log.Timber
 @AndroidEntryPoint
 class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R.layout.activity_analyze), BookSettingBudgetFragment.OnFragmentInteractionListener{
 
-    override fun onRestart() {
-        super.onRestart()
-
-        Timber.e("onRestart")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.e("onDestroy")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Timber.e("onResume")
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Timber.e("onStart")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

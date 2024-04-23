@@ -48,10 +48,19 @@
             android:layout_marginEnd="34dp"
             app:layout_constraintTop_toTopOf="@id/tv_top_text"/>
 
+        <com.aos.floney.view.analyze.AnalyzeAssetBarChart
+            android:layout_width="20dp"
+            android:layout_height="200dp"
+            android:layout_marginEnd="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon"
+            android:layout_marginTop="28dp"/>
+
         <View
             android:layout_width="24dp"
             android:layout_height="200dp"
             android:rotation="180"
+            android:visibility="gone"
             android:layout_marginTop="28dp"
             android:id="@+id/view1"
             android:background="@drawable/custom_radious_4_solid_primary1"

@@ -144,6 +144,7 @@
             android:layout_width="50dp"
             android:layout_height="84dp"
             android:layout_marginTop="96dp"
+            bind:setAnalyzeImage="@{vm.postAnalyzePlan}"
             android:src="@drawable/analyze_plan_0_49_icon"
             app:layout_constraintEnd_toEndOf="@id/circle_view"
             app:layout_constraintStart_toStartOf="@id/circle_view"
