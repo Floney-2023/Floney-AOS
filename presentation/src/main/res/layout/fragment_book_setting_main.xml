@@ -83,7 +83,7 @@
 
                     <ImageView
                         android:id="@+id/iv_profile"
-                        setImageToUrl="@{vm.bookSettingInfo.bookImg}"
+                        setImageToUrl="@{vm.bookSettingInfo.seeProfileStatus ? vm.bookSettingInfo.bookImg : `user_default`}"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="@drawable/background_circle_image"
@@ -303,7 +303,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="14dp"
-                    android:onClick="@{() -> vm.onClickUsageRightPage()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
@@ -452,14 +451,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="18dp"
-                    android:layout_marginBottom="70dp"
                     android:onClick="@{() -> vm.onClickInviteFriend()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="24dp"
                     android:paddingBottom="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_book_setting_excel">
@@ -486,13 +483,15 @@
                 <LinearLayout
                     android:id="@+id/li_book_setting_exit"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:onClick="@{() -> vm.onClickBookInit()}"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="70dp"
+                    android:onClick="@{() -> vm.onClickBookExit()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:visibility='@{vm.bookSettingInfo.ourBookUsers[0].role.equals("팀원·나") ? View.VISIBLE : View.GONE}'
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_book_setting_invite_friend">

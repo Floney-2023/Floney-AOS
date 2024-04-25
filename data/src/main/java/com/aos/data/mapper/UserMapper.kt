@@ -36,7 +36,7 @@ fun GetMypageSearchEntity.toUiMypageSearchModel(): UiMypageSearchModel {
 
     val myBooks = this.myBooks.map {
         MyBooks(
-            bookImg = it.bookImg,
+            bookImg = it.bookImg?: "book_default",
             bookKey = it.bookKey,
             name = it.name,
             memberCount = it.memberCount,

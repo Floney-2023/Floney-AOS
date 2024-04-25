@@ -93,8 +93,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
                 if(it.myBookCurrency != "") {
-                    // 나라코드 저장
-                    prefs.setString("countryCode", it.myBookCurrency)
+                    // 화폐 단위 저장
                     prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
 
                     _existBook.emit(true)

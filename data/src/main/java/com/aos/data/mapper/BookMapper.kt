@@ -2,9 +2,10 @@ package com.aos.data.mapper
 
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -22,6 +23,7 @@ import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.model.book.BudgetItem
+import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.PostBooksCreateModel
@@ -57,8 +59,8 @@ import java.util.Locale
 import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
-import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.book.PostBooksCategoryAddModel
+import com.aos.model.book.UiBookRepeatModel
 
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
@@ -235,7 +237,7 @@ fun GetBookInfoEntity.toUiBookInfoModel(): UiBookInfoModel {
     }
     return UiBookInfoModel(
         bookName = this.bookName,
-        bookImg = this.bookImg,
+        bookImg = this.bookImg?:"book_default",
         startDay = this.startDay,
         seeProfileStatus = this.seeProfileStatus,
         carryOver = this.carryOver,
@@ -365,7 +367,7 @@ fun GetBooksInfoEntity.toUiBookSettingModel(): UiBookSettingModel {
     }
     return UiBookSettingModel(
         bookName = this.bookName,
-        bookImg = this.bookImg,
+        bookImg = this.bookImg?:"book_default",
         startDay = "${this.startDay.replace('-','.')} 개설",
         seeProfileStatus = this.seeProfileStatus,
         carryOver = this.carryOver,
@@ -402,4 +404,23 @@ fun GetBooksBudgetEntity.toUiBookBudgetModel(): UiBookBudgetModel {
 }
 fun PostBooksCategoryAddEntity.toPostBooksCategoryAddModel() : PostBooksCategoryAddModel {
     return PostBooksCategoryAddModel(name = this.name ?: "")
+}
+fun GetBooksCodeEntity.toGetBooksCodeModel(): GetBooksCodeModel {
+    return GetBooksCodeModel(this.code ?: "")
+}
+fun List<GetBookRepeatEntity>.toUiBookRepeatModel(): List<UiBookRepeatModel> {
+    return this.map {
+        val repeatDurationInKorean = when (it.repeatDuration) {
+            "NONE" -> ""
+            "EVERYDAY" -> "매일"
+            "WEEK" -> "매주"
+            "MONTH" -> "매달"
+            "WEEKDAY" -> "주중"
+            "WEEKEND" -> "주말"
+            else -> it.repeatDuration // 만약 매칭되는 값이 없을 경우 기본값 사용
+        }
+        UiBookRepeatModel(
+            it.id, it.description, repeatDurationInKorean, it.lineSubCategory, it.assetSubCategory, it.money.toInt(), false
+        )
+    }
 }

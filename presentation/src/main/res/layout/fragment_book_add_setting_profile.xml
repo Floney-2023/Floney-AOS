@@ -87,16 +87,36 @@
             app:layout_constraintStart_toStartOf="@+id/tv_setting_profile_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_setting_profile_title" />
 
-        <ImageView
-            android:id="@+id/iv_setting_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:id="@+id/profile_view"
+            android:layout_width="124dp"
+            android:layout_height="124dp"
             android:layout_marginTop="48dp"
-            android:src="@drawable/icon_book_profile"
-            android:onClick="@{() -> vm.onClickSettingProfile()}"
             app:layout_constraintStart_toStartOf="@+id/tv_setting_profile_info"
-            app:layout_constraintTop_toBottomOf="@+id/tv_setting_profile_info" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_setting_profile_info">
 
+
+            <ImageView
+                android:id="@+id/iv_profile_card_view"
+                android:src="@drawable/btn_book_profile"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:background="@drawable/background_circle_image"
+                android:clipToOutline="true"
+                android:onClick="@{() -> vm.onClickSettingImage()}"
+                android:scaleType="centerCrop" />
+
+
+            <ToggleButton
+                android:id="@+id/btn_photo_camera"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/btn_photo_camera"
+                android:textOff=""
+                android:textOn="" />
+
+        </FrameLayout>
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
             android:layout_height="46dp"

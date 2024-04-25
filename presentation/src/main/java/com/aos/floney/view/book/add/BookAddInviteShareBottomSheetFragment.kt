@@ -3,6 +3,7 @@ package com.aos.floney.view.book.add
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
@@ -15,6 +16,7 @@ import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.BottomSheetBookAddInviteShareBinding
 import com.aos.floney.databinding.FragmentBookAddInviteCheckBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.BaseAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -23,23 +25,10 @@ class BookAddInviteShareBottomSheetFragment :
     BaseBottomSheetFragment<BottomSheetBookAddInviteShareBinding,BookAddInviteShareViewModel>
         (R.layout.bottom_sheet_book_add_invite_share) {
 
-    companion object {
-        private const val ARG_INVITE_CODE = "invite_code"
-
-        fun newInstance(inviteCode: String): BookAddInviteShareBottomSheetFragment {
-            val fragment = BookAddInviteShareBottomSheetFragment()
-            val args = Bundle()
-            args.putString(ARG_INVITE_CODE, inviteCode)
-            fragment.arguments = args
-            return fragment
-        }
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModelObserver()
 
-        // Arguments에서 데이터 읽어오기
-        viewModel.inviteCode.postValue(arguments?.getString(ARG_INVITE_CODE))
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
@@ -47,7 +36,7 @@ class BookAddInviteShareBottomSheetFragment :
             viewModel.inviteCodeShare.collect {
                 Timber.e("nextPage $it")
                 if(it) {
-
+                    onSharedBtnClicked()
                 }
             }
         }
@@ -70,8 +59,20 @@ class BookAddInviteShareBottomSheetFragment :
                         requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("label", code)
                     clipboard.setPrimaryClip(clip)
+                    setDialog()
                 }
             }
         }
+    }
+    private fun setDialog()
+    {
+
+    }
+    private fun onSharedBtnClicked() {
+        val code = viewModel.inviteCode.value ?: ""
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/html"
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, code)
+        startActivity(Intent.createChooser(sharingIntent, "Share using text"))
     }
 }

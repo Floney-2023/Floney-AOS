@@ -74,7 +74,7 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
         else if (cost.value!!.length<=4)
             return cost.value!!.substring(0, cost.value!!.length-1).toInt()
         else if (cost.value!="")
-            return cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2).toInt()
+            return cost.value!!.replace(",", "").replace("원","").toInt()
         else
             return 0
     }

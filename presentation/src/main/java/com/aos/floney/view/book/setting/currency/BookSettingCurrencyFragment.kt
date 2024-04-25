@@ -6,7 +6,9 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
+import com.aos.floney.base.BaseViewModel
 import com.aos.floney.databinding.FragmentBookSettingCurrencyBinding
+import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.common.WarningPopupDialog
@@ -57,11 +59,10 @@ class BookSettingCurrencyFragment : BaseFragment<FragmentBookSettingCurrencyBind
             }
         }
         repeatOnStarted {
-            // 초기화 후, 홈 화면으로
+            // 초기화 후, 이전 페이지 (가계부 설정) 으로
             viewModel.init.collect {
                 if(it) {
-                    val activity = requireActivity() as BookSettingActivity
-                    activity.startHomeActivity()
+                    findNavController().popBackStack()
                 }
             }
         }

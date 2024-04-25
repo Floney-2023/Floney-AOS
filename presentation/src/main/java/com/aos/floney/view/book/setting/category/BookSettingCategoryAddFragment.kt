@@ -3,6 +3,7 @@ package com.aos.floney.view.book.setting.category
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
@@ -44,11 +45,7 @@ class BookSettingCategoryAddFragment() : BaseFragment<FragmentBookSettingCategor
             // 이전 페이지로 (저장 O)
             viewModel.completePage.collect {
                 if(it.isNotEmpty()) {
-                    val budgetAction = BookSettingCategoryAddFragmentDirections.actionBookSettingCategoryAddFragmentToBookSettingCategoryFragment(
-                        viewModel.flow.value!!,
-                        viewModel.name.value!!
-                    )
-                    findNavController().navigate(budgetAction)
+                    findNavController().popBackStack()
                 }
             }
         }

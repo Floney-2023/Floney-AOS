@@ -1,4 +1,4 @@
-package com.aos.data.entity.request.book
+package com.aos.data.entity.request.settlement
 
 import kotlinx.serialization.Serializable
 
