@@ -52,7 +52,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{@string/member_count_format(item.memberCount)}"
-                android:textAppearance="@style/mypage_wallet_count" />
+                android:textColor="@color/grayscale6"
+                android:lineSpacingExtra="-2sp"
+                android:textSize="12dp"
+                android:fontFamily="@font/pretendard_regular"/>
         </LinearLayout>
 
         <View

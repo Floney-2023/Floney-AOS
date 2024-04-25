@@ -133,7 +133,6 @@ class BookSettingMainViewModel @Inject constructor(
     {
         viewModelScope.launch(Dispatchers.IO) {
             booksOutUseCase(prefs.getString("bookKey","")).onSuccess {
-                baseEvent(Event.ShowSuccessToast("가계부 나가기가 완료되었습니다."))
                 settingBookKey()
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))

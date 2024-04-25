@@ -13,6 +13,7 @@ import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingBudgetBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeViewModel
+import com.aos.floney.view.analyze.ChoiceDatePickerBottomSheet
 import com.aos.model.book.BudgetItem
 import com.aos.model.book.UiBookBudgetModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -91,6 +92,16 @@ class BookSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding,
                     }
                     bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
                 }
+            }
+        }
+        repeatOnStarted {
+            // 예산 설정 bottomSheet
+            viewModel.yearSetting.collect {
+                ChoiceYearPickerBottomSheet(requireContext(), viewModel.year.value!!) {
+                    // 결과값
+                    val item = it.split("-")
+                    viewModel.getBudgetInform(item[0].toInt().toString(),it)
+                }.show()
             }
         }
     }
