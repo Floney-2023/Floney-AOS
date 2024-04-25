@@ -18,6 +18,7 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
 import com.aos.floney.ext.intentSerializable
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.category.BookCategoryActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
@@ -94,9 +95,13 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.onClickCategory.collect {
-                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity) {
+                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity, {
+                    // 완료 버튼 클릭
                     viewModel.onClickCategoryChoiceDate()
-                }
+                }, {
+                    // 편집 버튼 클릭
+                    startActivity(Intent(this@HistoryActivity, BookCategoryActivity::class.java).putExtra("entryPoint", "history"))
+                })
                 categoryBottomSheetDialog.show()
             }
         }
