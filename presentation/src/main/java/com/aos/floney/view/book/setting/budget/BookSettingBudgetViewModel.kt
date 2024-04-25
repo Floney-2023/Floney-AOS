@@ -27,6 +27,11 @@ class BookSettingBudgetViewModel @Inject constructor(
     private var _budgetList = MutableLiveData<UiBookBudgetModel>()
     val budgetList: LiveData<UiBookBudgetModel> get() = _budgetList
 
+
+    // 년도 선택
+    private var _yearSetting = MutableEventFlow<Boolean>()
+    val yearSetting: EventFlow<Boolean> get() = _yearSetting
+
     // 이전 페이지
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
@@ -39,16 +44,15 @@ class BookSettingBudgetViewModel @Inject constructor(
     val year: LiveData<String> get() = _year
 
     init {
-        // 예산 내역 불러오기
-        getBudgetInform()
-    }
-
-    fun getBudgetInform(){
         // 현재 년도 설정
         val currentYear = Calendar.getInstance().get(Calendar.YEAR).toString()
         val yearStringFormat = String.format("%s-01-01", currentYear)
 
+        // 예산 내역 불러오기
+        getBudgetInform(currentYear, yearStringFormat)
+    }
 
+    fun getBudgetInform(currentYear: String, yearStringFormat: String) {
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
             booksBudgetCheckUseCase(prefs.getString("bookKey",""),yearStringFormat).onSuccess {
@@ -60,6 +64,13 @@ class BookSettingBudgetViewModel @Inject constructor(
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
+        }
+    }
+    // 날짜 선택
+    fun onClickedYear()
+    {
+        viewModelScope.launch {
+            _yearSetting.emit(true)
         }
     }
     // 이전 페이지

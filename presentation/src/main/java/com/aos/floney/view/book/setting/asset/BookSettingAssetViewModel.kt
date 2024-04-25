@@ -10,18 +10,23 @@ import com.aos.floney.ext.formatNumber
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.usecase.analyze.PostAnalyzeAssetUseCase
 import com.aos.usecase.booksetting.BooksCodeCheckUseCase
 import com.aos.usecase.booksetting.BooksInfoAssetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 @HiltViewModel
 class BookSettingAssetViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
     private val booksCodeCheckUseCase: BooksCodeCheckUseCase,
-    private val booksInfoAssetUseCase: BooksInfoAssetUseCase
+    private val booksInfoAssetUseCase: BooksInfoAssetUseCase,
+    private val postAnalyzeAssetUseCase: PostAnalyzeAssetUseCase
 ): BaseViewModel() {
 
     // 가계부 초대 코드
@@ -35,15 +40,23 @@ class BookSettingAssetViewModel @Inject constructor(
     var cost = MutableLiveData<String>("")
 
     init {
-        //settingInitAsset()
+        settingInitAsset()
     }
 
     // 초기 자산 불러오기
     fun settingInitAsset() {
         viewModelScope.launch {
-            booksCodeCheckUseCase(
-                prefs.getString("bookKey","")).onSuccess {
+            // Calendar 인스턴스 생성
+            val calendar = Calendar.getInstance()
+            // 현재 연도와 월을 가져옴
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH는 0부터 시작하므로 +1 해줌
+            // "YYYY-MM" 형식으로 포맷
+            val currentYearMonth = String.format("%d-%02d", year, month)
 
+            postAnalyzeAssetUseCase(
+                prefs.getString("bookKey",""), currentYearMonth).onSuccess {
+                cost.postValue(it.initAsset)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
@@ -53,21 +66,26 @@ class BookSettingAssetViewModel @Inject constructor(
     // 초기 자산 설정
     fun onClickSaveButton(){
         viewModelScope.launch {
-            if(cost.value!="") {
-                booksInfoAssetUseCase(
-                    prefs.getString("bookKey",""),
-                    cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2).toInt()).onSuccess {
+            booksInfoAssetUseCase(
+                prefs.getString("bookKey",""),
+                settingCost()).onSuccess {
 
-                    baseEvent(Event.ShowToastRes(R.string.book_setting_bottom_asset_succcess))
-                    _initAssetSheet.emit(true)
-                }.onFailure {
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
-                }
-            }
-            else{
-                baseEvent(Event.ShowToastRes(R.string.book_setting_bottom_asset_error))
+                baseEvent(Event.ShowToastRes(R.string.book_setting_bottom_asset_succcess))
+                _initAssetSheet.emit(true)
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }
+    }
+    fun settingCost(): Int {
+        if (cost.value=="")
+            return 0
+        else if (cost.value!!.length<=4)
+            return cost.value!!.substring(0, cost.value!!.length-1).toInt()
+        else if (cost.value!="")
+            return cost.value!!.replace(",", "").replace("원","").toInt()
+        else
+            return 0
     }
     // bottomsheet 내리기
     fun onClickedInitBtn(){
