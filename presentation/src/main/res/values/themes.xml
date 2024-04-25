@@ -15,6 +15,13 @@
 
     <style name="Theme.Floney" parent="Base.Theme.Floney" />
 
+    <style name="NumberPicker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="android:textColorPrimary">@color/grayscale3</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
     <style name="wallet_name">
         <item name="android:textSize">11sp</item>
         <item name="android:textColor">#FFFFFF</item>

@@ -7,20 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentAnalyzeIncomeBinding
 import com.aos.model.analyze.AnalyzeResult
 import com.aos.model.analyze.UiAnalyzeCategoryOutComeModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AnalyzeIncomeFragment : BaseFragment<FragmentAnalyzeIncomeBinding, AnalyzeIncomeViewModel>(R.layout.fragment_analyze_income), UiAnalyzeCategoryOutComeModel.OnItemClickListener {
+class AnalyzeIncomeFragment : BaseFragment<FragmentAnalyzeIncomeBinding, AnalyzeIncomeViewModel>(R.layout.fragment_analyze_income) {
 
+    private val activityViewModel: AnalyzeViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpViewModelObserver()
+        viewModel.postAnalyzeCategory(activityViewModel.getFormatDate())
     }
 
     private fun setUpViewModelObserver() {
@@ -39,10 +44,12 @@ class AnalyzeIncomeFragment : BaseFragment<FragmentAnalyzeIncomeBinding, Analyze
             binding.chartStackHorizontal.isVisible = true
             binding.chartStackHorizontal.clearColorIdx()
         }
-    }
 
-    override fun onItemClick(item: AnalyzeResult) {
-
+        lifecycleScope.launch {
+            activityViewModel.onChangedDate.collect {
+                viewModel.postAnalyzeCategory(it)
+            }
+        }
     }
 
 }

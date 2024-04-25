@@ -1,18 +1,18 @@
 package com.aos.data.mapper
 
 import android.graphics.Color
+import com.aos.data.entity.response.analyze.PostAnalyzeAssetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeBudgetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryInComeEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryOutComeEntity
 import com.aos.model.analyze.AnalyzeResult
+import com.aos.model.analyze.Asset
+import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzeCategoryInComeModel
 import com.aos.model.analyze.UiAnalyzeCategoryOutComeModel
 import com.aos.model.analyze.UiAnalyzePlanModel
-import timber.log.Timber
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -167,6 +167,29 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
         divMoney = "${
             NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).round(2))
         }원".replace("-", "")
+    )
+}
+
+fun PostAnalyzeAssetEntity.toUiAnalyzeAssetModel(): UiAnalyzeAssetModel {
+    val listAsset = arrayListOf<Asset>()
+    for ((key, value) in this.assetInfo) {
+        listAsset.add(
+            Asset(
+                key.substring(key.length - 2, key.length).toInt(),
+                (value / this.initAsset).toFloat() * 100
+            )
+        )
+    }
+
+    return UiAnalyzeAssetModel(
+        difference = if (this.difference >= 0) {
+            "지난달 대비 ${NumberFormat.getNumberInstance().format(this.difference)}원이\n증가했어요"
+        } else {
+            "지난달 대비 ${NumberFormat.getNumberInstance().format(this.difference)}원이\n감소했어요".replace("-", "")
+        },
+        initAsset = "${NumberFormat.getNumberInstance().format(this.initAsset)}원",
+        currentAsset = "${NumberFormat.getNumberInstance().format(this.currentAsset)}원",
+        analyzeResult = listAsset
     )
 }
 

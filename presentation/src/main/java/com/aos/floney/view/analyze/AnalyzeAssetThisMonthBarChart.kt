@@ -4,19 +4,18 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import timber.log.Timber
 
-class AnalyzeAssetBarChart(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class AnalyzeAssetThisMonthBarChart(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFF6200EE.toInt() // 예제 색상
         style = Paint.Style.FILL
     }
 
-    var data = 50f
+    var data = 0f
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -25,7 +24,7 @@ class AnalyzeAssetBarChart(context: Context, attrs: AttributeSet? = null) : View
         Timber.e("height.toFloat ${height.toFloat()}")
 
         val left = 0f
-        val right = 20f
+        val right = width.toFloat()
         val top = height.toFloat()
         val bottom = height.toFloat() - (height.toFloat() / 100 * data)
         Timber.e("top ${top}")
@@ -41,5 +40,6 @@ class AnalyzeAssetBarChart(context: Context, attrs: AttributeSet? = null) : View
 
     fun setChartData(newData: Float) {
         data = newData
+        this.invalidate()
     }
 }

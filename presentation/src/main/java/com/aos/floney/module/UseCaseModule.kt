@@ -3,6 +3,7 @@ package com.aos.floney.module
 import com.aos.repository.AnalyzeRepository
 import com.aos.repository.BookRepository
 import com.aos.repository.UserRepository
+import com.aos.usecase.analyze.PostAnalyzeAssetUseCase
 import com.aos.usecase.analyze.PostAnalyzeIPlanUseCase
 import com.aos.usecase.analyze.PostAnalyzeInComeCategoryUseCase
 import com.aos.usecase.analyze.PostAnalyzeOutComeCategoryUseCase
@@ -69,5 +70,8 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun providePostAnalyzeIPlanUseCase(analyzeRepository: AnalyzeRepository) = PostAnalyzeIPlanUseCase(analyzeRepository)
+    @Provides
+    @Singleton
+    fun providePostAnalyzeAssetUseCase(analyzeRepository: AnalyzeRepository) = PostAnalyzeAssetUseCase(analyzeRepository)
 
 }

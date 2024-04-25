@@ -29,15 +29,11 @@ class AnalyzePlanViewModel @Inject constructor(
     private var _onClickSetBudget = MutableEventFlow<Boolean>()
     val onClickSetBudget : EventFlow<Boolean> get() = _onClickSetBudget
 
-    init {
-        postAnalyzePlan()
-    }
-
     // 예산 조회하기
-    fun postAnalyzePlan() {
+    fun postAnalyzePlan(date: String) {
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
-            postAnalyzeIPlanUseCase(prefs.getString("bookKey", ""), "2024-04-01").onSuccess {
+            postAnalyzeIPlanUseCase(prefs.getString("bookKey", ""), date).onSuccess {
                 Timber.e("it $it")
                 _postAnalyzePlan.postValue(it)
                 baseEvent(Event.HideLoading)

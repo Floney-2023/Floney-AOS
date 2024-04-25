@@ -1,8 +1,10 @@
 package com.aos.data.repository.remote.analyze
 
 import com.aos.data.api.AnalyzeService
+import com.aos.data.entity.request.analyze.PostAnalyzeAssetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeBudgetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeCategoryBody
+import com.aos.data.entity.response.analyze.PostAnalyzeAssetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeBudgetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryInComeEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryOutComeEntity
@@ -23,5 +25,9 @@ class AnalyzeRemoteDataSourceImpl @Inject constructor(private val analyzeService
 
     override suspend fun postAnalyzeBudget(body: PostAnalyzeBudgetBody): NetworkState<PostAnalyzeBudgetEntity> {
         return analyzeService.postAnalyzeBudget(body)
+    }
+
+    override suspend fun postAnalyzeAsset(body: PostAnalyzeAssetBody): NetworkState<PostAnalyzeAssetEntity> {
+        return analyzeService.postAnalyzeAsset(body)
     }
 }

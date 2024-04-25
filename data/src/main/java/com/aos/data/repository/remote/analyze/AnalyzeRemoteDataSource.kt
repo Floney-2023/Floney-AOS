@@ -1,7 +1,9 @@
 package com.aos.data.repository.remote.analyze
 
+import com.aos.data.entity.request.analyze.PostAnalyzeAssetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeBudgetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeCategoryBody
+import com.aos.data.entity.response.analyze.PostAnalyzeAssetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeBudgetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryInComeEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryOutComeEntity
@@ -12,4 +14,5 @@ interface AnalyzeRemoteDataSource {
     suspend fun postAnalyzeOutComeCategory(body: PostAnalyzeCategoryBody): NetworkState<PostAnalyzeCategoryOutComeEntity>
     suspend fun postAnalyzeInComeCategory(body: PostAnalyzeCategoryBody): NetworkState<PostAnalyzeCategoryInComeEntity>
     suspend fun postAnalyzeBudget(body: PostAnalyzeBudgetBody): NetworkState<PostAnalyzeBudgetEntity>
+    suspend fun postAnalyzeAsset(body: PostAnalyzeAssetBody): NetworkState<PostAnalyzeAssetEntity>
 }

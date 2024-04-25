@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -32,7 +34,9 @@ class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R
 
         setUpBottomNavigation()
         setUpViewModelObserver()
+
     }
+
     private fun setUpBottomNavigation() {
         // 가운데 메뉴(제보하기)에 대한 터치 이벤트를 막기 위한 로직
         binding.bottomNavigationView.apply {
@@ -69,6 +73,7 @@ class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R
                     } else {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
+                    finish()
                     false
                 }
 
@@ -120,8 +125,21 @@ class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R
                     .replace(R.id.fl_container2, BookSettingBudgetFragment()).commit()
             } else {
                 binding.flContainer2.isVisible = false
+                val fragmentToRemove = supportFragmentManager.findFragmentById(R.id.fl_container2)
+                if (fragmentToRemove != null) {
+                    supportFragmentManager.beginTransaction().remove(fragmentToRemove).commit()
+                }
             }
+        }
 
+        repeatOnStarted {
+            viewModel.onClickChoiceDate.collect {
+                ChoiceDatePickerBottomSheet(this@AnalyzeActivity, it) {
+                    // 결과값
+                    val item = it.split("-")
+                    viewModel.updateCalendarClickedItem(item[0].toInt(), item[1].toInt())
+                }.show()
+            }
         }
     }
 
