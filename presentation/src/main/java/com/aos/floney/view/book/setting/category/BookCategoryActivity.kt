@@ -7,20 +7,24 @@ import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityBookAddBinding
+import com.aos.floney.databinding.ActivityBookCategoryBinding
 import com.aos.floney.databinding.ActivityBookSettingBinding
 import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class BookCategoryActivity : BaseActivity<ActivityBookSettingBinding, BookCategoryViewModel>(R.layout.activity_book_category) {
+class BookCategoryActivity : BaseActivity<ActivityBookCategoryBinding, BookCategoryViewModel>(R.layout.activity_book_category) {
     private lateinit var navController: NavController
+    private var entryPoint = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupJetpackNavigation()
+        entryPoint = intent.getStringExtra("entryPoint").toString()
     }
 
     private fun setupJetpackNavigation() {
@@ -38,7 +42,11 @@ class BookCategoryActivity : BaseActivity<ActivityBookSettingBinding, BookCatego
 
     // 가계부 설정 화면으로 이동
     fun startBookSettingActivity() {
-        startActivity(Intent(this, BookSettingActivity::class.java))
-        finishAffinity()
+        if(entryPoint != "") {
+            finish()
+        } else {
+            startActivity(Intent(this, BookSettingActivity::class.java))
+            finishAffinity()
+        }
     }
 }

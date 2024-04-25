@@ -47,6 +47,7 @@
             android:paddingStart="8dp"
             android:textColor="@color/grayscale4"
             android:textSize="14sp"
+            android:onClick="@{() -> dialog.onClickEditBtn()}"
             android:fontFamily="@font/pretendard_regular"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
