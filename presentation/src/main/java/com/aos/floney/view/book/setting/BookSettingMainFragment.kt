@@ -29,6 +29,11 @@ class BookSettingMainFragment :
         setUpUi()
         setUpViewModelObserver()
     }
+    override fun onResume() {
+        super.onResume()
+        viewModel.searchBookSettingItems()
+    }
+
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@BookSettingMainFragment)
     }
@@ -103,6 +108,14 @@ class BookSettingMainFragment :
                 if(it) {
                     val excelFragment = BookSettingExcelBottomSheetFragment()
                     excelFragment.show(parentFragmentManager, excelFragment.tag)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.budgetPage.collect() {
+                if(it) {
+                    val repeatAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingBudgetFragment()
+                    findNavController().navigate(repeatAction)
                 }
             }
         }

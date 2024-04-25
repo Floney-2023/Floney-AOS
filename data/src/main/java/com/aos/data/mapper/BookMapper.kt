@@ -237,7 +237,7 @@ fun GetBookInfoEntity.toUiBookInfoModel(): UiBookInfoModel {
     }
     return UiBookInfoModel(
         bookName = this.bookName,
-        bookImg = this.bookImg,
+        bookImg = this.bookImg?:"book_default",
         startDay = this.startDay,
         seeProfileStatus = this.seeProfileStatus,
         carryOver = this.carryOver,
@@ -367,7 +367,7 @@ fun GetBooksInfoEntity.toUiBookSettingModel(): UiBookSettingModel {
     }
     return UiBookSettingModel(
         bookName = this.bookName,
-        bookImg = this.bookImg,
+        bookImg = this.bookImg?:"book_default",
         startDay = "${this.startDay.replace('-','.')} 개설",
         seeProfileStatus = this.seeProfileStatus,
         carryOver = this.carryOver,

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
@@ -11,7 +12,9 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.Currency
 import com.aos.model.book.CurrencyInform
 import com.aos.model.book.UiBookCurrencyModel
+import com.aos.model.book.getCurrencySymbolByCode
 import com.aos.usecase.booksetting.BooksCurrencyChangeUseCase
+import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.booksetting.BooksInitUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +25,8 @@ import javax.inject.Inject
 class BookSettingCurrencyViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val booksInitUseCase : BooksInitUseCase,
-    private val booksCurrencyChangeUseCase: BooksCurrencyChangeUseCase
+    private val booksCurrencyChangeUseCase: BooksCurrencyChangeUseCase,
+    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase
 ): BaseViewModel() {
 
     // 화폐 단위 리스트
@@ -43,21 +47,27 @@ class BookSettingCurrencyViewModel @Inject constructor(
 
     // 화폐 단위 불러오기
     fun getCurrencyInform(){
-        val cl = CurrencyInform()
+        viewModelScope.launch {
+            booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
+                if(it.myBookCurrency != "") {
+                    // 화폐 단위 저장
+                    prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
+                    val cl = CurrencyInform()
 
-        val symbol = prefs.getString("countryCode","")
-
-        val updatedCl = cl.map { currency ->
-            if (currency.code == symbol) {
-                currency.copy(isCheck = true)
-            } else {
-                currency
+                    val updatedCl = cl.map { currency ->
+                        if (currency.code == it.myBookCurrency) {
+                            currency.copy(isCheck = true)
+                        } else {
+                            currency
+                        }
+                    }
+                    _currencyItems.postValue(UiBookCurrencyModel(updatedCl))
+                } else {
+                    baseEvent(Event.ShowToastRes(R.string.currency_error))
+                }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            _currencyItems.postValue(UiBookCurrencyModel(updatedCl))
-
         }
     }
 
@@ -74,6 +84,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                 baseEvent(Event.ShowLoading)
                 booksInitUseCase(prefs.getString("bookKey","")).onSuccess {
                     baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowSuccessToast("화폐 단위가 변경 완료 되었습니다."))
                     _init.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
@@ -89,7 +100,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                 baseEvent(Event.ShowLoading)
                 booksCurrencyChangeUseCase(item.code, prefs.getString("bookKey","")).onSuccess {
                     baseEvent(Event.HideLoading)
-                    prefs.setString("currency",item.symbol) // 화폐 단위 변경
+                    prefs.setString("symbol",item.symbol) // 화폐 단위 변경
                     initBook() // 가계부 초기화
                 }.onFailure {
                     baseEvent(Event.HideLoading)

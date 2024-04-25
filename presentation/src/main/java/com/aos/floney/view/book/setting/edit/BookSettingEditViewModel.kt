@@ -80,7 +80,7 @@ class BookSettingEditViewModel @Inject constructor(
                 baseEvent(Event.ShowLoading)
                 booksNameChangeUseCase(bookName.value!!, prefs.getString("bookKey","")).onSuccess {
                     // 닉네임 변경 성공
-                    baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_nickname_request_success))
+                    baseEvent(Event.ShowSuccessToastRes(R.string.mypage_main_inform_nickname_request_success))
                     baseEvent(Event.HideLoading)
                 }.onFailure {
                     baseEvent(Event.HideLoading)

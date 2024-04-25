@@ -80,23 +80,16 @@ class BookSettingMainViewModel @Inject constructor(
     private var _repeatPage = MutableEventFlow<Boolean>()
     val repeatPage: EventFlow<Boolean> get() = _repeatPage
 
-    init{
-        searchBookSettingItems()
-    }
     // 마이페이지 정보 읽어오기
     fun searchBookSettingItems()
     {
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             booksSettingGetUseCase(prefs.getString("bookKey","")).onSuccess {
-
                 // me가 true인 항목이 맨 앞에 오도록 정렬
                 val sortedList = it.ourBookUsers.sortedByDescending { it.me }
                 _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
 
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }

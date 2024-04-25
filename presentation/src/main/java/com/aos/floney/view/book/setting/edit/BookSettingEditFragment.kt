@@ -41,10 +41,11 @@ class BookSettingEditFragment :
         }
         repeatOnStarted {
             viewModel.deletePopup.collect() {
+                val bookName = if(viewModel.bookName.value=="") viewModel.bookHintName.value!! else viewModel.bookName.value
                 if(it) {
                     val exitDialogFragment = WarningPopupDialog(
                         getString(R.string.book_setting_exit_dialog_title),
-                        getString(R.string.book_setting_exit_dialog_info, viewModel.bookName.value!!),
+                        getString(R.string.book_setting_exit_dialog_info, bookName),
                         getString(R.string.book_setting_exit_dialog_delete_button),
                         getString(R.string.book_setting_exit_dialog_cancel_button)
                     ) {  checked ->

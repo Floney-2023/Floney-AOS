@@ -83,7 +83,7 @@ class BookSettingCategoryViewModel @Inject constructor(
         }
     }
     // 자산/분류 카테고리 항목 가져오기
-    private fun getBookCategory() {
+    fun getBookCategory() {
         viewModelScope.launch(Dispatchers.IO) {
             getBookCategoryUseCase(prefs.getString("bookKey", ""), flow.value!!).onSuccess { it ->
                 _categoryList.postValue(it)

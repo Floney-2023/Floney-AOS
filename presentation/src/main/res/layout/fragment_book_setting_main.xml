@@ -83,7 +83,7 @@
 
                     <ImageView
                         android:id="@+id/iv_profile"
-                        setImageToUrl="@{vm.bookSettingInfo.bookImg}"
+                        setImageToUrl="@{vm.bookSettingInfo.seeProfileStatus ? vm.bookSettingInfo.bookImg : `user_default`}"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:background="@drawable/background_circle_image"

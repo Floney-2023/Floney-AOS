@@ -405,7 +405,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     }
     override suspend fun deleteBooksInfoAll(bookKey: String): Result<Void?> {
         when (val data =
-            bookDataSource.deleteBooks(bookKey)) {
+            bookDataSource.deleteBooksInfoAll(bookKey)) {
             is NetworkState.Success -> {
                 return Result.success(data.body)
             }
