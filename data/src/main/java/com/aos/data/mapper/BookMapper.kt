@@ -366,7 +366,7 @@ fun GetBooksInfoEntity.toUiBookSettingModel(): UiBookSettingModel {
     }
     return UiBookSettingModel(
         bookName = this.bookName,
-        bookImg = this.bookImg,
+        bookImg = this.bookImg ?: "",
         startDay = "${this.startDay.replace('-','.')} 개설",
         seeProfileStatus = this.seeProfileStatus,
         carryOver = this.carryOver,

@@ -9,12 +9,13 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.ActivityBookSettingBinding
 import com.aos.floney.view.book.add.BookAddActivity
+import com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment
 import com.aos.floney.view.book.setting.category.BookCategoryActivity
 import com.aos.floney.view.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSettingViewModel>(R.layout.activity_book_setting) {
+class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSettingViewModel>(R.layout.activity_book_setting), BookSettingBudgetFragment.OnFragmentInteractionListener {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,5 +47,9 @@ class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSetting
     // 분류 항목 관리 화면으로 이동
     fun startBookCategoryActivity(){
         startActivity(Intent(this, BookCategoryActivity::class.java))
+    }
+
+    override fun onFragmentRemoved() {
+
     }
 }
