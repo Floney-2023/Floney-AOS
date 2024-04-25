@@ -19,6 +19,7 @@ class HomeMonthTypeFragment : BaseFragment<FragmentHomeMonthTypeBinding, HomeMon
     private val activityViewModel: HomeViewModel by activityViewModels()
 
     override fun onItemClick(item: MonthMoney) {
+        Timber.e("item $item")
         if(item.day != "") {
             val activity = requireActivity() as HomeActivity
             activity.onClickCalendarItem(item)
@@ -31,6 +32,9 @@ class HomeMonthTypeFragment : BaseFragment<FragmentHomeMonthTypeBinding, HomeMon
         setupUi()
         setUpViewModelObserver()
         setUpCalendarRecyclerView()
+
+        Timber.e("onViewCreated")
+        viewModel.getBookMonth(activityViewModel.getFormatDateMonth())
     }
 
     private fun setupUi() {
@@ -49,11 +53,6 @@ class HomeMonthTypeFragment : BaseFragment<FragmentHomeMonthTypeBinding, HomeMon
         }
         repeatOnStarted {
             activityViewModel.clickedNextMonth.collect {
-                viewModel.getBookMonth(it)
-            }
-        }
-        repeatOnStarted {
-            activityViewModel.showCalendarFragment.collect {
                 viewModel.getBookMonth(it)
             }
         }

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.analyze.AnalyzePlanViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.analyze.AnalyzeOutComeFragment">
+
+        <TextView
+            android:id="@+id/tv_out_come_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:lineHeight="33dp"
+            android:text="@{`현재 예산의\n` + vm.postAnalyzePlan.percent + `%를 사용했어요`}"
+            android:textColor="@color/grayscale1"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_different_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:lineHeight="18dp"
+            android:text="@{`남은 기간동안 하루에\n` + vm.postAnalyzePlan.divMoney + `을 사용할 수 있어요`}"
+            android:textColor="@color/grayscale6"
+            android:textSize="13sp"
+            app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
+            app:layout_constraintTop_toBottomOf="@id/tv_out_come_cash" />
+
+        <ImageView
+            android:layout_width="76dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/analyze_plan_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_out_come_cash" />
+
+        <com.aos.floney.view.analyze.CustomCircleBarView
+            android:id="@+id/circle_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="162dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/circle_view"
+            app:layout_constraintStart_toStartOf="@id/circle_view"
+            app:layout_constraintTop_toTopOf="@id/circle_view" />
+
+        <TextView
+            android:id="@+id/tv_remainder_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="남은 금액"
+            android:textColor="@color/grayscale6"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_total_money"
+            app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
+            app:layout_constraintTop_toBottomOf="@id/tv_score" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/pretendard_bold"
+            android:maxLines="1"
+            android:text="@{vm.postAnalyzePlan.leftMoney}"
+            android:textColor="@color/grayscale2"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_remainder_money"
+            app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
+            app:layout_constraintTop_toBottomOf="@id/tv_remainder_money" />
+
+        <TextView
+            android:id="@+id/tv_total_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="총예산"
+            android:textColor="@color/grayscale6"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_remainder_money"
+            app:layout_constraintTop_toBottomOf="@id/tv_score" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/pretendard_bold"
+            android:maxLines="1"
+            android:text="@{vm.postAnalyzePlan.initBudget}"
+            android:textColor="@color/grayscale2"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@id/tv_total_money"
+            app:layout_constraintStart_toStartOf="@id/tv_total_money"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_money" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#d9FFFFFF"
+            android:visibility="@{vm.postAnalyzePlan.initBudget.equals(`0원`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_score"
+            android:layout_width="50dp"
+            android:layout_height="84dp"
+            android:layout_marginTop="96dp"
+            bind:setAnalyzeImage="@{vm.postAnalyzePlan}"
+            android:src="@drawable/analyze_plan_0_49_icon"
+            app:layout_constraintEnd_toEndOf="@id/circle_view"
+            app:layout_constraintStart_toStartOf="@id/circle_view"
+            app:layout_constraintTop_toTopOf="@id/circle_view" />
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:textColor="@color/grayscale7"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/iv_score"
+            app:layout_constraintStart_toStartOf="@id/iv_score"
+            app:layout_constraintTop_toBottomOf="@id/iv_score"
+            bind:setPlanText="@{vm.postAnalyzePlan}" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="62dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="이번달 예산 설정하기"
+            android:visibility="@{vm.postAnalyzePlan.initBudget.equals(`0원`) ? View.VISIBLE : View.GONE}"
+            android:onClick="@{() -> vm.onClickSetBudget()}"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_score" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

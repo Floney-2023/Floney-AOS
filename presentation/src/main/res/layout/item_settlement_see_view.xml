@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.settlement.Settlement" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.settlement.UiSettlementSeeModel.OnItemClickListener" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_settlement_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_radius_12_solid_grayscale_12"
+            android:padding="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_term"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/settle_up_see_card_period"
+                android:textColor="@color/grayscale6"
+                android:textSize="13dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{item.dateString}"
+                android:textColor="@color/grayscale2"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_term"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_term" />
+
+            <TextView
+                android:id="@+id/tv_total_money_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/settle_up_see_card_total_money"
+                android:textColor="@color/grayscale6"
+                android:textSize="13dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_term" />
+
+            <TextView
+                android:id="@+id/tv_total_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{item.totalOutcome}"
+                android:textColor="@color/grayscale2"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_total_money_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_total_money_text"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/tv_member_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/settle_up_see_card_member"
+                android:textColor="@color/grayscale6"
+                android:textSize="13dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_total_money_text" />
+
+            <TextView
+                android:id="@+id/tv_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{item.userCount}"
+                android:textColor="@color/grayscale2"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_member_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_member_text"
+                app:layout_constraintVertical_bias="1.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/custom_radius_8_solid_primary10">
+
+            <TextView
+                android:id="@+id/tv_settlement_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginBottom="21dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/settle_up_see_card_settlement_money"
+                android:textColor="@color/grayscale2"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_settle_up_complete_settlement_money_one_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@string/settle_up_complete_member_count"
+                android:textColor="@color/grayscale6"
+                android:textSize="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_money"
+                app:layout_constraintEnd_toStartOf="@+id/tv_settlement_one_money"
+                app:layout_constraintTop_toTopOf="@+id/tv_settlement_money" />
+
+            <TextView
+                android:id="@+id/tv_settlement_one_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@{item.outcome}"
+                android:textColor="@color/primary2"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_money"
+                app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/tv_settlement_money" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/icon_chevron_unfold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_money"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_settlement_money" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

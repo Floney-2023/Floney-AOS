@@ -17,6 +17,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.analyze.AnalyzeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_analyze"
+            android:theme="@style/Theme.Floney" />
+        <activity
+            android:name=".view.history.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.book.add.BookAddActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.home.HomeActivity"
             android:exported="false" />
         <activity
@@ -32,6 +43,33 @@
             android:name=".view.onboard.OnBoardActivity"
             android:exported="false" />
         <activity
+            android:name=".view.mypage.MyPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.setting.MyPageSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.inform.simple.login.version.MyPageInformSimpleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.inform.email.login.version.MyPageInformEmailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.bookadd.create.MyPageBookCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.settleup.SettleUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.book.setting.BookSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.book.setting.category.BookCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -40,6 +78,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.aos.floney.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

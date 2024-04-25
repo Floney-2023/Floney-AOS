@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_page_inform_simple_nav"
+    app:startDestination="@id/myPageInformSimpleSettingFragment">
+
+    <activity
+        android:id="@+id/myPageInformSimpleActivity"
+        android:name="com.aos.floney.view.mypage.inform.simple.login.version.MyPageInformSimpleActivity"
+        tools:layout="@layout/activity_my_page_inform_simple"
+        android:label="MyPageInformSimpleActivity" />
+    <fragment
+        android:id="@+id/myPageInformSimpleSettingFragment"
+        android:name="com.aos.floney.view.mypage.inform.simple.login.version.main.MyPageInformSimpleMainFragment"
+        tools:layout="@layout/fragment_my_page_inform_simple_main"
+        android:label="MyPageInformSimpleSettingFragment" >
+        <action
+            android:id="@+id/action_myPageInformSimpleSettingFragment_to_myPageInformProfileChangeFragment"
+            app:destination="@id/myPageInformProfileChangeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_myPageInformSimpleSettingFragment_to_myPageInformWithdrawReasonCheckFragment22"
+            app:destination="@id/myPageInformWithdrawReasonCheckFragment2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageInformProfileChangeFragment"
+        android:name="com.aos.floney.view.mypage.inform.profile.change.MyPageInformProfileChangeFragment"
+        tools:layout="@layout/fragment_my_page_inform_profilechange"
+        android:label="MyPageInformProfileChangeFragment" />
+    <fragment
+        android:id="@+id/myPageInformWithdrawReasonCheckFragment2"
+        android:name="com.aos.floney.view.mypage.inform.withdraw.MyPageInformWithdrawReasonCheckFragment"
+        tools:layout="@layout/fragment_my_page_withdraw_reason_check"
+        android:label="MyPageInformWithdrawReasonCheckFragment" >
+        <action
+            android:id="@+id/action_myPageInformWithdrawReaonsCheckFragment2_to_myPageInformWithdrawCompleteFragment2"
+            app:destination="@id/myPageInformWithdrawCompleteFragment2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageInformWithdrawCompleteFragment2"
+        android:name="com.aos.floney.view.mypage.inform.withdraw.MyPageInformWithdrawCompleteFragment"
+        tools:layout="@layout/fragment_my_page_withdraw_complete"
+        android:label="MyPageInformWithdrawCompleteFragment" />
+</navigation>

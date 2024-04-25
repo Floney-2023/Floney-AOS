@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_page_setting_nav"
+    app:startDestination="@id/myPageSettingMainFragment">
+
+    <activity
+        android:id="@+id/myPageInformSettingActivity"
+        android:name="com.aos.floney.view.mypage.setting.MyPageSettingActivity"
+        tools:layout="@layout/activity_my_page_setting"
+        android:label="myPageSettingActivity" />
+    <fragment
+        android:id="@+id/myPageSettingMainFragment"
+        android:name="com.aos.floney.view.mypage.setting.main.MyPageSettingMainFragment"
+        tools:layout="@layout/fragment_my_page_setting_main"
+        android:label="MyPageSettingMainFragment" >
+        <action
+            android:id="@+id/action_myPageSettingActivity_to_myPageSettingAlarmFragment"
+            app:destination="@id/myPageSettingAlarmFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/myPageSettingMainFragment" />
+        <action
+            android:id="@+id/action_myPageSettingActivity_to_myPageSettingLanguageFragment"
+            app:destination="@id/myPageSettingLanguageFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/myPageSettingMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageSettingLanguageFragment"
+        android:name="com.aos.floney.view.mypage.setting.language.MyPageSettingLanguageFragment"
+        tools:layout="@layout/fragment_my_page_setting_language"
+        android:label="MyPageSettingLanguageFragment" />
+    <fragment
+        android:id="@+id/myPageSettingAlarmFragment"
+        android:name="com.aos.floney.view.mypage.setting.alarm.MyPageSettingAlarmFragment"
+        tools:layout="@layout/fragment_my_page_setting_alarm"
+        android:label="MyPageSettingAlarmFragment" />
+</navigation>

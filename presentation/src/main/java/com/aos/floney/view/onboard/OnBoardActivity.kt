@@ -1,6 +1,8 @@
 package com.aos.floney.view.onboard
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -30,6 +32,11 @@ class OnBoardActivity : BaseActivity<ActivityOnBoardBinding, OnBoardViewModel>(R
 
     fun startLoginActivity() {
         startActivity(Intent(this, LoginActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
         finish()
     }
 

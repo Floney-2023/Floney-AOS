@@ -10,24 +10,37 @@
         <variable
             name="eventHolder"
             type="com.aos.model.home.UiBookDayModel.OnItemClickListener" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}">
 
-        <ImageView
-            android:id="@+id/iv_profile"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_card_view"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            setImageToUrl="@{item.writerProfileImg}"
+            android:layout_gravity="center"
             android:layout_marginStart="20dp"
+            app:cardCornerRadius="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                setImageToUrl="@{item.writerProfileImg}"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -35,28 +48,27 @@
             android:text="@{item.description}"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
-            android:id="@+id/tv_name"
-            app:layout_constraintStart_toEndOf="@id/iv_profile"
-            app:layout_constraintTop_toTopOf="@id/iv_profile" />
+            app:layout_constraintStart_toEndOf="@id/cv_profile_card_view"
+            app:layout_constraintTop_toTopOf="@id/cv_profile_card_view" />
 
         <TextView
+            android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@{item.lineSubCategory + ` ‧ ` +item.assetSubCategory}"
             android:textColor="@color/grayscale6"
-            android:id="@+id/tv_category"
             android:textSize="12dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_name"
-            app:layout_constraintStart_toEndOf="@id/iv_profile" />
+            app:layout_constraintStart_toEndOf="@id/cv_profile_card_view"
+            app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="-7,000"
+            android:text="@{item.money}"
             android:textColor="@color/grayscale2"
             android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="@id/tv_category"

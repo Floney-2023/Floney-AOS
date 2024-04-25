@@ -11,6 +11,7 @@ import com.aos.model.home.MonthMoney
 import com.aos.usecase.home.GetMoneyHistoryMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -32,6 +33,7 @@ class HomeMonthTypeViewModel @Inject constructor(
         val date = "${_date.substring(0, 7)}-01"
         viewModelScope.launch {
             getMoneyHistoryMonthUseCase(bookKey = prefs.getString("bookKey", ""), date = date).onSuccess {
+                Timber.e("_getCalendarList ${it.data}")
                 _getCalendarList.postValue(it.data)
                 _getExtData.postValue(it.extData)
 

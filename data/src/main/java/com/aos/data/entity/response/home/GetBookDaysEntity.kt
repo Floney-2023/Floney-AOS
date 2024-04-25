@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetBookDaysEntity(
-    val dayLiensResponse: List<DayLiensResponse> = listOf(),
+    val dayLinesResponse: List<DayLiensResponse> = listOf(),
     val totalExpense: List<TotalExpense>,
     val seeProfileImg: Boolean,
     val carryOverInfo: CarryOverInfoDays
@@ -14,14 +14,14 @@ data class GetBookDaysEntity(
 @Serializable
 data class DayLiensResponse(
     val id: Int,
-    val money: Int,
+    val money: Double,
     val description: String,
     val lineCategory: String,
     val lineSubCategory: String,
     val assetSubCategory: String,
     val exceptStatus: Boolean,
     val writerEmail: String,
-    val writerNickName: String,
+    val writerNickname: String,
     val writerProfileImg: String,
 )
 

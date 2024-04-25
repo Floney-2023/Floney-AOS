@@ -7,23 +7,13 @@
 
         <variable
             name="vm"
-            type="com.aos.floney.view.signup.SignUpCompleteViewModel" />
+            type="com.aos.floney.view.book.add.SignUpCompleteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.signup.SignUpAgreeFragment">
-
-        <ImageView
-            android:id="@+id/iv_icon_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="22dp"
-            android:src="@drawable/icon_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_valid_email"
@@ -32,7 +22,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="78dp"
             android:fontFamily="@font/pretendard_bold"
-            android:text="@string/sign_up_complete_text"
+            android:text="@{vm.nickname}"
             android:textColor="@color/grayscale1"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"

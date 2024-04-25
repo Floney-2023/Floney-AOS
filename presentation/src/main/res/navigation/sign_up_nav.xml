@@ -6,7 +6,7 @@
     app:startDestination="@id/signUpAgreeFragment">
 
     <activity
-        android:id="@+id/signUpActivity"
+        android:id="@+id/myPageInformEmailActivity"
         android:name="com.aos.floney.view.signup.SignUpActivity"
         tools:layout="@layout/activity_sign_up"
         android:label="SignUpActivity" />
@@ -65,22 +65,10 @@
         android:name="com.aos.floney.view.signup.SignUpInputInfoFragment"
         tools:layout="@layout/fragment_sign_up_input_info"
         android:label="SignUpInputInfoFragment" >
-        <action
-            android:id="@+id/action_signUpInputInfoFragment_to_signUpCompleteFragment"
-            app:destination="@id/signUpCompleteFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <argument
             android:name="email"
             app:argType="string" />
         <argument android:name="marketing"
             app:argType="boolean" />
     </fragment>
-    <fragment
-        android:id="@+id/signUpCompleteFragment"
-        android:name="com.aos.floney.view.signup.SignUpCompleteFragment"
-        tools:layout="@layout/fragment_sign_up_complete"
-        android:label="SignUpCompleteFragment" />
 </navigation>

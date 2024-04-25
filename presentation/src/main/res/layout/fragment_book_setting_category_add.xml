@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.aos.floney.view.book.setting.category.BookSettingCategoryAddViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.signup.SignUpAgreeFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_exit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="22dp"
+            android:onClick="@{() -> vm.onClickedExit()}"
+            android:padding="5dp"
+            android:src="@drawable/icon_exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_settlement_see_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:text="항목 추가"
+            android:textAppearance="@style/mypage_inform_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="카테고리"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settlement_see_title" />
+
+        <LinearLayout
+            android:id="@+id/ll_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <!-- 첫 번째 가로 줄 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:background="@{vm.flow == `자산` ? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
+                    app:fontFamily="@{vm.flow == `자산`}"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onClickFlow(`자산`)}"
+                    android:text="자산"
+                    android:textColor="@{vm.flow == `자산` ? @color/white : @color/grayscale7}"
+                    android:textSize="14dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="0dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:background="@{vm.flow == `지출`  ? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
+                    app:fontFamily="@{vm.flow == `지출`}"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onClickFlow(`지출`)}"
+                    android:text="지출"
+                    android:textColor="@{vm.flow == `지출` ? @color/white : @color/grayscale7}"
+                    android:textSize="14dp" />
+            </LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="8dp"/>
+            <!-- 두 번째 가로 줄 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:background="@{vm.flow == `수입`? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
+                    app:fontFamily="@{vm.flow == `수입`}"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onClickFlow(`수입`)}"
+                    android:text="수입"
+                    android:textColor="@{vm.flow == `수입` ? @color/white : @color/grayscale7}"
+                    android:textSize="14dp" />
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="0dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:background="@{vm.flow == `이체`  ? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
+                    app:fontFamily="@{vm.flow == `이체`}"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onClickFlow(`이체`)}"
+                    android:text="이체"
+                    android:textColor="@{vm.flow == `이체`? @color/white : @color/grayscale7}"
+                    android:textSize="14dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_category_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="41dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="항목 이름"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_category" />
+
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+            android:fontFamily="@font/pretendard_medium"
+            android:hint="이름을 입력하세요."
+            android:maxLength="8"
+            android:paddingStart="20dp"
+            android:text="@={vm.name}"
+            android:textColor="@color/grayscale2"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_category_name_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="* 최대 6자까지 쓸 수 있어요."
+            android:textColor="@color/grayscale6"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/et_nickname"
+            app:layout_constraintTop_toBottomOf="@id/et_nickname" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grayscale2"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp"
+            android:text="완료하기"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> vm.onClickAddComplete()}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -27,7 +27,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val checkUserBookUseCase: CheckUserBookUseCase,
     private val getMoneyHistoryDaysUseCase: GetMoneyHistoryDaysUseCase,
     private val getBookInfoUseCase: GetBookInfoUseCase,
 ) : BaseViewModel() {
@@ -42,6 +41,9 @@ class HomeViewModel @Inject constructor(
     private var _bookInfo = MutableLiveData<UiBookInfoModel>()
     val bookInfo: LiveData<UiBookInfoModel> get() = _bookInfo
 
+    // 날짜 선택 버튼 클릭
+    private var _clickedChoiceDate = MutableEventFlow<String>()
+    val clickedChoiceDate: EventFlow<String> get() = _clickedChoiceDate
     // 이전 월 이동
     private var _clickedPreviousMonth = MutableEventFlow<String>()
     val clickedPreviousMonth: EventFlow<String> get() = _clickedPreviousMonth
@@ -54,9 +56,9 @@ class HomeViewModel @Inject constructor(
     private var _clickedShowType = MutableLiveData<String>("month")
     val clickedShowType: LiveData<String> get() = _clickedShowType
 
-    // 가계부 조회 후 프레그먼트 표시
-    private var _showCalendarFragment = MutableEventFlow<String>()
-    val showCalendarFragment: EventFlow<String> get() = _showCalendarFragment
+    // 내역추가
+    private var _clickedAddHistory = MutableEventFlow<Boolean>()
+    val clickedAddHistory: EventFlow<Boolean> get() = _clickedAddHistory
 
     private var _getMoneyDayData = MutableEventFlow<UiBookDayModel>()
     val getMoneyDayData: EventFlow<UiBookDayModel> get() = _getMoneyDayData
@@ -67,22 +69,20 @@ class HomeViewModel @Inject constructor(
     private var _onClickedShowDetail = MutableLiveData<MonthMoney?>(null)
     val onClickedShowDetail: LiveData<MonthMoney?> get() = _onClickedShowDetail
 
-    private var isFirst = true
+    private lateinit var myNickname: String
+
+    // 설정 페이지
+    private var _settingPage = MutableEventFlow<Boolean>()
+    val settingPage: EventFlow<Boolean> get() = _settingPage
 
     init {
-        checkUserBooks()
+        getBookInfo(prefs.getString("bookKey", ""))
         getFormatDateMonth()
     }
 
     fun initCalendarMonth() {
 //        _calendar.value = Calendar.getInstance()
         _showDate.value = getFormatDateMonth()
-
-        viewModelScope.launch {
-            if (!isFirst) {
-                _showCalendarFragment.emit(getFormatDateMonth())
-            }
-        }
     }
 
     fun initCalendarDay() {
@@ -90,27 +90,17 @@ class HomeViewModel @Inject constructor(
         _showDate.value = getFormatDateDay()
     }
 
-    // 유저 가계부 유효 확인
-    private fun checkUserBooks() {
-        viewModelScope.launch {
-            checkUserBookUseCase().onSuccess {
-                prefs.setString("bookKey", it.bookKey)
-                isFirst = false
-
-                // 캘린더 조회
-                _showCalendarFragment.emit(getFormatDateMonth())
-                // 가계부 정보 조회
-                getBookInfo(it.bookKey)
-            }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
-            }
-        }
-    }
-
     // 가계부 정보 가져오기
     private fun getBookInfo(code: String) {
         viewModelScope.launch {
             getBookInfoUseCase(code).onSuccess {
+                // 내 닉네임 저장
+                it.ourBookUsers.forEach {
+                    if(it.me) {
+                        myNickname = it.name
+                    }
+                }
+
                 _bookInfo.postValue(it)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -156,6 +146,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // 다음 월 클릭
+    fun onClickChoiceDate() {
+        viewModelScope.launch {
+            _clickedChoiceDate.emit(getFormatYearMonthDate())
+        }
+    }
+
     // 일자 상세 표시 열기
     fun onClickShowDetail(item: MonthMoney) {
         updateCalendarClickedItem(item.year.toInt(), item.month.toInt(), item.day.toInt())
@@ -190,6 +187,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // 캘린더, 일별 표시타입 변경
+    fun onClickAddHistory() {
+        viewModelScope.launch {
+            _clickedAddHistory.emit(true)
+        }
+    }
+
     // 캘린더 값 변경
     private fun updateCalendarMonth(value: Int) {
         _calendar.value.set(Calendar.DAY_OF_MONTH, 1)
@@ -202,14 +206,15 @@ class HomeViewModel @Inject constructor(
     }
 
     // 캘린더 값 변경
-    private fun updateCalendarClickedItem(year: Int, month: Int, date: Int) {
+    fun updateCalendarClickedItem(year: Int, month: Int, date: Int) {
         _calendar.value.set(Calendar.YEAR, year)
         _calendar.value.set(Calendar.MONTH, month - 1)
         _calendar.value.set(Calendar.DATE, date)
+        _showDate.value = getFormatDateMonth()
     }
 
     // 날짜 포멧 결과 가져오기
-    private fun getFormatDateMonth(): String {
+    fun getFormatDateMonth(): String {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(_calendar.value.time)
         val showDate = date.substring(0, 7).replace("-", ".")
         _showDate.postValue(showDate)
@@ -222,5 +227,38 @@ class HomeViewModel @Inject constructor(
         val showDate = date.substring(5, 10).replace("-", ".")
         _showDate.postValue(showDate)
         return date
+    }
+
+    // 년, 월 일 가져오기
+    fun getFormatYearMonthDate(): String {
+        return SimpleDateFormat("yyyy-MM", Locale.getDefault()).format(_calendar.value.time) + "-01"
+    }
+
+    // 선택된 날짜 가져오기
+    fun getClickDate(): String {
+        val year = _calendar.value.get(Calendar.YEAR)
+        val month = if((_calendar.value.get(Calendar.MONTH) + 1) < 10) {
+            "0${_calendar.value.get(Calendar.MONTH) + 1}"
+        } else {
+            _calendar.value.get(Calendar.MONTH) + 1
+        }
+        val day = if(_calendar.value.get(Calendar.DATE) < 10) {
+            "0${_calendar.value.get(Calendar.DATE)}"
+        } else {
+            _calendar.value.get(Calendar.DATE)
+        }
+        return "$year.$month.$day"
+    }
+
+    // 내 닉네임 가져오기
+    fun getMyNickname(): String {
+        return myNickname
+    }
+
+    // 가계부 설정 페이지 이동
+    fun onClickSettingPage(){
+        viewModelScope.launch {
+            _settingPage.emit(true)
+        }
     }
 }
