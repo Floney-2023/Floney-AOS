@@ -42,7 +42,6 @@ class HistoryActivity :
 
         setUpViewModelObserver()
         setUpCalendarBottomSheet()
-        setUpCategoryBottomSheet()
     }
 
     // 내역 추가 데이터 가져오기
@@ -83,13 +82,6 @@ class HistoryActivity :
         })
     }
 
-    // 카테고리 bottomSheet 구현
-    private fun setUpCategoryBottomSheet() {
-        categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, viewModel, this@HistoryActivity) {
-            viewModel.onClickCategoryChoiceDate()
-        }
-    }
-
     private fun setUpViewModelObserver() {
         repeatOnStarted {
             viewModel.showCalendar.collect {
@@ -102,9 +94,10 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.onClickCategory.collect {
-                if(it) {
-                    categoryBottomSheetDialog.show()
+                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity) {
+                    viewModel.onClickCategoryChoiceDate()
                 }
+                categoryBottomSheetDialog.show()
             }
         }
 

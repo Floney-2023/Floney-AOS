@@ -2,6 +2,7 @@ package com.aos.floney.ext
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.aos.data.util.CurrencyUtil
 import com.aos.model.analyze.Asset
 import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzePlanModel
@@ -11,7 +12,7 @@ import java.text.NumberFormat
 
 fun String.formatNumber(): String {
      return if(this != "") {
-         val text = this.replace("원", "")
+         val text = this.replace("${CurrencyUtil.currency}", "")
          if(text != "") {
              DecimalFormat("###,###").format(text.replace(",", "").toLong())
          } else {

@@ -13,15 +13,24 @@ import com.aos.floney.databinding.ActivitySplashBinding
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.onboard.OnBoardActivity
+import com.aos.data.util.CurrencyUtil
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SplashActivity :
     BaseActivity<ActivitySplashBinding, SplashViewModel>(R.layout.activity_splash) {
+
+    @Inject
+    lateinit var sharedPreferenceUtil: SharedPreferenceUtil
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupSplashAnimation()
+
+        CurrencyUtil.currency = sharedPreferenceUtil.getString("symbol", "원")
     }
 
     // logo animation
@@ -31,7 +40,7 @@ class SplashActivity :
 
         // 2초 후 처음 실행할 경우 온보드 아니면 로그인으로 이동
         Handler(Looper.myLooper()!!).postDelayed({
-            if (SharedPreferenceUtil(this).getBoolean(getString(R.string.is_first), true)) {
+            if (sharedPreferenceUtil.getBoolean(getString(R.string.is_first), true)) {
                 val intent = Intent(this@SplashActivity, OnBoardActivity::class.java)
                 startActivity(intent)
                 if (Build.VERSION.SDK_INT >= 34) {

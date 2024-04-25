@@ -23,7 +23,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/pretendard_bold"
             android:lineHeight="33dp"
-            android:text="나의 자산이\n지난날보다 증가했어요"
+            android:text="@{vm.postAssetResult.totalDifference}"
             android:textColor="@color/grayscale1"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"

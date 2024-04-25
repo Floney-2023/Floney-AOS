@@ -26,8 +26,6 @@ class AnalyzeAssetFragment :
     private fun setUpViewModelObserver() {
         viewModel.postAssetResult.observe(viewLifecycleOwner) {
             it.analyzeResult.forEachIndexed { index, asset ->
-                Timber.e("index $index")
-                Timber.e("asset.value ${asset.value}")
                 when (index) {
                     0 -> binding.barchartOne.setChartData(asset.value)
                     1 -> binding.barchartTwo.setChartData(asset.value)

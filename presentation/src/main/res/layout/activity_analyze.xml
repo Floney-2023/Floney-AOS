@@ -38,6 +38,7 @@
 
             <ImageView
                 android:layout_width="24dp"
+                android:onClick="@{() -> vm.onClickPreviousMonth()}"
                 android:layout_height="24dp"
                 android:src="@drawable/icon_arrow_left" />
 
@@ -53,6 +54,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:onClick="@{() -> vm.onClickNextMonth()}"
                 android:src="@drawable/icon_arrow_right" />
 
         </LinearLayout>

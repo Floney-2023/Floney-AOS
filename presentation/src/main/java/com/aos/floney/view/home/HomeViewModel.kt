@@ -41,6 +41,9 @@ class HomeViewModel @Inject constructor(
     private var _bookInfo = MutableLiveData<UiBookInfoModel>()
     val bookInfo: LiveData<UiBookInfoModel> get() = _bookInfo
 
+    // 날짜 선택 버튼 클릭
+    private var _clickedChoiceDate = MutableEventFlow<String>()
+    val clickedChoiceDate: EventFlow<String> get() = _clickedChoiceDate
     // 이전 월 이동
     private var _clickedPreviousMonth = MutableEventFlow<String>()
     val clickedPreviousMonth: EventFlow<String> get() = _clickedPreviousMonth
@@ -143,6 +146,13 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // 다음 월 클릭
+    fun onClickChoiceDate() {
+        viewModelScope.launch {
+            _clickedChoiceDate.emit(getFormatYearMonthDate())
+        }
+    }
+
     // 일자 상세 표시 열기
     fun onClickShowDetail(item: MonthMoney) {
         updateCalendarClickedItem(item.year.toInt(), item.month.toInt(), item.day.toInt())
@@ -196,10 +206,11 @@ class HomeViewModel @Inject constructor(
     }
 
     // 캘린더 값 변경
-    private fun updateCalendarClickedItem(year: Int, month: Int, date: Int) {
+    fun updateCalendarClickedItem(year: Int, month: Int, date: Int) {
         _calendar.value.set(Calendar.YEAR, year)
         _calendar.value.set(Calendar.MONTH, month - 1)
         _calendar.value.set(Calendar.DATE, date)
+        _showDate.value = getFormatDateMonth()
     }
 
     // 날짜 포멧 결과 가져오기
@@ -216,6 +227,11 @@ class HomeViewModel @Inject constructor(
         val showDate = date.substring(5, 10).replace("-", ".")
         _showDate.postValue(showDate)
         return date
+    }
+
+    // 년, 월 일 가져오기
+    fun getFormatYearMonthDate(): String {
+        return SimpleDateFormat("yyyy-MM", Locale.getDefault()).format(_calendar.value.time) + "-01"
     }
 
     // 선택된 날짜 가져오기

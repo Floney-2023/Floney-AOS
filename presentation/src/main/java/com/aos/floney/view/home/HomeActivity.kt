@@ -12,6 +12,7 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeActivity
+import com.aos.floney.view.analyze.ChoiceDatePickerBottomSheet
 import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.mypage.MyPageActivity
@@ -80,6 +81,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                 if(it) {
                     startActivity(Intent(this@HomeActivity, BookSettingActivity::class.java))
                 }
+            }
+        }
+        repeatOnStarted {
+            // 가계부 설정 페이지 이동
+            viewModel.clickedChoiceDate.collect {
+                ChoiceDatePickerBottomSheet(this@HomeActivity, it) {
+                    // 결과값
+                    val item = it.split("-")
+                    viewModel.updateCalendarClickedItem(item[0].toInt(), item[1].toInt(), 1)
+                }.show()
             }
         }
     }

@@ -5,6 +5,7 @@ import com.aos.data.entity.response.analyze.PostAnalyzeAssetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeBudgetEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryInComeEntity
 import com.aos.data.entity.response.analyze.PostAnalyzeCategoryOutComeEntity
+import com.aos.data.util.CurrencyUtil
 import com.aos.model.analyze.AnalyzeResult
 import com.aos.model.analyze.Asset
 import com.aos.model.analyze.UiAnalyzeAssetModel
@@ -13,6 +14,7 @@ import com.aos.model.analyze.UiAnalyzeCategoryOutComeModel
 import com.aos.model.analyze.UiAnalyzePlanModel
 import java.text.NumberFormat
 import java.util.Calendar
+import javax.inject.Inject
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -48,16 +50,16 @@ fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutCom
 
     return UiAnalyzeCategoryOutComeModel(total = "총 ${
         NumberFormat.getNumberInstance().format(this.total)
-    }원을\n소비했어요",
+    }${CurrencyUtil.currency}을\n소비했어요",
         differance = "${
             if (this.differance > this.total) {
                 "저번달 대비 ${
                     NumberFormat.getNumberInstance().format(this.differance - total)
-                }원을\n덜 사용했어요"
+                }${CurrencyUtil.currency}을\n덜 사용했어요"
             } else {
                 "저번달 대비 ${
                     NumberFormat.getNumberInstance().format(this.total - differance)
-                }원을\n더 사용했어요"
+                }${CurrencyUtil.currency}을\n더 사용했어요"
             }
         }",
         size = this.analyzeResult.size,
@@ -65,7 +67,7 @@ fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutCom
             AnalyzeResult(
                 category = it.category,
                 money = it.money,
-                uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}원",
+                uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}${CurrencyUtil.currency}",
                 percent = (it.money / total) * 100.0,
                 uiPercent = "${((it.money / total) * 100.0).round(1)}%",
                 color = when (stepIdx) {
@@ -101,16 +103,16 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
 
     return UiAnalyzeCategoryInComeModel(total = "총 ${
         NumberFormat.getNumberInstance().format(this.total)
-    }원을\n소비했어요",
+    }${CurrencyUtil.currency}을\n소비했어요",
         differance = "${
             if (this.differance > this.total) {
                 "저번달 대비 ${
                     NumberFormat.getNumberInstance().format(this.differance - total)
-                }원을\n덜 사용했어요"
+                }${CurrencyUtil.currency}을\n덜 사용했어요"
             } else {
                 "저번달 대비 ${
                     NumberFormat.getNumberInstance().format(this.total - differance)
-                }원을\n더 사용했어요"
+                }${CurrencyUtil.currency}을\n더 사용했어요"
             }
         }",
         size = this.analyzeResult.size,
@@ -118,7 +120,7 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
             AnalyzeResult(
                 category = it.category,
                 money = it.money,
-                uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}원",
+                uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}${CurrencyUtil.currency}",
                 percent = (it.money / total) * 100.0,
                 uiPercent = "${((it.money / total) * 100.0).round(1)}%",
                 color = when (stepIdx) {
@@ -146,8 +148,8 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
 }
 
 fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
-    val tempLeftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}원".substring(
-        1, "${NumberFormat.getNumberInstance().format(this.leftMoney)}원".length
+    val tempLeftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}${CurrencyUtil.currency}".substring(
+        1, "${NumberFormat.getNumberInstance().format(this.leftMoney)}${CurrencyUtil.currency}".length
     )
 
     // 남은 일 수 계산 
@@ -157,8 +159,8 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
     val enemyDay = lastDayOfMonth - today + 1
 
     return UiAnalyzePlanModel(
-        initBudget = "${NumberFormat.getNumberInstance().format(this.initBudget)}원",
-        leftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}원",
+        initBudget = "${NumberFormat.getNumberInstance().format(this.initBudget)}${CurrencyUtil.currency}",
+        leftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}${CurrencyUtil.currency}",
         percent = if (this.leftMoney < 0) {
             "100"
         } else {
@@ -166,7 +168,7 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
         },
         divMoney = "${
             NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).round(2))
-        }원".replace("-", "")
+        }${CurrencyUtil.currency}".replace("-", "")
     )
 }
 
@@ -182,13 +184,22 @@ fun PostAnalyzeAssetEntity.toUiAnalyzeAssetModel(): UiAnalyzeAssetModel {
     }
 
     return UiAnalyzeAssetModel(
-        difference = if (this.difference >= 0) {
-            "지난달 대비 ${NumberFormat.getNumberInstance().format(this.difference)}원이\n증가했어요"
+        totalDifference = if (this.difference > 0) {
+            "나의 자산이\n지난달보다 증가했어요"
+        } else if (this.difference.toInt() == 0) {
+            "나의 자산이\n지난달과 같아요"
         } else {
-            "지난달 대비 ${NumberFormat.getNumberInstance().format(this.difference)}원이\n감소했어요".replace("-", "")
+            "나의 자산이\n지난달보다 감소했어요"
         },
-        initAsset = "${NumberFormat.getNumberInstance().format(this.initAsset)}원",
-        currentAsset = "${NumberFormat.getNumberInstance().format(this.currentAsset)}원",
+        difference = if (this.difference >= 0) {
+            "지난달 대비 ${NumberFormat.getNumberInstance().format(this.difference)}${CurrencyUtil.currency}이\n증가했어요"
+        } else {
+            "지난달 대비 ${
+                NumberFormat.getNumberInstance().format(this.difference)
+            }${CurrencyUtil.currency}이\n감소했어요".replace("-", "")
+        },
+        initAsset = "${NumberFormat.getNumberInstance().format(this.initAsset)}${CurrencyUtil.currency}",
+        currentAsset = "${NumberFormat.getNumberInstance().format(this.currentAsset)}${CurrencyUtil.currency}",
         analyzeResult = listAsset
     )
 }

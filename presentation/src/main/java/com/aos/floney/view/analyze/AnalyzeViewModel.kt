@@ -47,6 +47,7 @@ class AnalyzeViewModel @Inject constructor(): BaseViewModel() {
         _flow.postValue(type)
     }
 
+    // 예산 설정하기 클릭
     fun onClickSetBudget(flag: Boolean) {
         _onClickSetBudget.postValue(flag)
     }
@@ -58,10 +59,24 @@ class AnalyzeViewModel @Inject constructor(): BaseViewModel() {
         }
     }
 
+    // 이전 달 버튼 클릭
+    fun onClickPreviousMonth() {
+        updateCalendarMonth(-1)
+    }
+
+    // 다음 달 버튼 클릭
+    fun onClickNextMonth() {
+        updateCalendarMonth(1)
+    }
+
     // 날짜 포멧 월만 결과 가져오기
     private fun getFormatDateMonth() {
         val date = SimpleDateFormat("M월", Locale.getDefault()).format(_calendar.value.time)
         _showDate.postValue(date)
+
+        viewModelScope.launch {
+            _onChangedDate.emit(getFormatDate())
+        }
     }
 
     // 날짜 포멧 전체 결과 가져오기
@@ -75,9 +90,14 @@ class AnalyzeViewModel @Inject constructor(): BaseViewModel() {
         _calendar.value.set(Calendar.MONTH, month - 1)
         _calendar.value.set(Calendar.DATE, 1)
 
-        viewModelScope.launch {
-            _onChangedDate.emit(getFormatDate())
-        }
+        // 월 업데이트
+        getFormatDateMonth()
+    }
+
+    // 캘린더 값 변경
+    private fun updateCalendarMonth(value: Int) {
+        _calendar.value.set(Calendar.DAY_OF_MONTH, 1)
+        _calendar.value.add(Calendar.MONTH, value)
 
         // 월 업데이트
         getFormatDateMonth()

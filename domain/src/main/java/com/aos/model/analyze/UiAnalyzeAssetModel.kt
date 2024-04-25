@@ -3,6 +3,7 @@ package com.aos.model.analyze
 import androidx.recyclerview.widget.DiffUtil
 
 data class UiAnalyzeAssetModel(
+    val totalDifference: String,
     val difference: String,
     val initAsset: String,
     val currentAsset: String,
