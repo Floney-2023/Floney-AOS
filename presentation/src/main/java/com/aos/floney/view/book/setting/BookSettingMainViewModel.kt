@@ -18,6 +18,7 @@ import javax.inject.Inject
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.user.MyBooks
+import com.aos.usecase.booksetting.BooksInitUseCase
 import com.aos.usecase.booksetting.BooksSettingGetUseCase
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
 import kotlinx.coroutines.withContext
@@ -26,7 +27,8 @@ import timber.log.Timber
 @HiltViewModel
 class BookSettingMainViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val booksSettingGetUseCase : BooksSettingGetUseCase
+    private val booksSettingGetUseCase : BooksSettingGetUseCase,
+    private val booksInitUseCase : BooksInitUseCase
 ): BaseViewModel() {
 
     // 회원 닉네임
@@ -41,6 +43,10 @@ class BookSettingMainViewModel @Inject constructor(
     // 이전 페이지
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
+
+    // 가계부 초기화 페이지
+    private var _initPage = MutableEventFlow<Boolean>()
+    val initPage: EventFlow<Boolean> get() = _initPage
 
     // 이월 설정 페이지
     private var _carryInfoPage = MutableEventFlow<Boolean>()
@@ -95,6 +101,23 @@ class BookSettingMainViewModel @Inject constructor(
         }
     }
 
+    // 가계부 초기화하기
+    fun initBook(){
+        viewModelScope.launch {
+            if(prefs.getString("bookKey","").isNotEmpty()) {
+                baseEvent(Event.ShowLoading)
+                booksInitUseCase(prefs.getString("bookKey","")).onSuccess {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowSuccessToast("가계부가 초기화 되었습니다."))
+                }.onFailure {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                }
+            }
+        }
+    }
+
+    // 이월 설정
     fun changeCarryOver(carryOver : Boolean){
         viewModelScope.launch {
             val currentInfo = bookSettingInfo.value
@@ -140,7 +163,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 가계부 초기화하기
     fun onClickBookInit()
     {
-
+        viewModelScope.launch {
+            _initPage.emit(true)
+        }
     }
     // 예산 설정
     fun onClickAssetSetting()

@@ -12,6 +12,8 @@ import com.aos.floney.view.book.add.BookAddInviteShareBottomSheetFragment
 import com.aos.floney.view.book.setting.asset.BookSettingAssetBottomSheetFragment
 import com.aos.floney.view.book.setting.carryinfo.BookSettingCarryInfoSheetFragment
 import com.aos.floney.view.book.setting.excel.BookSettingExcelBottomSheetFragment
+import com.aos.floney.view.common.BaseAlertDialog
+import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.UiBookSettingModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,6 +59,23 @@ class BookSettingMainFragment :
                         viewModel.bookSettingInfo.value!!.bookName
                     )
                     findNavController().navigate(settingAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.initPage.collect() {
+                if(it) {
+                    if(it) {
+                        val initDialog = BaseAlertDialog(
+                            getString(R.string.book_setting_currency_alert_dialog_title),
+                            getString(R.string.book_setting_currency_alert_dialog_info),
+                            true
+                        ) {  checked ->
+                            if (checked)
+                                viewModel.initBook()
+                        }
+                        initDialog.show(parentFragmentManager, "initDialog")
+                    }
                 }
             }
         }
