@@ -4,23 +4,28 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentAnalyzeOutComeBinding
 import com.aos.model.analyze.AnalyzeResult
 import com.aos.model.analyze.UiAnalyzeCategoryOutComeModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AnalyzeOutComeFragment :
     BaseFragment<FragmentAnalyzeOutComeBinding, AnalyzeOutComeViewModel>(R.layout.fragment_analyze_out_come),
     UiAnalyzeCategoryOutComeModel.OnItemClickListener {
+    private val activityViewModel: AnalyzeViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpViewModelObserver()
         setUpUi()
+        viewModel.postAnalyzeCategory(activityViewModel.getFormatDate())
     }
 
     private fun setUpUi() {
@@ -42,6 +47,12 @@ class AnalyzeOutComeFragment :
             )
             binding.chartStackHorizontal.isVisible = true
             binding.chartStackHorizontal.clearColorIdx()
+        }
+
+        lifecycleScope.launch {
+            activityViewModel.onChangedDate.collect {
+                viewModel.postAnalyzeCategory(it)
+            }
         }
     }
 

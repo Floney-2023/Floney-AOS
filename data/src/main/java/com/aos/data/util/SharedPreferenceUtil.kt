@@ -2,8 +2,10 @@ package com.aos.data.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ActivityContext
+import javax.inject.Inject
 
-class SharedPreferenceUtil(context: Context) {
+class SharedPreferenceUtil @Inject constructor(@ActivityContext context: Context){
     private val prefs: SharedPreferences =
         context.getSharedPreferences("pref", Context.MODE_PRIVATE)
 

@@ -27,16 +27,13 @@ class AnalyzeIncomeViewModel @Inject constructor(
     private var _postAnalyzeInComeCategoryResult = MutableLiveData<UiAnalyzeCategoryInComeModel>()
     val postAnalyzeInComeCategoryResult: LiveData<UiAnalyzeCategoryInComeModel> get() = _postAnalyzeInComeCategoryResult
 
-    init {
-        postAnalyzeCategory()
-    }
 
     // 지출 분석 가져오기
-    private fun postAnalyzeCategory() {
+    fun postAnalyzeCategory(date :String) {
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
             postAnalyzeInComeCategoryUseCase(
-                prefs.getString("bookKey", ""), "수입", "2024-04-01"
+                prefs.getString("bookKey", ""), "수입", date
             ).onSuccess {
                 baseEvent(Event.HideLoading)
                 _postAnalyzeInComeCategoryResult.postValue(it)

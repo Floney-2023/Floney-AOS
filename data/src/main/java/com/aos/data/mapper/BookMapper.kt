@@ -22,6 +22,7 @@ import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
+import com.aos.data.util.CurrencyUtil
 import com.aos.model.book.BudgetItem
 import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
@@ -135,17 +136,17 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
                     "${
                         NumberFormat.getNumberInstance()
                             .format(totalIncome + carryOverInfo.carryOverMoney)
-                    }원", "${NumberFormat.getNumberInstance().format(totalOutcome)}원"
+                    }${CurrencyUtil.currency}", "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
                 )
             )
         } else {
             // 총 지출에 포함
             UiBookMonthModel(
                 list, ExtData(
-                    "${NumberFormat.getNumberInstance().format(totalIncome)}원", "${
+                    "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}", "${
                         NumberFormat.getNumberInstance()
                             .format(totalOutcome + carryOverInfo.carryOverMoney)
-                    }원"
+                    }${CurrencyUtil.currency}"
                 )
             )
         }
@@ -153,8 +154,8 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
         // 이월 내역 없을 경우
         UiBookMonthModel(
             list, ExtData(
-                "${NumberFormat.getNumberInstance().format(totalIncome)}원",
-                "${NumberFormat.getNumberInstance().format(totalOutcome)}원"
+                "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}",
+                "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
             )
         )
     }
@@ -204,17 +205,17 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
                     "${
                         NumberFormat.getNumberInstance()
                             .format(totalIncome + carryOverInfo.carryOverMoney)
-                    }원", "${NumberFormat.getNumberInstance().format(totalOutcome)}원"
+                    }${CurrencyUtil.currency}", "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
                 )
             )
         } else {
             // 총 지출에 포함
             UiBookDayModel(
                 dayMoneyList, ExtData(
-                    "${NumberFormat.getNumberInstance().format(totalIncome)}원", "${
+                    "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}", "${
                         NumberFormat.getNumberInstance()
                             .format(totalOutcome + carryOverInfo.carryOverMoney)
-                    }원"
+                    }${CurrencyUtil.currency}"
                 )
             )
         }
@@ -222,8 +223,8 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
         // 이월 내역 없을 경우
         UiBookDayModel(
             dayMoneyList, ExtData(
-                "${NumberFormat.getNumberInstance().format(totalIncome)}원",
-                "${NumberFormat.getNumberInstance().format(totalOutcome)}원"
+                "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}",
+                "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
             )
         )
     }
@@ -309,7 +310,7 @@ fun List<PostBooksOutcomesEntity>.toUiOutcomesSelectModel(): UiOutcomesSelectMod
         Outcomes(
             id = index, // 인덱스를 id로 사용
             money = item.money.roundToLong(),
-            moneyFormat ="${NumberFormat.getNumberInstance().format(item.money.roundToLong())}원" ,
+            moneyFormat ="${NumberFormat.getNumberInstance().format(item.money.roundToLong())}${CurrencyUtil.currency}" ,
             category = "${item.category[0]} ‧ ${item.category[1]}",
             assetType = item.assetType,
             content = item.content,
@@ -326,7 +327,7 @@ fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
 
     val details = this.details.map {
         Details(
-            money = if (it.money.toInt() == 0 ) "" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong().absoluteValue)}원",
+            money = if (it.money.toInt() == 0 ) "" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong().absoluteValue)}${CurrencyUtil.currency}",
             userNickname = it.userNickname,
             useruserProfileImg = it.userProfileImg,
             moneyInfo = if (it.money > 0) "을 보내야해요." else if (it.money < 0) "을 받아야해요." else "정산할 금액이 없어요."
@@ -338,8 +339,8 @@ fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
         endDate = this.endDate,
         dateString = "${this.startDate.replace('-','.')} - ${this.endDate.replace('-','.')}",
         userCount = this.userCount,
-        totalOutcome ="${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}원",
-        outcome = "${NumberFormat.getNumberInstance().format(this.outcome.roundToLong())}원",
+        totalOutcome ="${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}${CurrencyUtil.currency}",
+        outcome = "${NumberFormat.getNumberInstance().format(this.outcome.roundToLong())}${CurrencyUtil.currency}",
         details = details
     )
 }
@@ -349,8 +350,8 @@ fun List<GetSettlementSeeEntity>.toUiSettlementSeeModel(): UiSettlementSeeModel 
             id = it.id,
             dateString = "${it.startDate.replace('-','.')} - ${it.endDate.replace('-','.')}",
             userCount = "${it.userCount}명",
-            totalOutcome = "${NumberFormat.getNumberInstance().format(it.totalOutcome)}원",
-            outcome = "${NumberFormat.getNumberInstance().format(it.outcome)}원"
+            totalOutcome = "${NumberFormat.getNumberInstance().format(it.totalOutcome)}${CurrencyUtil.currency}",
+            outcome = "${NumberFormat.getNumberInstance().format(it.outcome)}${CurrencyUtil.currency}"
         )
     }
     return UiSettlementSeeModel(
@@ -385,18 +386,18 @@ fun GetBooksInfoCurrencyEntity.toGetBooksInfoCurrencyModel() : GetBooksInfoCurre
 
 fun GetBooksBudgetEntity.toUiBookBudgetModel(): UiBookBudgetModel {
     val budgetList = listOf(
-        BudgetItem("1", "${NumberFormat.getNumberInstance().format(this.january.toInt())}원", this.january > 0.0),
-        BudgetItem("2","${NumberFormat.getNumberInstance().format(this.february.toInt())}원", this.february > 0.0),
-        BudgetItem("3","${NumberFormat.getNumberInstance().format(this.march.toInt())}원", this.march > 0.0),
-        BudgetItem("4", "${NumberFormat.getNumberInstance().format(this.april.toInt())}원", this.april > 0.0),
-        BudgetItem("5", "${NumberFormat.getNumberInstance().format(this.may.toInt())}원", this.may > 0.0),
-        BudgetItem("6", "${NumberFormat.getNumberInstance().format(this.june.toInt())}원", this.june > 0.0),
-        BudgetItem("7", "${NumberFormat.getNumberInstance().format(this.july.toInt())}원", this.july > 0.0),
-        BudgetItem("8", "${NumberFormat.getNumberInstance().format(this.august.toInt())}원", this.august > 0.0),
-        BudgetItem("9","${NumberFormat.getNumberInstance().format(this.september.toInt())}원", this.september > 0.0),
-        BudgetItem("10", "${NumberFormat.getNumberInstance().format(this.october.toInt())}원", this.october > 0.0),
-        BudgetItem("11", "${NumberFormat.getNumberInstance().format(this.november.toInt())}원", this.november > 0.0),
-        BudgetItem("12", "${NumberFormat.getNumberInstance().format(this.december.toInt())}원", this.december > 0.0)
+        BudgetItem("1", "${NumberFormat.getNumberInstance().format(this.january.toInt())}${CurrencyUtil.currency}", this.january > 0.0),
+        BudgetItem("2","${NumberFormat.getNumberInstance().format(this.february.toInt())}${CurrencyUtil.currency}", this.february > 0.0),
+        BudgetItem("3","${NumberFormat.getNumberInstance().format(this.march.toInt())}${CurrencyUtil.currency}", this.march > 0.0),
+        BudgetItem("4", "${NumberFormat.getNumberInstance().format(this.april.toInt())}${CurrencyUtil.currency}", this.april > 0.0),
+        BudgetItem("5", "${NumberFormat.getNumberInstance().format(this.may.toInt())}${CurrencyUtil.currency}", this.may > 0.0),
+        BudgetItem("6", "${NumberFormat.getNumberInstance().format(this.june.toInt())}${CurrencyUtil.currency}", this.june > 0.0),
+        BudgetItem("7", "${NumberFormat.getNumberInstance().format(this.july.toInt())}${CurrencyUtil.currency}", this.july > 0.0),
+        BudgetItem("8", "${NumberFormat.getNumberInstance().format(this.august.toInt())}${CurrencyUtil.currency}", this.august > 0.0),
+        BudgetItem("9","${NumberFormat.getNumberInstance().format(this.september.toInt())}${CurrencyUtil.currency}", this.september > 0.0),
+        BudgetItem("10", "${NumberFormat.getNumberInstance().format(this.october.toInt())}${CurrencyUtil.currency}", this.october > 0.0),
+        BudgetItem("11", "${NumberFormat.getNumberInstance().format(this.november.toInt())}${CurrencyUtil.currency}", this.november > 0.0),
+        BudgetItem("12", "${NumberFormat.getNumberInstance().format(this.december.toInt())}${CurrencyUtil.currency}", this.december > 0.0)
     )
     return UiBookBudgetModel(
         budgetList = budgetList

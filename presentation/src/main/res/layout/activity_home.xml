@@ -98,6 +98,7 @@
             android:layout_marginStart="2dp"
             android:fontFamily="@font/pretendard_semibold"
             android:text="@{vm.showDate}"
+            android:onClick="@{() -> vm.onClickChoiceDate()}"
             android:textColor="@color/grayscale1"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"

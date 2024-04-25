@@ -2,6 +2,9 @@ package com.aos.floney.ext
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.aos.data.util.CurrencyUtil
+import com.aos.model.analyze.Asset
+import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzePlanModel
 import timber.log.Timber
 import java.text.DecimalFormat
@@ -9,7 +12,7 @@ import java.text.NumberFormat
 
 fun String.formatNumber(): String {
      return if(this != "") {
-         val text = this.replace("원", "")
+         val text = this.replace("${CurrencyUtil.currency}", "")
          if(text != "") {
              DecimalFormat("###,###").format(text.replace(",", "").toLong())
          } else {
@@ -33,6 +36,15 @@ fun TextView.setPlanText(item: UiAnalyzePlanModel?) {
                 in 80..99 -> this.text = "예산을 넘기지 않게\n주의하세요!"
             }
         }
+    } else {
+        this.text = ""
+    }
+}
+
+@BindingAdapter("bind:setAssetMonthText")
+fun TextView.setAssetMonthText(item: Asset?){
+    if(item != null) {
+        this.text = item.month.toString()
     } else {
         this.text = ""
     }

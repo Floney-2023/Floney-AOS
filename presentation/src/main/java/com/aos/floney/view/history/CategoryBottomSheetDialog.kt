@@ -17,6 +17,7 @@ import timber.log.Timber
 
 class CategoryBottomSheetDialog(
     context: Context,
+    private val category: String,
     private val viewModel: HistoryViewModel,
     private val activityLifecycleOwner: LifecycleOwner,
     private val clickedChoiceBtn: () -> Unit,
@@ -38,6 +39,8 @@ class CategoryBottomSheetDialog(
             setVariable(BR.vm, viewModel)
             setVariable(BR.eventHolder, this@CategoryBottomSheetDialog)
             lifecycleOwner = activityLifecycleOwner
+
+            binding.tvCategory.text = category
         }
     }
 

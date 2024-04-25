@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
+import com.aos.floney.util.EventFlow
+import com.aos.floney.util.MutableEventFlow
 import com.aos.model.analyze.UiAnalyzePlanModel
 import com.aos.usecase.analyze.PostAnalyzeIPlanUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,15 +26,14 @@ class AnalyzePlanViewModel @Inject constructor(
     private var _postAnalyzePlan = MutableLiveData<UiAnalyzePlanModel>(UiAnalyzePlanModel("", "0원", "0", ""))
     val postAnalyzePlan: LiveData<UiAnalyzePlanModel> get() = _postAnalyzePlan
 
-    init {
-        postAnalyzePlan()
-    }
+    private var _onClickSetBudget = MutableEventFlow<Boolean>()
+    val onClickSetBudget : EventFlow<Boolean> get() = _onClickSetBudget
 
     // 예산 조회하기
-    fun postAnalyzePlan() {
+    fun postAnalyzePlan(date: String) {
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
-            postAnalyzeIPlanUseCase(prefs.getString("bookKey", ""), "2024-04-01").onSuccess {
+            postAnalyzeIPlanUseCase(prefs.getString("bookKey", ""), date).onSuccess {
                 Timber.e("it $it")
                 _postAnalyzePlan.postValue(it)
                 baseEvent(Event.HideLoading)
@@ -40,6 +41,12 @@ class AnalyzePlanViewModel @Inject constructor(
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                 baseEvent(Event.HideLoading)
             }
+        }
+    }
+
+    fun onClickSetBudget() {
+        viewModelScope.launch {
+            _onClickSetBudget.emit(true)
         }
     }
 

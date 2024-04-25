@@ -144,6 +144,7 @@
             android:layout_width="50dp"
             android:layout_height="84dp"
             android:layout_marginTop="96dp"
+            bind:setAnalyzeImage="@{vm.postAnalyzePlan}"
             android:src="@drawable/analyze_plan_0_49_icon"
             app:layout_constraintEnd_toEndOf="@id/circle_view"
             app:layout_constraintStart_toStartOf="@id/circle_view"
@@ -172,11 +173,13 @@
             android:background="@drawable/custom_radius_12_solid_primary1"
             android:fontFamily="@font/pretendard_bold"
             android:text="이번달 예산 설정하기"
+            android:visibility="@{vm.postAnalyzePlan.initBudget.equals(`0원`) ? View.VISIBLE : View.GONE}"
+            android:onClick="@{() -> vm.onClickSetBudget()}"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:visibility="@{vm.postAnalyzePlan.initBudget.equals(`0원`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_score" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
