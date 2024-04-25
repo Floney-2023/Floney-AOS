@@ -14,6 +14,7 @@ import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
+import com.aos.data.entity.request.book.PostBooksOutBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
@@ -75,4 +76,5 @@ interface BookRemoteDataSource {
     suspend fun getBooksRepeat(bookKey : String, categoryType : String): NetworkState<List<GetBookRepeatEntity>>
     suspend fun deleteBooksRepeat(repeatLineId:Int): NetworkState<Void>
     suspend fun postBooksExcel(postBooksExcelBody: PostBooksExcelBody): NetworkState<ResponseBody>
+    suspend fun postBooksOut(postBooksOutBody: PostBooksOutBody): NetworkState<Void>
 }

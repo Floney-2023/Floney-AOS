@@ -14,6 +14,7 @@ import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksNameBody
+import com.aos.data.entity.request.book.PostBooksOutBody
 import com.aos.data.entity.request.settlement.Outcomes
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
 import com.aos.data.entity.request.settlement.PostSettlementAddBody
@@ -628,6 +629,27 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
 
             is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
             is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+    override suspend fun postBooksOut(bookKey: String): Result<Void?> {
+        when (val data =
+            bookDataSource.postBooksOut(PostBooksOutBody(bookKey))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
         }
     }
 }

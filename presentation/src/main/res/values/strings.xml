@@ -168,7 +168,7 @@
     <string name="sign_up_not_valid_code">코드가 올바르지 않습니다.</string>
     <string name="sign_up_request_input_code">코드를 입력해주세요</string>
     <string name="sign_up_input_sign_up_info">가입 정보 입력</string>
-    <string name="sign_up_complete_text">환영합니다\n플로니님!</string>
+    <string name="sign_up_complete_text">환영합니다\n%1$s님!</string>
     <string name="sign_up_complete_text_detail">플로니와 함께 똑똑하고 편리한 가계부를\n작성해부세요.</string>
     <string name="sign_up_start_floney">플로니 시작하기</string>
 
@@ -275,6 +275,9 @@
     <string name="book_setting_exit_dialog_delete_button">삭제하기</string>
     <string name="book_setting_exit_dialog_cancel_button">취소하기</string>
     <string name="book_setting_exit_dialog_cancel_error">모든 사용자가 나가야 가계부 삭제가 가능합니다.</string>
+
+    <string name="book_setting_exit_alert_dialog_title">가계부 나가기</string>
+    <string name="book_setting_exit_alert_dialog_info">가계부를 나갈 시 모든 내역이 삭제됩니다.\n삭제하시겠습니까?</string>
 
     <string name="book_setting_bottom_asset_title">초기 자산 설정</string>
     <string name="book_setting_bottom_asset_info">현재 모아놓은 자산을 입력해 주세요.\n플로니가 앞으로의 자산 흐름을 보여드릴게요.</string>

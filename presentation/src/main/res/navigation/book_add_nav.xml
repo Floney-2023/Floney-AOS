@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/book_add_nav"
-    app:startDestination="@id/bookAddInviteCheckFragment">
+    app:startDestination="@id/signUpCompleteFragment">
 
     <activity
         android:id="@+id/bookAddActivity"
@@ -76,5 +76,14 @@
         <argument
             android:name="invitecode"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpCompleteFragment"
+        android:name="com.aos.floney.view.book.add.SignUpCompleteFragment"
+        tools:layout="@layout/fragment_sign_up_complete"
+        android:label="SignUpCompleteFragment" >
+        <action
+            android:id="@+id/action_signUpCompleteFragment_to_bookAddInviteCheckFragment"
+            app:destination="@id/bookAddInviteCheckFragment" />
     </fragment>
 </navigation>

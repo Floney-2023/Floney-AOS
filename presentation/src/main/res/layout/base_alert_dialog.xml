@@ -7,7 +7,7 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/background_base_alert_dialog"
@@ -17,9 +17,10 @@
 
         <TextView
             android:id="@+id/tv_popup_title"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
+            android:gravity="center"
             android:lineSpacingExtra="-3sp"
             android:fontFamily="@font/floney_pretendard_bold"
             android:textSize="16dp"
@@ -27,14 +28,12 @@
 
         <TextView
             android:id="@+id/tv_popup_info"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="23dp"
             android:fontFamily="@font/floney_pretendard_regular"
             android:gravity="center"
             android:lineSpacingExtra="3sp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:textColor="@color/grayscale1"
             android:textSize="13dp"
             android:translationY="-1.34sp" />

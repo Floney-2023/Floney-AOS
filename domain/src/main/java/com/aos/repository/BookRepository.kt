@@ -145,4 +145,7 @@ interface BookRepository {
 
     // 가계부 엑셀 다운로드
     suspend fun postBooksExcel(bookKey: String, excelDuration: String, currentDate: String): Result<ResponseBody>
+
+    // 가계부 나가기
+    suspend fun postBooksOut(bookKey: String): Result<Void?>
 }

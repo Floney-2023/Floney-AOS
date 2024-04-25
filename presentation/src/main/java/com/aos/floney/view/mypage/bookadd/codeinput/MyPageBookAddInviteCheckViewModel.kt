@@ -2,6 +2,7 @@ package com.aos.floney.view.mypage.bookadd.codeinput
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageBookAddInviteCheckViewModel @Inject constructor(
-
+    private val prefs: SharedPreferenceUtil,
     private val booksJoinUseCase: BooksJoinUseCase
 ): BaseViewModel() {
     // 뒤로가기
@@ -45,8 +46,7 @@ class MyPageBookAddInviteCheckViewModel @Inject constructor(
                     baseEvent(Event.ShowLoading)
                     booksJoinUseCase(code.value!!).onSuccess {
                         // 참여 완료, 참여 가계부 키 설정
-                        baseEvent(Event.ShowToast(it.bookKey))
-
+                        prefs.setString("bookKey", it.bookKey)
                         baseEvent(Event.HideLoading)
 
                         _codeInputCompletePage.emit(true)

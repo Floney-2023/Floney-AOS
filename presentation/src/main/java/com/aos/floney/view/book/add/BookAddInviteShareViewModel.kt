@@ -71,7 +71,6 @@ class BookAddInviteShareViewModel @Inject constructor(
     // 초대 코드 복사
     fun onClickInviteCodeCopy(){
         viewModelScope.launch {
-            baseEvent(Event.ShowToastRes(R.string.book_add_invite_dialog_copy_text))
             _inviteCodeCopy.emit(true)
         }
     }

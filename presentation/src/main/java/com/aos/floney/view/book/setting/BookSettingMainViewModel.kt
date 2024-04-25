@@ -19,7 +19,9 @@ import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.user.MyBooks
 import com.aos.usecase.booksetting.BooksInitUseCase
+import com.aos.usecase.booksetting.BooksOutUseCase
 import com.aos.usecase.booksetting.BooksSettingGetUseCase
+import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -28,7 +30,9 @@ import timber.log.Timber
 class BookSettingMainViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val booksSettingGetUseCase : BooksSettingGetUseCase,
-    private val booksInitUseCase : BooksInitUseCase
+    private val booksInitUseCase : BooksInitUseCase,
+    private val booksOutUseCase: BooksOutUseCase,
+    private val checkUserBookUseCase: CheckUserBookUseCase
 ): BaseViewModel() {
 
     // 회원 닉네임
@@ -86,6 +90,14 @@ class BookSettingMainViewModel @Inject constructor(
     private var _repeatPage = MutableEventFlow<Boolean>()
     val repeatPage: EventFlow<Boolean> get() = _repeatPage
 
+    // 가계부 나가기 팝업
+    private var _exitPopup = MutableEventFlow<Boolean>()
+    val exitPopup: EventFlow<Boolean> get() = _exitPopup
+
+    // 가계부 나가기 완료
+    private var _exitPage = MutableEventFlow<Boolean>()
+    val exitPage: EventFlow<Boolean> get() = _exitPage
+
     // 마이페이지 정보 읽어오기
     fun searchBookSettingItems()
     {
@@ -113,6 +125,18 @@ class BookSettingMainViewModel @Inject constructor(
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                 }
+            }
+        }
+    }
+    // 가계부 나가기
+    fun onBookExit()
+    {
+        viewModelScope.launch(Dispatchers.IO) {
+            booksOutUseCase(prefs.getString("bookKey","")).onSuccess {
+                baseEvent(Event.ShowSuccessToast("가계부 나가기가 완료되었습니다."))
+                settingBookKey()
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
         }
     }
@@ -213,4 +237,26 @@ class BookSettingMainViewModel @Inject constructor(
         }
     }
 
+    // 가계부 나가기
+    fun onClickBookExit()
+    {
+        viewModelScope.launch {
+            _exitPopup.emit(true)
+        }
+    }
+
+    fun settingBookKey(){
+        viewModelScope.launch {
+            checkUserBookUseCase().onSuccess {
+                if(it.bookKey != "") {
+                    prefs.setString("bookKey", it.bookKey)
+                    _exitPage.emit(true)
+                } else {
+                    _exitPage.emit(false)
+                }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
 }

@@ -16,6 +16,7 @@ import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.BottomSheetBookAddInviteShareBinding
 import com.aos.floney.databinding.FragmentBookAddInviteCheckBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.BaseAlertDialog
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -58,9 +59,14 @@ class BookAddInviteShareBottomSheetFragment :
                         requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("label", code)
                     clipboard.setPrimaryClip(clip)
+                    setDialog()
                 }
             }
         }
+    }
+    private fun setDialog()
+    {
+
     }
     private fun onSharedBtnClicked() {
         val code = viewModel.inviteCode.value ?: ""

@@ -17,6 +17,7 @@ import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.UiBookSettingModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class BookSettingMainFragment :
@@ -143,6 +144,43 @@ class BookSettingMainFragment :
                 if(it) {
                     val repeatAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingRepeatFragment()
                     findNavController().navigate(repeatAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.repeatPage.collect() {
+                if(it) {
+                    val repeatAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingRepeatFragment()
+                    findNavController().navigate(repeatAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.exitPopup.collect(){
+                if(it){
+                    val initDialog = BaseAlertDialog(
+                        getString(R.string.book_setting_exit_alert_dialog_title),
+                        getString(R.string.book_setting_exit_alert_dialog_info),
+                        true
+                    ) {  checked ->
+                        if (checked)
+                            viewModel.onBookExit()
+                    }
+                    initDialog.show(parentFragmentManager, "exitDialog")
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.exitPage.collect(){
+                if(it) {
+                    // 가계부 2개 이상인데 나간 경우 -> 홈 화면으로 이동
+                    val activity = requireActivity() as BookSettingActivity
+                    activity.startHomeActivity()
+                }
+                else {
+                    // 가계부 1개 있는데 나간 경우 -> 가계부 추가 화면으로 이동
+                    val activity = requireActivity() as BookSettingActivity
+                    activity.startBookAddActivity()
                 }
             }
         }

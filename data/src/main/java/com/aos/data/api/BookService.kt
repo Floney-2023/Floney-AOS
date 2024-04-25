@@ -17,6 +17,7 @@ import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
+import com.aos.data.entity.request.book.PostBooksOutBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
@@ -278,4 +279,10 @@ interface BookService {
         @Query("repeatLineId") repeatLineId: Int
     ): NetworkState<Void>
 
+    // 가계부 나가기
+    @POST("books/users/out")
+    @Headers("Auth: true")
+    suspend fun postBooksOut(
+        @Body postBooksOutBody: PostBooksOutBody
+    ): NetworkState<Void>
 }

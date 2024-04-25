@@ -1,10 +1,7 @@
-package com.aos.floney.view.signup
+package com.aos.floney.view.book.add
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
@@ -24,8 +21,9 @@ class SignUpCompleteFragment : BaseFragment<FragmentSignUpCompleteBinding, SignU
         repeatOnStarted {
             viewModel.nextPage.collect() {
                 if(it) {
-                    val activity = requireActivity() as SignUpActivity
-                    activity.startBookAddActivity()
+                    val action =
+                        SignUpCompleteFragmentDirections.actionSignUpCompleteFragmentToBookAddInviteCheckFragment()
+                    findNavController().navigate(action)
                 }
             }
         }

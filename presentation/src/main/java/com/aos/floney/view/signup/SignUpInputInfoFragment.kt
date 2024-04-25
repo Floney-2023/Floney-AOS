@@ -25,9 +25,8 @@ class SignUpInputInfoFragment : BaseFragment<FragmentSignUpInputInfoBinding, Sig
         repeatOnStarted {
             viewModel.nextPage.collect() {
                 if (it) {
-                    val action =
-                        SignUpInputInfoFragmentDirections.actionSignUpInputInfoFragmentToSignUpCompleteFragment()
-                    findNavController().navigate(action)
+                    val activity = requireActivity() as SignUpActivity
+                    activity.startBookAddActivity()
                 }
             }
         }
