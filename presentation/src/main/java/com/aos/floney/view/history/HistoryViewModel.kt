@@ -3,6 +3,7 @@ package com.aos.floney.view.history
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.formatNumber
@@ -100,7 +101,7 @@ class HistoryViewModel @Inject constructor(
     fun setIntentModifyData(item: DayMoneyModifyItem) {
         mode.value = "modify"
         modifyId = item.id
-        cost.value = item.money.substring(2, item.money.length).trim() + "원"
+        cost.value = item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
         date.value = item.lineDate
         flow.value = getCategory(item.lineCategory)
         asset.value = item.assetSubCategory
@@ -247,7 +248,7 @@ class HistoryViewModel @Inject constructor(
         if (count == 0) {
             cost.postValue("${s.toString().formatNumber()}")
         } else {
-            cost.postValue("${s.toString().formatNumber()}원")
+            cost.postValue("${s.toString().formatNumber()}${CurrencyUtil.currency}")
         }
     }
 

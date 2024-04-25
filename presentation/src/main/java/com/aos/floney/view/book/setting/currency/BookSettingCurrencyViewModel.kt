@@ -3,6 +3,7 @@ package com.aos.floney.view.book.setting.currency
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
@@ -101,6 +102,8 @@ class BookSettingCurrencyViewModel @Inject constructor(
                 booksCurrencyChangeUseCase(item.code, prefs.getString("bookKey","")).onSuccess {
                     baseEvent(Event.HideLoading)
                     prefs.setString("symbol",item.symbol) // 화폐 단위 변경
+                    CurrencyUtil.currency = item.symbol
+
                     initBook() // 가계부 초기화
                 }.onFailure {
                     baseEvent(Event.HideLoading)

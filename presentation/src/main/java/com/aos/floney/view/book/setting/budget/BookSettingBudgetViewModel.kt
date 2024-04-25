@@ -3,6 +3,7 @@ package com.aos.floney.view.book.setting.budget
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -97,7 +98,7 @@ class BookSettingBudgetViewModel @Inject constructor(
 
             val updatedList = budgetInfo.budgetList.map { item ->
                 if (item.month == budgetItem.month) {
-                    item.copy(money = budgetMoney, isExist = !budgetMoney.equals("0원"))
+                    item.copy(money = budgetMoney, isExist = !budgetMoney.equals("0${CurrencyUtil.currency}"))
                 } else {
                     item // 변경 없음
                 }

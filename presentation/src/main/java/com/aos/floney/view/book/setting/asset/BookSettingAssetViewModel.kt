@@ -3,6 +3,7 @@ package com.aos.floney.view.book.setting.asset
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
@@ -83,7 +84,7 @@ class BookSettingAssetViewModel @Inject constructor(
         else if (cost.value!!.length<=4)
             return cost.value!!.substring(0, cost.value!!.length-1).toInt()
         else if (cost.value!="")
-            return cost.value!!.replace(",", "").replace("원","").toInt()
+            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toInt()
         else
             return 0
     }
@@ -97,7 +98,7 @@ class BookSettingAssetViewModel @Inject constructor(
         if (count == 0) {
             cost.postValue("${s.toString().formatNumber()}")
         } else {
-            cost.postValue("${s.toString().formatNumber()}원")
+            cost.postValue("${s.toString().formatNumber()}${CurrencyUtil.currency}")
         }
     }
 }
