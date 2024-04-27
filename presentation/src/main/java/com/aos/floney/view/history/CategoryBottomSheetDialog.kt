@@ -21,6 +21,7 @@ class CategoryBottomSheetDialog(
     private val viewModel: HistoryViewModel,
     private val activityLifecycleOwner: LifecycleOwner,
     private val clickedChoiceBtn: () -> Unit,
+    private val clickedEditeBtn: () -> Unit,
 ) : BottomSheetDialog(context), UiBookCategory.OnItemClickListener {
     lateinit var binding: BottomSheetCategoryBinding
 
@@ -57,6 +58,11 @@ class CategoryBottomSheetDialog(
             clickedChoiceBtn()
             this.dismiss()
         }
+    }
+
+    fun onClickEditBtn() {
+        clickedEditeBtn()
+        this.dismiss()
     }
 
     override fun onItemClick(item: UiBookCategory) {

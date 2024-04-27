@@ -182,6 +182,7 @@
             android:background="@color/primary1"
             android:fontFamily="@font/pretendard_bold"
             android:onClick="@{() -> vm.onClickSaveBtn()}"
+            android:visibility="@{vm.edit ? View.GONE : View.VISIBLE}"
             android:paddingTop="20dp"
             android:paddingBottom="32dp"
             android:text="추가하기"

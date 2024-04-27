@@ -274,6 +274,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
             android:text="삭제"
+            android:onClick="@{() -> vm.onClickDeleteBtn()}"
             android:textColor="@color/white"
             android:textSize="14dp"
             android:visibility="@{vm.mode.equals(`modify`) ? View.VISIBLE : View.GONE}"

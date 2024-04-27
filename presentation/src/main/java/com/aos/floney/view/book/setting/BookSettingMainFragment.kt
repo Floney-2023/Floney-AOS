@@ -8,11 +8,16 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingMainBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.add.BookAddInviteShareBottomSheetFragment
 import com.aos.floney.view.book.setting.asset.BookSettingAssetBottomSheetFragment
 import com.aos.floney.view.book.setting.carryinfo.BookSettingCarryInfoSheetFragment
+import com.aos.floney.view.book.setting.excel.BookSettingExcelBottomSheetFragment
+import com.aos.floney.view.common.BaseAlertDialog
+import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.model.book.MyBookUsers
 import com.aos.model.book.UiBookSettingModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class BookSettingMainFragment :
@@ -27,6 +32,11 @@ class BookSettingMainFragment :
         setUpUi()
         setUpViewModelObserver()
     }
+    override fun onResume() {
+        super.onResume()
+        viewModel.searchBookSettingItems()
+    }
+
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@BookSettingMainFragment)
     }
@@ -50,6 +60,23 @@ class BookSettingMainFragment :
                         viewModel.bookSettingInfo.value!!.bookName
                     )
                     findNavController().navigate(settingAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.initPage.collect() {
+                if(it) {
+                    if(it) {
+                        val initDialog = BaseAlertDialog(
+                            getString(R.string.book_setting_currency_alert_dialog_title),
+                            getString(R.string.book_setting_currency_alert_dialog_info),
+                            true
+                        ) {  checked ->
+                            if (checked)
+                                viewModel.initBook()
+                        }
+                        initDialog.show(parentFragmentManager, "initDialog")
+                    }
                 }
             }
         }
@@ -81,18 +108,79 @@ class BookSettingMainFragment :
             }
         }
         repeatOnStarted {
-            viewModel.budgetPage.collect() {
-                if(it) {
-                    val budgetAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingBudgetFragment()
-                    findNavController().navigate(budgetAction)
-                }
-            }
-        }
-        repeatOnStarted {
             viewModel.categoryPage.collect() {
                 if(it) {
                     val activity = requireActivity() as BookSettingActivity
                     activity.startBookCategoryActivity()
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.invitePage.collect() {
+                if(it) {
+                    val bottomSheetFragment = BookAddInviteShareBottomSheetFragment()
+                    bottomSheetFragment.show(parentFragmentManager, bottomSheetFragment.tag)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.excelPage.collect() {
+                if(it) {
+                    val excelFragment = BookSettingExcelBottomSheetFragment()
+                    excelFragment.show(parentFragmentManager, excelFragment.tag)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.budgetPage.collect() {
+                if(it) {
+                    val repeatAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingBudgetFragment()
+                    findNavController().navigate(repeatAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.repeatPage.collect() {
+                if(it) {
+                    val repeatAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingRepeatFragment()
+                    findNavController().navigate(repeatAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.repeatPage.collect() {
+                if(it) {
+                    val repeatAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingRepeatFragment()
+                    findNavController().navigate(repeatAction)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.exitPopup.collect(){
+                if(it){
+                    val initDialog = BaseAlertDialog(
+                        getString(R.string.book_setting_exit_alert_dialog_title),
+                        getString(R.string.book_setting_exit_alert_dialog_info),
+                        true
+                    ) {  checked ->
+                        if (checked)
+                            viewModel.onBookExit()
+                    }
+                    initDialog.show(parentFragmentManager, "exitDialog")
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.exitPage.collect(){
+                if(it) {
+                    // 가계부 2개 이상인데 나간 경우 -> 홈 화면으로 이동
+                    val activity = requireActivity() as BookSettingActivity
+                    activity.startHomeActivity()
+                }
+                else {
+                    // 가계부 1개 있는데 나간 경우 -> 가계부 추가 화면으로 이동
+                    val activity = requireActivity() as BookSettingActivity
+                    activity.startBookAddActivity()
                 }
             }
         }

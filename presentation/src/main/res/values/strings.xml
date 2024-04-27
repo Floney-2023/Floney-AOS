@@ -63,7 +63,7 @@
     <string name="mypage_main_user_soppose_text4">리뷰 작성하기</string>
     <string name="mypage_main_user_soppose_text5">개인정보 처리방침</string>
     <string name="mypage_main_user_soppose_text6">이용 약관</string>
-    <string name="member_count_format">%1$s 명</string>
+    <string name="member_count_format">%1$s명</string>
 
     <!--myPageActivity(설정)-->
     <string name="mypage_main_setting_text">설정</string>
@@ -168,7 +168,7 @@
     <string name="sign_up_not_valid_code">코드가 올바르지 않습니다.</string>
     <string name="sign_up_request_input_code">코드를 입력해주세요</string>
     <string name="sign_up_input_sign_up_info">가입 정보 입력</string>
-    <string name="sign_up_complete_text">환영합니다\n플로니님!</string>
+    <string name="sign_up_complete_text">환영합니다\n%1$s님!</string>
     <string name="sign_up_complete_text_detail">플로니와 함께 똑똑하고 편리한 가계부를\n작성해부세요.</string>
     <string name="sign_up_start_floney">플로니 시작하기</string>
 
@@ -266,6 +266,8 @@
     <string name="book_setting_currency_dialog_info">화폐 단위를 %1$s으로 변경하시겠습니까?\n변경 시, 가계부가 초기화됩니다.</string>
     <string name="book_setting_currency_dialog_left_button">초기화하기</string>
     <string name="book_setting_currency_dialog_right_button">취소하기</string>
+    <string name="book_setting_currency_alert_dialog_title">가계부 내역 초기화</string>
+    <string name="book_setting_currency_alert_dialog_info">가계부 내역 초기화 시 모든 내역이 삭제됩니다.\n초기화 하시겠습니까?</string>
 
 
     <string name="book_setting_exit_dialog_title">가계부 삭제</string>
@@ -273,6 +275,9 @@
     <string name="book_setting_exit_dialog_delete_button">삭제하기</string>
     <string name="book_setting_exit_dialog_cancel_button">취소하기</string>
     <string name="book_setting_exit_dialog_cancel_error">모든 사용자가 나가야 가계부 삭제가 가능합니다.</string>
+
+    <string name="book_setting_exit_alert_dialog_title">가계부 나가기</string>
+    <string name="book_setting_exit_alert_dialog_info">가계부를 나갈 시 모든 내역이 삭제됩니다.\n삭제하시겠습니까?</string>
 
     <string name="book_setting_bottom_asset_title">초기 자산 설정</string>
     <string name="book_setting_bottom_asset_info">현재 모아놓은 자산을 입력해 주세요.\n플로니가 앞으로의 자산 흐름을 보여드릴게요.</string>
@@ -300,6 +305,11 @@
     <string name="book_setting_category_dialog_info">‘%1$s’ 항목을 삭제하시겠습니까?\n해당 항목으로 작성된 모든 내역이 삭제됩니다.</string>
     <string name="book_setting_category_dialog_left_button">삭제하기</string>
     <string name="book_setting_category_dialog_right_button">취소하기</string>
+
+    <string name="book_setting_category_repeat_title">반복 내역 삭제</string>
+    <string name="book_setting_category_repeat_info">반복 내역을 삭제하시겠습니까?\n해당 반복의 모든 내역이 삭제됩니다.</string>
+    <string name="book_setting_category_repeat_left_button">삭제하기</string>
+    <string name="book_setting_category_repeat_right_button">취소하기</string>
 
     <!--10-1 정산 -->
     <string name="settle_up_start">정산</string>

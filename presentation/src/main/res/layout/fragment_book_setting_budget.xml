@@ -50,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
+            android:onClick="@{() -> vm.onClickedYear()}"
             android:src="@drawable/icon_year_picker"
             app:layout_constraintEnd_toEndOf="@+id/tv_budget_select_view"
             app:layout_constraintTop_toBottomOf="@+id/tv_budget_see_title" />
@@ -60,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:text="@{vm.year}"
+            android:onClick="@{() -> vm.onClickedYear()}"
             android:textColor="@color/black"
             android:textSize="13dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_select_year"

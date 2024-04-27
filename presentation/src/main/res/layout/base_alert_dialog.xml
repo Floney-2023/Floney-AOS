@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/background_base_alert_dialog"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="28dp">
+
+        <TextView
+            android:id="@+id/tv_popup_title"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:gravity="center"
+            android:lineSpacingExtra="-3sp"
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:textSize="16dp"
+            android:textColor="@color/grayscale1"/>
+
+        <TextView
+            android:id="@+id/tv_popup_info"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="23dp"
+            android:fontFamily="@font/floney_pretendard_regular"
+            android:gravity="center"
+            android:lineSpacingExtra="3sp"
+            android:textColor="@color/grayscale1"
+            android:textSize="13dp"
+            android:translationY="-1.34sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grayscale10"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:weightSum="2"
+            android:padding="1dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_left"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="네"
+                android:textSize="16dp"
+                android:layout_weight="1"
+                android:textAllCaps="false" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grayscale10"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:textSize="16dp"
+                android:text="아니오"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendard_semibold" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

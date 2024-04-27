@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.formatNumber
@@ -45,7 +46,7 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
         date.postValue(dateString)
         title.postValue(item.month+"월 예산")
 
-        if (!item.money.equals("0원"))
+        if (!item.money.equals("0${CurrencyUtil.currency}"))
             cost.postValue(item.money)
         else
             cost.postValue("")
@@ -60,7 +61,7 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
                 date.value!! ).onSuccess {
                 // 변경 완료 토스트 메세지
                 if (cost.value!! == "")
-                    _budgetSheet.emit("0원")
+                    _budgetSheet.emit("0${CurrencyUtil.currency}")
                 else
                     _budgetSheet.emit(cost.value!!)
             }.onFailure {
@@ -74,7 +75,7 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
         else if (cost.value!!.length<=4)
             return cost.value!!.substring(0, cost.value!!.length-1).toInt()
         else if (cost.value!="")
-            return cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2).toInt()
+            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toInt()
         else
             return 0
     }
@@ -88,7 +89,7 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
         if (count == 0) {
             cost.postValue("${s.toString().formatNumber()}")
         } else {
-            cost.postValue("${s.toString().formatNumber()}원")
+            cost.postValue("${s.toString().formatNumber()}${CurrencyUtil.currency}")
         }
     }
 }

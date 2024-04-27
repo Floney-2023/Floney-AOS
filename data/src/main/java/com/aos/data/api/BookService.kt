@@ -7,6 +7,7 @@ import com.aos.data.entity.response.home.GetBookDaysEntity
 import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksExcelBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
@@ -16,11 +17,14 @@ import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
+import com.aos.data.entity.request.book.PostBooksOutBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
-import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
+import com.aos.data.entity.request.settlement.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
+import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -34,13 +38,17 @@ import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
+import okhttp3.ResponseBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.io.File
 
 interface BookService {
 
@@ -107,6 +115,13 @@ interface BookService {
     suspend fun postBooksLinesChange(
         @Body moneyData: PostBooksChangeBody
     ): NetworkState<PostBooksChangeEntity>
+
+    // 가계부 내역 수정
+    @DELETE("books/lines/delete")
+    @Headers("Auth: true")
+    suspend fun deleteBookLines(
+        @Query("bookLineKey") bookLineKey: String
+    ): NetworkState<Void>
 
     // 가계부의 마지막 정산일 조회
     @GET("books/settlement/last")
@@ -243,4 +258,40 @@ interface BookService {
         @Path("bookKey") bookKey: String,
         @Body postBooksCategoryAddBody: PostBooksCategoryAddBody
     ): NetworkState<PostBooksCategoryAddEntity>
+
+    // 가계부 코드 조회
+    @GET("books/code")
+    @Headers("Auth: true")
+    suspend fun getBooksCode(
+        @Query("bookKey") bookKey : String
+    ): NetworkState<GetBooksCodeEntity>
+
+    // 가계부 엑셀 다운로드
+    @POST("books/excel")
+    @Headers("Auth: true")
+    suspend fun postBooksExcel(
+        @Body postBooksExcelBody: PostBooksExcelBody
+    ): NetworkState<ResponseBody>
+
+    // 반복 내역 조회
+    @GET("books/repeat")
+    @Headers("Auth: true")
+    suspend fun getBooksRepeat(
+        @Query("bookKey") bookKey: String,
+        @Query("categoryType") categoryType: String
+    ): NetworkState<List<GetBookRepeatEntity>>
+
+    // 반복 내역 삭제
+    @HTTP(method = "DELETE", path="books/repeat", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBooksRepeat(
+        @Query("repeatLineId") repeatLineId: Int
+    ): NetworkState<Void>
+
+    // 가계부 나가기
+    @POST("books/users/out")
+    @Headers("Auth: true")
+    suspend fun postBooksOut(
+        @Body postBooksOutBody: PostBooksOutBody
+    ): NetworkState<Void>
 }

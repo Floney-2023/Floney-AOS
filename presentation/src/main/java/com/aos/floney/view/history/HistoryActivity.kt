@@ -8,6 +8,8 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.ViewGroup
@@ -18,6 +20,8 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
 import com.aos.floney.ext.intentSerializable
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.category.BookCategoryActivity
+import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
@@ -84,6 +88,26 @@ class HistoryActivity :
 
     private fun setUpViewModelObserver() {
         repeatOnStarted {
+            viewModel.deleteBookLines.collect {
+                startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                if (Build.VERSION.SDK_INT >= 34) {
+                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                } else {
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                }
+                finish()
+            }
+        }
+        repeatOnStarted {
+            viewModel.onClickDelete.collect {
+                 BaseAlertDialog(title = "삭제하기", info = "삭제하시겠습니까?", false) {
+                    if(it) {
+                        viewModel.deleteHistory()
+                    }
+                }.show(supportFragmentManager, "baseAlertDialog")
+            }
+        }
+        repeatOnStarted {
             viewModel.showCalendar.collect {
                 if(it) {
                     if(!calendarBottomSheetDialog.isShowing) {
@@ -94,9 +118,13 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.onClickCategory.collect {
-                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity) {
+                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity, {
+                    // 완료 버튼 클릭
                     viewModel.onClickCategoryChoiceDate()
-                }
+                }, {
+                    // 편집 버튼 클릭
+                    startActivity(Intent(this@HistoryActivity, BookCategoryActivity::class.java).putExtra("entryPoint", "history"))
+                })
                 categoryBottomSheetDialog.show()
             }
         }
@@ -104,13 +132,15 @@ class HistoryActivity :
         repeatOnStarted {
             viewModel.postBooksLines.collect {
                 if(it) {
-                    startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }
-                    finish()
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
+                        finish()
+                    }, 2000)
                 }
             }
         }
@@ -118,6 +148,14 @@ class HistoryActivity :
         repeatOnStarted {
             viewModel.onClickCloseBtn.collect {
                 if(it) {
+                    // 수정 내역 있음
+                    BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
+                        if(it) {
+                            finish()
+                        }
+                    }.show(supportFragmentManager, "baseAlertDialog")
+                } else {
+                    // 수정 내역 없음
                     finish()
                 }
             }
@@ -126,13 +164,15 @@ class HistoryActivity :
         repeatOnStarted {
             viewModel.postModifyBooksLines.collect {
                 if(it) {
-                    startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }
-                    finish()
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
+                        finish()
+                    }, 2000)
                 }
             }
         }

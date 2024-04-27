@@ -1,5 +1,6 @@
 package com.aos.repository
 
+import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
@@ -9,6 +10,7 @@ import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
@@ -20,6 +22,8 @@ import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
 import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.settlement.settleOutcomes
+import okhttp3.ResponseBody
+import java.io.File
 import java.time.Duration
 
 interface BookRepository {
@@ -72,6 +76,9 @@ interface BookRepository {
         except: Boolean,
         nickname: String,
     ): Result<PostBooksChangeModel>
+
+    // 내역 삭제
+    suspend fun deleteBookLines(bookLineKey: String): Result<Void?>
 
     // 가계부의 마지막 정산일 조회
     suspend fun getSettlementLast(bookKey: String): Result<GetSettlementLastModel>
@@ -130,4 +137,18 @@ interface BookRepository {
     // 카테고리 추가하기
     suspend fun postBooksCategoryAdd(bookKey: String, parent: String, name: String): Result<PostBooksCategoryAddModel>
 
+    // 가계부 코드 조회
+    suspend fun getBooksCode(bookKey: String): Result<GetBooksCodeModel>
+
+    // 반복 내역 조회
+    suspend fun getBooksRepeat(bookKey: String, categoryType: String): Result<List<UiBookRepeatModel>>
+
+    // 반복 내역 삭제
+    suspend fun deleteBooksRepeat(repeatLineId: Int): Result<Void?>
+
+    // 가계부 엑셀 다운로드
+    suspend fun postBooksExcel(bookKey: String, excelDuration: String, currentDate: String): Result<ResponseBody>
+
+    // 가계부 나가기
+    suspend fun postBooksOut(bookKey: String): Result<Void?>
 }

@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_bookSettingMainFragment_to_bookSettingBudgetFragment"
             app:destination="@id/bookSettingBudgetFragment" />
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingRepeatFragment"
+            app:destination="@id/bookSettingRepeatFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookSettingEditFragment"
@@ -76,6 +79,11 @@
         android:name="com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment"
         android:label="BookSettingBudgetFragment"
         tools:layout="@layout/fragment_book_setting_budget"  />
+    <fragment
+        android:id="@+id/bookSettingRepeatFragment"
+        android:name="com.aos.floney.view.book.setting.repeat.BookSettingRepeatFragment"
+        android:label="BookSettingRepeatFragment"
+        tools:layout="@layout/fragment_book_setting_repeat" />
 
 
 </navigation>

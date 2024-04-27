@@ -1,15 +1,18 @@
 package com.aos.floney.view.book.add
 
+import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.bookadd.BooksJoinUseCase
+import com.aos.usecase.booksetting.BooksCodeCheckUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,7 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookAddInviteShareViewModel @Inject constructor(
-    stateHandle: SavedStateHandle
+    stateHandle: SavedStateHandle,
+    private val prefs: SharedPreferenceUtil,
+    private val booksCodeCheckUseCase: BooksCodeCheckUseCase
 ): BaseViewModel() {
 
     // 가계부 초대 코드
@@ -35,6 +40,21 @@ class BookAddInviteShareViewModel @Inject constructor(
     private var _inviteCodeCopy = MutableEventFlow<Boolean>()
     val inviteCodeCopy: EventFlow<Boolean> get() = _inviteCodeCopy
 
+    init {
+        settingInviteCode()
+    }
+    // 가계부 초대 코드 불러오기
+    fun settingInviteCode(){
+        viewModelScope.launch {
+            booksCodeCheckUseCase(
+                prefs.getString("bookKey","")).onSuccess {
+                inviteCode.postValue(it.code)
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+
     // 코드 공유 버튼 클릭
     fun onClickInviteCodeShare(){
         viewModelScope.launch {
@@ -51,7 +71,6 @@ class BookAddInviteShareViewModel @Inject constructor(
     // 초대 코드 복사
     fun onClickInviteCodeCopy(){
         viewModelScope.launch {
-            baseEvent(Event.ShowToastRes(R.string.book_add_invite_dialog_copy_text))
             _inviteCodeCopy.emit(true)
         }
     }

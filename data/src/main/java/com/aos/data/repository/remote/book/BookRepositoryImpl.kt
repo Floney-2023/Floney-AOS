@@ -2,9 +2,10 @@ package com.aos.data.repository.remote.book
 
 import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
-import com.aos.data.entity.request.book.Duration
+import com.aos.data.entity.request.settlement.Duration
 import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
+import com.aos.data.entity.request.book.PostBooksExcelBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
@@ -13,8 +14,11 @@ import com.aos.data.entity.request.book.PostBooksInfoSeeProfileBody
 import com.aos.data.entity.request.book.PostBooksJoinBody
 import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksNameBody
-import com.aos.data.entity.request.book.PostBooksOutcomesBody
-import com.aos.data.entity.request.book.PostSettlementAddBody
+import com.aos.data.entity.request.book.PostBooksOutBody
+import com.aos.data.entity.request.settlement.Outcomes
+import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
+import com.aos.data.entity.request.settlement.PostSettlementAddBody
+import com.aos.data.mapper.toGetBooksCodeModel
 import com.aos.data.mapper.toGetBooksInfoCurrencyModel
 import com.aos.data.mapper.toGetCheckUserBookModel
 import com.aos.data.mapper.toGetsettleUpLastModel
@@ -29,11 +33,13 @@ import com.aos.data.mapper.toPostBooksLinesModel
 import com.aos.data.mapper.toUiBookCategory
 import com.aos.data.mapper.toPostSettlementAddModel
 import com.aos.data.mapper.toUiBookBudgetModel
+import com.aos.data.mapper.toUiBookRepeatModel
 import com.aos.data.mapper.toUiBookSettingModel
 import com.aos.data.mapper.toUiMemberSelectModel
 import com.aos.data.mapper.toUiOutcomesSelectModel
 import com.aos.data.mapper.toUiSettlementSeeModel
 import com.aos.data.util.RetrofitFailureStateException
+import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
@@ -43,6 +49,7 @@ import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
@@ -56,7 +63,9 @@ import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.settlement.settleOutcomes
 import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
+import okhttp3.ResponseBody
 import timber.log.Timber
+import java.io.File
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRemoteDataSource) :
@@ -225,6 +234,27 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
             }
         }
     }
+
+    override suspend fun deleteBookLines(bookLineKey: String): Result<Void?> {
+        when (val data = bookDataSource.deleteBookLines(
+            bookLineKey
+        )) {
+            is NetworkState.Success -> return Result.success(data.body)
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+
     override suspend fun getSettlementLast(bookKey: String): Result<GetSettlementLastModel> {
         when (val data =
             bookDataSource.getSettlementLast(bookKey)) {
@@ -273,7 +303,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         outcomes: List<settleOutcomes>
     ):  Result<UiSettlementAddModel> {
         val outcomes = outcomes.map {
-            com.aos.data.entity.request.book.Outcomes(it.outcome.toDouble(),it.userEmail)
+            Outcomes(it.outcome.toDouble(),it.userEmail)
         }
         when (val data =
             bookDataSource.postSettlementAdd(PostSettlementAddBody(bookKey, startDate, endDate, usersEmails, outcomes))) {
@@ -397,7 +427,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     }
     override suspend fun deleteBooksInfoAll(bookKey: String): Result<Void?> {
         when (val data =
-            bookDataSource.deleteBooks(bookKey)) {
+            bookDataSource.deleteBooksInfoAll(bookKey)) {
             is NetworkState.Success -> {
                 return Result.success(data.body)
             }
@@ -553,6 +583,93 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
             is NetworkState.UnknownError ->{
                 Timber.e("UnknownError ${data.errorState}, ${data.t}")
                 return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun getBooksCode(bookKey: String): Result<GetBooksCodeModel> {
+        when (val data =
+            bookDataSource.getBooksCode(bookKey)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body.toGetBooksCodeModel())
+            }
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError ->{
+                Timber.e("UnknownError ${data.errorState}, ${data.t}")
+                return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun getBooksRepeat(
+        bookKey: String,
+        categoryType: String,
+    ): Result<List<UiBookRepeatModel>> {
+        when (val data = bookDataSource.getBooksRepeat(bookKey, categoryType)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiBookRepeatModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+    override suspend fun deleteBooksRepeat(repeatLineId: Int): Result<Void?> {
+        when (val data =
+            bookDataSource.deleteBooksRepeat(repeatLineId)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun postBooksExcel(
+        bookKey: String,
+        excelDuration: String,
+        currentDate : String
+    ): Result<ResponseBody> {
+        when (val data = bookDataSource.postBooksExcel(PostBooksExcelBody(bookKey, excelDuration, currentDate))) {
+            is NetworkState.Success -> return Result.success(data.body)
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+    override suspend fun postBooksOut(bookKey: String): Result<Void?> {
+        when (val data =
+            bookDataSource.postBooksOut(PostBooksOutBody(bookKey))) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
             }
         }
     }

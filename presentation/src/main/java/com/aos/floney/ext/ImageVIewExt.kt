@@ -15,13 +15,21 @@ fun ImageView.setImageToUrl(url: String?) {
             Glide.with(this)
                 .load(R.drawable.icon_default_profile)
                 .into(this)
-        } else if(it != "") {
+        } else if(it.equals("book_default")) {
             Glide.with(this)
-                .load(url)
+                .load(R.drawable.icon_book_profile)
+                .into(this)
+        } else if(it.equals("user_book_default")) {
+            Glide.with(this)
+                .load(R.drawable.btn_profile)
+                .into(this)
+        } else if(it.equals("btn_book_default")) {
+            Glide.with(this)
+                .load(R.drawable.btn_book_profile)
                 .into(this)
         } else {
             Glide.with(this)
-                .load(R.drawable.icon_default_profile)
+                .load(url)
                 .into(this)
         }
     }

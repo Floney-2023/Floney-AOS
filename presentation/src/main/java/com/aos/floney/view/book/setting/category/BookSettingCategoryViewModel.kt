@@ -83,10 +83,15 @@ class BookSettingCategoryViewModel @Inject constructor(
         }
     }
     // 자산/분류 카테고리 항목 가져오기
-    private fun getBookCategory() {
+    fun getBookCategory() {
         viewModelScope.launch(Dispatchers.IO) {
             getBookCategoryUseCase(prefs.getString("bookKey", ""), flow.value!!).onSuccess { it ->
-                _categoryList.postValue(it)
+                val item = it.map {
+                    UiBookCategory(
+                        it.idx, edit.value!!, it.name, it.default
+                    )
+                }
+                _categoryList.postValue(item)
 
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -103,13 +108,7 @@ class BookSettingCategoryViewModel @Inject constructor(
     // 편집버튼 클릭
     fun onClickEdit(){
         edit.value = !edit.value!!
-
-        val item = _categoryList.value?.map {
-            UiBookCategory(
-                it.idx, edit.value!!, it.name, it.default
-            )
-        } ?: listOf()
-        _categoryList.postValue(item)
+        getBookCategory()
     }
 
     // 내역 삭제

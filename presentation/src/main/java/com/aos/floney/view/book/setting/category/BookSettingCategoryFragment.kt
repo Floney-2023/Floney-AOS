@@ -20,7 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BookSettingCategoryFragment : BaseFragment<FragmentBookSettingCategoryBinding, BookSettingCategoryViewModel>(R.layout.fragment_book_setting_category) , UiBookCategory.OnItemClickListener {
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.getBookCategory()
+    }
     override fun onItemClick(item: UiBookCategory) {
 
         val dialogInfo = getString(R.string.book_setting_category_dialog_info, item.name)
