@@ -175,13 +175,32 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
 
 fun PostAnalyzeAssetEntity.toUiAnalyzeAssetModel(): UiAnalyzeAssetModel {
     val listAsset = arrayListOf<Asset>()
+    var maxAsset = 0.0
+
     for ((key, value) in this.assetInfo) {
-        listAsset.add(
-            Asset(
-                key.substring(key.length - 2, key.length).toInt(),
-                (value / this.initAsset).toFloat() * 100
+        // 최대 자산 저장
+        if(maxAsset < value) {
+            maxAsset = value
+        }
+    }
+
+    for ((key, value) in this.assetInfo) {
+        // 최대 자산 저장
+        if(value <= 0.0) {
+            listAsset.add(
+                Asset(
+                    key.substring(key.length - 2, key.length).toInt(),
+                    1f
+                )
             )
-        )
+        } else {
+            listAsset.add(
+                Asset(
+                    key.substring(key.length - 2, key.length).toInt(),
+                    (value / maxAsset).toFloat() * 100
+                )
+            )
+        }
     }
 
     return UiAnalyzeAssetModel(
