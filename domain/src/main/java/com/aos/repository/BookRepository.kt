@@ -77,6 +77,9 @@ interface BookRepository {
         nickname: String,
     ): Result<PostBooksChangeModel>
 
+    // 내역 삭제
+    suspend fun deleteBookLines(bookLineKey: String): Result<Void?>
+
     // 가계부의 마지막 정산일 조회
     suspend fun getSettlementLast(bookKey: String): Result<GetSettlementLastModel>
 

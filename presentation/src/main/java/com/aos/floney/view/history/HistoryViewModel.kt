@@ -13,6 +13,7 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyModifyItem
+import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
@@ -27,12 +28,17 @@ class HistoryViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val getBookCategoryUseCase: GetBookCategoryUseCase,
     private val postBooksLinesUseCase: PostBooksLinesUseCase,
-    private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase
+    private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
+    private val deleteBookLineUseCase: DeleteBookLineUseCase,
 ) : BaseViewModel() {
 
     // 내역 추가 결과
     private var _postBooksLines = MutableEventFlow<Boolean>()
     val postBooksLines: EventFlow<Boolean> get() = _postBooksLines
+
+    // 내역 삭제 결과
+    private var _deleteBookLines = MutableEventFlow<Boolean>()
+    val deleteBookLines: EventFlow<Boolean> get() = _deleteBookLines
 
     // 내역 수정 결과
     private var _postModifyBooksLines = MutableEventFlow<Boolean>()
@@ -49,6 +55,10 @@ class HistoryViewModel @Inject constructor(
     // 카테고리 클릭
     private var _onClickCategory = MutableEventFlow<String>()
     val onClickCategory: EventFlow<String> get() = _onClickCategory
+
+    // 내역 삭제 버튼 클릭
+    private var _onClickDelete = MutableEventFlow<Boolean>()
+    val onClickDelete: EventFlow<Boolean> get() = _onClickDelete
 
     // 날짜
     private var tempDate = ""
@@ -175,6 +185,7 @@ class HistoryViewModel @Inject constructor(
                 repeatDuration = "NONE"
             ).onSuccess {
                 _postBooksLines.emit(true)
+                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
@@ -198,6 +209,20 @@ class HistoryViewModel @Inject constructor(
                 nickname = nickname.value!!,
             ).onSuccess {
                 _postModifyBooksLines.emit(true)
+                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+
+    // 내역 삭제
+    fun deleteHistory() {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteBookLineUseCase(
+                bookLineKey = modifyId.toString()
+            ).onSuccess {
+                _deleteBookLines.emit(true)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
@@ -220,6 +245,13 @@ class HistoryViewModel @Inject constructor(
     fun onClickShowCalendar() {
         viewModelScope.launch {
             _showCalendar.emit(true)
+        }
+    }
+
+    // 삭제 버튼 클릭
+    fun onClickDeleteBtn() {
+        viewModelScope.launch {
+            _onClickDelete.emit(true)
         }
     }
 
