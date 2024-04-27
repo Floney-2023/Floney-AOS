@@ -226,4 +226,8 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
     ): NetworkState<Void> {
         return bookService.postBooksOut(postBooksOutBody)
     }
+
+    override suspend fun deleteBookLines(bookLineKey: String): NetworkState<Void> {
+        return bookService.deleteBookLines(bookLineKey)
+    }
 }

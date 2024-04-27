@@ -7,6 +7,7 @@ import com.aos.usecase.analyze.PostAnalyzeAssetUseCase
 import com.aos.usecase.analyze.PostAnalyzeIPlanUseCase
 import com.aos.usecase.analyze.PostAnalyzeInComeCategoryUseCase
 import com.aos.usecase.analyze.PostAnalyzeOutComeCategoryUseCase
+import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
@@ -73,5 +74,8 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun providePostAnalyzeAssetUseCase(analyzeRepository: AnalyzeRepository) = PostAnalyzeAssetUseCase(analyzeRepository)
+    @Provides
+    @Singleton
+    fun provideDeleteBookLineUseCase(bookRepository: BookRepository) = DeleteBookLineUseCase(bookRepository)
 
 }

@@ -13,6 +13,7 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyModifyItem
+import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
@@ -27,12 +28,17 @@ class HistoryViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val getBookCategoryUseCase: GetBookCategoryUseCase,
     private val postBooksLinesUseCase: PostBooksLinesUseCase,
-    private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase
+    private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
+    private val deleteBookLineUseCase: DeleteBookLineUseCase,
 ) : BaseViewModel() {
 
     // 내역 추가 결과
     private var _postBooksLines = MutableEventFlow<Boolean>()
     val postBooksLines: EventFlow<Boolean> get() = _postBooksLines
+
+    // 내역 삭제 결과
+    private var _deleteBookLines = MutableEventFlow<Boolean>()
+    val deleteBookLines: EventFlow<Boolean> get() = _deleteBookLines
 
     // 내역 수정 결과
     private var _postModifyBooksLines = MutableEventFlow<Boolean>()
@@ -49,6 +55,10 @@ class HistoryViewModel @Inject constructor(
     // 카테고리 클릭
     private var _onClickCategory = MutableEventFlow<String>()
     val onClickCategory: EventFlow<String> get() = _onClickCategory
+
+    // 내역 삭제 버튼 클릭
+    private var _onClickDelete = MutableEventFlow<Boolean>()
+    val onClickDelete: EventFlow<Boolean> get() = _onClickDelete
 
     // 날짜
     private var tempDate = ""
@@ -91,6 +101,7 @@ class HistoryViewModel @Inject constructor(
 
     // 내역 수정 시 해당 아이템 Id
     private var modifyId = 0
+    private var modifyItem: DayMoneyModifyItem? = null
 
     // 내역 추가 시에는 날짜만 세팅함
     fun setIntentAddData(clickDate: String, nickname: String) {
@@ -109,6 +120,10 @@ class HistoryViewModel @Inject constructor(
         content.value = item.description
         _nickname.value = item.writerNickName
         deleteChecked = item.exceptStatus
+
+        modifyItem = item
+        modifyItem!!.money = item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
+        modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
 
     // 자산/분류 카테고리 항목 가져오기
@@ -175,6 +190,7 @@ class HistoryViewModel @Inject constructor(
                 repeatDuration = "NONE"
             ).onSuccess {
                 _postBooksLines.emit(true)
+                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
@@ -184,10 +200,11 @@ class HistoryViewModel @Inject constructor(
     // 내역 수정
     private fun postModifyHistory() {
         viewModelScope.launch(Dispatchers.IO) {
+            val tempMoney = cost.value!!.replace(",", "")
             postBooksLinesChangeUseCase(
                 lineId = modifyId,
                 bookKey = prefs.getString("bookKey", ""),
-                money = cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2)
+                money = tempMoney.substring(0, tempMoney.length - 1)
                     .toInt(),
                 flow = flow.value!!,
                 asset = asset.value!!,
@@ -198,6 +215,20 @@ class HistoryViewModel @Inject constructor(
                 nickname = nickname.value!!,
             ).onSuccess {
                 _postModifyBooksLines.emit(true)
+                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+
+    // 내역 삭제
+    fun deleteHistory() {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteBookLineUseCase(
+                bookLineKey = modifyId.toString()
+            ).onSuccess {
+                _deleteBookLines.emit(true)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
@@ -209,10 +240,19 @@ class HistoryViewModel @Inject constructor(
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
     }
 
+    // 수정된 내용이 있는지 체크
+    private fun isExistEdit(): Boolean {
+        return cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
+    }
+
     // 닫기 버튼 클릭
     fun onClickCloseBtn() {
         viewModelScope.launch {
-            _onClickCloseBtn.emit(true)
+            if(modifyItem != null) {
+                _onClickCloseBtn.emit(isExistEdit())
+            } else {
+                _onClickCloseBtn.emit(false)
+            }
         }
     }
 
@@ -220,6 +260,13 @@ class HistoryViewModel @Inject constructor(
     fun onClickShowCalendar() {
         viewModelScope.launch {
             _showCalendar.emit(true)
+        }
+    }
+
+    // 삭제 버튼 클릭
+    fun onClickDeleteBtn() {
+        viewModelScope.launch {
+            _onClickDelete.emit(true)
         }
     }
 

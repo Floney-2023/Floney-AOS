@@ -12,6 +12,7 @@ import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzeCategoryInComeModel
 import com.aos.model.analyze.UiAnalyzeCategoryOutComeModel
 import com.aos.model.analyze.UiAnalyzePlanModel
+import timber.log.Timber
 import java.text.NumberFormat
 import java.util.Calendar
 import javax.inject.Inject

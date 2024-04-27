@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
-import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.ActivityBookSettingBinding
 import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment

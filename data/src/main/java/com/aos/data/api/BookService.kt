@@ -40,6 +40,8 @@ import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
 import okhttp3.ResponseBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.Headers
@@ -113,6 +115,13 @@ interface BookService {
     suspend fun postBooksLinesChange(
         @Body moneyData: PostBooksChangeBody
     ): NetworkState<PostBooksChangeEntity>
+
+    // 가계부 내역 수정
+    @DELETE("books/lines/delete")
+    @Headers("Auth: true")
+    suspend fun deleteBookLines(
+        @Query("bookLineKey") bookLineKey: String
+    ): NetworkState<Void>
 
     // 가계부의 마지막 정산일 조회
     @GET("books/settlement/last")
