@@ -1,14 +1,30 @@
 package com.aos.repository
 
+import com.aos.model.book.GetBooksCodeModel
+import com.aos.model.book.GetBooksInfoCurrencyModel
+import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
+import com.aos.model.book.PostBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
+import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookRepeatModel
+import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
+import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.UiMemberSelectModel
+import com.aos.model.settlement.UiOutcomesSelectModel
+import com.aos.model.settlement.UiSettlementAddModel
+import com.aos.model.settlement.UiSettlementSeeModel
+import com.aos.model.settlement.settleOutcomes
+import okhttp3.ResponseBody
+import java.io.File
+import java.time.Duration
 
 interface BookRepository {
 
@@ -61,4 +77,75 @@ interface BookRepository {
         nickname: String,
     ): Result<PostBooksChangeModel>
 
+    // 가계부의 마지막 정산일 조회
+    suspend fun getSettlementLast(bookKey: String): Result<GetSettlementLastModel>
+
+    // 특정 가계부의 유저들 조회
+    suspend fun getBooksUsers(bookKey: String): Result<UiMemberSelectModel>
+
+    // 정산 지출 내역 조회
+    suspend fun postBooksOutcomes(usersEmails : List<String>, startDate : String, endDate : String, bookKey: String) : Result<UiOutcomesSelectModel>
+
+    // 정산 추가
+    suspend fun postSettlementAdd(bookKey: String, startDate : String, endDate : String, usersEmails : List<String>, outcomes: List<settleOutcomes>) : Result<UiSettlementAddModel>
+
+    // 가계부의 정산 내역 조회
+    suspend fun getSettlementSee(bookKey: String): Result<UiSettlementSeeModel>
+
+    // 정산 세부 내역 조회
+    suspend fun getSettlementDetailSee(id: Long): Result<UiSettlementAddModel>
+
+    // 가계부 설정 조회하기
+    suspend fun getBooksInfo(bookKey: String): Result<UiBookSettingModel>
+
+    // 가계부 이름 변경
+    suspend fun postBooksName(name: String, bookKey: String): Result<Void?>
+
+    // 가계부 삭제
+    suspend fun deleteBooks(bookKey: String): Result<Void?>
+
+    // 내역 프로필 보기 설정
+    suspend fun postBooksInfoSeeProfile(bookKey: String, seeProfileStatus: Boolean): Result<Void?>
+
+    // 가계부 초기화
+    suspend fun deleteBooksInfoAll(bookKey: String): Result<Void?>
+
+    // 화폐설정 변경
+    suspend fun postBooksInfoCurrency(currency: String, bookKey: String): Result<PostBooksInfoCurrencyModel>
+
+    // 화폐설정 조회
+    suspend fun getBooksInfoCurrency(bookKey: String): Result<GetBooksInfoCurrencyModel>
+
+    // 가계부 자산 설정하기
+    suspend fun postBooksInfoAsset(bookKey: String, asset: Int): Result<Void?>
+
+    // 가계부 이월설정 On/Off
+    suspend fun postBooksInfoCarryOver(status: Boolean, bookKey: String): Result<Void?>
+
+    // 예산조회하기
+    suspend fun getBooksBudget(bookKey: String, date: String): Result<UiBookBudgetModel>
+
+    // 가계부 예산 설정하기
+    suspend fun postBooksInfoBudget(bookKey: String, budget: Int, date: String): Result<Void?>
+
+    // 하위 카테고리 삭제
+    suspend fun deleteBookCategory(bookKey: String,  parent: String, name: String): Result<Void?>
+
+    // 카테고리 추가하기
+    suspend fun postBooksCategoryAdd(bookKey: String, parent: String, name: String): Result<PostBooksCategoryAddModel>
+
+    // 가계부 코드 조회
+    suspend fun getBooksCode(bookKey: String): Result<GetBooksCodeModel>
+
+    // 반복 내역 조회
+    suspend fun getBooksRepeat(bookKey: String, categoryType: String): Result<List<UiBookRepeatModel>>
+
+    // 반복 내역 삭제
+    suspend fun deleteBooksRepeat(repeatLineId: Int): Result<Void?>
+
+    // 가계부 엑셀 다운로드
+    suspend fun postBooksExcel(bookKey: String, excelDuration: String, currentDate: String): Result<ResponseBody>
+
+    // 가계부 나가기
+    suspend fun postBooksOut(bookKey: String): Result<Void?>
 }

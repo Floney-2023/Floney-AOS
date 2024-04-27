@@ -25,6 +25,7 @@ import com.aos.floney.BR
 import com.aos.floney.R
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.common.ErrorToastDialog
+import com.aos.floney.view.common.SuccessToastDialog
 import timber.log.Timber
 import java.lang.reflect.ParameterizedType
 
@@ -100,7 +101,23 @@ abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseViewModel>(
                     errorToastDialog.dismiss()
                 }, 2000)
             }
+            is BaseViewModel.Event.ShowSuccessToast -> {
+                val successToastDialog = SuccessToastDialog(requireContext(), event.message)
+                successToastDialog.show()
 
+                Handler(Looper.myLooper()!!).postDelayed({
+                    successToastDialog.dismiss()
+                }, 2000)
+            }
+
+            is BaseViewModel.Event.ShowSuccessToastRes -> {
+                val successToastDialog = SuccessToastDialog(requireContext(), getString(event.message))
+                successToastDialog.show()
+
+                Handler(Looper.myLooper()!!).postDelayed({
+                    successToastDialog.dismiss()
+                }, 2000)
+            }
             is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
             is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
         }

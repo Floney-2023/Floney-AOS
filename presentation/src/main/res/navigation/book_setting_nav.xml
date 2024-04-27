@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/book_setting_nav"
+    app:startDestination="@id/bookSettingMainFragment">
+
+    <activity
+        android:id="@+id/bookSettingActivity"
+        android:name="com.aos.floney.view.book.setting.BookSettingActivity"
+        tools:layout="@layout/activity_book_setting"
+        android:label="BookSettingActivity" />
+    <fragment
+        android:id="@+id/bookSettingMainFragment"
+        android:name="com.aos.floney.view.book.setting.BookSettingMainFragment"
+        tools:layout="@layout/fragment_book_setting_main"
+        android:label="BookSettingMainFragment" >
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingEditFragment"
+            app:destination="@id/bookSettingEditFragment" />
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingCurrencyFragment"
+            app:destination="@id/bookSettingCurrencyFragment" />
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingBudgetFragment"
+            app:destination="@id/bookSettingBudgetFragment" />
+        <action
+            android:id="@+id/action_bookSettingMainFragment_to_bookSettingRepeatFragment"
+            app:destination="@id/bookSettingRepeatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingEditFragment"
+        android:name="com.aos.floney.view.book.setting.edit.BookSettingEditFragment"
+        tools:layout="@layout/fragment_book_setting_edit"
+        android:label="BookSettingEditFragment" >
+        <action
+            android:id="@+id/action_bookSettingEditFragment_to_bookSettingProfileChangeFragment"
+            app:destination="@id/bookSettingProfileChangeFragment" />
+
+        <argument
+            android:name="profileImg"
+            app:argType="string" />
+        <argument
+            android:name="profileCheck"
+            app:argType="boolean" />
+        <argument
+            android:name="roleCheck"
+            app:argType="boolean" />
+        <argument
+            android:name="bookCount"
+            app:argType="integer" />
+        <argument
+            android:name="bookName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingProfileChangeFragment"
+        android:name="com.aos.floney.view.book.setting.edit.BookSettingProfileChangeFragment"
+        android:label="BookSettingProfileChangeFragment"
+        tools:layout="@layout/fragment_book_setting_edit_profilechange" >
+        <argument
+            android:name="profileImg"
+            app:argType="string" />
+        <argument
+            android:name="profileCheck"
+            app:argType="boolean" />
+        <argument
+            android:name="roleCheck"
+            app:argType="boolean" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingCurrencyFragment"
+        android:name="com.aos.floney.view.book.setting.currency.BookSettingCurrencyFragment"
+        android:label="BookSettingCurrencyFragment"
+        tools:layout="@layout/fragment_book_setting_currency" />
+    <fragment
+        android:id="@+id/bookSettingBudgetFragment"
+        android:name="com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment"
+        android:label="BookSettingBudgetFragment"
+        tools:layout="@layout/fragment_book_setting_budget"  />
+    <fragment
+        android:id="@+id/bookSettingRepeatFragment"
+        android:name="com.aos.floney.view.book.setting.repeat.BookSettingRepeatFragment"
+        android:label="BookSettingRepeatFragment"
+        tools:layout="@layout/fragment_book_setting_repeat" />
+
+
+</navigation>

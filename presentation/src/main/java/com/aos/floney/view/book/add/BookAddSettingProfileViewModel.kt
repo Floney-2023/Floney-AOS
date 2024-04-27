@@ -73,7 +73,7 @@ class BookAddSettingProfileViewModel @Inject constructor(
     }
 
     // 이미지 설정
-    fun onClickSettingProfile(){
+    fun onClickSettingImage(){
 
     }
 }

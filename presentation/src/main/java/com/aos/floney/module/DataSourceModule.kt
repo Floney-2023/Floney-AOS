@@ -1,7 +1,9 @@
 package com.aos.floney.module
 
+import com.aos.data.api.AnalyzeService
 import com.aos.data.api.BookService
 import com.aos.data.api.UserService
+import com.aos.data.repository.remote.analyze.AnalyzeRemoteDataSourceImpl
 import com.aos.data.repository.remote.book.BookRemoteDataSourceImpl
 import com.aos.data.repository.remote.user.UserRemoteDataSourceImpl
 import dagger.Module
@@ -21,6 +23,10 @@ object DataSourceModule {
     @Singleton
     @Provides
     fun provideBookRemoteDataSourceImpl(bookService: BookService) = BookRemoteDataSourceImpl(bookService)
+
+    @Singleton
+    @Provides
+    fun provideAnalyzeRemoteDataSourceImpl(analyzeService: AnalyzeService) = AnalyzeRemoteDataSourceImpl(analyzeService)
 
 
 }

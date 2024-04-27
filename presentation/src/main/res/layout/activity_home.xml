@@ -40,8 +40,9 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:layout_marginEnd="20dp"
+            android:onClick="@{() -> vm.onClickSettingPage()}"
             android:visibility="@{vm.onClickedShowDetail != null ? View.INVISIBLE : View.VISIBLE}"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_logo">
@@ -97,6 +98,7 @@
             android:layout_marginStart="2dp"
             android:fontFamily="@font/pretendard_semibold"
             android:text="@{vm.showDate}"
+            android:onClick="@{() -> vm.onClickChoiceDate()}"
             android:textColor="@color/grayscale1"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"
@@ -257,7 +259,7 @@
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNavigationView"
                 android:layout_width="match_parent"
-                android:layout_height="76dp"
+                android:layout_height="64dp"
                 android:background="#FFFFFF"
                 app:itemActiveIndicatorStyle="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_setting"

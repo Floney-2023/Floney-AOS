@@ -1,10 +1,12 @@
 package com.aos.floney.view.history
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
@@ -16,6 +18,7 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
 import com.aos.floney.ext.intentSerializable
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.category.BookCategoryActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
@@ -40,7 +43,6 @@ class HistoryActivity :
 
         setUpViewModelObserver()
         setUpCalendarBottomSheet()
-        setUpCategoryBottomSheet()
     }
 
     // 내역 추가 데이터 가져오기
@@ -81,13 +83,6 @@ class HistoryActivity :
         })
     }
 
-    // 카테고리 bottomSheet 구현
-    private fun setUpCategoryBottomSheet() {
-        categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, viewModel, this@HistoryActivity) {
-            viewModel.onClickCategoryChoiceDate()
-        }
-    }
-
     private fun setUpViewModelObserver() {
         repeatOnStarted {
             viewModel.showCalendar.collect {
@@ -100,9 +95,14 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.onClickCategory.collect {
-                if(it) {
-                    categoryBottomSheetDialog.show()
-                }
+                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity, {
+                    // 완료 버튼 클릭
+                    viewModel.onClickCategoryChoiceDate()
+                }, {
+                    // 편집 버튼 클릭
+                    startActivity(Intent(this@HistoryActivity, BookCategoryActivity::class.java).putExtra("entryPoint", "history"))
+                })
+                categoryBottomSheetDialog.show()
             }
         }
 
@@ -110,6 +110,11 @@ class HistoryActivity :
             viewModel.postBooksLines.collect {
                 if(it) {
                     startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                     finish()
                 }
             }
@@ -127,6 +132,11 @@ class HistoryActivity :
             viewModel.postModifyBooksLines.collect {
                 if(it) {
                     startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
                     finish()
                 }
             }

@@ -13,7 +13,7 @@
     <item android:id="@+id/add"
         android:title="" />
 
-    <item android:id="@+id/calculateFragment"
+    <item android:id="@+id/settleUpFragment"
         android:icon="@drawable/item_calculate_selector"
         android:title="@string/bottom_navigation_calculate" />
 

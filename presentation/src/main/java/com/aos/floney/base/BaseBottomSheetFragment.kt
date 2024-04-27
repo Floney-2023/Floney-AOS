@@ -89,6 +89,12 @@ abstract class BaseBottomSheetFragment<B : ViewDataBinding, VM : BaseViewModel>(
             is BaseViewModel.Event.ShowToastRes -> {
                 // Show Toast from resources logic
             }
+            is BaseViewModel.Event.ShowSuccessToast -> {
+                // Show Toast logic
+            }
+            is BaseViewModel.Event.ShowSuccessToastRes -> {
+                // Show Toast from resources logic
+            }
             is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
             is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
         }

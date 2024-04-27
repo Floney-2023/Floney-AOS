@@ -98,7 +98,7 @@
             android:paddingTop="20dp"
             android:paddingBottom="32dp"
             android:text="변경하기"
-            android:textAppearance="@style/start_button"
+            android:textAppearance="@style/right_button"
             app:layout_constraintBottom_toBottomOf="parent"
             android:onClick="@{() -> vm.onClickProfileChange()}" />
     </androidx.constraintlayout.widget.ConstraintLayout>

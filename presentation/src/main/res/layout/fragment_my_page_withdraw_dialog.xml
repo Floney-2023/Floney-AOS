@@ -93,7 +93,7 @@
                 android:stateListAnimator="@null"
                 android:text="@string/mypage_main_inform_exit_popup_btn_cancel"
                 android:textAllCaps="false"
-                android:textAppearance="@style/start_button"
+                android:textAppearance="@style/right_button"
                 android:textSize="13sp"
                 android:onClick="@{() -> vm.onClickCancelButton()}" />
         </LinearLayout>

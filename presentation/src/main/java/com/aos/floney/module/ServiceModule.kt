@@ -1,5 +1,6 @@
 package com.aos.floney.module
 
+import com.aos.data.api.AnalyzeService
 import com.aos.data.api.BookService
 import com.aos.data.api.UserService
 import dagger.Module
@@ -20,5 +21,9 @@ object ServiceModule {
     @Provides
     @Singleton
     fun provideBookService(retrofit: Retrofit): BookService = retrofit.create(BookService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAnalyzeService(retrofit: Retrofit): AnalyzeService = retrofit.create(AnalyzeService::class.java)
 
 }

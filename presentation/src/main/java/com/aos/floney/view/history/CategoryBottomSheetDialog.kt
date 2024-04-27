@@ -17,9 +17,11 @@ import timber.log.Timber
 
 class CategoryBottomSheetDialog(
     context: Context,
+    private val category: String,
     private val viewModel: HistoryViewModel,
     private val activityLifecycleOwner: LifecycleOwner,
     private val clickedChoiceBtn: () -> Unit,
+    private val clickedEditeBtn: () -> Unit,
 ) : BottomSheetDialog(context), UiBookCategory.OnItemClickListener {
     lateinit var binding: BottomSheetCategoryBinding
 
@@ -38,6 +40,8 @@ class CategoryBottomSheetDialog(
             setVariable(BR.vm, viewModel)
             setVariable(BR.eventHolder, this@CategoryBottomSheetDialog)
             lifecycleOwner = activityLifecycleOwner
+
+            binding.tvCategory.text = category
         }
     }
 
@@ -54,6 +58,11 @@ class CategoryBottomSheetDialog(
             clickedChoiceBtn()
             this.dismiss()
         }
+    }
+
+    fun onClickEditBtn() {
+        clickedEditeBtn()
+        this.dismiss()
     }
 
     override fun onItemClick(item: UiBookCategory) {

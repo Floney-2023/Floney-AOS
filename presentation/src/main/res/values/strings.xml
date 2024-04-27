@@ -44,6 +44,7 @@
     <string name="find_pw">비밀번호 찾기</string>
     <string name="sign_up">회원가입 하기</string>
     <string name="simple_login">간편 로그인</string>
+    <string name="currency_error">화폐 단위를 불러오지 못했습니다.</string>
 
     <!--PasswordFindActivity-->
     <string name="find_password_text">가입한 이메일 주소를 입력하세요.\n로그인 가능한 임시 비밀번호를 보내드립니다.</string>
@@ -62,7 +63,7 @@
     <string name="mypage_main_user_soppose_text4">리뷰 작성하기</string>
     <string name="mypage_main_user_soppose_text5">개인정보 처리방침</string>
     <string name="mypage_main_user_soppose_text6">이용 약관</string>
-    <string name="member_count_format">%1$s 명</string>
+    <string name="member_count_format">%1$s명</string>
 
     <!--myPageActivity(설정)-->
     <string name="mypage_main_setting_text">설정</string>
@@ -167,7 +168,7 @@
     <string name="sign_up_not_valid_code">코드가 올바르지 않습니다.</string>
     <string name="sign_up_request_input_code">코드를 입력해주세요</string>
     <string name="sign_up_input_sign_up_info">가입 정보 입력</string>
-    <string name="sign_up_complete_text">환영합니다\n플로니님!</string>
+    <string name="sign_up_complete_text">환영합니다\n%1$s님!</string>
     <string name="sign_up_complete_text_detail">플로니와 함께 똑똑하고 편리한 가계부를\n작성해부세요.</string>
     <string name="sign_up_start_floney">플로니 시작하기</string>
 
@@ -229,4 +230,178 @@
         <item>토</item>
         <item>일</item>
     </string-array>
+
+    <!--7-1 가계부설정 -->
+    <string name="book_setting_title">가계부 설정</string>
+    <string name="book_setting_user">사용자</string>
+    <string name="book_setting_calendar">캘린더</string>
+    <string name="book_setting_carryInfo">이월 설정</string>
+    <string name="book_setting_carryInfo_yes">이월 있음</string>
+    <string name="book_setting_carryInfo_no">이월 없음</string>
+    <string name="book_setting_repeat">반복 내역 설정</string>
+    <string name="book_setting_favorite">즐겨찾기 설정</string>
+    <string name="book_setting_init"><u>가계부 초기화하기</u></string>
+    <string name="book_setting_exit"><u>가계부 나가기</u></string>
+    <string name="book_setting_asset_title">예산·자산</string>
+    <string name="book_setting_asset">예산 설정</string>
+    <string name="book_setting_start_money">초기 자산 설정</string>
+    <string name="book_setting_category">분류항목 관리</string>
+    <string name="book_setting_money">화폐 설정</string>
+    <string name="book_setting_excel">엑셀 내보내기</string>
+    <string name="book_setting_invite_friend">친구 초대하기</string>
+
+    <string name="book_setting_edit_title">가계부 편집</string>
+    <string name="book_setting_edit_name">가계부 이름</string>
+    <string name="book_setting_edit_hint">이름을 입력하세요.</string>
+    <string name="book_setting_edit_edit_button">변경하기</string>
+    <string name="book_setting_edit_edit_profile_change">프로필 이미지 변경</string>
+    <string name="book_setting_edit_edit_see_profile">내역 프로필 보기</string>
+    <string name="book_setting_edit_edit_delete"><u>가계부 삭제</u></string>
+    <string name="book_setting_edit_request">가계부 이름을 입력해주세요.</string>
+
+    <string name="book_setting_currency_title">화폐 설정</string>
+    <string name="book_setting_currency_info">찾으시는 화폐 단위가 없나요?\n원하시는 화폐를 플로니에게 알려주세요.</string>
+
+    <string name="book_setting_currency_dialog_title">가계부가 초기화됩니다</string>
+    <string name="book_setting_currency_dialog_info">화폐 단위를 %1$s으로 변경하시겠습니까?\n변경 시, 가계부가 초기화됩니다.</string>
+    <string name="book_setting_currency_dialog_left_button">초기화하기</string>
+    <string name="book_setting_currency_dialog_right_button">취소하기</string>
+    <string name="book_setting_currency_alert_dialog_title">가계부 내역 초기화</string>
+    <string name="book_setting_currency_alert_dialog_info">가계부 내역 초기화 시 모든 내역이 삭제됩니다.\n초기화 하시겠습니까?</string>
+
+
+    <string name="book_setting_exit_dialog_title">가계부 삭제</string>
+    <string name="book_setting_exit_dialog_info">%1$s의 가계부를 정말 삭제하시겠습니까?\n작성된 내역은 모두 삭제되며 복구할 수 없습니다.</string>
+    <string name="book_setting_exit_dialog_delete_button">삭제하기</string>
+    <string name="book_setting_exit_dialog_cancel_button">취소하기</string>
+    <string name="book_setting_exit_dialog_cancel_error">모든 사용자가 나가야 가계부 삭제가 가능합니다.</string>
+
+    <string name="book_setting_exit_alert_dialog_title">가계부 나가기</string>
+    <string name="book_setting_exit_alert_dialog_info">가계부를 나갈 시 모든 내역이 삭제됩니다.\n삭제하시겠습니까?</string>
+
+    <string name="book_setting_bottom_asset_title">초기 자산 설정</string>
+    <string name="book_setting_bottom_asset_info">현재 모아놓은 자산을 입력해 주세요.\n플로니가 앞으로의 자산 흐름을 보여드릴게요.</string>
+    <string name="book_setting_bottom_asset_hint">초기 자산을 입력하세요.</string>
+    <string name="book_setting_bottom_asset_error">숫자를 입력해주세요.</string>
+    <string name="book_setting_bottom_asset_succcess">초기 자산 설정이 완료되었습니다.</string>
+    <string name="book_setting_bottom_asset_save">저장하기</string>
+    <string name="book_setting_bottom_asset_init"><u>초기화하기</u></string>
+
+    <string name="book_setting_bottom_carryinfo_title">이월 설정</string>
+    <string name="book_setting_bottom_carryinfo_total_income">지난달 총수입</string>
+    <string name="book_setting_bottom_carryinfo_total_outcome">지난달 총지출</string>
+    <string name="book_setting_bottom_carryinfo_next_start_money">다음달 시작금액</string>
+    <string name="book_setting_bottom_carryinfo_info">이월 설정은 지난 달에 기록된 수입에서 지출을 차감한 금액을\n다음 달로 넘기는 기능입니다.\n\n남은 금액이 마이너스인 경우 지출로 기록되며\n플러스인 경우는 수입으로 기록 됩니다.</string>
+    <string name="book_setting_bottom_carryinfo_on">ON</string>
+    <string name="book_setting_bottom_carryinfo_off">OFF</string>
+
+    <string name="book_setting_budget_title">예산 설정</string>
+    <string name="book_setting_budget_hint">예산을 입력하세요.</string>
+    <string name="book_setting_budget_error">숫자를 입력해주세요.</string>
+
+    <string name="book_setting_category_title">분류 항목 관리</string>
+    <string name="book_setting_category_info">가계부를 적을 때 선택하는 항목들을\n추가, 삭제 할 수 있어요</string>
+    <string name="book_setting_category_dialog_title">분류항목 삭제</string>
+    <string name="book_setting_category_dialog_info">‘%1$s’ 항목을 삭제하시겠습니까?\n해당 항목으로 작성된 모든 내역이 삭제됩니다.</string>
+    <string name="book_setting_category_dialog_left_button">삭제하기</string>
+    <string name="book_setting_category_dialog_right_button">취소하기</string>
+
+    <string name="book_setting_category_repeat_title">반복 내역 삭제</string>
+    <string name="book_setting_category_repeat_info">반복 내역을 삭제하시겠습니까?\n해당 반복의 모든 내역이 삭제됩니다.</string>
+    <string name="book_setting_category_repeat_left_button">삭제하기</string>
+    <string name="book_setting_category_repeat_right_button">취소하기</string>
+
+    <!--10-1 정산 -->
+    <string name="settle_up_start">정산</string>
+    <string name="settle_up_start_title">마지막 정산일로부터\n%1$s일 지났어요</string>
+    <string name="settle_up_start_info">복잡하고 어려운 정산, 저희가 대신 해드릴게요</string>
+    <string name="settle_up_start_button">정산하기</string>
+    <string name="settle_up_start_see_button"><u>정산 내역 보기</u></string>
+
+    <string name="settle_up_member_select_title">정산에 참여할 멤버를\n선택해주세요</string>
+    <string name="settle_up_member_select_button">다음으로</string>
+    <string name="settle_up_member_select_error_messsage">멤버를 선택해주세요.</string>
+
+    <string name="settle_up_period_select_title">정산할 기간을\n설정해주세요</string>
+    <string name="settle_up_period_select_hint">기간을 설정해주세요.</string>
+    <string name="settle_up_period_select_back_button">이전으로</string>
+    <string name="settle_up_period_select_next_button">다음으로</string>
+    <string name="settle_up_period_select_text">%1$s-%1$s</string>
+    <string name="settle_up_period_select_select_button">선택</string>
+    <string name="settle_up_period_select_day_placeholder">%1$s</string>
+    <string name="settle_up_period_select_error_messsage">내역이 없습니다. 기간을 다시 설정해주세요.</string>
+
+    <string name="settle_up_outcomes_select_title">정산할 내역을\n선택해주세요</string>
+    <string name="settle_up_outcomes_all_check">전체선택</string>
+    <string name="settle_up_outcomes_select_money_text">%1$s원</string>
+    <string name="settle_up_outcomes_select_back_button">이전으로</string>
+    <string name="settle_up_outcomes_select_next_button">정산하기</string>
+
+    <string name="settle_up_complete_title">정산이\n완료되었어요!</string>
+    <string name="settle_up_complete_info">소수점은 반올림되어 계산됩니다.</string>
+    <string name="settle_up_complete_member_count">1인</string>
+    <string name="settle_up_complete_total_expense">총 지출</string>
+    <string name="settle_up_complete_total_expense_format">%1$s원</string>
+    <string name="settle_up_complete_settlement_money">정산 금액</string>
+    <string name="settle_up_complete_share_button">공유하기</string>
+
+    <!--10-2 정산 내역 -->
+    <string name="settle_up_see_title">정산 내역</string>
+    <string name="settle_up_see_card_period">기간</string>
+    <string name="settle_up_see_card_total_money">총 금액</string>
+    <string name="settle_up_see_card_member">인원</string>
+    <string name="settle_up_see_card_settlement_money">정산 금액</string>
+    <string name="settle_up_see_card_settlement_one_member">1인</string>
+    <string name="settle_up_see_card_not_settlement">정산 내역이 없습니다.</string>
+
+
+    <string name="settle_up_detail_see_title">정산 영수증</string>
+    <string name="settle_up_detail_see_total_expense">총 지출</string>
+    <string name="settle_up_detail_see_settlement_money">정산 금액</string>
+    <string name="settle_up_detail_see_card_settlement_one_member">1인</string>
+    <string name="settle_up_detail_see_share_button">공유하기</string>
+    <string name="title_activity_analyze">AnalyzeActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+
 </resources>

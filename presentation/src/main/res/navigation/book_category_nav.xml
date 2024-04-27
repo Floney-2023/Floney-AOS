@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_page_code_input_nav"
+    app:startDestination="@id/bookSettingCategoryFragment">
+
+    <activity
+        android:id="@+id/bookCategoryActivity"
+        android:name="com.aos.floney.view.book.setting.category.BookCategoryActivity"
+        tools:layout="@layout/activity_book_category"
+        android:label="BookCategoryActivity" />
+    <fragment
+        android:id="@+id/bookSettingCategoryFragment"
+        android:name="com.aos.floney.view.book.setting.category.BookSettingCategoryFragment"
+        android:label="BookSettingCategoryFragment"
+        tools:layout="@layout/fragment_book_setting_category">
+        <action
+            android:id="@+id/action_bookSettingCategoryFragment_to_bookSettingCategoryAddFragment"
+            app:destination="@id/bookSettingCategoryAddFragment" />
+        <argument
+            android:name="parent"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingCategoryAddFragment"
+        android:name="com.aos.floney.view.book.setting.category.BookSettingCategoryAddFragment"
+        android:label="BookSettingCategoryAddFragment"
+        tools:layout="@layout/fragment_book_setting_category_add" >
+        <action
+            android:id="@+id/action_bookSettingCategoryAddFragment_to_bookSettingCategoryFragment"
+            app:destination="@id/bookSettingCategoryFragment" />
+    </fragment>
+
+
+</navigation>

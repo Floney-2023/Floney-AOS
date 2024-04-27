@@ -25,7 +25,7 @@ data class UiMypageSearchModel(
     }
 }
 data class MyBooks(
-    val bookImg: String?,
+    val bookImg: String? = "book_default",
     val bookKey: String,
     val name: String,
     val memberCount: Int,

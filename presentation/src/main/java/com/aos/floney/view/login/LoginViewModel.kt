@@ -9,6 +9,10 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.model.book.Currency
+import com.aos.model.book.CurrencyInform
+import com.aos.model.book.getCurrencySymbolByCode
+import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.login.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +27,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val loginUseCase: LoginUseCase,
-    private val checkUserBookUseCase: CheckUserBookUseCase
+    private val checkUserBookUseCase: CheckUserBookUseCase,
+    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase
 ): BaseViewModel() {
 
     var email = MutableLiveData<String>()
@@ -74,9 +79,26 @@ class LoginViewModel @Inject constructor(
             checkUserBookUseCase().onSuccess {
                 if(it.bookKey != "") {
                     prefs.setString("bookKey", it.bookKey)
-                    _existBook.emit(true)
+                    searchCurrency()
                 } else {
                     _existBook.emit(false)
+                }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+    // 화폐 설정 조회
+    fun searchCurrency(){
+        viewModelScope.launch {
+            booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
+                if(it.myBookCurrency != "") {
+                    // 화폐 단위 저장
+                    prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
+
+                    _existBook.emit(true)
+                } else {
+                    baseEvent(Event.ShowToastRes(R.string.currency_error))
                 }
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
