@@ -100,13 +100,11 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.onClickDelete.collect {
-                 val baseAlertDialog = BaseAlertDialog(title = "삭제하기", info = "삭제하시겠습니까?", false) {
+                 BaseAlertDialog(title = "삭제하기", info = "삭제하시겠습니까?", false) {
                     if(it) {
                         viewModel.deleteHistory()
                     }
-                }
-
-                baseAlertDialog.show(supportFragmentManager, "baseAlertDialog")
+                }.show(supportFragmentManager, "baseAlertDialog")
             }
         }
         repeatOnStarted {
@@ -150,6 +148,14 @@ class HistoryActivity :
         repeatOnStarted {
             viewModel.onClickCloseBtn.collect {
                 if(it) {
+                    // 수정 내역 있음
+                    BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
+                        if(it) {
+                            finish()
+                        }
+                    }.show(supportFragmentManager, "baseAlertDialog")
+                } else {
+                    // 수정 내역 없음
                     finish()
                 }
             }

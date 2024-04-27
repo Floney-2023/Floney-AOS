@@ -40,10 +40,10 @@ data class DayMoney(
 // 내역 수정 전달 아이템
 data class DayMoneyModifyItem(
     val id: Int,
-    val money: String,
+    var money: String,
     val description: String,
     val lineDate: String,
-    val lineCategory: String,
+    var lineCategory: String,
     val lineSubCategory: String,
     val assetSubCategory: String,
     val exceptStatus: Boolean,

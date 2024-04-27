@@ -101,6 +101,7 @@ class HistoryViewModel @Inject constructor(
 
     // 내역 수정 시 해당 아이템 Id
     private var modifyId = 0
+    private var modifyItem: DayMoneyModifyItem? = null
 
     // 내역 추가 시에는 날짜만 세팅함
     fun setIntentAddData(clickDate: String, nickname: String) {
@@ -119,6 +120,10 @@ class HistoryViewModel @Inject constructor(
         content.value = item.description
         _nickname.value = item.writerNickName
         deleteChecked = item.exceptStatus
+
+        modifyItem = item
+        modifyItem!!.money = item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
+        modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
 
     // 자산/분류 카테고리 항목 가져오기
@@ -195,10 +200,11 @@ class HistoryViewModel @Inject constructor(
     // 내역 수정
     private fun postModifyHistory() {
         viewModelScope.launch(Dispatchers.IO) {
+            val tempMoney = cost.value!!.replace(",", "")
             postBooksLinesChangeUseCase(
                 lineId = modifyId,
                 bookKey = prefs.getString("bookKey", ""),
-                money = cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2)
+                money = tempMoney.substring(0, tempMoney.length - 1)
                     .toInt(),
                 flow = flow.value!!,
                 asset = asset.value!!,
@@ -234,10 +240,19 @@ class HistoryViewModel @Inject constructor(
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
     }
 
+    // 수정된 내용이 있는지 체크
+    private fun isExistEdit(): Boolean {
+        return cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
+    }
+
     // 닫기 버튼 클릭
     fun onClickCloseBtn() {
         viewModelScope.launch {
-            _onClickCloseBtn.emit(true)
+            if(modifyItem != null) {
+                _onClickCloseBtn.emit(isExistEdit())
+            } else {
+                _onClickCloseBtn.emit(false)
+            }
         }
     }
 
