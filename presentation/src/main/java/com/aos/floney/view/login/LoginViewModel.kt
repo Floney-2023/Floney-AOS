@@ -31,8 +31,8 @@ class LoginViewModel @Inject constructor(
     private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase
 ): BaseViewModel() {
 
-    var email = MutableLiveData<String>()
-    var password = MutableLiveData<String>()
+    var email = MutableLiveData<String>("")
+    var password = MutableLiveData<String>("")
 
     // 회원가입 클릭
     private var _clickSignUp = MutableEventFlow<Boolean>()

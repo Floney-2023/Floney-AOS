@@ -44,6 +44,7 @@ class HomeViewModel @Inject constructor(
     // 날짜 선택 버튼 클릭
     private var _clickedChoiceDate = MutableEventFlow<String>()
     val clickedChoiceDate: EventFlow<String> get() = _clickedChoiceDate
+
     // 이전 월 이동
     private var _clickedPreviousMonth = MutableEventFlow<String>()
     val clickedPreviousMonth: EventFlow<String> get() = _clickedPreviousMonth
@@ -96,7 +97,7 @@ class HomeViewModel @Inject constructor(
             getBookInfoUseCase(code).onSuccess {
                 // 내 닉네임 저장
                 it.ourBookUsers.forEach {
-                    if(it.me) {
+                    if (it.me) {
                         myNickname = it.name
                     }
                 }
@@ -138,18 +139,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             if (_clickedShowType.value == "month") {
                 updateCalendarMonth(1)
-                _clickedPreviousMonth.emit(getFormatDateMonth())
+                _clickedNextMonth.emit(getFormatDateMonth())
             } else {
                 updateCalendarDay(1)
-                _clickedPreviousMonth.emit(getFormatDateDay())
+                _clickedNextMonth.emit(getFormatDateDay())
             }
         }
     }
 
     // 다음 월 클릭
     fun onClickChoiceDate() {
-        viewModelScope.launch {
-            _clickedChoiceDate.emit(getFormatYearMonthDate())
+        if (_clickedShowType.value == "month") {
+            viewModelScope.launch {
+                _clickedChoiceDate.emit(getFormatYearMonthDate())
+            }
         }
     }
 
@@ -210,7 +213,12 @@ class HomeViewModel @Inject constructor(
         _calendar.value.set(Calendar.YEAR, year)
         _calendar.value.set(Calendar.MONTH, month - 1)
         _calendar.value.set(Calendar.DATE, date)
-        _showDate.value = getFormatDateMonth()
+
+        if (_clickedShowType.value == "month") {
+            getFormatDateMonth()
+        } else {
+            getFormatDateDay()
+        }
     }
 
     // 날짜 포멧 결과 가져오기
@@ -230,19 +238,19 @@ class HomeViewModel @Inject constructor(
     }
 
     // 년, 월 일 가져오기
-    fun getFormatYearMonthDate(): String {
+    private fun getFormatYearMonthDate(): String {
         return SimpleDateFormat("yyyy-MM", Locale.getDefault()).format(_calendar.value.time) + "-01"
     }
 
     // 선택된 날짜 가져오기
     fun getClickDate(): String {
         val year = _calendar.value.get(Calendar.YEAR)
-        val month = if((_calendar.value.get(Calendar.MONTH) + 1) < 10) {
+        val month = if ((_calendar.value.get(Calendar.MONTH) + 1) < 10) {
             "0${_calendar.value.get(Calendar.MONTH) + 1}"
         } else {
             _calendar.value.get(Calendar.MONTH) + 1
         }
-        val day = if(_calendar.value.get(Calendar.DATE) < 10) {
+        val day = if (_calendar.value.get(Calendar.DATE) < 10) {
             "0${_calendar.value.get(Calendar.DATE)}"
         } else {
             _calendar.value.get(Calendar.DATE)
@@ -256,7 +264,7 @@ class HomeViewModel @Inject constructor(
     }
 
     // 가계부 설정 페이지 이동
-    fun onClickSettingPage(){
+    fun onClickSettingPage() {
         viewModelScope.launch {
             _settingPage.emit(true)
         }
