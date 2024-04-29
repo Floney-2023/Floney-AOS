@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.inform.email.login.version.MyPageInformEmailViewModel" />
+            type="com.aos.floney.view.mypage.inform.MyPageInformViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

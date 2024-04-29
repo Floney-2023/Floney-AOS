@@ -1,10 +1,10 @@
-package com.aos.floney.view.mypage.inform.email.login.version
+package com.aos.floney.view.mypage.inform
 
 import com.aos.floney.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageInformEmailViewModel @Inject constructor(): BaseViewModel() {
+class MyPageInformViewModel @Inject constructor(): BaseViewModel() {
 
 }

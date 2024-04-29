@@ -1,4 +1,4 @@
-package com.aos.floney.view.mypage.inform.email.login.version.main
+package com.aos.floney.view.mypage.inform.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageInformEmailMainViewModel @Inject constructor(
+class MyPageInformMainViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val nicknameChangeUseCase : NicknameChangeUseCase,
     private val logoutUseCase : LogoutUseCase
@@ -27,7 +27,13 @@ class MyPageInformEmailMainViewModel @Inject constructor(
     val back: EventFlow<Boolean> get() = _back
 
     // 바뀔 닉네임
-    var nickName = MutableLiveData<String>("")
+    var nickName = MutableLiveData<String?>("")
+
+    // hint 닉네임
+    var hintName = MutableLiveData<String?>("")
+
+    // provider
+    var provider = MutableLiveData<String?>("")
 
     // 프로필 이미지 변경 페이지 이동
     private var _profileChangePage = MutableEventFlow<Boolean>()
@@ -41,12 +47,21 @@ class MyPageInformEmailMainViewModel @Inject constructor(
     private var _logOutPage = MutableEventFlow<Boolean>()
     val logOutPage: EventFlow<Boolean> get() = _logOutPage
 
+
+    // 로그아웃
+    private var _logOutAlert = MutableEventFlow<Boolean>()
+    val logOutAlert: EventFlow<Boolean> get() = _logOutAlert
+
     // 회원탈퇴
     private var _withDrawalPage = MutableEventFlow<Boolean>()
     val withDrawalPage: EventFlow<Boolean> get() = _withDrawalPage
 
 
-
+    // Provider 설정
+    fun setInform(provide: String?, nickname: String?){
+        provider.value = provide
+        hintName.value = nickname
+    }
     // 이전 페이지로 이동
     fun onClickPreviousPage()
     {
@@ -91,6 +106,13 @@ class MyPageInformEmailMainViewModel @Inject constructor(
     }
     // 로그아웃
     fun onClickLogOut()
+    {
+        viewModelScope.launch {
+            _logOutAlert.emit(true)
+        }
+
+    }
+    fun onLogOut()
     {
         viewModelScope.launch {
             if(prefs.getString("accessToken","").isNotEmpty()) {
