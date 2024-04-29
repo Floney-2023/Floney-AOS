@@ -12,10 +12,14 @@ import com.aos.floney.databinding.ActivityMyPageBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.home.HomeMonthTypeFragment
 import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
 import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
 import com.aos.floney.view.mypage.inform.MyPageInformActivity
+import com.aos.floney.view.mypage.service.MyPageServicePrivacyFragment
+import com.aos.floney.view.mypage.service.MyPageServiceTermsFragment
+import com.aos.floney.view.mypage.service.MyPageServiceTermsViewModel
 import com.aos.floney.view.mypage.setting.MyPageSettingActivity
 import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.model.user.MyBooks
@@ -24,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
+    private val fragmentManager = supportFragmentManager
     override fun onItemClick(item: MyBooks) {
         viewModel.settingBookKey(item.bookKey)
     }
@@ -46,9 +51,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         repeatOnStarted {
             viewModel.informPage.collect {
                 if(it) {
-                    startActivity(Intent(this@MyPageActivity, MyPageInformActivity::class.java)
-                        .putExtra("PROVIDER", viewModel.mypageInfo.value!!.provider)
-                        .putExtra("NICKNAME", viewModel.mypageInfo.value!!.nickname))
+                    startActivity(Intent(this@MyPageActivity, MyPageInformActivity::class.java))
                     if (Build.VERSION.SDK_INT >= 34) {
                         overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
                     } else {
@@ -102,16 +105,16 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         repeatOnStarted {
             viewModel.privatePage.collect {
                 if (it){
-                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://m.cafe.naver.com/floney/4"))
-                    startActivity(intent)
+                    fragmentManager.beginTransaction()
+                        .replace(R.id.fl_mypage_container, MyPageServicePrivacyFragment()).commit()
                 }
             }
         }
         repeatOnStarted {
             viewModel.usageRightPage.collect {
                 if (it){
-                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://m.cafe.naver.com/floney/2"))
-                    startActivity(intent)
+                    fragmentManager.beginTransaction()
+                        .replace(R.id.fl_mypage_container, MyPageServiceTermsFragment()).commit()
                 }
             }
         }

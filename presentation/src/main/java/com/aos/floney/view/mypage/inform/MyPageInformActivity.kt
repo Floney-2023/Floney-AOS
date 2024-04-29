@@ -25,19 +25,8 @@ class MyPageInformActivity :
     }
 
     private fun setupJetpackNavigation() {
-        // Intent로부터 데이터를 받음
-        val provider = intent.getStringExtra("PROVIDER") ?: ""
-        val nickname = intent.getStringExtra("NICKNAME") ?: ""
-
-        // Bundle 객체 생성 및 데이터 추가
-        val bundle = Bundle().apply {
-            putString("PROVIDER", provider)
-            putString("NICKNAME", nickname)
-        }
-
         val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_mypage_email_container) as NavHostFragment
         navController = host.navController
-        navController.navigate(R.id.myPageInformEmailSettingFragment, bundle)
     }
     fun startMyPageActivity(){
         startActivity(Intent(this, MyPageActivity::class.java))
