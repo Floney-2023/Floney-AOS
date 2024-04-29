@@ -6,13 +6,13 @@
 
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.inform.email.login.version.password.change.MyPageInformEmailPwChangeViewModel" />
+            type="com.aos.floney.view.mypage.inform.pwchange.MyPageInformPwChangeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.mypage.inform.email.login.version.password.change.MyPageInformEmailPwChangeFragment">
+        tools:context=".view.mypage.inform.pwchange.MyPageInformPwChangeFragment">
 
         <ImageView
             android:id="@+id/iv_back_button"

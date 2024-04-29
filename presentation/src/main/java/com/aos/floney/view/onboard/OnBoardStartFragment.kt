@@ -6,8 +6,10 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentOnBoardStartBinding
 import com.aos.data.util.SharedPreferenceUtil
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class OnBoardStartFragment : BaseFragment<FragmentOnBoardStartBinding, OnBoardStartViewModel>(R.layout.fragment_on_board_start) {
     @Inject
     lateinit var sharedPreferenceUtil: SharedPreferenceUtil

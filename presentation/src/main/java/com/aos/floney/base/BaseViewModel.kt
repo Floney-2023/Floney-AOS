@@ -15,7 +15,6 @@ abstract class BaseViewModel : ViewModel() {
             _baseEventFlow.emit(event)
         }
     }
-
     sealed class Event {
         data class ShowToast(val message: String) : Event()
         data class ShowToastRes(@StringRes val message: Int) : Event()

@@ -52,7 +52,7 @@
             android:name=".view.mypage.inform.simple.login.version.MyPageInformSimpleActivity"
             android:exported="false" />
         <activity
-            android:name=".view.mypage.inform.email.login.version.MyPageInformEmailActivity"
+            android:name=".view.mypage.inform.MyPageInformActivity"
             android:exported="false" />
         <activity
             android:name=".view.mypage.bookadd.create.MyPageBookCreateActivity"
