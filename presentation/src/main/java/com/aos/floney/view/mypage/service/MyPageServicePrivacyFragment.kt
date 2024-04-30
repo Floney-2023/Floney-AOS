@@ -3,6 +3,7 @@ package com.aos.floney.view.mypage.service
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
@@ -19,6 +20,8 @@ class MyPageServicePrivacyFragment : BaseFragment<FragmentMyPageServicePrivacyBi
         super.onViewCreated(view, savedInstanceState)
 
         binding.wvPrivacy.loadUrl("https://m.cafe.naver.com/floney/4")
+        binding.wvPrivacy.settings.javaScriptEnabled = true
+
         setUpViewModelObserver()
     }
 
@@ -27,7 +30,7 @@ class MyPageServicePrivacyFragment : BaseFragment<FragmentMyPageServicePrivacyBi
             // 이전 페이지 이동
             viewModel.back.collect {
                 if(it) {
-                    findNavController().popBackStack()
+                    parentFragmentManager.popBackStack()
                 }
             }
         }

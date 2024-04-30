@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context="com.aos.floney.view.mypage.service.MyPageServicePrivacyFragment">
 
         <ImageView
             android:id="@+id/iv_back_button"
@@ -23,7 +24,7 @@
             android:src="@drawable/icon_chevron_left"
             android:onClick="@{() -> vm.onClickPreviousPage()}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tv_service_notice_title"

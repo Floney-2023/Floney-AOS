@@ -35,6 +35,21 @@ fun ImageView.setImageToUrl(url: String?) {
     }
 }
 
+@BindingAdapter("setAlarmImage")
+fun ImageView.setAlarmImage(url: String?) {
+    url?.let {
+        if(it.equals("icon_noti_currency")) {
+            Glide.with(this)
+                .load(R.drawable.icon_alarm_currrency)
+                .into(this)
+        } else {
+            Glide.with(this)
+                .load(url)
+                .into(this)
+        }
+    }
+}
+
 @BindingAdapter("setAnalyzeImage")
 fun ImageView.setAnalyzeImage(item: UiAnalyzePlanModel?) {
 

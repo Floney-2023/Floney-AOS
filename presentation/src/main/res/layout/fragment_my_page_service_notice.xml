@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:context="com.aos.floney.view.mypage.MyPageActivity">
+        tools:context="com.aos.floney.view.mypage.service.MyPageServiceNoticeFragment">
 
         <ImageView
             android:id="@+id/iv_back_button"
@@ -64,11 +64,11 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_notice_title" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="24dp"
             android:onClick="@{() -> vm.onClickTerms()}"
-            android:src="@{vm.terms? @drawable/icon_chevron_up : @drawable/icon_chevron_down}"
+            android:src="@{vm.terms ? @drawable/icon_chevron_up : @drawable/icon_chevron_down}"
             app:layout_constraintBottom_toBottomOf="@+id/textView11"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_notice_title" />

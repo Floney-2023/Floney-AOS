@@ -13,6 +13,7 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.home.HomeMonthTypeFragment
+import com.aos.floney.view.mypage.alarm.MyPageAlarmActivity
 import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
 import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
@@ -48,6 +49,18 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
     }
 
     private fun setUpViewModelObserver() {
+        repeatOnStarted {
+            viewModel.alarmPage.collect {
+                if(it) {
+                    startActivity(Intent(this@MyPageActivity, MyPageAlarmActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                }
+            }
+        }
         repeatOnStarted {
             viewModel.informPage.collect {
                 if(it) {
@@ -106,7 +119,9 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
             viewModel.privatePage.collect {
                 if (it){
                     fragmentManager.beginTransaction()
-                        .replace(R.id.fl_mypage_container, MyPageServicePrivacyFragment()).commit()
+                        .replace(R.id.fl_mypage_container, MyPageServicePrivacyFragment())
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
         }
@@ -114,7 +129,9 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
             viewModel.usageRightPage.collect {
                 if (it){
                     fragmentManager.beginTransaction()
-                        .replace(R.id.fl_mypage_container, MyPageServiceTermsFragment()).commit()
+                        .replace(R.id.fl_mypage_container, MyPageServiceTermsFragment())
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
         }

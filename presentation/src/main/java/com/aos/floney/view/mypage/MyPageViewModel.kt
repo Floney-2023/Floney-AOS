@@ -35,6 +35,11 @@ class MyPageViewModel @Inject constructor(
     private var _mypageList = MutableLiveData<List<MyBooks>>()
     val mypageList: LiveData<List<MyBooks>> get() = _mypageList
 
+
+    // 알람 페이지
+    private var _alarmPage = MutableEventFlow<Boolean>()
+    val alarmPage: EventFlow<Boolean> get() = _alarmPage
+
     // 메일 문의하기 페이지
     private var _mailPage = MutableEventFlow<Boolean>()
     val mailPage: EventFlow<Boolean> get() = _mailPage
@@ -55,9 +60,17 @@ class MyPageViewModel @Inject constructor(
     private var _privatePage = MutableEventFlow<Boolean>()
     val privatePage: EventFlow<Boolean> get() = _privatePage
 
+    // 개인 정보 페이지 간 여부
+    private var _privateGo = MutableLiveData<Boolean>()
+    val privateGo: LiveData<Boolean> get() = _privateGo
+
     // 이용 약관 페이지
     private var _usageRightPage = MutableEventFlow<Boolean>()
     val usageRightPage: EventFlow<Boolean> get() = _usageRightPage
+
+    // 이용 약관 페이지 간 여부
+    private var _usageRightGo = MutableLiveData<Boolean>(true)
+    val usageRightGo: LiveData<Boolean> get() = _usageRightGo
 
     // 가계부 추가 BottomSheet
     private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
@@ -90,7 +103,9 @@ class MyPageViewModel @Inject constructor(
     // 알람 페이지 이동
     fun onClickAlarmPage()
     {
-
+        viewModelScope.launch {
+            _alarmPage.emit(true)
+        }
     }
 
     // 설정 페이지 이동
@@ -134,6 +149,7 @@ class MyPageViewModel @Inject constructor(
     // 개인 정보 처리방침 페이지 이동
     fun onClickPrivateRolePage()
     {
+        _privateGo.value = true
         viewModelScope.launch {
             _privatePage.emit(true)
         }
@@ -142,6 +158,7 @@ class MyPageViewModel @Inject constructor(
     // 이용 약관 페이지 이동
     fun onClickUsageRightPage()
     {
+        _usageRightGo.value = true
         viewModelScope.launch {
             _usageRightPage.emit(true)
         }

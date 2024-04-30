@@ -17,6 +17,7 @@ class MyPageServiceTermsFragment : BaseFragment<FragmentMyPageServiceTermsBindin
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.wvTerms.loadUrl("https://m.cafe.naver.com/floney/2")
+        binding.wvTerms.settings.javaScriptEnabled = true
         setUpViewModelObserver()
     }
 
@@ -25,7 +26,7 @@ class MyPageServiceTermsFragment : BaseFragment<FragmentMyPageServiceTermsBindin
             // 이전 페이지 이동
             viewModel.back.collect {
                 if(it) {
-                    findNavController().popBackStack()
+                    parentFragmentManager.popBackStack()
                 }
             }
         }
