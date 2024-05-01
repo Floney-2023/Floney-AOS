@@ -9,13 +9,17 @@ import com.aos.model.alarm.UiAlarmGetModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.home.GetCheckUserBookModel
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.abs
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -46,4 +50,12 @@ fun List<GetAlarmEntity>.toUiAlarmGetEntity(): List<UiAlarmGetModel> {
             received = alarm.received
         )
     }
+}
+
+fun getCurrentDateTimeString(): String {
+    val mNow = System.currentTimeMillis()
+    val mDate = Date(mNow)
+    val mFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+    mFormat.timeZone = TimeZone.getTimeZone("UTC")
+    return mFormat.format(mDate)
 }

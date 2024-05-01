@@ -42,7 +42,23 @@ fun ImageView.setAlarmImage(url: String?) {
             Glide.with(this)
                 .load(R.drawable.icon_alarm_currrency)
                 .into(this)
-        } else {
+        } else if(it.equals("icon_noti_exit")) {
+            Glide.with(this)
+                .load(R.drawable.icon_noti_exit)
+                .into(this)
+        } else if(it.equals("icon_noti_join")) {
+            Glide.with(this)
+                .load(R.drawable.icon_noti_join)
+                .into(this)
+        } else if(it.equals("icon_noti_reset")) {
+            Glide.with(this)
+                .load(R.drawable.icon_noti_reset)
+                .into(this)
+        } else if(it.equals("icon_noti_settlement")) {
+            Glide.with(this)
+                .load(R.drawable.icon_noti_settlement)
+                .into(this)
+        }else {
             Glide.with(this)
                 .load(url)
                 .into(this)

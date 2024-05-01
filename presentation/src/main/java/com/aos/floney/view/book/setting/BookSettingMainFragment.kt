@@ -1,7 +1,9 @@
 package com.aos.floney.view.book.setting
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.aos.data.mapper.getCurrentDateTimeString
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
@@ -92,7 +93,6 @@ class BookSettingCurrencyViewModel @Inject constructor(
             _back.emit(true)
         }
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     // 가계부 초기화
     fun initBook(code: String) {
         viewModelScope.launch {
@@ -109,9 +109,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
             }
         }
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     fun saveAlarm(code: String){
-        val now = LocalDateTime.now()
         Timber.e("save !?! ")
         viewModelScope.launch {
             if(prefs.getString("bookKey","").isNotEmpty()) {
@@ -123,7 +121,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                         "${bookName.value} 가계부의 화폐가 ${code}로 변경되었어요.",
                         "icon_noti_currency",
                         it,
-                        LocalDateTime.now().toString()).onSuccess {
+                        getCurrentDateTimeString()).onSuccess {
                         baseEvent(Event.HideLoading)
                         Timber.e("save gg ")
                         _init.emit(true)
@@ -136,7 +134,6 @@ class BookSettingCurrencyViewModel @Inject constructor(
             }
         }
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     // 화폐설정 변경
     fun settingCurrency(item : Currency){
         viewModelScope.launch {
