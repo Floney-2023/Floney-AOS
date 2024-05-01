@@ -1,5 +1,6 @@
 package com.aos.data.api
 
+import com.aos.data.entity.request.alarm.PostAlarmSaveBody
 import com.aos.data.entity.request.alarm.PostAlarmUpdateBody
 import com.aos.data.entity.response.alarm.GetAlarmEntity
 import com.aos.data.entity.response.book.GetBookRepeatEntity
@@ -22,5 +23,11 @@ interface AlarmService {
     suspend fun postAlarmUpdate(
         @Query("bookKey") bookKey: String,
         @Body postAlarmUpdateBody : PostAlarmUpdateBody
+    ): NetworkState<Void>
+
+    @POST("alarm")
+    @Headers("Auth: true")
+    suspend fun postAlarmSave(
+        @Body postAlarmSaveBody : PostAlarmSaveBody
     ): NetworkState<Void>
 }

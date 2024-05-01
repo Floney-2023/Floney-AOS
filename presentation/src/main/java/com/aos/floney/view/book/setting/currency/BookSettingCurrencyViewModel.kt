@@ -1,7 +1,10 @@
 package com.aos.floney.view.book.setting.currency
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
@@ -17,18 +20,29 @@ import com.aos.model.book.getCurrencySymbolByCode
 import com.aos.usecase.booksetting.BooksCurrencyChangeUseCase
 import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.booksetting.BooksInitUseCase
+import com.aos.usecase.mypage.AlarmSaveGetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import javax.inject.Inject
 
 @HiltViewModel
 class BookSettingCurrencyViewModel @Inject constructor(
+    stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
     private val booksInitUseCase : BooksInitUseCase,
     private val booksCurrencyChangeUseCase: BooksCurrencyChangeUseCase,
-    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase
+    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase,
+    private val alarmSaveGetUseCase : AlarmSaveGetUseCase
 ): BaseViewModel() {
+
+
+    var bookName: LiveData<String> = stateHandle.getLiveData("bookName")
+
+    var emailArray: LiveData<Array<String>> = stateHandle.getLiveData("emailList")
 
     // 화폐 단위 리스트
     private var _currencyItems = MutableLiveData<UiBookCurrencyModel>()
@@ -78,15 +92,16 @@ class BookSettingCurrencyViewModel @Inject constructor(
             _back.emit(true)
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     // 가계부 초기화
-    fun initBook(){
+    fun initBook(code: String) {
         viewModelScope.launch {
             if(prefs.getString("bookKey","").isNotEmpty()) {
                 baseEvent(Event.ShowLoading)
                 booksInitUseCase(prefs.getString("bookKey","")).onSuccess {
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowSuccessToast("화폐 단위가 변경 완료 되었습니다."))
-                    _init.emit(true)
+                    saveAlarm(code)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
@@ -94,6 +109,34 @@ class BookSettingCurrencyViewModel @Inject constructor(
             }
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveAlarm(code: String){
+        val now = LocalDateTime.now()
+        Timber.e("save !?! ")
+        viewModelScope.launch {
+            if(prefs.getString("bookKey","").isNotEmpty()) {
+                baseEvent(Event.ShowLoading)
+                emailArray.value!!.map {
+                    alarmSaveGetUseCase(
+                        prefs.getString("bookKey",""),
+                        "플로니",
+                        "${bookName.value} 가계부의 화폐가 ${code}로 변경되었어요.",
+                        "icon_noti_currency",
+                        it,
+                        LocalDateTime.now().toString()).onSuccess {
+                        baseEvent(Event.HideLoading)
+                        Timber.e("save gg ")
+                        _init.emit(true)
+                    }.onFailure {
+                        baseEvent(Event.HideLoading)
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    }
+                }
+
+            }
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
     // 화폐설정 변경
     fun settingCurrency(item : Currency){
         viewModelScope.launch {
@@ -103,8 +146,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                     baseEvent(Event.HideLoading)
                     prefs.setString("symbol",item.symbol) // 화폐 단위 변경
                     CurrencyUtil.currency = item.symbol
-
-                    initBook() // 가계부 초기화
+                    initBook(item.code) // 가계부 초기화
                 }.onFailure {
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg()))

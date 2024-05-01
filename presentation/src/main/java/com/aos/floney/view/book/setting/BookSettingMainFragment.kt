@@ -83,7 +83,13 @@ class BookSettingMainFragment :
         repeatOnStarted {
             viewModel.currencyPage.collect(){
                 if(it){
-                    val currencyAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingCurrencyFragment()
+                    val emailArray: Array<String> = viewModel.bookSettingInfo.value?.ourBookUsers?.map { it.email }?.toTypedArray() ?: emptyArray()
+                    viewModel.bookSettingInfo.value!!.ourBookUsers
+
+                    val currencyAction = BookSettingMainFragmentDirections.actionBookSettingMainFragmentToBookSettingCurrencyFragment(
+                        viewModel.bookSettingInfo.value!!.bookName,
+                        emailArray
+                    )
                     findNavController().navigate(currencyAction)
                 }
             }

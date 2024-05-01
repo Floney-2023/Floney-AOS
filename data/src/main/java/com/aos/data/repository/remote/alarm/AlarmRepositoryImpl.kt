@@ -1,5 +1,6 @@
 package com.aos.data.repository.remote.alarm
 
+import com.aos.data.entity.request.alarm.PostAlarmSaveBody
 import com.aos.data.entity.request.alarm.PostAlarmUpdateBody
 import com.aos.data.entity.request.analyze.PostAnalyzeAssetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeBudgetBody
@@ -46,6 +47,30 @@ class AlarmRepositoryImpl @Inject constructor(private val alarmRemoteDataSourceI
         id : Int
     ): Result<Void?> {
         when (val data = alarmRemoteDataSourceImpl.postAlarmUpdate(bookKey, PostAlarmUpdateBody(id, bookKey))) {
+            is NetworkState.Success -> return Result.success(data.body)
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun postAlarmSave(
+        bookKey: String,
+        title: String,
+        body: String,
+        imgUrl: String,
+        userEmail: String,
+        date: String
+    ): Result<Void?> {
+        when (val data = alarmRemoteDataSourceImpl.postAlarmSave(PostAlarmSaveBody(bookKey, title, body, imgUrl, userEmail, date))) {
             is NetworkState.Success -> return Result.success(data.body)
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)

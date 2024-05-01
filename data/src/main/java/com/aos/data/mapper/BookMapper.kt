@@ -364,7 +364,7 @@ fun GetBooksInfoEntity.toUiBookSettingModel(): UiBookSettingModel {
     val myBookUsers = this.ourBookUsers.map {
         val roleString = if (it.me) "${it.role}·나" else it.role
         MyBookUsers(
-            name = it.name, profileImg = it.profileImg, role = roleString, me = it.me
+            name = it.name, profileImg = it.profileImg, email = it.email, role = roleString, me = it.me
         )
     }
     return UiBookSettingModel(

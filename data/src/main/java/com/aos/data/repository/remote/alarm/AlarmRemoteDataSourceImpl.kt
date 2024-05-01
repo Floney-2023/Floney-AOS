@@ -2,6 +2,7 @@ package com.aos.data.repository.remote.alarm
 
 import com.aos.data.api.AlarmService
 import com.aos.data.api.AnalyzeService
+import com.aos.data.entity.request.alarm.PostAlarmSaveBody
 import com.aos.data.entity.request.alarm.PostAlarmUpdateBody
 import com.aos.data.entity.request.analyze.PostAnalyzeAssetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeBudgetBody
@@ -27,5 +28,11 @@ class AlarmRemoteDataSourceImpl @Inject constructor(private val alarmService: Al
         postAlarmUpdateBody: PostAlarmUpdateBody
     ): NetworkState<Void> {
         return alarmService.postAlarmUpdate(bookKey, postAlarmUpdateBody)
+    }
+
+    override suspend fun postAlarmSave(
+        postAlarmSaveBody: PostAlarmSaveBody
+    ): NetworkState<Void> {
+        return alarmService.postAlarmSave(postAlarmSaveBody)
     }
 }

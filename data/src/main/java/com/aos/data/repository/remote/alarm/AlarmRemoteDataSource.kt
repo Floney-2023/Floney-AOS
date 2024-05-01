@@ -1,5 +1,6 @@
 package com.aos.data.repository.remote.alarm
 
+import com.aos.data.entity.request.alarm.PostAlarmSaveBody
 import com.aos.data.entity.request.alarm.PostAlarmUpdateBody
 import com.aos.data.entity.request.analyze.PostAnalyzeAssetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeBudgetBody
@@ -16,4 +17,6 @@ interface AlarmRemoteDataSource {
     suspend fun getAlarm(bookKey: String): NetworkState<List<GetAlarmEntity>>
 
     suspend fun postAlarmUpdate(bookKey: String, postAlarmUpdateBody: PostAlarmUpdateBody) : NetworkState<Void>
+
+    suspend fun postAlarmSave(postAlarmSaveBody: PostAlarmSaveBody) : NetworkState<Void>
 }
