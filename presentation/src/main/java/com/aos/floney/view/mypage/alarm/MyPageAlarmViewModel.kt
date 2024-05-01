@@ -13,6 +13,7 @@ import com.aos.model.settlement.Settlement
 import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.user.MyBooks
 import com.aos.usecase.mypage.AlarmInformGetUseCase
+import com.aos.usecase.mypage.AlarmUpdateGetUseCase
 import com.aos.usecase.mypage.MypageSearchUseCase
 import com.aos.usecase.settlement.SettlementSeeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +26,8 @@ import javax.inject.Inject
 class MyPageAlarmViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val mypageSearchUseCase : MypageSearchUseCase,
-    private val alarmInformGetUseCase : AlarmInformGetUseCase
+    private val alarmInformGetUseCase : AlarmInformGetUseCase,
+    private val alarmUpdateGetUseCase : AlarmUpdateGetUseCase
 ): BaseViewModel() {
 
     // 알람 조회 정보
@@ -70,12 +72,31 @@ class MyPageAlarmViewModel @Inject constructor(
                         val bookKey = books[index.value!!].bookKey
                         alarmInformGetUseCase(bookKey).onSuccess { alarmList ->
                             _alarmList.postValue(alarmList)
+                            setAlarmUpdate()
                         }.onFailure {
                             baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                         }
                     }
                 }
             }
+    }
+    // 알람 읽음 처리
+    fun setAlarmUpdate()
+    {
+        viewModelScope.launch(Dispatchers.IO) {
+            _bookList.value?.let { books ->
+                if (index.value != null && index.value!! < books.size) {
+                    val bookKey = books[index.value!!].bookKey
+                    _alarmList.value?.map {
+                        alarmUpdateGetUseCase(bookKey, it.id).onSuccess {
+
+                        }.onFailure {
+                            baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                        }
+                    }
+                }
+            }
+        }
     }
     // exit 버튼 클릭 -> 처음 정산하기 페이지
     fun onClickedExit() {

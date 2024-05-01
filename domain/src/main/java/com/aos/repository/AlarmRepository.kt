@@ -11,4 +11,6 @@ interface AlarmRepository {
     // 알람 정보 조회
     suspend fun getAlarm(bookKey: String): Result<List<UiAlarmGetModel>>
 
+    // 알람 읽음 처리
+    suspend fun postAlarmUpdate(bookKey: String, id: Int): Result<Void?>
 }

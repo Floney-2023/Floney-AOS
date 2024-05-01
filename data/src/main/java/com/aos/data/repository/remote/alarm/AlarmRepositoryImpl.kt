@@ -1,5 +1,6 @@
 package com.aos.data.repository.remote.alarm
 
+import com.aos.data.entity.request.alarm.PostAlarmUpdateBody
 import com.aos.data.entity.request.analyze.PostAnalyzeAssetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeBudgetBody
 import com.aos.data.entity.request.analyze.PostAnalyzeCategoryBody
@@ -24,7 +25,8 @@ import javax.inject.Inject
 class AlarmRepositoryImpl @Inject constructor(private val alarmRemoteDataSourceImpl: AlarmRemoteDataSourceImpl) :
     AlarmRepository {
 
-    override suspend fun getAlarm( bookKey: String
+    override suspend fun getAlarm(
+        bookKey: String
     ): Result<List<UiAlarmGetModel>> {
         when (val data = alarmRemoteDataSourceImpl.getAlarm(bookKey)) {
             is NetworkState.Success -> return Result.success(data.body.toUiAlarmGetEntity())
@@ -36,6 +38,26 @@ class AlarmRepositoryImpl @Inject constructor(private val alarmRemoteDataSourceI
             is NetworkState.UnknownError -> {
                 Timber.e(data.t?.message)
                 return Result.failure(IllegalStateException("unKnownError"))
+            }
+        }
+    }
+    override suspend fun postAlarmUpdate(
+        bookKey: String,
+        id : Int
+    ): Result<Void?> {
+        when (val data = alarmRemoteDataSourceImpl.postAlarmUpdate(bookKey, PostAlarmUpdateBody(id, bookKey))) {
+            is NetworkState.Success -> return Result.success(data.body)
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
             }
         }
     }
