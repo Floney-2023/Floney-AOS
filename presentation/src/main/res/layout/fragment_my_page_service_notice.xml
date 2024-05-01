@@ -7,13 +7,13 @@
         <import type="android.view.View" />
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.service.MyPageServiceNoticeViewModel" />
+            type="com.aos.floney.view.mypage.main.service.MyPageServiceNoticeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.aos.floney.view.mypage.service.MyPageServiceNoticeFragment">
+        tools:context="com.aos.floney.view.mypage.main.service.MyPageServiceNoticeFragment">
 
         <ImageView
             android:id="@+id/iv_back_button"

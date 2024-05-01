@@ -18,9 +18,9 @@ import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
 import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
 import com.aos.floney.view.mypage.inform.MyPageInformActivity
-import com.aos.floney.view.mypage.service.MyPageServicePrivacyFragment
-import com.aos.floney.view.mypage.service.MyPageServiceTermsFragment
-import com.aos.floney.view.mypage.service.MyPageServiceTermsViewModel
+import com.aos.floney.view.mypage.main.service.MyPageServicePrivacyFragment
+import com.aos.floney.view.mypage.main.service.MyPageServiceTermsFragment
+import com.aos.floney.view.mypage.main.service.MyPageServiceTermsViewModel
 import com.aos.floney.view.mypage.setting.MyPageSettingActivity
 import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.model.user.MyBooks
@@ -28,115 +28,59 @@ import com.aos.model.user.UiMypageSearchModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
+class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page) {
     private val fragmentManager = supportFragmentManager
-    override fun onItemClick(item: MyBooks) {
-        viewModel.settingBookKey(item.bookKey)
-    }
-    override fun onResume() {
-        super.onResume()
-        viewModel.searchMypageItems()
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setUpUi()
-        setUpViewModelObserver()
         setUpBottomNavigation()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@MyPageActivity)
     }
-
-    private fun setUpViewModelObserver() {
-        repeatOnStarted {
-            viewModel.alarmPage.collect {
-                if(it) {
-                    startActivity(Intent(this@MyPageActivity, MyPageAlarmActivity::class.java))
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }
-                }
-            }
+    fun startAlarmActivity() {
+        startActivity(Intent(this, MyPageAlarmActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(
+                Activity.OVERRIDE_TRANSITION_OPEN,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
-        repeatOnStarted {
-            viewModel.informPage.collect {
-                if(it) {
-                    startActivity(Intent(this@MyPageActivity, MyPageInformActivity::class.java))
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }
-                }
-            }
-        }
-        repeatOnStarted {
-            viewModel.settingPage.collect {
-                if(it) {
-                    startActivity(Intent(this@MyPageActivity, MyPageSettingActivity::class.java))
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }
-                }
-            }
-        }
-        repeatOnStarted {
-            viewModel.bookAddBottomSheet.collect { shouldShowBottomSheet ->
-                if (shouldShowBottomSheet) {
-                    val bottomSheetFragment = MypageBookAddSelectBottomSheetFragment { checked ->
-                        val intentClass = if (checked) MyPageBookCreateActivity::class.java else MyPageBookCodeInputActivity::class.java
-                        startActivity(Intent(this@MyPageActivity, intentClass))
-                        if (Build.VERSION.SDK_INT >= 34) {
-                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                        } else {
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                        }
-                    }
-                    bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
-                }
-            }
-        }
-        repeatOnStarted {
-            viewModel.mailPage.collect {
-                if (it){
-                    val email = Intent(Intent.ACTION_SEND)
-                    email.setType("plain/text")
-                    val address = arrayOf("floney.team@gmail.com")
-                    email.putExtra(Intent.EXTRA_EMAIL, address)
-                    email.putExtra(Intent.EXTRA_SUBJECT, "Floney 문의 제보")
-                    email.putExtra(Intent.EXTRA_TEXT, "작성자 : \n 문의 기능 : \n문의 내용 : \n")
-                    startActivity(email)
-
-                }
-            }
-        }
-        repeatOnStarted {
-            viewModel.privatePage.collect {
-                if (it){
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.fl_mypage_container, MyPageServicePrivacyFragment())
-                        .addToBackStack(null)
-                        .commit()
-                }
-            }
-        }
-        repeatOnStarted {
-            viewModel.usageRightPage.collect {
-                if (it){
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.fl_mypage_container, MyPageServiceTermsFragment())
-                        .addToBackStack(null)
-                        .commit()
-                }
-            }
+    }
+    fun startInformActivity(){
+        startActivity(Intent(this, MyPageInformActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
     }
 
+    fun startSettingActivity() {
+        startActivity(Intent(this, MyPageSettingActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+    }
+
+    fun startBottomSheet() {
+        val bottomSheetFragment = MypageBookAddSelectBottomSheetFragment { checked ->
+            val intentClass = if (checked) MyPageBookCreateActivity::class.java else MyPageBookCodeInputActivity::class.java
+            startActivity(Intent(this, intentClass))
+            if (Build.VERSION.SDK_INT >= 34) {
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+            } else {
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
+        }
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+    }
     private fun setUpBottomNavigation() {
         // 가운데 메뉴(제보하기)에 대한 터치 이벤트를 막기 위한 로직
         binding.bottomNavigationView.apply {

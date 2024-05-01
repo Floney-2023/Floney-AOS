@@ -1,4 +1,4 @@
-package com.aos.floney.view.mypage.service
+package com.aos.floney.view.mypage.main.service
 
 import android.content.Intent
 import android.os.Bundle
@@ -30,7 +30,7 @@ class MyPageServicePrivacyFragment : BaseFragment<FragmentMyPageServicePrivacyBi
             // 이전 페이지 이동
             viewModel.back.collect {
                 if(it) {
-                    parentFragmentManager.popBackStack()
+                    findNavController().popBackStack()
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.aos.floney.view.mypage.service
+package com.aos.floney.view.mypage.main.service
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

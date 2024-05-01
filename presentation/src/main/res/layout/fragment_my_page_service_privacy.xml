@@ -6,13 +6,13 @@
     <data>
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.service.MyPageServicePrivacyViewModel" />
+            type="com.aos.floney.view.mypage.main.service.MyPageServicePrivacyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.aos.floney.view.mypage.service.MyPageServicePrivacyFragment">
+        tools:context="com.aos.floney.view.mypage.main.service.MyPageServicePrivacyFragment">
 
         <ImageView
             android:id="@+id/iv_back_button"

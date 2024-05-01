@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.service.MyPageServiceTermsViewModel" />
+            type="com.aos.floney.view.mypage.main.service.MyPageServiceTermsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
