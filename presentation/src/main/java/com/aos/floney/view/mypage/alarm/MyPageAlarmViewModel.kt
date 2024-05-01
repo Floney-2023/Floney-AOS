@@ -39,11 +39,16 @@ class MyPageAlarmViewModel @Inject constructor(
     val bookList: LiveData<List<MyBooks>> get() = _bookList
 
     // 다음 정산 페이지
+    private var _complete = MutableEventFlow<Boolean>()
+    val complete: EventFlow<Boolean> get() = _complete
+
+    // 다음 정산 페이지
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
 
 
     init {
+        index.value = 0
         searchMypageItems()
     }
     fun searchMypageItems()
@@ -51,9 +56,7 @@ class MyPageAlarmViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             mypageSearchUseCase().onSuccess {
                 _bookList.postValue(it.myBooks)
-
-                if(it.myBooks.isNotEmpty())
-                    getAlarmInform()
+                _complete.emit(true)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }
@@ -61,25 +64,18 @@ class MyPageAlarmViewModel @Inject constructor(
     }
     // 알람 내역 불러오기
     fun getAlarmInform(){
-        _bookList.value?.let { books ->
-            if (index.value != null && index.value!! < books.size) {
-                val bookKey = books[index.value!!].bookKey
-
-                if (bookKey.isNotEmpty()) {
-                    viewModelScope.launch(Dispatchers.IO) {
-                        baseEvent(Event.ShowLoading)
+            viewModelScope.launch(Dispatchers.IO) {
+                _bookList.value?.let { books ->
+                    if (index.value != null && index.value!! < books.size) {
+                        val bookKey = books[index.value!!].bookKey
                         alarmInformGetUseCase(bookKey).onSuccess { alarmList ->
-                            // 불러오기 성공
                             _alarmList.postValue(alarmList)
-                            baseEvent(Event.HideLoading)
                         }.onFailure {
-                            baseEvent(Event.HideLoading)
                             baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                         }
                     }
                 }
             }
-        }
     }
     // exit 버튼 클릭 -> 처음 정산하기 페이지
     fun onClickedExit() {
@@ -88,7 +84,7 @@ class MyPageAlarmViewModel @Inject constructor(
         }
     }
     fun onClickFlow(flow: Int) {
-        index.postValue(flow)
+        index.value = flow
         getAlarmInform()
     }
 }

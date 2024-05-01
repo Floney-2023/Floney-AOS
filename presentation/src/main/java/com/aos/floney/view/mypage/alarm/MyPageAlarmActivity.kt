@@ -39,6 +39,7 @@ class MyPageAlarmActivity : BaseActivity<ActivityMyPageAlarmBinding, MyPageAlarm
         setUpViewModelObserver()
     }
     private fun setUpUi() {
+        binding.setVariable(BR.vm, viewModel)
         binding.setVariable(BR.eventHolder, this@MyPageAlarmActivity)
     }
     private fun setUpViewModelObserver() {
@@ -46,6 +47,13 @@ class MyPageAlarmActivity : BaseActivity<ActivityMyPageAlarmBinding, MyPageAlarm
             viewModel.back.collect {
                 if(it) {
                     finish()
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.complete.collect {
+                if(it) {
+                    viewModel.getAlarmInform()
                 }
             }
         }
