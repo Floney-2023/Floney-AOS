@@ -34,7 +34,6 @@ class HomeMonthTypeFragment : BaseFragment<FragmentHomeMonthTypeBinding, HomeMon
         setUpCalendarRecyclerView()
 
         Timber.e("onViewCreated")
-        viewModel.getBookMonth(activityViewModel.getFormatDateMonth())
     }
 
     private fun setupUi() {
@@ -55,6 +54,9 @@ class HomeMonthTypeFragment : BaseFragment<FragmentHomeMonthTypeBinding, HomeMon
             activityViewModel.clickedNextMonth.collect {
                 viewModel.getBookMonth(it)
             }
+        }
+        activityViewModel.bookInfo.observe(viewLifecycleOwner) {
+            viewModel.getBookMonth(activityViewModel.getFormatDateMonth())
         }
     }
 

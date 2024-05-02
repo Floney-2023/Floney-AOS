@@ -59,7 +59,7 @@ class BookSettingAssetViewModel @Inject constructor(
                 prefs.getString("bookKey",""), currentYearMonth).onSuccess {
                 cost.postValue(it.initAsset)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
             }
         }
     }
@@ -74,7 +74,7 @@ class BookSettingAssetViewModel @Inject constructor(
                 baseEvent(Event.ShowToastRes(R.string.book_setting_bottom_asset_succcess))
                 _initAssetSheet.emit(true)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
             }
         }
     }

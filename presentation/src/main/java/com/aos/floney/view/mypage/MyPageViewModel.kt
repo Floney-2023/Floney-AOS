@@ -27,7 +27,7 @@ class MyPageViewModel @Inject constructor(
     private val recentBookKeySaveUseCase : RecentBookkeySaveUseCase
 ): BaseViewModel() {
 
-    // 회원 닉네임
+    // 회원 정보
     private var _mypageInfo = MutableLiveData<UiMypageSearchModel>()
     val mypageInfo: LiveData<UiMypageSearchModel> get() = _mypageInfo
 
@@ -35,6 +35,13 @@ class MyPageViewModel @Inject constructor(
     private var _mypageList = MutableLiveData<List<MyBooks>>()
     val mypageList: LiveData<List<MyBooks>> get() = _mypageList
 
+    // 메일 문의하기 페이지
+    private var _mailPage = MutableEventFlow<Boolean>()
+    val mailPage: EventFlow<Boolean> get() = _mailPage
+
+    // 공지사항 페이지
+    private var _noticePage = MutableEventFlow<Boolean>()
+    val noticePage: EventFlow<Boolean> get() = _noticePage
 
     // 회원 정보 페이지
     private var _informPage = MutableEventFlow<Boolean>()
@@ -44,8 +51,15 @@ class MyPageViewModel @Inject constructor(
     private var _settingPage = MutableEventFlow<Boolean>()
     val settingPage: EventFlow<Boolean> get() = _settingPage
 
+    // 개인 정보 페이지
+    private var _privatePage = MutableEventFlow<Boolean>()
+    val privatePage: EventFlow<Boolean> get() = _privatePage
+
+    // 이용 약관 페이지
+    private var _usageRightPage = MutableEventFlow<Boolean>()
+    val usageRightPage: EventFlow<Boolean> get() = _usageRightPage
+
     // 가계부 추가 BottomSheet
-    // 설정 페이지
     private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
     val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
     init{
@@ -69,7 +83,7 @@ class MyPageViewModel @Inject constructor(
 
                 _mypageInfo.postValue(updatedResult)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageViewModel)))
             }
         }
     }
@@ -95,16 +109,20 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    // 문의 하기 페이지 이동
+    // 메일 문의 하기 페이지 이동
     fun onClickAnswerPage()
     {
-
+        viewModelScope.launch {
+            _mailPage.emit(true)
+        }
     }
 
     // 공지 사항 페이지 이동
     fun onClickNoticePage()
     {
-
+        viewModelScope.launch {
+            _noticePage.emit(true)
+        }
     }
 
     // 리뷰 작성하기 페이지 이동
@@ -116,13 +134,17 @@ class MyPageViewModel @Inject constructor(
     // 개인 정보 처리방침 페이지 이동
     fun onClickPrivateRolePage()
     {
-
+        viewModelScope.launch {
+            _privatePage.emit(true)
+        }
     }
 
     // 이용 약관 페이지 이동
     fun onClickUsageRightPage()
     {
-
+        viewModelScope.launch {
+            _usageRightPage.emit(true)
+        }
     }
 
     // 최근 저장 가계부 저장
@@ -146,7 +168,7 @@ class MyPageViewModel @Inject constructor(
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageViewModel)))
             }
         }
     }

@@ -33,7 +33,7 @@ class SignUpCompleteViewModel @Inject constructor(
             mypageSearchUseCase().onSuccess {
                 nickname.postValue("환영합니다\n${it.nickname}님!")
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SignUpCompleteViewModel)))
             }
         }
     }

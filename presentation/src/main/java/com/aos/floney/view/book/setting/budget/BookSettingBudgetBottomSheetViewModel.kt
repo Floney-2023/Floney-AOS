@@ -65,7 +65,7 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
                 else
                     _budgetSheet.emit(cost.value!!)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingBudgetBottomSheetViewModel)))
             }
         }
     }

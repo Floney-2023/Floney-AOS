@@ -1,4 +1,4 @@
-package com.aos.floney.view.mypage.inform.email.login.version.password.change
+package com.aos.floney.view.mypage.inform.pwchange
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageInformEmailPwChangeViewModel @Inject constructor(
+class MyPageInformPwChangeViewModel @Inject constructor(
     private val passwordChangeUseCase : PasswordChangeUseCase
 ): BaseViewModel() {
 
@@ -60,7 +60,7 @@ class MyPageInformEmailPwChangeViewModel @Inject constructor(
                                     _checkBtn.emit(true)
                                 }.onFailure {
                                     baseEvent(Event.HideLoading)
-                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel)))
                                 }
                             }
                         } else {

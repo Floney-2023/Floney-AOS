@@ -103,7 +103,7 @@ class SignUpEmailCodeViewModel @Inject constructor(
                         _nextPage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SignUpEmailCodeViewModel)))
                     }
                 } else {
                     // 5분 타이머가 만료되었을 경우

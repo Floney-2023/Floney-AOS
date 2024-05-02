@@ -2,34 +2,35 @@ package com.aos.floney.view.mypage
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.navigation.NavController
+import androidx.databinding.library.baseAdapters.BR
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityMyPageBinding
 import com.aos.floney.ext.repeatOnStarted
-import com.aos.floney.view.mypage.inform.email.login.version.MyPageInformEmailActivity
+import com.aos.floney.view.analyze.AnalyzeActivity
+import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
+import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
+import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
+import com.aos.floney.view.mypage.inform.MyPageInformActivity
 import com.aos.floney.view.mypage.setting.MyPageSettingActivity
+import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.model.user.MyBooks
 import com.aos.model.user.UiMypageSearchModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-
-import androidx.databinding.library.baseAdapters.BR
-import com.aos.floney.view.analyze.AnalyzeActivity
-import com.aos.floney.view.home.HomeActivity
-import com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity
-import com.aos.floney.view.mypage.bookadd.MypageBookAddSelectBottomSheetFragment
-import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
-import com.aos.floney.view.settleup.SettleUpActivity
 
 @AndroidEntryPoint
 class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.layout.activity_my_page), UiMypageSearchModel.OnItemClickListener {
     override fun onItemClick(item: MyBooks) {
         viewModel.settingBookKey(item.bookKey)
     }
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.searchMypageItems()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +46,9 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         repeatOnStarted {
             viewModel.informPage.collect {
                 if(it) {
-                    startActivity(Intent(this@MyPageActivity, MyPageInformEmailActivity::class.java))
+                    startActivity(Intent(this@MyPageActivity, MyPageInformActivity::class.java)
+                        .putExtra("PROVIDER", viewModel.mypageInfo.value!!.provider)
+                        .putExtra("NICKNAME", viewModel.mypageInfo.value!!.nickname))
                     if (Build.VERSION.SDK_INT >= 34) {
                         overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
                     } else {
@@ -67,9 +70,6 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
             }
         }
         repeatOnStarted {
-            viewModel.searchMypageItems()
-        }
-        repeatOnStarted {
             viewModel.bookAddBottomSheet.collect { shouldShowBottomSheet ->
                 if (shouldShowBottomSheet) {
                     val bottomSheetFragment = MypageBookAddSelectBottomSheetFragment { checked ->
@@ -82,6 +82,36 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
                         }
                     }
                     bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.mailPage.collect {
+                if (it){
+                    val email = Intent(Intent.ACTION_SEND)
+                    email.setType("plain/text")
+                    val address = arrayOf("floney.team@gmail.com")
+                    email.putExtra(Intent.EXTRA_EMAIL, address)
+                    email.putExtra(Intent.EXTRA_SUBJECT, "Floney 문의 제보")
+                    email.putExtra(Intent.EXTRA_TEXT, "작성자 : \n 문의 기능 : \n문의 내용 : \n")
+                    startActivity(email)
+
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.privatePage.collect {
+                if (it){
+                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://m.cafe.naver.com/floney/4"))
+                    startActivity(intent)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.usageRightPage.collect {
+                if (it){
+                    var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://m.cafe.naver.com/floney/2"))
+                    startActivity(intent)
                 }
             }
         }

@@ -50,7 +50,7 @@ class BookAddInviteShareViewModel @Inject constructor(
                 prefs.getString("bookKey","")).onSuccess {
                 inviteCode.postValue(it.code)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookAddInviteShareViewModel)))
             }
         }
     }

@@ -56,6 +56,10 @@ class HistoryViewModel @Inject constructor(
     private var _onClickCategory = MutableEventFlow<String>()
     val onClickCategory: EventFlow<String> get() = _onClickCategory
 
+    // 반복 설정 클릭
+    private var _onClickRepeat = MutableEventFlow<String>()
+    val onClickRepeat: EventFlow<String> get() = _onClickRepeat
+
     // 내역 삭제 버튼 클릭
     private var _onClickDelete = MutableEventFlow<Boolean>()
     val onClickDelete: EventFlow<Boolean> get() = _onClickDelete
@@ -87,11 +91,26 @@ class HistoryViewModel @Inject constructor(
     var content = MutableLiveData<String>("")
 
     // 내용
+    var repeat = MutableLiveData<String>("")
+
+    // 카테고리 종류
     var _categoryList = MutableLiveData<List<UiBookCategory>>()
     val categoryList: LiveData<List<UiBookCategory>> get() = _categoryList
 
     // 카테고리 선택 아이템 저장
     private var categoryClickItem: UiBookCategory? = null
+
+    // 반복 설정
+    val repeatItem = arrayListOf<UiBookCategory>(
+        UiBookCategory(0, false, "없음", true),
+        UiBookCategory(1, false, "매일", false),
+        UiBookCategory(2, false, "매주", false),
+        UiBookCategory(3, false, "매달", false),
+        UiBookCategory(4, false, "주중", false),
+        UiBookCategory(5, false, "주말", false)
+    )
+    private var _repeatClickItem = MutableLiveData<UiBookCategory?>(null)
+    val repeatClickItem: LiveData<UiBookCategory?> get() = _repeatClickItem
 
     // 자산, 지출, 수입, 이체 카테고리 조회에 사용
     private var parent = ""
@@ -122,7 +141,8 @@ class HistoryViewModel @Inject constructor(
         deleteChecked = item.exceptStatus
 
         modifyItem = item
-        modifyItem!!.money = item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
+        modifyItem!!.money =
+            item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
         modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
 
@@ -156,7 +176,7 @@ class HistoryViewModel @Inject constructor(
                 _categoryList.postValue(item.toMutableList())
                 _onClickCategory.emit(parent)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
         }
     }
@@ -192,7 +212,7 @@ class HistoryViewModel @Inject constructor(
                 _postBooksLines.emit(true)
                 baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
         }
     }
@@ -217,7 +237,7 @@ class HistoryViewModel @Inject constructor(
                 _postModifyBooksLines.emit(true)
                 baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
         }
     }
@@ -230,7 +250,7 @@ class HistoryViewModel @Inject constructor(
             ).onSuccess {
                 _deleteBookLines.emit(true)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
         }
     }
@@ -248,7 +268,7 @@ class HistoryViewModel @Inject constructor(
     // 닫기 버튼 클릭
     fun onClickCloseBtn() {
         viewModelScope.launch {
-            if(modifyItem != null) {
+            if (modifyItem != null) {
                 _onClickCloseBtn.emit(isExistEdit())
             } else {
                 _onClickCloseBtn.emit(false)
@@ -260,6 +280,13 @@ class HistoryViewModel @Inject constructor(
     fun onClickShowCalendar() {
         viewModelScope.launch {
             _showCalendar.emit(true)
+        }
+    }
+
+    // 반복 설정 클릭
+    fun onClickRepeat() {
+        viewModelScope.launch {
+            _onClickRepeat.emit("반복 설정")
         }
     }
 
@@ -284,7 +311,7 @@ class HistoryViewModel @Inject constructor(
 
     // 지출, 수입, 이체 클릭
     fun onClickFlow(type: String) {
-        if(mode.value == "add") {
+        if (mode.value == "add") {
             line.postValue("분류를 선택하세요")
             flow.postValue(type)
         }
@@ -342,6 +369,12 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
+    // 반복 설정 확인 클릭
+    fun onClickRepeatChoice() {
+        repeat.value = repeatClickItem.value?.name
+    }
+
+    // 카테고리 아이템 세팅
     fun onClickCategoryItem(_item: UiBookCategory) {
         categoryClickItem = _item
 
@@ -354,12 +387,28 @@ class HistoryViewModel @Inject constructor(
         _categoryList.postValue(item)
     }
 
+    // 반복 설정 아이템 세팅
+    fun onClickRepeatItem(_item: UiBookCategory) {
+        _repeatClickItem.postValue(_item)
+        repeatItem[_item.idx].checked = !repeatItem[_item.idx].checked
+    }
+
     // 카테고리 선택 여부 확인
     fun isClickedCategoryItem(): Boolean {
         return if (categoryClickItem != null) {
             true
         } else {
             baseEvent(Event.ShowToast("카테고리 항목을 선택해주세요"))
+            false
+        }
+    }
+
+    // 반복 설정 선택 여부 확인
+    fun isClickedRepeatItem(): Boolean {
+        return if (repeatClickItem.value != null) {
+            true
+        } else {
+            baseEvent(Event.ShowToast("반복 설정 항목을 선택해주세요"))
             false
         }
     }

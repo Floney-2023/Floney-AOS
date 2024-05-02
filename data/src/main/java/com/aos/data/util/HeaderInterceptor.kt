@@ -10,7 +10,6 @@ class HeaderInterceptor @Inject constructor(
     private val prefs: SharedPreferenceUtil
 ): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        Timber.e("chain.request().headers()[\"Auth\"] ${chain.request().headers["Auth"]}")
         if(chain.request().headers["Auth"] == "false"){
 
             val newRequest = chain.request().newBuilder()
@@ -28,7 +27,6 @@ class HeaderInterceptor @Inject constructor(
             .addHeader("Authorization", token)
             .build()
         val response = chain.proceed(newRequest)
-
 
         return response
     }

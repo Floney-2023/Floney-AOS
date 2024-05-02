@@ -5,11 +5,9 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
-import com.aos.floney.databinding.FragmentMyPageInformProfilechangeBinding
 import com.aos.floney.databinding.FragmentMyPageWithdrawCompleteBinding
 import com.aos.floney.ext.repeatOnStarted
-import com.aos.floney.view.mypage.inform.email.login.version.MyPageInformEmailActivity
-import com.aos.floney.view.signup.SignUpActivity
+import com.aos.floney.view.mypage.inform.MyPageInformActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +30,7 @@ class MyPageInformWithdrawCompleteFragment :
         repeatOnStarted {
             viewModel.nextPage.collect() {
                 if(it) {
-                    val activity = requireActivity() as MyPageInformEmailActivity
+                    val activity = requireActivity() as MyPageInformActivity
                     activity.startLoginActivity()
                 }
             }

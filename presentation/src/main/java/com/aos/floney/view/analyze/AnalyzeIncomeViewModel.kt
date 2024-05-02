@@ -39,7 +39,7 @@ class AnalyzeIncomeViewModel @Inject constructor(
                 _postAnalyzeInComeCategoryResult.postValue(it)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@AnalyzeIncomeViewModel)))
             }
         }
     }

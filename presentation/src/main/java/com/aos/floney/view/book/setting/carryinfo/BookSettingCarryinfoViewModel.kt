@@ -57,7 +57,7 @@ class BookSettingCarryinfoViewModel @Inject constructor(
                 prefs.getString("bookKey","")).onSuccess {
                 _carryOverSheet.emit(true)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCarryinfoViewModel)))
             }
         }
     }

@@ -63,7 +63,7 @@ class SignUpInputInfoViewModel @Inject constructor(
                                     _nextPage.emit(true)
                                 }.onFailure {
                                     baseEvent(Event.HideLoading)
-                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SignUpInputInfoViewModel)))
                                 }
                             }
                         } else {

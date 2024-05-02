@@ -93,7 +93,7 @@ class BookSettingRepeatViewModel @Inject constructor(
                 _repeatList.postValue(it)
 
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingRepeatViewModel)))
             }
         }
     }
@@ -121,7 +121,7 @@ class BookSettingRepeatViewModel @Inject constructor(
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingRepeatViewModel)))
             }
         }
     }

@@ -60,7 +60,7 @@ class BookSettingExcelViewModel @Inject constructor(
                 ).onSuccess {
                     _completePage.emit(it)
                 }.onFailure {
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingExcelViewModel)))
                 }
             }
         } else{

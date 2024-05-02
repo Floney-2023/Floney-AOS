@@ -6,6 +6,7 @@ import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 
 class CustomCall<T : Any>(private val call: Call<T>) : Call<NetworkState<T>> {
@@ -37,6 +38,7 @@ class CustomCall<T : Any>(private val call: Call<T>) : Call<NetworkState<T>> {
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
+                Timber.e("t ${t.message}")
                 val errorResponse = when (t) {
                     is IOException -> NetworkState.NetworkError(t)  // 2
                     else -> NetworkState.UnknownError(t,"onFailure에 진입,IoException 이외의 에러") // 3

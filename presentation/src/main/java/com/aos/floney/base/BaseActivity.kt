@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -23,6 +24,7 @@ import com.aos.floney.R
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.common.ErrorToastDialog
 import com.aos.floney.view.common.SuccessToastDialog
+import com.aos.floney.view.login.LoginActivity
 import timber.log.Timber
 import java.lang.reflect.ParameterizedType
 
@@ -78,12 +80,14 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     private fun handleEvent(event: BaseViewModel.Event) {
         when (event) {
             is BaseViewModel.Event.ShowToast -> {
-                val errorToastDialog = ErrorToastDialog(this, event.message)
-                errorToastDialog.show()
+                if(event.message != "") {
+                    val errorToastDialog = ErrorToastDialog(this, event.message)
+                    errorToastDialog.show()
 
-                Handler(Looper.myLooper()!!).postDelayed({
-                    errorToastDialog.dismiss()
-                }, 2000)
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        errorToastDialog.dismiss()
+                    }, 2000)
+                }
             }
 
             is BaseViewModel.Event.ShowToastRes -> {
@@ -114,6 +118,10 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
 
             is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
             is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
+            is BaseViewModel.Event.ExpiredToken -> {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finishAffinity()
+            }
         }
     }
 

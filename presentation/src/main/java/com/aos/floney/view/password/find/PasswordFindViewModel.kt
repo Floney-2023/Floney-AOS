@@ -38,7 +38,7 @@ class PasswordFindViewModel @Inject constructor(
 //                        _nextPage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@PasswordFindViewModel)))
                     }
                 }
             } else {
