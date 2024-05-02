@@ -83,6 +83,8 @@
     <string name="mypage_main_inform_change_profile">프로필 이미지 변경</string>
     <string name="mypage_main_inform_change_passwd">비밀번호 변경</string>
     <string name="mypage_main_inform_logout">로그아웃</string>
+    <string name="mypage_main_inform_logout_dialog_info">로그아웃 하시겠습니까?</string>
+
     <string name="mypage_main_inform_exit"><u>회원탈퇴</u></string>
     <string name="mypage_main_inform_nickname_request">닉네임을 입력해주세요.</string>
     <string name="mypage_main_inform_nickname_request_success">변경이 완료되었습니다.</string>

@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.inform.email.login.version.main.MyPageInformEmailMainViewModel" />
+            type="com.aos.floney.view.mypage.inform.main.MyPageInformMainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.mypage.inform.email.login.version.MyPageInformEmailActivity">
+        tools:context=".view.mypage.inform.MyPageInformActivity">
 
         <ImageView
             android:id="@+id/iv_back_button"
@@ -68,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="90"
-                android:hint="@string/mypage_main_inform_nickname_tint"
+                android:hint="@{vm.hintName}"
                 android:textColor="@color/grayscale2"
                 android:textSize="14dp"
                 android:fontFamily="@font/pretendard_regular"
@@ -126,8 +127,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:orientation="horizontal"
             android:onClick="@{() -> vm.onClickPasswordChange()}"
+            android:orientation="horizontal"
+            android:visibility="@{vm.provider.equals(`EMAIL`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="@+id/profile_image_change"
             app:layout_constraintStart_toStartOf="@+id/profile_image_change"
             app:layout_constraintTop_toBottomOf="@+id/profile_image_change">
@@ -156,9 +158,9 @@
             android:layout_marginTop="32dp"
             android:onClick="@{() -> vm.onClickLogOut()}"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/pw_change"
+            app:layout_constraintEnd_toEndOf="@+id/profile_image_change"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/pw_change"
+            app:layout_constraintStart_toStartOf="@+id/profile_image_change"
             app:layout_constraintTop_toBottomOf="@+id/pw_change">
 
             <TextView

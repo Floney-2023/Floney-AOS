@@ -7,13 +7,13 @@
 
     <activity
         android:id="@+id/myPageInformEmailActivity"
-        android:name="com.aos.floney.view.mypage.inform.email.login.version.MyPageInformEmailActivity"
-        tools:layout="@layout/activity_my_page_inform_email"
+        android:name="com.aos.floney.view.mypage.inform.MyPageInformActivity"
+        tools:layout="@layout/activity_my_page_inform"
         android:label="MyPageInformEmailActivity" />
     <fragment
         android:id="@+id/myPageInformEmailSettingFragment"
-        android:name="com.aos.floney.view.mypage.inform.email.login.version.main.MyPageInformEmailMainFragment"
-        tools:layout="@layout/fragment_my_page_inform_email_main"
+        android:name="com.aos.floney.view.mypage.inform.main.MyPageInformMainFragment"
+        tools:layout="@layout/fragment_my_page_inform_main"
         android:label="MyPageInformEmailSettingFragment" >
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformProfileChangeFragment"
@@ -39,8 +39,8 @@
     </fragment>
     <fragment
         android:id="@+id/myPageInformEmailPwChangeFragment"
-        android:name="com.aos.floney.view.mypage.inform.email.login.version.password.change.MyPageInformEmailPwChangeFragment"
-        tools:layout="@layout/fragment_my_page_inform_email_pwchange"
+        android:name="com.aos.floney.view.mypage.inform.pwchange.MyPageInformPwChangeFragment"
+        tools:layout="@layout/fragment_my_page_inform_pwchange"
         android:label="MyPageInformEmailPwChangeFragment" />
     <fragment
         android:id="@+id/myPageInformProfileChangeFragment"
