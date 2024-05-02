@@ -389,8 +389,13 @@ class HistoryViewModel @Inject constructor(
 
     // 반복 설정 아이템 세팅
     fun onClickRepeatItem(_item: UiBookCategory) {
-        _repeatClickItem.postValue(_item)
-        repeatItem[_item.idx].checked = !repeatItem[_item.idx].checked
+        val item = repeatItem.map {
+            UiBookCategory(
+                it.idx, false, it.name, it.default
+            )
+        } ?: listOf()
+        item[_item.idx].checked = !repeatItem[_item.idx].checked
+        _repeatClickItem.postValue(item)
     }
 
     // 카테고리 선택 여부 확인
