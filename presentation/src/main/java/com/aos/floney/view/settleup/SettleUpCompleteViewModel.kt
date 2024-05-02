@@ -5,14 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.aos.data.mapper.getCurrentDateTimeString
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.model.book.UiBookSettingModel
 import com.aos.model.settlement.UiSettlementAddModel
 import com.aos.model.settlement.settleOutcomes
+import com.aos.usecase.booksetting.BooksSettingGetUseCase
+import com.aos.usecase.mypage.AlarmSaveGetUseCase
 import com.aos.usecase.settlement.BooksOutComesUseCase
 import com.aos.usecase.settlement.BooksUsersUseCase
 import com.aos.usecase.settlement.SettlementAddUseCase
@@ -26,7 +30,9 @@ import javax.inject.Inject
 class SettleUpCompleteViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
-    private val settlementAddUseCase : SettlementAddUseCase
+    private val settlementAddUseCase : SettlementAddUseCase,
+    private val booksSettingGetUseCase : BooksSettingGetUseCase,
+    private val alarmSaveGetUseCase : AlarmSaveGetUseCase
 ): BaseViewModel() {
 
 
@@ -39,18 +45,6 @@ class SettleUpCompleteViewModel @Inject constructor(
     private var _settlementModel = MutableLiveData<UiSettlementAddModel>()
     val settlementModel: LiveData<UiSettlementAddModel> get() = _settlementModel
 
-    // 선택 날짜 String format
-    private var _selectDay = MutableLiveData<String>("")
-    val selectDay: LiveData<String> get() = _selectDay
-
-    // 시작 날짜
-    private var _startDay = MutableLiveData<String>("")
-    val startDay: LiveData<String> get() = _startDay
-
-    // 끝 날짜
-    private var _endDay = MutableLiveData<String>("")
-    val endDay: LiveData<String> get() = _endDay
-
     // 다음 정산 페이지
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
@@ -62,6 +56,14 @@ class SettleUpCompleteViewModel @Inject constructor(
     // 처음 정산하기 페이지
     private var _settlementPage = MutableEventFlow<Boolean>()
     val settlementPage: EventFlow<Boolean> get() = _settlementPage
+
+    // 가계부 정보
+    private var _bookSettingInfo = MutableLiveData<UiBookSettingModel>()
+    val bookSettingInfo: LiveData<UiBookSettingModel> get() = _bookSettingInfo
+
+    // 정보 load 완료
+    private var _getInform = MutableEventFlow<Boolean>()
+    val getInform: EventFlow<Boolean> get() = _getInform
 
 
     init {
@@ -78,11 +80,48 @@ class SettleUpCompleteViewModel @Inject constructor(
             settlementAddUseCase(prefs.getString("bookKey",""), startDate.value!!, endDate.value!!,userEmails, outcomes).onSuccess {
                 // 불러오기 성공
                 _settlementModel.postValue(it)
-
                 baseEvent(Event.HideLoading)
+                searchBookSettingItems()
             }.onFailure {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+
+    fun searchBookSettingItems()
+    {
+        viewModelScope.launch(Dispatchers.IO) {
+            booksSettingGetUseCase(prefs.getString("bookKey","")).onSuccess {
+                // me가 true인 항목이 맨 앞에 오도록 정렬
+                val sortedList = it.ourBookUsers.sortedByDescending { it.me }
+                _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
+                _getInform.emit(true)
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+    fun saveInviteAlarm(){
+        viewModelScope.launch {
+            if(prefs.getString("bookKey","").isNotEmpty()) {
+                baseEvent(Event.ShowLoading)
+                memberArray.value?.map {
+                    alarmSaveGetUseCase(
+                        prefs.getString("bookKey",""),
+                        "플로니",
+                        "${_bookSettingInfo.value!!.bookName} 가계부를 정산해보세요.",
+                        "icon_noti_settlement",
+                        it,
+                        getCurrentDateTimeString()
+                    ).onSuccess {
+                        baseEvent(Event.HideLoading)
+                    }.onFailure {
+                        baseEvent(Event.HideLoading)
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    }
+                }
+
             }
         }
     }
