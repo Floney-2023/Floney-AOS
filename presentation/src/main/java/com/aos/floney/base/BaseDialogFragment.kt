@@ -120,6 +120,7 @@ abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseViewModel>(
             }
             is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
             is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
+            is BaseViewModel.Event.ExpiredToken -> {}
         }
     }
 

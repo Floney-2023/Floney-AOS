@@ -66,7 +66,7 @@ class MyPageInformEmailMainViewModel @Inject constructor(
                     baseEvent(Event.HideLoading)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformEmailMainViewModel)))
                 }
             }
         }else {
@@ -99,7 +99,7 @@ class MyPageInformEmailMainViewModel @Inject constructor(
                     _logOutPage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformEmailMainViewModel)))
                 }
             }
         }

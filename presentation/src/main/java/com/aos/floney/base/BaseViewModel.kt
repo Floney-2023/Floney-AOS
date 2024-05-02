@@ -24,5 +24,6 @@ abstract class BaseViewModel : ViewModel() {
         
         object ShowLoading: Event()
         object HideLoading: Event()
+        object ExpiredToken: Event()
     }
 }

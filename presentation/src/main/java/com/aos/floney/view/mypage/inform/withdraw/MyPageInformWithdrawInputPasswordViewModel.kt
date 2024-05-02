@@ -67,7 +67,7 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
                     _dialogPage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformWithdrawInputPasswordViewModel)))
                 }
             }
         } else {
@@ -86,7 +86,7 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
                 _withdrawPage.emit(true)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformWithdrawInputPasswordViewModel)))
             }
         }
     }

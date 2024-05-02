@@ -43,7 +43,7 @@ class MyPageSettingAlarmViewModel @Inject constructor(
             marketingCheckUseCase().onSuccess {
                 _marketingTerms.postValue(it.agree)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageSettingAlarmViewModel)))
             }
         }
     }
@@ -60,7 +60,7 @@ class MyPageSettingAlarmViewModel @Inject constructor(
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageSettingAlarmViewModel)))
             }
         }
     }

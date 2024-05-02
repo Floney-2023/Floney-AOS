@@ -128,6 +128,14 @@ class HistoryActivity :
                 categoryBottomSheetDialog.show()
             }
         }
+        repeatOnStarted {
+            viewModel.onClickRepeat.collect {
+                SetRepeatBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity) {
+                    // 완료 버튼 클릭
+                    viewModel.onClickRepeatChoice()
+                }.show()
+            }
+        }
 
         repeatOnStarted {
             viewModel.postBooksLines.collect {

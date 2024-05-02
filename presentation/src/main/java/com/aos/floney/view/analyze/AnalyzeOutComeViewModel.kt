@@ -36,7 +36,7 @@ class AnalyzeOutComeViewModel @Inject constructor(
                 _postAnalyzeOutComeCategoryResult.postValue(it)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@AnalyzeOutComeViewModel)))
             }
         }
     }

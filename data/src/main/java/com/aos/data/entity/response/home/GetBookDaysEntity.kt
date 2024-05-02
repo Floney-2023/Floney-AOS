@@ -8,7 +8,8 @@ data class GetBookDaysEntity(
     val dayLinesResponse: List<DayLiensResponse> = listOf(),
     val totalExpense: List<TotalExpense>,
     val seeProfileImg: Boolean,
-    val carryOverInfo: CarryOverInfoDays
+    val carryOverInfo: CarryOverInfoDays,
+    val repeatDuration: String
 )
 
 @Serializable

@@ -94,7 +94,9 @@ class HomeViewModel @Inject constructor(
     // 가계부 정보 가져오기
     private fun getBookInfo(code: String) {
         viewModelScope.launch {
+            baseEvent(Event.ShowLoading)
             getBookInfoUseCase(code).onSuccess {
+                baseEvent(Event.HideLoading)
                 // 내 닉네임 저장
                 it.ourBookUsers.forEach {
                     if (it.me) {
@@ -104,7 +106,8 @@ class HomeViewModel @Inject constructor(
 
                 _bookInfo.postValue(it)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
             }
         }
     }
@@ -116,7 +119,8 @@ class HomeViewModel @Inject constructor(
                 _getMoneyDayData.emit(it)
                 _getMoneyDayList.postValue(it.data)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
+
             }
         }
     }

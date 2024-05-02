@@ -39,7 +39,7 @@ class HomeMonthTypeViewModel @Inject constructor(
 
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeMonthTypeViewModel)))
             }
         }
     }

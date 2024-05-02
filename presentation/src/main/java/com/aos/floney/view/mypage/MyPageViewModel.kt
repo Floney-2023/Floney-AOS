@@ -69,7 +69,7 @@ class MyPageViewModel @Inject constructor(
 
                 _mypageInfo.postValue(updatedResult)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageViewModel)))
             }
         }
     }
@@ -146,7 +146,7 @@ class MyPageViewModel @Inject constructor(
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageViewModel)))
             }
         }
     }

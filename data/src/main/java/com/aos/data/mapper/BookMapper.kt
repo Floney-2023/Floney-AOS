@@ -179,7 +179,8 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
             exceptStatus = it.exceptStatus,
             writerEmail = it.writerEmail,
             writerNickName = it.writerNickname,
-            writerProfileImg = it.writerProfileImg
+            writerProfileImg = it.writerProfileImg,
+            repeatDuration = this.repeatDuration
         )
     }
 

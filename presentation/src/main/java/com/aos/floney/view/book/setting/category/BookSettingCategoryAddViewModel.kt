@@ -58,7 +58,7 @@ class BookSettingCategoryAddViewModel @Inject constructor(
                 ).onSuccess {
                     _completePage.emit(it.name)
                 }.onFailure {
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCategoryAddViewModel)))
                 }
             }
         } else{

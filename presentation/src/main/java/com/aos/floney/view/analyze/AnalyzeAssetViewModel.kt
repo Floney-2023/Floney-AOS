@@ -29,7 +29,7 @@ class AnalyzeAssetViewModel @Inject constructor(private val pref: SharedPreferen
                 Timber.e("it $it")
                 _postAssetResult.postValue(it)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@AnalyzeAssetViewModel)))
             }
         }
     }

@@ -116,7 +116,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                     lineSubCategory = item.lineSubCategory,
                     assetSubCategory = item.assetSubCategory,
                     exceptStatus = item.exceptStatus,
-                    writerNickName = item.writerNickName
+                    writerNickName = item.writerNickName,
+                    repeatDuration = item.repeatDuration
                 )
             )
         )

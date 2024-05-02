@@ -3,6 +3,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -21,6 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.aos.floney.R
 import com.aos.floney.BR
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.login.LoginActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.lang.reflect.ParameterizedType
 
@@ -97,6 +99,7 @@ abstract class BaseBottomSheetFragment<B : ViewDataBinding, VM : BaseViewModel>(
             }
             is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
             is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
+            is BaseViewModel.Event.ExpiredToken -> {}
         }
     }
 
