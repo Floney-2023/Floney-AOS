@@ -60,7 +60,7 @@ class MyPageInformPwChangeViewModel @Inject constructor(
                                     _checkBtn.emit(true)
                                 }.onFailure {
                                     baseEvent(Event.HideLoading)
-                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformEmailPwChangeViewModel)))
+                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel)))
                                 }
                             }
                         } else {

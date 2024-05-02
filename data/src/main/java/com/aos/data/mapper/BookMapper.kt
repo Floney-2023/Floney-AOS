@@ -180,7 +180,7 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
             writerEmail = it.writerEmail,
             writerNickName = it.writerNickname,
             writerProfileImg = it.writerProfileImg,
-            repeatDuration = this.repeatDuration
+            repeatDuration = it.repeatDuration
         )
     }
 
