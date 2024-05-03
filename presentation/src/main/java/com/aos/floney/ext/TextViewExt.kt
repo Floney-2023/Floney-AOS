@@ -1,5 +1,7 @@
 package com.aos.floney.ext
 
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
@@ -48,4 +50,17 @@ fun TextView.setAssetMonthText(item: Asset?){
     } else {
         this.text = ""
     }
+}
+@BindingAdapter("bind:setTextViewWeight")
+fun TextView.setLayoutWeight(weight: Float) {
+    val layoutParams = this.layoutParams as LinearLayout.LayoutParams
+    layoutParams.weight = weight
+    this.layoutParams = layoutParams
+}
+
+@BindingAdapter("bind:setViewWeight")
+fun View.setLayoutWeight(weight: Float) {
+    val layoutParams = this.layoutParams as LinearLayout.LayoutParams
+    layoutParams.weight = weight
+    this.layoutParams = layoutParams
 }

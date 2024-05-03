@@ -23,8 +23,8 @@ import timber.log.Timber
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
-    private val mypageSearchUseCase : MypageSearchUseCase,
-    private val recentBookKeySaveUseCase : RecentBookkeySaveUseCase
+    private val mypageSearchUseCase: MypageSearchUseCase,
+    private val recentBookKeySaveUseCase: RecentBookkeySaveUseCase
 ): BaseViewModel() {
 
     // 회원 정보

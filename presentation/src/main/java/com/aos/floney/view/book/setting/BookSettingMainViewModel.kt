@@ -1,8 +1,11 @@
 package com.aos.floney.view.book.setting
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.mapper.getCurrentDateTimeString
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -22,6 +25,7 @@ import com.aos.usecase.booksetting.BooksInitUseCase
 import com.aos.usecase.booksetting.BooksOutUseCase
 import com.aos.usecase.booksetting.BooksSettingGetUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
+import com.aos.usecase.mypage.AlarmSaveGetUseCase
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -32,7 +36,8 @@ class BookSettingMainViewModel @Inject constructor(
     private val booksSettingGetUseCase : BooksSettingGetUseCase,
     private val booksInitUseCase : BooksInitUseCase,
     private val booksOutUseCase: BooksOutUseCase,
-    private val checkUserBookUseCase: CheckUserBookUseCase
+    private val checkUserBookUseCase: CheckUserBookUseCase,
+    private val alarmSaveGetUseCase : AlarmSaveGetUseCase
 ): BaseViewModel() {
 
     // 회원 닉네임
@@ -121,6 +126,7 @@ class BookSettingMainViewModel @Inject constructor(
                 booksInitUseCase(prefs.getString("bookKey","")).onSuccess {
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowSuccessToast("가계부가 초기화 되었습니다."))
+                    alarmInitSave()
                 }.onFailure {
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
@@ -128,12 +134,68 @@ class BookSettingMainViewModel @Inject constructor(
             }
         }
     }
+
+    // 가계부 초기화 알람 저장
+    fun alarmInitSave()
+    {
+        viewModelScope.launch {
+            if(prefs.getString("bookKey","").isNotEmpty()) {
+                baseEvent(Event.ShowLoading)
+
+                bookSettingInfo.value?.ourBookUsers?.map {
+                    alarmSaveGetUseCase(
+                        prefs.getString("bookKey",""),
+                        "플로니",
+                        "${_bookSettingInfo.value!!.bookName} 가계부가 초기화 되었어요.",
+                        "icon_noti_reset",
+                        it.email,
+                        getCurrentDateTimeString()
+                    ).onSuccess {
+                        baseEvent(Event.HideLoading)
+                        Timber.e("save gg ")
+                    }.onFailure {
+                        baseEvent(Event.HideLoading)
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    }
+                }
+            }
+        }
+    }
+    // 가계부 나가기 알람 저장
+    fun alarmExitSave()
+    {
+        viewModelScope.launch {
+            if(prefs.getString("bookKey","").isNotEmpty()) {
+                baseEvent(Event.ShowLoading)
+                bookSettingInfo.value?.ourBookUsers?.forEachIndexed { index, user ->
+                    if (index != 0) { // 인덱스가 0이 아닌 경우에만 실행(본인 제외, 알람)
+                        alarmSaveGetUseCase(
+                            prefs.getString("bookKey",""),
+                            "플로니",
+                            "${_bookSettingInfo.value!!.ourBookUsers[index].name}님이 ${_bookSettingInfo.value!!.bookName} 가계부를 나갔습니다.",
+                            "icon_noti_exit",
+                            _bookSettingInfo.value!!.ourBookUsers[index].email,
+                            getCurrentDateTimeString()
+                        ).onSuccess {
+                            baseEvent(Event.HideLoading)
+                            settingBookKey()
+                            Timber.e("save gg ")
+                        }.onFailure {
+                            baseEvent(Event.HideLoading)
+                            baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // 가계부 나가기
     fun onBookExit()
     {
         viewModelScope.launch(Dispatchers.IO) {
             booksOutUseCase(prefs.getString("bookKey","")).onSuccess {
-                settingBookKey()
+                alarmExitSave()
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
             }

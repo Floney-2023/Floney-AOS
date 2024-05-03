@@ -1,5 +1,6 @@
 package com.aos.floney.module
 
+import com.aos.data.api.AlarmService
 import com.aos.data.api.AnalyzeService
 import com.aos.data.api.BookService
 import com.aos.data.api.UserService
@@ -25,5 +26,9 @@ object ServiceModule {
     @Provides
     @Singleton
     fun provideAnalyzeService(retrofit: Retrofit): AnalyzeService = retrofit.create(AnalyzeService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAlarmService(retrofit: Retrofit): AlarmService = retrofit.create(AlarmService::class.java)
 
 }

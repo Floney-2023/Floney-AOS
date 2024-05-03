@@ -43,18 +43,6 @@ class SettleUpCompleteFragment : BaseFragment<FragmentSettleUpCompleteBinding, S
                 }
             }
         }
-
-        repeatOnStarted {
-            // 다음 페이지 이동
-            viewModel.nextPage.collect {
-//                if(it) {
-//                    val action = SettleUp
-//                        .actionSignUpAgreeFragmentToSignUpInputEmailFragment(viewModel.marketingTerms.value ?: false)
-//                    findNavController().navigate(action)
-//                }
-            }
-        }
-
         repeatOnStarted {
             // 처음 정산 페이지로
             viewModel.settlementPage.collect {
@@ -64,7 +52,15 @@ class SettleUpCompleteFragment : BaseFragment<FragmentSettleUpCompleteBinding, S
                 }
             }
         }
-
+        repeatOnStarted {
+            // 작성하러 가기 -> 홈 화면 가기
+            viewModel.getInform.collect {
+                Timber.e("nextPage $it")
+                if(it) {
+                    viewModel.saveInviteAlarm()
+                }
+            }
+        }
     }
 
 }

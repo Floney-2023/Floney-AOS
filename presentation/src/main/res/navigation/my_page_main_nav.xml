@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_page_main_nav"
+    app:startDestination="@id/myPageMainFragment">
+
+    <activity
+        android:id="@+id/myPageActivity"
+        android:name="com.aos.floney.view.mypage.MyPageActivity"
+        android:label="MyPageActivity"
+        tools:layout="@layout/activity_my_page"/>
+    <fragment
+        android:id="@+id/myPageMainFragment"
+        android:name="com.aos.floney.view.mypage.main.service.MyPageMainFragment"
+        android:label="MyPageMainFragment"
+        tools:layout="@layout/fragment_my_page_main">
+        <action
+            android:id="@+id/action_myPageMainFragment_to_myPageServiceAskFragment"
+            app:destination="@id/myPageServiceAskFragment" />
+        <action
+            android:id="@+id/action_myPageMainFragment_to_myPageServiceNoticeFragment"
+            app:destination="@id/myPageServiceNoticeFragment" />
+        <action
+            android:id="@+id/action_myPageMainFragment_to_myPageServicePrivacyFragment"
+            app:destination="@id/myPageServicePrivacyFragment" />
+        <action
+            android:id="@+id/action_myPageMainFragment_to_myPageServiceTermsFragment"
+            app:destination="@id/myPageServiceTermsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageServiceAskFragment"
+        android:name="com.aos.floney.view.mypage.main.service.MyPageServiceAskFragment"
+        android:label="MyPageServiceAskFragment"
+        tools:layout="@layout/fragment_my_page_service_ask"/>
+    <fragment
+        android:id="@+id/myPageServiceNoticeFragment"
+        android:name="com.aos.floney.view.mypage.main.service.MyPageServiceNoticeFragment"
+        android:label="MyPageServiceNoticeFragment"
+        tools:layout="@layout/fragment_my_page_service_notice"/>
+    <fragment
+        android:id="@+id/myPageServicePrivacyFragment"
+        android:name="com.aos.floney.view.mypage.main.service.MyPageServicePrivacyFragment"
+        android:label="MyPageServicePrivacyFragment"
+        tools:layout="@layout/fragment_my_page_service_privacy"/>
+    <fragment
+        android:id="@+id/myPageServiceTermsFragment"
+        android:name="com.aos.floney.view.mypage.main.service.MyPageServiceTermsFragment"
+        android:label="MyPageServiceTermsFragment"
+        tools:layout="@layout/fragment_my_page_service_terms"/>
+
+</navigation>

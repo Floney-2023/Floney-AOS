@@ -35,5 +35,14 @@ class MyPageBookAddInviteSuccessFragment : BaseFragment<FragmentMyPageBookAddInv
                 }
             }
         }
+        repeatOnStarted {
+            // 작성하러 가기 -> 홈 화면 가기
+            viewModel.getInform.collect {
+                Timber.e("nextPage $it")
+                if(it) {
+                    viewModel.saveInviteAlarm()
+                }
+            }
+        }
     }
 }
