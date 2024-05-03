@@ -64,44 +64,7 @@ class SettleUpCompleteViewModel @Inject constructor(
     // 정보 load 완료
     private var _getInform = MutableEventFlow<Boolean>()
     val getInform: EventFlow<Boolean> get() = _getInform
-
-
-    init {
-        getOutcomesItems()
-    }
-    fun getOutcomesItems(){
-        val userEmails = memberArray.value!!.map { it }
-        val outcomes = outcome.value!!.zip(userEmail.value!!) { outcome, email ->
-            settleOutcomes(outcome, email)
-        }
-        Timber.e("yeah : ${outcomes}")
-        viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
-            settlementAddUseCase(prefs.getString("bookKey",""), startDate.value!!, endDate.value!!,userEmails, outcomes).onSuccess {
-                // 불러오기 성공
-                _settlementModel.postValue(it)
-                baseEvent(Event.HideLoading)
-                searchBookSettingItems()
-            }.onFailure {
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpCompleteViewModel)))
-            }
-        }
-    }
-
-    fun searchBookSettingItems()
-    {
-        viewModelScope.launch(Dispatchers.IO) {
-            booksSettingGetUseCase(prefs.getString("bookKey","")).onSuccess {
-                // me가 true인 항목이 맨 앞에 오도록 정렬
-                val sortedList = it.ourBookUsers.sortedByDescending { it.me }
-                _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
-                _getInform.emit(true)
-            }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
-            }
-        }
-    }
+      
     fun saveInviteAlarm(){
         viewModelScope.launch {
             if(prefs.getString("bookKey","").isNotEmpty()) {
