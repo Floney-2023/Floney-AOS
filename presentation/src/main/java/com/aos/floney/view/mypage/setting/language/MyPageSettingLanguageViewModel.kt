@@ -62,7 +62,7 @@ class MyPageSettingLanguageViewModel @Inject constructor(
                     baseEvent(Event.HideLoading)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageSettingLanguageViewModel)))
                 }
             }
         }else {

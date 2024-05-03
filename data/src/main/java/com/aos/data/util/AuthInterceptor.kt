@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
     private val prefs: SharedPreferenceUtil
-): okhttp3.Authenticator {
+) : okhttp3.Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
         val originRequest = response.request
@@ -31,35 +31,30 @@ class AuthInterceptor @Inject constructor(
             return null
         }
 
+
         // CoroutineScope 내에서 실행하여 비동기적으로 토큰 재발급
-        CoroutineScope(Dispatchers.IO).launch {
-            val refreshRequest = Request.Builder()
-                .url("${BuildConfig.BASE_URL}users/reissue")
-                .post(createTokenReissueRequestBody())
-                .build()
+        val refreshRequest = Request.Builder()
+            .url("${BuildConfig.BASE_URL}users/reissue")
+            .post(createTokenReissueRequestBody())
+            .build()
 
-            try {
-                val refreshedToken = executeRefreshTokenRequest(refreshRequest)
-                refreshedToken?.let {
-                    updateTokenInPrefs(it.accessToken, it.refreshToken)
+        try {
+            val refreshedToken = executeRefreshTokenRequest(refreshRequest)
+            return refreshedToken?.let {
+                updateTokenInPrefs(it.accessToken, it.refreshToken)
 
-                    originRequest.newBuilder().addHeader("Authorization", it.accessToken).build()
-                }
-            } catch (e: IOException) {
-                Timber.e(e, "Failed to refresh token")
-                clearTokens()
+                originRequest.newBuilder().header("Authorization", "Bearer ${it.accessToken}").build()
             }
+        } catch (e: IOException) {
+            Timber.e(e, "Failed to refresh token")
         }
 
         // 새로운 요청을 기다리지 않고 null 반환
         return null
     }
 
-    private suspend fun executeRefreshTokenRequest(refreshRequest: Request): PostUserReissueEntity? {
-        val response = withContext(Dispatchers.IO) {
-            OkHttpClient().newCall(refreshRequest).execute()
-        }
-
+    private fun executeRefreshTokenRequest(refreshRequest: Request): PostUserReissueEntity? {
+        val response = OkHttpClient().newCall(refreshRequest).execute()
         return response.use {
             if (response.isSuccessful) {
                 val json = Json { ignoreUnknownKeys = true }
@@ -68,6 +63,7 @@ class AuthInterceptor @Inject constructor(
                     json.decodeFromString<PostUserReissueEntity>(it)
                 }
             } else {
+                clearTokens()
                 null
             }
         }
@@ -90,6 +86,7 @@ class AuthInterceptor @Inject constructor(
             "refreshToken": "${prefs.getString("refreshToken", "")}"
         }
     """.trimIndent()
+        Timber.e("requestBodyString $requestBodyString")
 
         return requestBodyString.toRequestBody("application/json".toMediaTypeOrNull())
     }

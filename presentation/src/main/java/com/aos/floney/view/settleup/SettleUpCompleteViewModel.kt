@@ -84,7 +84,7 @@ class SettleUpCompleteViewModel @Inject constructor(
                 searchBookSettingItems()
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpCompleteViewModel)))
             }
         }
     }

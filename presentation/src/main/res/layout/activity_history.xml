@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -28,6 +29,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:padding="5dp"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.INVISIBLE}"
+            android:src="@drawable/icon_favorite"
+            app:layout_constraintBottom_toBottomOf="@id/iv_close"
+            app:layout_constraintEnd_toStartOf="@id/iv_repeat"
+            app:layout_constraintTop_toTopOf="@id/iv_close" />
+
+        <ImageView
+            android:id="@+id/iv_repeat"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> vm.onClickRepeat()}"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.INVISIBLE}"
+            android:padding="5dp"
+            android:src="@drawable/icon_repeat"
+            app:layout_constraintBottom_toBottomOf="@id/iv_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_close" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="매일"
+            android:visibility="@{vm.mode.equals(`add`) ? View.INVISIBLE : View.VISIBLE}"
+            android:textColor="@color/grayscale6"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_repeat"
+            app:layout_constraintEnd_toEndOf="@id/iv_repeat"
+            app:layout_constraintTop_toTopOf="@id/iv_repeat" />
+
         <TextView
             android:id="@+id/tv_money"
             android:layout_width="wrap_content"
@@ -43,7 +79,6 @@
 
         <EditText
             android:id="@+id/et_money"
-            bind:setSelection="@{vm.cost}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -61,7 +96,8 @@
             android:textSize="36dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_money"
-            app:layout_constraintTop_toBottomOf="@id/tv_money" />
+            app:layout_constraintTop_toBottomOf="@id/tv_money"
+            bind:setSelection="@{vm.cost}" />
 
         <LinearLayout
             android:id="@+id/ll_category"
@@ -273,8 +309,8 @@
             android:background="@color/grayscale2"
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
-            android:text="삭제"
             android:onClick="@{() -> vm.onClickDeleteBtn()}"
+            android:text="삭제"
             android:textColor="@color/white"
             android:textSize="14dp"
             android:visibility="@{vm.mode.equals(`modify`) ? View.VISIBLE : View.GONE}"

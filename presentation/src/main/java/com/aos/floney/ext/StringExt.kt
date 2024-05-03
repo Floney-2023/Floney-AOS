@@ -2,10 +2,11 @@ package com.aos.floney.ext
 
 import android.provider.Settings.Global.getString
 import com.aos.floney.R
+import com.aos.floney.base.BaseViewModel
 import org.json.JSONObject
 import timber.log.Timber
 
-fun String?.parseErrorMsg(): String {
+fun String?.parseErrorMsg(event: BaseViewModel? = null): String {
     return if(this == "") {
         ""
     } else if(this == "NetworkError") {
@@ -14,6 +15,12 @@ fun String?.parseErrorMsg(): String {
         "예상 못한 에러 발생! 플로니팀에 제보 해주세요."
     } else {
         val jsonObject = JSONObject(this)
-        jsonObject.getString("message")
+
+        if(jsonObject.getString("message").equals("만료된 토큰입니다")) {
+            event?.baseEvent(BaseViewModel.Event.ExpiredToken)
+            ""
+        } else {
+            jsonObject.getString("message")
+        }
     }
 }

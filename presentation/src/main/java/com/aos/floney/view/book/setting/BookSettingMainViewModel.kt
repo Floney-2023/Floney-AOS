@@ -113,7 +113,7 @@ class BookSettingMainViewModel @Inject constructor(
                 _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
 
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
             }
         }
     }
@@ -129,7 +129,7 @@ class BookSettingMainViewModel @Inject constructor(
                     alarmInitSave()
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
                 }
             }
         }
@@ -197,7 +197,7 @@ class BookSettingMainViewModel @Inject constructor(
             booksOutUseCase(prefs.getString("bookKey","")).onSuccess {
                 alarmExitSave()
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
             }
         }
     }
@@ -316,7 +316,7 @@ class BookSettingMainViewModel @Inject constructor(
                     _exitPage.emit(false)
                 }
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
             }
         }
     }

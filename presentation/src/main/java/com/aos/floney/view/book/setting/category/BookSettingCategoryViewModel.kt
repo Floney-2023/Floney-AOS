@@ -94,7 +94,7 @@ class BookSettingCategoryViewModel @Inject constructor(
                 _categoryList.postValue(item)
 
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCategoryViewModel)))
             }
         }
     }
@@ -122,7 +122,7 @@ class BookSettingCategoryViewModel @Inject constructor(
                 val updatedList = _categoryList.value!!.filter { it.name != item.name }
                 _categoryList.postValue(updatedList)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCategoryViewModel)))
             }
         }
     }

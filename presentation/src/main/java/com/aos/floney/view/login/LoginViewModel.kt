@@ -60,7 +60,7 @@ class LoginViewModel @Inject constructor(
                         checkUserBooks()
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
                     }
                 } else {
                     // 비밀번호가 비어있음
@@ -84,7 +84,7 @@ class LoginViewModel @Inject constructor(
                     _existBook.emit(false)
                 }
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
             }
         }
     }
@@ -101,7 +101,7 @@ class LoginViewModel @Inject constructor(
                     baseEvent(Event.ShowToastRes(R.string.currency_error))
                 }
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
             }
         }
     }

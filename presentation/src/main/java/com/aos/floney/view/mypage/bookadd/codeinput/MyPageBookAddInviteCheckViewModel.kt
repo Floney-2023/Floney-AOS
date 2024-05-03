@@ -52,7 +52,7 @@ class MyPageBookAddInviteCheckViewModel @Inject constructor(
                         _codeInputCompletePage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageBookAddInviteCheckViewModel)))
                     }
                 }
         } else {

@@ -38,7 +38,7 @@ class AnalyzePlanViewModel @Inject constructor(
                 _postAnalyzePlan.postValue(it)
                 baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@AnalyzePlanViewModel)))
                 baseEvent(Event.HideLoading)
             }
         }

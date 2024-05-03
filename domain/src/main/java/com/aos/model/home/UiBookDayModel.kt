@@ -34,7 +34,8 @@ data class DayMoney(
     val exceptStatus: Boolean,
     val writerEmail: String,
     val writerNickName: String,
-    val writerProfileImg: String
+    val writerProfileImg: String,
+    val repeatDuration: String
 )
 
 // 내역 수정 전달 아이템
@@ -47,5 +48,6 @@ data class DayMoneyModifyItem(
     val lineSubCategory: String,
     val assetSubCategory: String,
     val exceptStatus: Boolean,
-    val writerNickName: String
+    val writerNickName: String,
+    val repeatDuration: String
 ): Serializable

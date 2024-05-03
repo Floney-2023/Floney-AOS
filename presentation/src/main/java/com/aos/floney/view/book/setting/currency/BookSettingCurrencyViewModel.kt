@@ -82,7 +82,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                     baseEvent(Event.ShowToastRes(R.string.currency_error))
                 }
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCurrencyViewModel)))
             }
         }
     }
@@ -104,7 +104,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                     saveAlarm(code)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCurrencyViewModel)))
                 }
             }
         }
@@ -146,7 +146,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                     initBook(item.code) // 가계부 초기화
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCurrencyViewModel)))
                 }
             }
         }

@@ -84,7 +84,7 @@ class BookSettingEditViewModel @Inject constructor(
                     baseEvent(Event.HideLoading)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingEditViewModel)))
                 }
             }
         }else {
@@ -107,7 +107,7 @@ class BookSettingEditViewModel @Inject constructor(
             if(prefs.getString("bookKey","").isNotEmpty()) {
                 booksInfoSeeProfileUseCase(prefs.getString("bookKey",""),!(profileCheck.value!!)).onSuccess {
                 }.onFailure {
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingEditViewModel)))
                 }
             }
         }
@@ -130,7 +130,7 @@ class BookSettingEditViewModel @Inject constructor(
                         settingBookKey()
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingEditViewModel)))
                     }
                 }
             }
@@ -149,7 +149,7 @@ class BookSettingEditViewModel @Inject constructor(
                     _deletePage.emit(false)
                 }
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingEditViewModel)))
             }
         }
     }
