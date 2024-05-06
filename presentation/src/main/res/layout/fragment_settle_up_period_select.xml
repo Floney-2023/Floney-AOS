@@ -95,13 +95,14 @@
                 android:src="@drawable/icon_calendar" />
 
             <TextView
+                android:id="@+id/tv_period_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@{vm.selectDay}"
-                android:hint="@string/settle_up_period_select_hint"
+
                 android:textSize="16sp" />
         </LinearLayout>
 

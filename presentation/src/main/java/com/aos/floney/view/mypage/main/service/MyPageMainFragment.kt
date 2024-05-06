@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.fragment.findNavController
+import com.aos.floney.BuildConfig
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.base.BaseFragment
@@ -31,11 +32,21 @@ import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.aos.model.user.MyBooks
 import com.aos.model.user.UiMypageSearchModel
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainViewModel>(R.layout.fragment_my_page_main), UiMypageSearchModel.OnItemClickListener {
 
+    private var mRewardAd: RewardedAd? = null
     override fun onItemClick(item: MyBooks) {
         viewModel.settingBookKey(item.bookKey)
     }
@@ -48,6 +59,7 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
         super.onViewCreated(view, savedInstanceState)
         setUpUi()
         setUpViewModelObserver()
+        setUpAdMob()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@MyPageMainFragment)
@@ -120,5 +132,50 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.adMobPage.collect {
+                if (it){
+                    if (mRewardAd != null) {
+                        mRewardAd?.show(requireActivity(), OnUserEarnedRewardListener {
+                            fun onUserEarnedReward(rewardItem: RewardItem) {
+                                val rewardAmount = rewardItem.amount
+                                var rewardType = rewardItem.type
+
+                            }
+                        })
+                        mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                settingAdvertiseTime()
+                                mRewardAd = null
+                                setUpAdMob()
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                                mRewardAd = null
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private fun settingAdvertiseTime(){
+        viewModel.updateAdvertiseTime()
+    }
+    private fun setUpAdMob(){
+        MobileAds.initialize(requireContext())
+
+        val adRequest = AdRequest.Builder().build()
+
+        RewardedAd.load(requireContext(),
+            BuildConfig.google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    mRewardAd = null
+                }
+
+                override fun onAdLoaded(ad: RewardedAd) {
+                    mRewardAd = ad
+                }
+            })
     }
 }

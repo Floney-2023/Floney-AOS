@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.aos.data.mapper.getCurrentDateTimeString
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
@@ -14,6 +13,7 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.book.Currency
 import com.aos.model.book.CurrencyInform
 import com.aos.model.book.UiBookCurrencyModel

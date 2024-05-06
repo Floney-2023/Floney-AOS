@@ -101,6 +101,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                         })
                         mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
                             override fun onAdDismissedFullScreenContent() {
+                                viewModel.updateAdvertiseTenMinutes()
                                 goToBookSettingActivity()
                                 mRewardAd = null
                                 setUpAdMob()
@@ -110,10 +111,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                                 mRewardAd = null
                             }
                         }
-                    } else {
-
                     }
-
+                } else {
+                    goToBookSettingActivity()
                 }
             }
         }

@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.aos.data.mapper.getCurrentDateTimeString
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -19,6 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.user.MyBooks
 import com.aos.usecase.booksetting.BooksInitUseCase

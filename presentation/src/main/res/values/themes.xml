@@ -328,8 +328,8 @@
     <style name="mypage_card_view_1_write">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/grayscale3</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <style name="mypage_card_view_2_write">

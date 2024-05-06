@@ -141,7 +141,7 @@
                             android:src="@drawable/icon_chevron_right" />
                     </LinearLayout>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/li_review_suppose_card_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,59 +153,112 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/li_user_inform_view">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="40"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/first_square"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
                             android:background="@drawable/custom_radius_12_solid_grayscale_12"
                             android:orientation="vertical"
-                            android:padding="25dp">
+                            android:padding="25dp"
+                            android:onClick="@{() -> vm.onClickAdMob()}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toStartOf="@+id/space_between_squares"
+                            app:layout_constraintHorizontal_chainStyle="packed"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
+                                android:id="@+id/textView5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="60dp"
                                 android:fontFamily="@font/floney_pretendard_bold"
-                                android:text="@string/mypage_main_appstore_text"
-                                android:textAppearance="@style/mypage_card_view_1" />
+                                android:text="광고 제거하기"
+                                android:textAppearance="@style/mypage_card_view_1"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="18dp"
+                                android:fontFamily="@font/pretendard_medium"
+                                android:text="남은 시간"
+                                android:textColor="@color/grayscale7"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="@+id/textView5"
+                                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="@string/mypage_main_appstore_write_text"
-                                android:textAppearance="@style/mypage_card_view_1_write" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="20" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="40"
-                            android:background="@drawable/custom_radius_12_gradation_card_view"
-                            android:orientation="vertical"
-                            android:padding="25dp">
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:text="@{vm.advertiseTime}"
+                                android:textColor="@color/grayscale3"
+                                android:textSize="24sp"
+                                app:layout_constraintStart_toStartOf="@+id/textView12"
+                                app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="40dp"
+                                android:layout_gravity="center"
+                                android:text="광고보기"
+                                android:textAppearance="@style/mypage_card_view_1_write"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:id="@+id/space_between_squares"
+                            android:layout_width="12dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toStartOf="@+id/first_square"
+                            app:layout_constraintEnd_toEndOf="@+id/second_square"
+                            app:layout_constraintTop_toTopOf="@+id/li_review_suppose_card_view"
+                            app:layout_constraintBottom_toBottomOf="@+id/li_review_suppose_card_view"/>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/second_square"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/custom_radius_12_gradation_card_view"
+                            android:orientation="vertical"
+                            android:padding="25dp"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/space_between_squares"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:fontFamily="@font/floney_pretendard_bold"
                                 android:text="@string/mypage_main_suppose_text"
-                                android:textAppearance="@style/mypage_card_view_2" />
+                                android:textAppearance="@style/mypage_card_view_2"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="@string/mypage_main_suppose_write_text"
-                                android:textAppearance="@style/mypage_card_view_2_write" />
-                        </LinearLayout>
-                    </LinearLayout>
+                                android:textAppearance="@style/mypage_card_view_2_write"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                     <TextView
                         android:id="@+id/my_wallet_title"

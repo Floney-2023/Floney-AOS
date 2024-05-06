@@ -73,6 +73,7 @@ class SettleUpOutcomesSelectFragment : BaseFragment<FragmentSettleUpOutcomesSele
                         })
                         mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
                             override fun onAdDismissedFullScreenContent() {
+                                viewModel.updateAdvertiseTenMinutes()
                                 goToSettlementCompleteFragment()
                                 mRewardAd = null
                                 setUpAdMob()
@@ -86,6 +87,8 @@ class SettleUpOutcomesSelectFragment : BaseFragment<FragmentSettleUpOutcomesSele
 
                     }
 
+                } else {
+                    goToSettlementCompleteFragment()
                 }
             }
         }
