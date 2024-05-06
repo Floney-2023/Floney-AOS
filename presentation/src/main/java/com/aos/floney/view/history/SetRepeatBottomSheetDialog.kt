@@ -60,6 +60,6 @@ class SetRepeatBottomSheetDialog(
         }
     }
     override fun onItemClick(item: UiBookCategory) {
-        viewModel.onClickCategoryItem(item)
+        viewModel.onClickRepeatItem(item)
     }
 }

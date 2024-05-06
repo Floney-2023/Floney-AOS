@@ -30,11 +30,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_favorite"
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:padding="5dp"
-            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.INVISIBLE}"
             android:src="@drawable/icon_favorite"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_close"
             app:layout_constraintEnd_toStartOf="@id/iv_repeat"
             app:layout_constraintTop_toTopOf="@id/iv_close" />
@@ -45,9 +46,9 @@
             android:layout_height="34dp"
             android:layout_marginEnd="20dp"
             android:onClick="@{() -> vm.onClickRepeat()}"
-            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.INVISIBLE}"
             android:padding="5dp"
-            android:src="@drawable/icon_repeat"
+            android:src="@{vm.repeatClickItem != null ? @drawable/icon_repeat_enable : @drawable/icon_repeat}"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_close" />
@@ -55,14 +56,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
             android:fontFamily="@font/pretendard_regular"
-            android:text="매일"
-            android:visibility="@{vm.mode.equals(`add`) ? View.INVISIBLE : View.VISIBLE}"
-            android:textColor="@color/grayscale6"
+            android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
+            android:textColor="@{vm.mode.equals(`add`) ? @color/primary1 : @color/grayscale6}"
             android:textSize="14sp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@id/iv_repeat"
-            app:layout_constraintEnd_toEndOf="@id/iv_repeat"
-            app:layout_constraintTop_toTopOf="@id/iv_repeat" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_repeat" />
 
         <TextView
             android:id="@+id/tv_money"
