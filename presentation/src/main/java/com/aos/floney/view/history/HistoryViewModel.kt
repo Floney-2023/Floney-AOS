@@ -149,7 +149,7 @@ class HistoryViewModel @Inject constructor(
         _repeatClickItem.value = UiBookCategory(
             idx = 1,
             checked = true,
-            name = item.repeatDuration,
+            name = getConvertReceiveRepeatValue(item.repeatDuration),
             default = true
         )
 
@@ -220,7 +220,7 @@ class HistoryViewModel @Inject constructor(
                 description = content.value!!,
                 except = deleteChecked,
                 nickname = nickname.value!!,
-                repeatDuration = _repeatClickItem.value!!.name
+                repeatDuration = getConvertSendRepeatValue()
             ).onSuccess {
                 _postBooksLines.emit(true)
                 baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
@@ -362,6 +362,32 @@ class HistoryViewModel @Inject constructor(
                 dateArr[2]
             }
         }"
+    }
+
+    // 반복내역 서버로 보내기 위한 값으로 변경
+    private fun getConvertSendRepeatValue(): String {
+        return when(_repeatClickItem.value!!.name) {
+            "없음" -> "NONE"
+            "매일" -> "EVERYDAY"
+            "매주" -> "WEEK"
+            "매달" -> "MONTH"
+            "주중" -> "WEEKDAY"
+            "주말" -> "WEEKEND"
+            else -> ""
+        }
+    }
+
+    // 반복내역 서버로부터 받은 값을 UI 로 변경
+    private fun getConvertReceiveRepeatValue(value: String): String {
+        return when(value) {
+             "NONE" -> "없음"
+             "EVERYDAY" -> "매일"
+             "WEEK" -> "매주"
+             "MONTH" -> "매달"
+             "WEEKDAY" -> "주중"
+             "WEEKEND" -> "주말"
+            else -> ""
+        }
     }
 
     // 캘린더 선택 버튼 클릭
