@@ -101,14 +101,8 @@ class HistoryViewModel @Inject constructor(
     private var categoryClickItem: UiBookCategory? = null
 
     // 반복 설정
-    val repeatItem = arrayListOf<UiBookCategory>(
-        UiBookCategory(0, false, "없음", true),
-        UiBookCategory(1, false, "매일", false),
-        UiBookCategory(2, false, "매주", false),
-        UiBookCategory(3, false, "매달", false),
-        UiBookCategory(4, false, "주중", false),
-        UiBookCategory(5, false, "주말", false)
-    )
+    val _repeatItem = MutableLiveData<List<UiBookCategory>>()
+    val repeatItem: LiveData<List<UiBookCategory>> get() = _repeatItem
     private var _repeatClickItem = MutableLiveData<UiBookCategory?>(null)
     val repeatClickItem: LiveData<UiBookCategory?> get() = _repeatClickItem
 
@@ -121,6 +115,18 @@ class HistoryViewModel @Inject constructor(
     // 내역 수정 시 해당 아이템 Id
     private var modifyId = 0
     private var modifyItem: DayMoneyModifyItem? = null
+
+    init {
+        val array = arrayListOf<UiBookCategory>(
+            UiBookCategory(0, false, "없음", true),
+            UiBookCategory(1, false, "매일", false),
+            UiBookCategory(2, false, "매주", false),
+            UiBookCategory(3, false, "매달", false),
+            UiBookCategory(4, false, "주중", false),
+            UiBookCategory(5, false, "주말", false)
+        )
+        _repeatItem.postValue(array)
+    }
 
     // 내역 추가 시에는 날짜만 세팅함
     fun setIntentAddData(clickDate: String, nickname: String) {
@@ -139,6 +145,13 @@ class HistoryViewModel @Inject constructor(
         content.value = item.description
         _nickname.value = item.writerNickName
         deleteChecked = item.exceptStatus
+        Timber.e("item.repeatDuration ${item.repeatDuration}")
+        _repeatClickItem.value = UiBookCategory(
+            idx = 1,
+            checked = true,
+            name = item.repeatDuration,
+            default = true
+        )
 
         modifyItem = item
         modifyItem!!.money =
@@ -207,7 +220,7 @@ class HistoryViewModel @Inject constructor(
                 description = content.value!!,
                 except = deleteChecked,
                 nickname = nickname.value!!,
-                repeatDuration = "NONE"
+                repeatDuration = _repeatClickItem.value!!.name
             ).onSuccess {
                 _postBooksLines.emit(true)
                 baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
@@ -257,7 +270,7 @@ class HistoryViewModel @Inject constructor(
 
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
     }
 
     // 수정된 내용이 있는지 체크
@@ -389,13 +402,14 @@ class HistoryViewModel @Inject constructor(
 
     // 반복 설정 아이템 세팅
     fun onClickRepeatItem(_item: UiBookCategory) {
-        val item = repeatItem.map {
+        val item = _repeatItem.value?.map {
             UiBookCategory(
                 it.idx, false, it.name, it.default
             )
         } ?: listOf()
-        item[_item.idx].checked = !repeatItem[_item.idx].checked
-        _repeatClickItem.postValue(item)
+        item[_item.idx].checked = !item[_item.idx].checked
+        _repeatItem.postValue(item)
+        _repeatClickItem.value = _item
     }
 
     // 카테고리 선택 여부 확인
