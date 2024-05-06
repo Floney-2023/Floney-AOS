@@ -2,6 +2,7 @@ package com.aos.floney.view.settleup
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
@@ -26,6 +27,7 @@ class SettleUpPeriodSelectFragment : BaseFragment<FragmentSettleUpPeriodSelectBi
         setUpViewModelObserver()
     }
     private fun setUpUi() {
+        binding.tvPeriodSelect.setHint(Html.fromHtml("<small>" +getString(R.string.settle_up_period_select_hint) + "</small>"));
         binding.setVariable(BR.eventHolder, this@SettleUpPeriodSelectFragment)
     }
 

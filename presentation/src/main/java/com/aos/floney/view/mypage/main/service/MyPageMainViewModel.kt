@@ -16,9 +16,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.util.convertStringToDate
+import com.aos.floney.util.getAdvertiseCheck
+import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.user.MyBooks
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
+import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.math.abs
 
 @HiltViewModel
 class MyPageMainViewModel @Inject constructor(
@@ -27,6 +32,10 @@ class MyPageMainViewModel @Inject constructor(
     private val recentBookKeySaveUseCase : RecentBookkeySaveUseCase
 ): BaseViewModel() {
 
+    // 광고 시간
+    private var _advertiseTime = MutableLiveData<String>()
+    val advertiseTime: LiveData<String> get() = _advertiseTime
+
     // 회원 정보
     private var _mypageInfo = MutableLiveData<UiMypageSearchModel>()
     val mypageInfo: LiveData<UiMypageSearchModel> get() = _mypageInfo
@@ -34,7 +43,6 @@ class MyPageMainViewModel @Inject constructor(
     // 가계부 리스트
     private var _mypageList = MutableLiveData<List<MyBooks>>()
     val mypageList: LiveData<List<MyBooks>> get() = _mypageList
-
 
     // 알람 페이지
     private var _alarmPage = MutableEventFlow<Boolean>()
@@ -66,8 +74,42 @@ class MyPageMainViewModel @Inject constructor(
     // 가계부 추가 BottomSheet
     private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
     val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
+
+    // 광고 페이지
+    private var _adMobPage = MutableEventFlow<Boolean>()
+    val adMobPage: EventFlow<Boolean> get() = _adMobPage
+
     init{
+        settingAdvertiseTime()
         searchMypageItems()
+    }
+    // 광고 남은 시간 설정
+    fun settingAdvertiseTime(){
+        val adverseTiseTime = prefs.getString("advertiseTime", "")
+        if (adverseTiseTime.isNotEmpty()){
+            viewModelScope.launch {
+                withContext(Dispatchers.Default) {
+                    val remainingMinutes = getAdvertiseCheck(adverseTiseTime)
+
+                    if (remainingMinutes <= 0) {
+                        prefs.setString("advertiseTime", "")
+                        _advertiseTime.postValue("06:00")
+                    } else {
+                        val hours = remainingMinutes / 60
+                        val minutes = remainingMinutes % 60
+                        _advertiseTime.postValue(String.format("%02d:%02d", hours, minutes))
+                    }
+                }
+            }
+        }
+        else {
+            _advertiseTime.postValue("06:00")
+        }
+    }
+    // 광고 시청 시간 설정
+    fun updateAdvertiseTime(){
+        prefs.setString("advertiseTime", getCurrentDateTimeString())
+        settingAdvertiseTime()
     }
     // 마이페이지 정보 읽어오기
     fun searchMypageItems()
@@ -187,4 +229,11 @@ class MyPageMainViewModel @Inject constructor(
         }
     }
 
+    // 광고 시청
+    fun onClickAdMob()
+    {
+        viewModelScope.launch {
+            _adMobPage.emit(true)
+        }
+    }
 }

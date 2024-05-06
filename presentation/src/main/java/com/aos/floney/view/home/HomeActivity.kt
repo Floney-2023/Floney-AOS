@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.animation.AnimationUtils
 import androidx.databinding.library.baseAdapters.BR
-import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
@@ -16,30 +14,44 @@ import com.aos.floney.view.analyze.ChoiceDatePickerBottomSheet
 import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.mypage.MyPageActivity
+import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyModifyItem
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-
+import com.aos.floney.BuildConfig.google_app_reward_key
+import com.aos.floney.BuildConfig.google_app_banner_key
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home),
     UiBookDayModel.OnItemClickListener {
     private val fragmentManager = supportFragmentManager
-
+    private var mRewardAd: RewardedAd? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setUpUi()
         setUpViewModelObserver()
         setUpBottomNavigation()
+        setUpAdMob()
     }
-
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this)
     }
+
 
     private fun setUpViewModelObserver() {
         viewModel.clickedShowType.observe(this) { showType ->
@@ -79,7 +91,29 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             // 가계부 설정 페이지 이동
             viewModel.settingPage.collect {
                 if(it) {
-                    startActivity(Intent(this@HomeActivity, BookSettingActivity::class.java))
+                    if (mRewardAd != null) {
+                        mRewardAd?.show(this@HomeActivity, OnUserEarnedRewardListener {
+                            fun onUserEarnedReward(rewardItem: RewardItem) {
+                                val rewardAmount = rewardItem.amount
+                                var rewardType = rewardItem.type
+
+                            }
+                        })
+                        mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                            override fun onAdDismissedFullScreenContent() {
+                                viewModel.updateAdvertiseTenMinutes()
+                                goToBookSettingActivity()
+                                mRewardAd = null
+                                setUpAdMob()
+                            }
+
+                            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                                mRewardAd = null
+                            }
+                        }
+                    }
+                } else {
+                    goToBookSettingActivity()
                 }
             }
         }
@@ -94,7 +128,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             }
         }
     }
-
+    fun goToBookSettingActivity()
+    {
+        startActivity(Intent(this@HomeActivity, BookSettingActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+    }
     // 캘린더 아이템이 표시됨
     fun onClickCalendarItem(item: MonthMoney) {
         viewModel.onClickShowDetail(item)
@@ -184,5 +226,21 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                 R.id.mypageFragment -> {}
             }
         }
+    }
+    private fun setUpAdMob(){
+        MobileAds.initialize(this)
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adBanner.loadAd(adRequest)
+
+        RewardedAd.load(this,google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                mRewardAd = null
+            }
+
+            override fun onAdLoaded(ad: RewardedAd) {
+                mRewardAd = ad
+            }
+        })
     }
 }

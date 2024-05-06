@@ -51,11 +51,3 @@ fun List<GetAlarmEntity>.toUiAlarmGetEntity(): List<UiAlarmGetModel> {
         )
     }
 }
-
-fun getCurrentDateTimeString(): String {
-    val mNow = System.currentTimeMillis()
-    val mDate = Date(mNow)
-    val mFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-    mFormat.timeZone = TimeZone.getTimeZone("UTC")
-    return mFormat.format(mDate)
-}

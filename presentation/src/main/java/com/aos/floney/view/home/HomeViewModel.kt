@@ -8,6 +8,9 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.floney.util.getAdvertiseCheck
+import com.aos.floney.util.getAdvertiseTenMinutesCheck
+import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.home.DayMoney
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
@@ -76,9 +79,15 @@ class HomeViewModel @Inject constructor(
     private var _settingPage = MutableEventFlow<Boolean>()
     val settingPage: EventFlow<Boolean> get() = _settingPage
 
+    // 광고 ON/OFF
+    private var _showAdvertisement = MutableLiveData<Boolean>()
+    val showAdvertisement: LiveData<Boolean> get() = _showAdvertisement
+
+
     init {
         getBookInfo(prefs.getString("bookKey", ""))
         getFormatDateMonth()
+        setAdvertisement()
     }
 
     fun initCalendarMonth() {
@@ -270,7 +279,30 @@ class HomeViewModel @Inject constructor(
     // 가계부 설정 페이지 이동
     fun onClickSettingPage() {
         viewModelScope.launch {
-            _settingPage.emit(true)
+            val advertiseTime = prefs.getString("advertiseTime", "")
+            val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
+            val showSettingPage = advertiseTime.isEmpty() || advertiseTenMinutes.isEmpty() || getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0
+
+            if (showSettingPage) {
+                prefs.setString("advertiseTenMinutes", "")
+            }
+
+            _settingPage.emit(showSettingPage)
         }
+    }
+    // 10분 광고 시간 기록
+    fun updateAdvertiseTenMinutes(){
+        prefs.setString("advertiseTenMinutes", getCurrentDateTimeString())
+    }
+    // 광고 표시 여부
+    fun setAdvertisement() {
+        val advertiseTime = prefs.getString("advertiseTime", "")
+        val remainingMinutes = if (advertiseTime.isNotEmpty()) getAdvertiseCheck(advertiseTime) else -1
+
+        if (remainingMinutes <= 0) {
+            prefs.setString("advertiseTime", "")
+        }
+
+        _showAdvertisement.postValue(advertiseTime.isEmpty() || remainingMinutes <= 0)
     }
 }
