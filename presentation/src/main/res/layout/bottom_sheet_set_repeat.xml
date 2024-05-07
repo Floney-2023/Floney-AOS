@@ -44,6 +44,7 @@
             android:layout_height="296dp"
             android:orientation="horizontal"
             android:paddingEnd="8dp"
+            android:paddingStart="20dp"
             android:layout_marginTop="18dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +53,7 @@
             app:spanCount="5"
             bind:diffCallback="@{(Object)UiBookCategory.Companion}"
             bind:eventHolder="@{eventHolder}"
-            bind:itemLayout="@{@layout/item_category}"
+            bind:itemLayout="@{@layout/item_repeat}"
             bind:items="@{vm.repeatItem}"
             bind:viewModel="@{vm}"
             tools:listitem="@layout/item_category" />
