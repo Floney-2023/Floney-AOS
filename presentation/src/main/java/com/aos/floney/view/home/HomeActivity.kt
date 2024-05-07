@@ -35,6 +35,8 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
 import com.aos.floney.BuildConfig.google_app_banner_key
+import timber.log.Timber
+
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home),
     UiBookDayModel.OnItemClickListener {
@@ -43,10 +45,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setUpAdMob()
         setUpUi()
         setUpViewModelObserver()
         setUpBottomNavigation()
-        setUpAdMob()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this)
