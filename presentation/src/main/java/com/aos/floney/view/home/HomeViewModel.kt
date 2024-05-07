@@ -281,13 +281,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val advertiseTime = prefs.getString("advertiseTime", "")
             val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
-            val showSettingPage = advertiseTime.isEmpty() || advertiseTenMinutes.isEmpty() || getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0
+            val showSettingPage = advertiseTime.isNotEmpty() || getAdvertiseTenMinutesCheck(advertiseTenMinutes) > 0
 
-            if (showSettingPage) {
+            if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
                 prefs.setString("advertiseTenMinutes", "")
             }
 
-            _settingPage.emit(showSettingPage)
+            _settingPage.emit(!showSettingPage)
         }
     }
     // 10분 광고 시간 기록
@@ -297,12 +297,11 @@ class HomeViewModel @Inject constructor(
     // 광고 표시 여부
     fun setAdvertisement() {
         val advertiseTime = prefs.getString("advertiseTime", "")
-        val remainingMinutes = if (advertiseTime.isNotEmpty()) getAdvertiseCheck(advertiseTime) else -1
 
-        if (remainingMinutes <= 0) {
+        if (getAdvertiseCheck(advertiseTime) <= 0) {
             prefs.setString("advertiseTime", "")
         }
 
-        _showAdvertisement.postValue(advertiseTime.isEmpty() || remainingMinutes <= 0)
+        _showAdvertisement.postValue(advertiseTime.isEmpty())
     }
 }

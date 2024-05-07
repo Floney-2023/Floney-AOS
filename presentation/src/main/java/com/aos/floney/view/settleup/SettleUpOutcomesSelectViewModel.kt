@@ -123,18 +123,16 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
             if (selectedEmails.isNotEmpty()) {
                 val advertiseTime = prefs.getString("advertiseTime", "")
                 val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
-                val showNextPage = advertiseTime.isEmpty() || getAdvertiseCheck(advertiseTime) <= 0 || getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0
+                val showNextPage = getAdvertiseCheck(advertiseTime) > 0 || getAdvertiseTenMinutesCheck(advertiseTenMinutes) > 0
 
-                if (showNextPage) {
-                    if (getAdvertiseCheck(advertiseTime) <= 0) {
-                        prefs.setString("advertiseTime", "")
-                    }
-                    if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
-                        prefs.setString("advertiseTenMinutes", "")
-                    }
+                if (getAdvertiseCheck(advertiseTime) <= 0) {
+                    prefs.setString("advertiseTime", "")
+                }
+                if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
+                    prefs.setString("advertiseTenMinutes", "")
                 }
 
-                _nextPage.emit(showNextPage)
+                _nextPage.emit(!showNextPage)
             }
             else {
                 baseEvent(Event.ShowToastRes(R.string.settle_up_outcomes_select_title))

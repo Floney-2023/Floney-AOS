@@ -87,20 +87,17 @@ class MyPageMainViewModel @Inject constructor(
     fun settingAdvertiseTime(){
         val adverseTiseTime = prefs.getString("advertiseTime", "")
         if (adverseTiseTime.isNotEmpty()){
-            viewModelScope.launch {
-                withContext(Dispatchers.Default) {
-                    val remainingMinutes = getAdvertiseCheck(adverseTiseTime)
+            val remainingMinutes = getAdvertiseCheck(adverseTiseTime)
 
-                    if (remainingMinutes <= 0) {
-                        prefs.setString("advertiseTime", "")
-                        _advertiseTime.postValue("06:00")
-                    } else {
-                        val hours = remainingMinutes / 60
-                        val minutes = remainingMinutes % 60
-                        _advertiseTime.postValue(String.format("%02d:%02d", hours, minutes))
-                    }
-                }
+            if (remainingMinutes <= 0) {
+                prefs.setString("advertiseTime", "")
+                _advertiseTime.postValue("06:00")
+            } else {
+                val hours = remainingMinutes / 60
+                val minutes = remainingMinutes % 60
+                _advertiseTime.postValue(String.format("%02d:%02d", hours, minutes))
             }
+
         }
         else {
             _advertiseTime.postValue("06:00")
