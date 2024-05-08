@@ -188,6 +188,10 @@ abstract class BaseDialogFragment<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     fun dismissLoadingDialog(){
-        loadingDialog.dismiss()
+        try {
+            loadingDialog.dismiss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

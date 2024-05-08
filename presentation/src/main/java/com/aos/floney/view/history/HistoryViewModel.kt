@@ -61,8 +61,8 @@ class HistoryViewModel @Inject constructor(
     val onClickRepeat: EventFlow<String> get() = _onClickRepeat
 
     // 내역 삭제 버튼 클릭
-    private var _onClickDelete = MutableEventFlow<Boolean>()
-    val onClickDelete: EventFlow<Boolean> get() = _onClickDelete
+    private var _onClickDelete = MutableEventFlow<OnClickedDelete>()
+    val onClickDelete: EventFlow<OnClickedDelete> get() = _onClickDelete
 
     // 날짜
     private var tempDate = ""
@@ -306,7 +306,7 @@ class HistoryViewModel @Inject constructor(
     // 삭제 버튼 클릭
     fun onClickDeleteBtn() {
         viewModelScope.launch {
-            _onClickDelete.emit(true)
+            _onClickDelete.emit(OnClickedDelete((getConvertReceiveRepeatValue(_repeatClickItem.value!!.name).equals("없음")), modifyId))
         }
     }
 

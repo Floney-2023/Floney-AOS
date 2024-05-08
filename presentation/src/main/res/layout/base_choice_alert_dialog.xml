@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/background_base_alert_dialog"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="28dp">
+
+        <TextView
+            android:id="@+id/tv_popup_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="-3sp"
+            android:lineHeight="22.4dp"
+            android:text="이 내역을 삭제하시겠습니까?\n반복되는 내역입니다."
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:textSize="16dp"
+            android:textColor="@color/grayscale1"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_text_1"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="14dp"
+            android:text="이 내역만 삭제"
+            android:textColor="@color/grayscale2"
+            android:textSize="14sp"
+            android:fontFamily="@font/pretendard_medium"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_text_2"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="이 내역만 삭제"
+            android:textColor="@color/grayscale2"
+            android:textSize="14sp"
+            android:fontFamily="@font/pretendard_medium"/>
+
+    </LinearLayout>
+</layout>
