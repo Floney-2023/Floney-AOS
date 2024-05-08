@@ -103,6 +103,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                             viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                         } else if (user != null) {
                             Timber.e("user $user")
+                            Timber.e("token ${token?.accessToken ?: "kmbn"}")
 //                            LoginModel.login.email = user.kakaoAccount?.email.toString()
 //                            LoginModel.login.nickname =
 //                                user.kakaoAccount?.profile?.nickname.toString()
@@ -120,6 +121,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 // 카카오톡으로 로그인
                 UserApiClient.instance.loginWithKakaoTalk(applicationContext) { token, error ->
                     Timber.e("loginWithKakaoTalk error $error")
+                    // token.accessToken 소셜 토큰
 
                     if (error != null) {
                         // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
@@ -141,6 +143,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                             if (error != null) {
                                 viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                             } else if (user != null) {
+                                Timber.e("token ${token?.accessToken ?: "kmbn"}")
                                 Timber.e("user $user")
 //                            LoginModel.login.email = user.kakaoAccount?.email.toString()
 //                            LoginModel.login.nickname =
