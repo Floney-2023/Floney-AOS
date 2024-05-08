@@ -306,7 +306,7 @@ class HistoryViewModel @Inject constructor(
     // 삭제 버튼 클릭
     fun onClickDeleteBtn() {
         viewModelScope.launch {
-            _onClickDelete.emit(OnClickedDelete((getConvertReceiveRepeatValue(_repeatClickItem.value!!.name).equals("없음")), modifyId))
+            _onClickDelete.emit(OnClickedDelete((!getConvertSendRepeatValue().equals("NONE")), modifyId))
         }
     }
 
@@ -379,6 +379,7 @@ class HistoryViewModel @Inject constructor(
 
     // 반복내역 서버로부터 받은 값을 UI 로 변경
     private fun getConvertReceiveRepeatValue(value: String): String {
+        Timber.e("value $value")
         return when(value) {
              "NONE" -> "없음"
              "EVERYDAY" -> "매일"

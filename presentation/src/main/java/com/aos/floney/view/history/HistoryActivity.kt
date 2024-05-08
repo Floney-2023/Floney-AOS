@@ -112,7 +112,7 @@ class HistoryActivity :
                             // 이후 모든 내역 삭제 선택
                             // 반복내역삭제
                         }
-                    }
+                    }.show(supportFragmentManager, "baseChoiceDialog")
                 } else {
                     // 반복내역 없음
                     BaseAlertDialog(title = "삭제하기", info = "삭제하시겠습니까?", false) {

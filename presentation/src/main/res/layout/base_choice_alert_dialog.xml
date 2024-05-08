@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/tv_popup_title"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lineSpacingExtra="-3sp"
@@ -29,7 +29,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_text_1"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="54dp"
             android:layout_marginTop="14dp"
             android:text="이 내역만 삭제"
@@ -39,7 +39,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_text_2"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="54dp"
             android:text="이 내역만 삭제"
             android:textColor="@color/grayscale2"
