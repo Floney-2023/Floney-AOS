@@ -17,6 +17,7 @@
         <variable
             name="eventHolder"
             type="com.aos.model.home.UiBookDayModel.OnItemClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -171,6 +172,17 @@
             app:layout_constraintBottom_toBottomOf="@id/cl_show_detail"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ad_banner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="@{vm.onClickedShowDetail == null &amp;&amp; vm.showAdvertisement == true ? View.VISIBLE : View.GONE}"
+            ads:layout_constraintBottom_toTopOf="@+id/ll_bottom_navigation"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/9214589741"/>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_show_detail"
             android:layout_width="0dp"

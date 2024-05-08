@@ -9,6 +9,7 @@ import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.logout.LogoutUseCase
+import com.aos.usecase.mypage.MypageSearchUseCase
 import com.aos.usecase.mypage.NicknameChangeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class MyPageInformMainViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val nicknameChangeUseCase : NicknameChangeUseCase,
+    private val mypageSearchUseCase : MypageSearchUseCase,
     private val logoutUseCase : LogoutUseCase
 ): BaseViewModel() {
 
@@ -56,11 +58,20 @@ class MyPageInformMainViewModel @Inject constructor(
     private var _withDrawalPage = MutableEventFlow<Boolean>()
     val withDrawalPage: EventFlow<Boolean> get() = _withDrawalPage
 
+    init {
+        searchMypageItems()
+    }
 
     // Provider 설정
-    fun setInform(provide: String?, nickname: String?){
-        provider.value = provide
-        hintName.value = nickname
+    fun searchMypageItems(){
+        viewModelScope.launch(Dispatchers.IO) {
+            mypageSearchUseCase().onSuccess {
+                hintName.postValue(it.nickname)
+                provider.postValue(it.provider)
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
     }
     // 이전 페이지로 이동
     fun onClickPreviousPage()

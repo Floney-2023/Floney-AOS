@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.main.service.MyPageServiceNoticeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.aos.floney.view.mypage.main.service.MyPageServiceNoticeFragment">
+
+        <ImageView
+            android:id="@+id/iv_back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="24dp"
+            android:padding="20dp"
+            android:src="@drawable/icon_chevron_left"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_service_notice_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:text="공지사항"
+            android:textAppearance="@style/mypage_inform_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_notice_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="51dp"
+            android:text="플로니가 출시되었어요"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_service_notice_title" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="2023-10-02"
+            android:textColor="@color/grayscale6"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_notice_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_notice_title" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="24dp"
+            android:onClick="@{() -> vm.onClickTerms()}"
+            android:src="@{vm.terms ? @drawable/icon_chevron_up : @drawable/icon_chevron_down}"
+            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_notice_title" />
+
+        <TextView
+            android:id="@+id/rectangle_5"
+            android:layout_width="match_parent"
+            android:layout_height="158dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:background="@color/grayscale12"
+            android:paddingStart="28dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="28dp"
+            android:paddingBottom="16dp"
+            android:text="@string/mypage_service_mail_info"
+            android:textColor="@color/grayscale3"
+            android:textSize="13dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:visibility="@{vm.terms? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

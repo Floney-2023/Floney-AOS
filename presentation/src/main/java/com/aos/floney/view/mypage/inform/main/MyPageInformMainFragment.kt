@@ -18,13 +18,7 @@ class MyPageInformMainFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setInform()
         setUpViewModelObserver()
-    }
-    private fun setInform()
-    {
-        viewModel.setInform(arguments?.getString("PROVIDER"),arguments?.getString("NICKNAME"))
-
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {

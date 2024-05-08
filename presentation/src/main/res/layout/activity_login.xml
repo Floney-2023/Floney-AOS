@@ -163,6 +163,7 @@
             <ImageView
                 android:id="@+id/iv_kakao"
                 android:layout_width="0dp"
+                android:onClick="@{() -> vm.onClickKakaoLogin()}"
                 android:layout_height="48dp"
                 android:src="@drawable/btn_kakao"
                 app:layout_constraintEnd_toStartOf="@id/iv_google"

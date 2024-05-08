@@ -141,6 +141,9 @@
     <string name="mypage_main_inform_exit_complete_info">이용해 주셔서 감사합니다.\n언제든 다시 돌아오세요!</string>
     <string name="mypage_main_inform_exit_complete_btn_close">닫기</string>
 
+    <!--myPageActivity(서비스)-->
+    <string name="mypage_service_mail_info">안녕하세요!\n공유가계부 플로니가 출시되었습니다.\n사용 중 궁금하거나 불편한 점이 있으시면 문의하기를 통해\n메일로 물어봐 주시면 언제든지 친절하게 답변해 드립니다.\n\n많은 이용과 관심 부탁드립니다.\n감사합니다.</string>
+
     <!--이미지 선택-->
     <string name="camera">사진 촬영하기</string>
     <string name="gallery">앨범에서 사진 선택</string>

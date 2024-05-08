@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 Properties properties = new Properties()
@@ -24,6 +25,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BASE_URL", properties['base.url']
+        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
     }
 
     buildTypes {
@@ -55,6 +57,10 @@ dependencies {
     implementation project(':data')
     implementation project(':domain')
 
+    // 카카오로그인
+    implementation "com.kakao.sdk:v2-all:2.14.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
+    implementation "com.kakao.sdk:v2-user:2.14.0" // 카카오 로그인
+
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
@@ -64,6 +70,9 @@ dependencies {
     implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
 
     implementation("com.tbuonomo:dotsindicator:5.0")
+
+    // google AdMob
+    implementation("com.google.android.gms:play-services-ads:22.6.0")
 
     // viweModels
     implementation 'androidx.activity:activity-ktx:1.1.0'

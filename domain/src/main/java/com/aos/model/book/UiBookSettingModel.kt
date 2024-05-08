@@ -29,6 +29,7 @@ data class UiBookSettingModel(
 data class MyBookUsers(
     val name: String,
     val profileImg: String,
+    val email: String,
     val me: Boolean,
     val role: String
 )

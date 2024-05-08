@@ -73,7 +73,14 @@
         android:id="@+id/bookSettingCurrencyFragment"
         android:name="com.aos.floney.view.book.setting.currency.BookSettingCurrencyFragment"
         android:label="BookSettingCurrencyFragment"
-        tools:layout="@layout/fragment_book_setting_currency" />
+        tools:layout="@layout/fragment_book_setting_currency" >
+        <argument
+            android:name="bookName"
+            app:argType="string" />
+        <argument
+            android:name="emailList"
+            app:argType="string[]" />
+    </fragment>
     <fragment
         android:id="@+id/bookSettingBudgetFragment"
         android:name="com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment"

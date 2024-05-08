@@ -11,6 +11,9 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.floney.util.getAdvertiseCheck
+import com.aos.floney.util.getAdvertiseTenMinutesCheck
+import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.Outcomes
 import com.aos.model.settlement.UiMemberSelectModel
@@ -118,12 +121,25 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
 
         viewModelScope.launch {
             if (selectedEmails.isNotEmpty()) {
-                _nextPage.emit(true)
-            } else {
+                val advertiseTime = prefs.getString("advertiseTime", "")
+                val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
+                val showNextPage = getAdvertiseCheck(advertiseTime) > 0 || getAdvertiseTenMinutesCheck(advertiseTenMinutes) > 0
+
+                if (getAdvertiseCheck(advertiseTime) <= 0) {
+                    prefs.setString("advertiseTime", "")
+                }
+                if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
+                    prefs.setString("advertiseTenMinutes", "")
+                }
+
+                _nextPage.emit(!showNextPage)
+            }
+            else {
                 baseEvent(Event.ShowToastRes(R.string.settle_up_outcomes_select_title))
             }
         }
     }
+
     private fun getSelectedEmails(): Array<String> {
         return _outcomesList.value?.outcomes
             ?.filter { it.isClick }
@@ -156,4 +172,8 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
         }
     }
 
+    // 10분 광고 시간 기록
+    fun updateAdvertiseTenMinutes(){
+        prefs.setString("advertiseTenMinutes", getCurrentDateTimeString())
+    }
 }

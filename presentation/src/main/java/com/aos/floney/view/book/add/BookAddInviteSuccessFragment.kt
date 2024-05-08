@@ -34,5 +34,14 @@ class BookAddInviteSuccessFragment : BaseFragment<FragmentBookAddInviteSuccessBi
                 }
             }
         }
+        repeatOnStarted {
+            // 정보 Load
+            viewModel.getInform.collect {
+                Timber.e("nextPage $it")
+                if(it) {
+                    viewModel.saveInviteAlarm()
+                }
+            }
+        }
     }
 }
