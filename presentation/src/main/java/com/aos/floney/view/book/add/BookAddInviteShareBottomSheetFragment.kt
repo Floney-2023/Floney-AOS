@@ -9,6 +9,7 @@ import android.view.View
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.aos.floney.BuildConfig
 import com.aos.floney.R
 import com.aos.floney.base.BaseBottomSheetFragment
 import com.aos.floney.base.BaseFragment
@@ -66,10 +67,16 @@ class BookAddInviteShareBottomSheetFragment :
     }
     private fun setDialog()
     {
+        BaseAlertDialog(title = "초대 코드 복사", info = "초대 코드가 복사되었습니다.", false) {
+            if(it) {
+
+            }
+        }.show(parentFragmentManager, "baseAlertDialog")
 
     }
     private fun onSharedBtnClicked() {
-        val code = viewModel.inviteCode.value ?: ""
+
+        val code = "https://floney.onelink.me${BuildConfig.appsflyer_invite_url}?inviteCode=${viewModel.inviteCode.value ?: ""}"
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/html"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, code)
