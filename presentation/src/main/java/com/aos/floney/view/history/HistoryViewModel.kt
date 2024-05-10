@@ -13,6 +13,7 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyModifyItem
+import com.aos.usecase.booksetting.BooksRepeatDeleteUseCase
 import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
@@ -30,6 +31,7 @@ class HistoryViewModel @Inject constructor(
     private val postBooksLinesUseCase: PostBooksLinesUseCase,
     private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
     private val deleteBookLineUseCase: DeleteBookLineUseCase,
+    private val booksRepeatDeleteUseCase: BooksRepeatDeleteUseCase
 ) : BaseViewModel() {
 
     // 내역 추가 결과
@@ -263,6 +265,26 @@ class HistoryViewModel @Inject constructor(
             ).onSuccess {
                 _deleteBookLines.emit(true)
             }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
+            }
+        }
+    }
+
+    // 반복 내역 삭제
+    fun deleteRepeatHistory() {
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            booksRepeatDeleteUseCase(
+                modifyId
+            ).onSuccess {
+//                val updatedList = _repeatList.value!!.filter { it.id != item.id }
+//                _repeatList.postValue(updatedList)
+
+                Timber.e("it success")
+
+                baseEvent(Event.HideLoading)
+            }.onFailure {
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
         }

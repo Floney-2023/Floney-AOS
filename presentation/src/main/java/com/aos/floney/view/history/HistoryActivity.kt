@@ -111,6 +111,7 @@ class HistoryActivity :
                         } else {
                             // 이후 모든 내역 삭제 선택
                             // 반복내역삭제
+                            viewModel.deleteRepeatHistory()
                         }
                     }.show(supportFragmentManager, "baseChoiceDialog")
                 } else {
