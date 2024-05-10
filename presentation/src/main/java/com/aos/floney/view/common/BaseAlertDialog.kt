@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.aos.floney.R
 import com.aos.floney.databinding.BaseAlertDialogBinding
 import com.aos.floney.databinding.WarningPopupBinding
+import com.aos.floney.ext.setLayoutWeight
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,6 +54,13 @@ class BaseAlertDialog(
             tvPopupTitle.text = title
             tvPopupInfo.text = info
             btnLeft.apply {
+                // '초대 코드 복사'가 맞으면 weight를 2로 설정, OK로 변경
+                if (title == "초대 코드 복사") {
+                    btnLeft.text = "OK"
+                    val params = layoutParams as LinearLayout.LayoutParams
+                    params.weight = 2f
+                    layoutParams = params
+                }
                 // 'check' 값에 따라 버튼의 글씨색 변경
                 setTextColor(
                     if (check) Color.RED else ContextCompat.getColor(requireContext(), R.color.grayscale2)

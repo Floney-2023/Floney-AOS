@@ -71,7 +71,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="floney.onelink.me" />
+                <data android:scheme="https" android:host="floney.onelink.me" android:pathPrefix="/ZpHw/hmdgif1c" />
             </intent-filter>
         </activity>
         <activity
@@ -80,6 +80,16 @@
         <activity
             android:name=".view.book.setting.category.BookCategoryActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.book.entrance.BookEntranceActivity"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="floney.onelink.me" android:pathPrefix="/ZpHw/sm5liatr" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.splash.SplashActivity"
             android:exported="true">

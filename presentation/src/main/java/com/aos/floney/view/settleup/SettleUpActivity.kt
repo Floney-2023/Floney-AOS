@@ -114,6 +114,9 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         }
     }
     private fun setUpShareDeepLink(){
+        AppsFlyerLib.getInstance().init("${appsflyer_dev_key}", null, this)
+        AppsFlyerLib.getInstance().start(this)
+
         AppsFlyerLib.getInstance().subscribeForDeepLink(object : DeepLinkListener {
             override fun onDeepLinking(deepLinkResult: DeepLinkResult) {
                 when (deepLinkResult.status) {

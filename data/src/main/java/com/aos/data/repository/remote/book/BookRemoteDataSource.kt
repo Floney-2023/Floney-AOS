@@ -22,6 +22,7 @@ import com.aos.data.entity.request.settlement.PostSettlementAddBody
 import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
+import com.aos.data.entity.response.book.GetBooksEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -78,4 +79,5 @@ interface BookRemoteDataSource {
     suspend fun postBooksExcel(postBooksExcelBody: PostBooksExcelBody): NetworkState<ResponseBody>
     suspend fun postBooksOut(postBooksOutBody: PostBooksOutBody): NetworkState<Void>
     suspend fun deleteBookLines(bookLineKey: String): NetworkState<Void>
+    suspend fun getBooks(code: String): NetworkState<GetBooksEntity>
 }

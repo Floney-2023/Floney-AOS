@@ -25,6 +25,7 @@ import com.aos.data.entity.request.settlement.PostSettlementAddBody
 import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
+import com.aos.data.entity.response.book.GetBooksEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -294,4 +295,11 @@ interface BookService {
     suspend fun postBooksOut(
         @Body postBooksOutBody: PostBooksOutBody
     ): NetworkState<Void>
+
+    // 참여코드로 가계부 정보 불러오기
+    @GET("books")
+    @Headers("Auth: true")
+    suspend fun getBooks(
+        @Query("code") code: String
+    ): NetworkState<GetBooksEntity>
 }

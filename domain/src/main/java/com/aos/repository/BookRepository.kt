@@ -10,6 +10,7 @@ import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -151,4 +152,7 @@ interface BookRepository {
 
     // 가계부 나가기
     suspend fun postBooksOut(bookKey: String): Result<Void?>
+
+    // 참여코드로 가계부 정보 불러오기
+    suspend fun getBooks(code: String): Result<UiBookEntranceModel>
 }
