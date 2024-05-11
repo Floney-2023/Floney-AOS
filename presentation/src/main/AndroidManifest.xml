@@ -71,9 +71,9 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="floney.onelink.me" android:pathPrefix="/ZpHw/hmdgif1c" />
+                <data android:scheme="https" android:host="floney.onelink.me" android:pathPrefix="${appsflyer_settlement_url}" />
             </intent-filter>
-        </activity>
+2        </activity>
         <activity
             android:name=".view.book.setting.BookSettingActivity"
             android:exported="false" />

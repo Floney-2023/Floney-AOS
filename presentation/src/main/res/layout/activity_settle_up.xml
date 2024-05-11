@@ -7,6 +7,8 @@
         <variable
             name="vm"
             type="com.aos.floney.view.settleup.SettleUpViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +38,7 @@
             android:id="@+id/ll_bottom_navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{vm.bottom ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -59,6 +62,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:background="@drawable/icon_add_circle"
+            android:visibility="@{vm.bottom ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/ll_bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

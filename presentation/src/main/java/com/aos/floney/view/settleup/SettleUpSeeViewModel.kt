@@ -2,6 +2,7 @@ package com.aos.floney.view.settleup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
@@ -26,9 +27,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettleUpSeeViewModel @Inject constructor(
+    stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
     private val settlementSeeUseCase : SettlementSeeUseCase
 ): BaseViewModel() {
+
+
+    var id: MutableLiveData<Long> = stateHandle.getLiveData("id")
+
+    var bookKey: LiveData<String> = stateHandle.getLiveData("bookKey")
 
     // 특정 가계부 유저 리스트
     private var _settlementList = MutableLiveData<UiSettlementSeeModel>()
@@ -50,15 +57,19 @@ class SettleUpSeeViewModel @Inject constructor(
 
     // 정산 내역 불러오기
     fun getSettlementInform(){
+        val result = if (bookKey.value.isNullOrEmpty()) prefs.getString("bookKey", "") else bookKey.value
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
-            settlementSeeUseCase(prefs.getString("bookKey","")).onSuccess {
-                // 불러오기 성공
-                _settlementList.postValue(it)
-                baseEvent(Event.HideLoading)
-            }.onFailure {
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpSeeViewModel)))
+            if (result != null) {
+                settlementSeeUseCase(result).onSuccess {
+                    // 불러오기 성공, 유효 bookKey
+                    prefs.setString("bookKey",result)
+                    _settlementList.postValue(it)
+                    baseEvent(Event.HideLoading)
+                }.onFailure {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpSeeViewModel)))
+                }
             }
         }
     }
@@ -77,4 +88,7 @@ class SettleUpSeeViewModel @Inject constructor(
         }
     }
 
+    fun settingReset(){
+        id.value = -1
+    }
 }

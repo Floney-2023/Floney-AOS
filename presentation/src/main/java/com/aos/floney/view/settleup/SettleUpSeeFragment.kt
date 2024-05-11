@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
@@ -32,6 +34,8 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSeeViewModel>(R.layout.fragment_settle_up_see) , UiSettlementSeeModel.OnItemClickListener {
 
+    private val activityViewModel: SettleUpViewModel by activityViewModels()
+
     override fun onItemClick(item: Settlement) {
         viewModel.seeDetailSettlement(item)
     }
@@ -41,8 +45,10 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
 
         setUpUi()
         setUpViewModelObserver()
+        setUpNavigate()
     }
     private fun setUpUi() {
+        activityViewModel.bottomSee(false)
         binding.setVariable(BR.eventHolder, this@SettleUpSeeFragment)
     }
 
@@ -66,6 +72,17 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
                     findNavController().navigate(action)
                 }
             }
+        }
+
+    }
+    private fun setUpNavigate(){
+        if (viewModel.id.value?.toInt() !=-1) {
+            val action =
+                SettleUpSeeFragmentDirections.actionSettleUpSeeFragmentToSettleUpDetailSeeFragment(
+                    viewModel.id.value!!.toLong()
+                )
+            viewModel.settingReset() // 값 리셋. 원링크 이전 화면 이동 시, 자동 다음 화면 방지
+            findNavController().navigate(action)
         }
     }
 }

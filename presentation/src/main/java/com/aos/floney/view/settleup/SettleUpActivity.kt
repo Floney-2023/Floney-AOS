@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.aos.floney.BuildConfig.appsflyer_dev_key
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
@@ -29,15 +32,14 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupJetpackNavigation()
         setUpBottomNavigation()
-        setUpShareDeepLink()
+        setupJetpackNavigation()
     }
     private fun setupJetpackNavigation() {
 
         val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = host.navController
-
+        setUpShareDeepLink()
     }
 
     fun startSettleUpActivity() {
@@ -121,7 +123,17 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
             override fun onDeepLinking(deepLinkResult: DeepLinkResult) {
                 when (deepLinkResult.status) {
                     DeepLinkResult.Status.FOUND -> {
-                        Timber.d("deep Deep link found")
+                        val deepLinkObj = deepLinkResult.deepLink
+
+                        val settlementId = deepLinkObj.values["settlementId"].toString().toLong()
+                        val bookKey = deepLinkObj.values["bookKey"].toString()
+
+                        Timber.e("settlement ${settlementId} ------ ${bookKey}")
+                        if (settlementId != null && bookKey.isNotEmpty()) {
+                            viewModel.settingBookKey(settlementId, bookKey)
+                        } else {
+                            Log.d("DeepLink", "SettleUp not found")
+                        }
                     }
                     DeepLinkResult.Status.NOT_FOUND -> {
                         Timber.d("deep Deep link not found")
