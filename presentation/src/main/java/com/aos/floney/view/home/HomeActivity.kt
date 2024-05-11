@@ -35,6 +35,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
 import com.aos.floney.BuildConfig.google_app_banner_key
+import com.aos.floney.view.common.WarningPopupDialog
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -127,6 +128,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                     val item = it.split("-")
                     viewModel.updateCalendarClickedItem(item[0].toInt(), item[1].toInt(), 1)
                 }.show()
+            }
+        }
+        repeatOnStarted {
+            // 접근 불가 가계부 dialog
+            viewModel.accessCheck.collect {
+                if(it) {
+                    val exitDialogFragment = WarningPopupDialog(
+                        getString(R.string.home_dialog_title),
+                        getString(R.string.home_dialog_info),
+                        getString(R.string.home_dialog_right_button),
+                        getString(R.string.home_dialog_right_button),
+                        true
+                    ) { checked ->
+
+                    }
+                    exitDialogFragment.show(fragmentManager, "clickDialog")
+                }
+
             }
         }
     }

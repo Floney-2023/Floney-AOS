@@ -242,6 +242,11 @@
         <item>일</item>
     </string-array>
 
+    <!-- 6. 홈 화면-->
+    <string name="home_dialog_title">접근 권한이 없어요</string>
+    <string name="home_dialog_info">해당 가계부의 멤버가 아닙니다.\n소속된 가계부를 다시 확인해 주세요.</string>
+    <string name="home_dialog_right_button">확인</string>
+
     <!--7-1 가계부설정 -->
     <string name="book_setting_title">가계부 설정</string>
     <string name="book_setting_user">사용자</string>

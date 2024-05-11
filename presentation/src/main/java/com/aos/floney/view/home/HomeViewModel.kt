@@ -84,6 +84,11 @@ class HomeViewModel @Inject constructor(
     val showAdvertisement: LiveData<Boolean> get() = _showAdvertisement
 
 
+    // 접근 권한 확인 O/X
+    private var _accessCheck = MutableEventFlow<Boolean>()
+    val accessCheck: EventFlow<Boolean> get() = _accessCheck
+
+
     init {
         getBookInfo(prefs.getString("bookKey", ""))
         getFormatDateMonth()
@@ -112,11 +117,11 @@ class HomeViewModel @Inject constructor(
                         myNickname = it.name
                     }
                 }
-
                 _bookInfo.postValue(it)
             }.onFailure {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
+                _accessCheck.emit(false)
             }
         }
     }

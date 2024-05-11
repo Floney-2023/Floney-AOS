@@ -16,6 +16,7 @@ import com.aos.floney.databinding.ActivitySettleUpBinding
 import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.mypage.MyPageActivity
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
@@ -51,9 +52,8 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         }
         finishAffinity()
     }
-
-    fun startBookAddActivity() {
-        startActivity(Intent(this, BookAddActivity::class.java))
+    fun startHomeActivity() {
+        startActivity(Intent(this, HomeActivity::class.java))
         if (Build.VERSION.SDK_INT >= 34) {
             overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
         } else {

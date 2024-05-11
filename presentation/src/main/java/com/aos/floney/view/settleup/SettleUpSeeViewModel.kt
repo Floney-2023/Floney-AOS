@@ -42,11 +42,17 @@ class SettleUpSeeViewModel @Inject constructor(
     val settlementList: LiveData<UiSettlementSeeModel> get() = _settlementList
 
 
-    // 다음 정산 페이지
+    // 정산 페이지
     private var _startPage = MutableEventFlow<Boolean>()
     val startPage: EventFlow<Boolean> get() = _startPage
 
-    // 처음 정산하기 페이지
+
+    // 정산 페이지
+    private var _homePage = MutableEventFlow<Boolean>()
+    val homePage: EventFlow<Boolean> get() = _homePage
+
+
+    // 정산 상세 페이지
     private var _settlementDetailPage = MutableEventFlow<Long>()
     val settlementDetailPage: EventFlow<Long> get() = _settlementDetailPage
 
@@ -69,6 +75,7 @@ class SettleUpSeeViewModel @Inject constructor(
                 }.onFailure {
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpSeeViewModel)))
+                    _homePage.emit(true)
                 }
             }
         }

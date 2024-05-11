@@ -32,7 +32,8 @@ class BookSettingCategoryFragment : BaseFragment<FragmentBookSettingCategoryBind
             getString(R.string.book_setting_category_dialog_title),
             dialogInfo,
             getString(R.string.book_setting_category_dialog_left_button),
-            getString(R.string.book_setting_category_dialog_right_button)
+            getString(R.string.book_setting_category_dialog_right_button),
+            false
         ) { checked ->
             if (checked)
                 viewModel.deleteCategory(item)

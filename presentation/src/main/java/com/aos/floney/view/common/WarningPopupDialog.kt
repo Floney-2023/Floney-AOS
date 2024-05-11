@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.aos.floney.R
 import com.aos.floney.databinding.WarningPopupBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +20,7 @@ class WarningPopupDialog(
     val info : String,
     val leftButton : String,
     val rightButton : String,
+    val check : Boolean,
     private val onSelect: (Boolean) -> Unit) :
     DialogFragment(){
 
@@ -27,21 +31,30 @@ class WarningPopupDialog(
         _binding = WarningPopupBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         setUpUi()
         setUpListener()
         return view
     }
     private fun setUpUi()
     {
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window?.apply {
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            requestFeature(Window.FEATURE_NO_TITLE)
+        }
 
-        binding.tvPopupTitle.text = title
-        binding.tvPopupInfo.text = info
-        binding.btnLeft.text = leftButton
-        binding.btnRight.text = rightButton
+        binding.apply {
+            tvPopupTitle.text = title
+            tvPopupInfo.text = info
+            btnLeft.text = leftButton
+            btnRight.text = rightButton
+
+            // check true면 black Popup, false면 red Popup
+            if (check) {
+                btnLeft.visibility = View.GONE
+                viewPadding.visibility = View.GONE
+                ivPopupImage.setImageResource(R.drawable.item_black_exit_popup)
+            }
+        }
     }
     private fun setUpListener()
     {

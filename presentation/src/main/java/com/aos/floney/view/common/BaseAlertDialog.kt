@@ -35,8 +35,6 @@ class BaseAlertDialog(
         _binding = BaseAlertDialogBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         setUpUi()
         setUpListener()
         return view
