@@ -14,7 +14,6 @@ import com.aos.floney.view.analyze.ChoiceDatePickerBottomSheet
 import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.mypage.MyPageActivity
-import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyModifyItem
@@ -22,21 +21,16 @@ import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.OnUserEarnedRewardListener
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
-import com.aos.floney.BuildConfig.google_app_banner_key
 import com.aos.floney.view.common.WarningPopupDialog
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home),
@@ -50,6 +44,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         setUpUi()
         setUpViewModelObserver()
         setUpBottomNavigation()
+        setUpAccessCheck()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this)
@@ -263,5 +258,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                 mRewardAd = ad
             }
         })
+    }
+    private fun setUpAccessCheck(){
+        viewModel.setAccessCheck(intent.getBooleanExtra("accessCheck", false))
     }
 }

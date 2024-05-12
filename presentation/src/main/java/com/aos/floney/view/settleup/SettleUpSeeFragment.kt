@@ -45,7 +45,6 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
 
         setUpUi()
         setUpViewModelObserver()
-        setUpNavigate()
     }
     private fun setUpUi() {
         activityViewModel.bottomSee(false)
@@ -63,9 +62,12 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
             }
         }
         repeatOnStarted {
-            // 정산 페이지 권한 설정 불가..
+            // 정산 페이지 권한 여부 확인
             viewModel.homePage.collect {
-                if(it) {
+                if(it) { // bookKey 유효할 시
+                    setUpNavigate()
+                }
+                else { // bookKey 유효 X, 홈 화면으로 이동
                     val activity = requireActivity() as SettleUpActivity
                     activity.startHomeActivity()
                 }
@@ -84,7 +86,7 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
 
     }
     private fun setUpNavigate(){
-        if (viewModel.id.value?.toInt() !=-1) { // 원링크 이동 시, 상세 페이지로 이동
+        if (viewModel.id.value?.toInt() !=-1) { // 원링크 이동 시, 정산 내역 상세 페이지로 이동
             val action =
                 SettleUpSeeFragmentDirections.actionSettleUpSeeFragmentToSettleUpDetailSeeFragment(
                     viewModel.id.value!!.toLong()

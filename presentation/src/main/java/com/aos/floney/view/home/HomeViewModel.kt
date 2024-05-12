@@ -15,13 +15,11 @@ import com.aos.model.home.DayMoney
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
-import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -119,9 +117,9 @@ class HomeViewModel @Inject constructor(
                 }
                 _bookInfo.postValue(it)
             }.onFailure {
+                _accessCheck.emit(true)
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
-                _accessCheck.emit(false)
             }
         }
     }
@@ -308,5 +306,12 @@ class HomeViewModel @Inject constructor(
         }
 
         _showAdvertisement.postValue(advertiseTime.isEmpty())
+    }
+    // 가계부 접근 확인
+    fun setAccessCheck(booleanExtra: Boolean) {
+        viewModelScope.launch {
+            if(booleanExtra)
+                _accessCheck.emit(true)
+        }
     }
 }

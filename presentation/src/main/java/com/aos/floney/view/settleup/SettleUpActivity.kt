@@ -15,6 +15,7 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySettleUpBinding
 import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.book.add.BookAddActivity
+import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.mypage.MyPageActivity
@@ -53,13 +54,17 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         finishAffinity()
     }
     fun startHomeActivity() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(
+            Intent(
+                this@SettleUpActivity,
+                HomeActivity::class.java
+            ).putExtra("accessCheck", true)
+        )
         if (Build.VERSION.SDK_INT >= 34) {
             overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
         } else {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
-        finishAffinity()
     }
 
     private fun setUpBottomNavigation() {

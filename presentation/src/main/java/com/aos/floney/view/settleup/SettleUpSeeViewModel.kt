@@ -72,10 +72,10 @@ class SettleUpSeeViewModel @Inject constructor(
                     prefs.setString("bookKey",result)
                     _settlementList.postValue(it)
                     baseEvent(Event.HideLoading)
+                    _homePage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpSeeViewModel)))
-                    _homePage.emit(true)
+                    _homePage.emit(false)
                 }
             }
         }

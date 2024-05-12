@@ -35,7 +35,7 @@
 
         <TextView
             android:id="@+id/tv_popup_info"
-            android:layout_width="wrap_content"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/floney_pretendard_regular"
             android:gravity="center"
