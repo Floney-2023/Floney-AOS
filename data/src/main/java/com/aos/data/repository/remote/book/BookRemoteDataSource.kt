@@ -81,4 +81,5 @@ interface BookRemoteDataSource {
     suspend fun deleteBookLines(bookLineKey: String): NetworkState<Void>
     suspend fun getBooks(code: String): NetworkState<GetBooksEntity>
     suspend fun postShortenUrl(id: String, secretKey: String,url:String): NetworkState<PostNaverShortenUrlEntity>
+    suspend fun deleteBookLinesAll(bookLineKey: Int): NetworkState<Void>
 }

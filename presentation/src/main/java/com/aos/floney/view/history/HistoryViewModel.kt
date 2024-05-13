@@ -11,9 +11,9 @@ import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
-import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyModifyItem
 import com.aos.usecase.history.DeleteBookLineUseCase
+import com.aos.usecase.history.DeleteBooksLinesAllUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
@@ -30,6 +30,7 @@ class HistoryViewModel @Inject constructor(
     private val postBooksLinesUseCase: PostBooksLinesUseCase,
     private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
     private val deleteBookLineUseCase: DeleteBookLineUseCase,
+    private val deleteBooksLinesAllUseCase: DeleteBooksLinesAllUseCase
 ) : BaseViewModel() {
 
     // 내역 추가 결과
@@ -61,8 +62,8 @@ class HistoryViewModel @Inject constructor(
     val onClickRepeat: EventFlow<String> get() = _onClickRepeat
 
     // 내역 삭제 버튼 클릭
-    private var _onClickDelete = MutableEventFlow<Boolean>()
-    val onClickDelete: EventFlow<Boolean> get() = _onClickDelete
+    private var _onClickDelete = MutableEventFlow<OnClickedDelete>()
+    val onClickDelete: EventFlow<OnClickedDelete> get() = _onClickDelete
 
     // 날짜
     private var tempDate = ""
@@ -268,6 +269,23 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
+    // 반복 내역 삭제
+    fun deleteRepeatHistory() {
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            deleteBooksLinesAllUseCase(
+                modifyId
+            ).onSuccess {
+                _deleteBookLines.emit(true)
+
+                baseEvent(Event.HideLoading)
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
+            }
+        }
+    }
+
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
@@ -306,7 +324,7 @@ class HistoryViewModel @Inject constructor(
     // 삭제 버튼 클릭
     fun onClickDeleteBtn() {
         viewModelScope.launch {
-            _onClickDelete.emit(true)
+            _onClickDelete.emit(OnClickedDelete((!getConvertSendRepeatValue().equals("NONE")), modifyId))
         }
     }
 
@@ -379,6 +397,7 @@ class HistoryViewModel @Inject constructor(
 
     // 반복내역 서버로부터 받은 값을 UI 로 변경
     private fun getConvertReceiveRepeatValue(value: String): String {
+        Timber.e("value $value")
         return when(value) {
              "NONE" -> "없음"
              "EVERYDAY" -> "매일"

@@ -148,6 +148,9 @@ interface BookRepository {
     // 반복 내역 삭제
     suspend fun deleteBooksRepeat(repeatLineId: Int): Result<Void?>
 
+    // 가계부 이후 내역 삭제
+    suspend fun deleteBooksLinesAll(bookLineKey: Int): Result<Void?>
+
     // 가계부 엑셀 다운로드
     suspend fun postBooksExcel(bookKey: String, excelDuration: String, currentDate: String): Result<ResponseBody>
 

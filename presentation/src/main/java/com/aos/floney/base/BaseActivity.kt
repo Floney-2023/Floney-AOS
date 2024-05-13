@@ -176,6 +176,10 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun dismissLoadingDialog(){
-        loadingDialog.dismiss()
+        try {
+            loadingDialog.dismiss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

@@ -289,6 +289,13 @@ interface BookService {
         @Query("repeatLineId") repeatLineId: Int
     ): NetworkState<Void>
 
+    // 반복 내역 삭제
+    @HTTP(method = "DELETE", path="books/lines/all", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBooksLineAll(
+        @Query("bookLineKey") bookLineKey: Int
+    ): NetworkState<Void>
+
     // 가계부 나가기
     @POST("books/users/out")
     @Headers("Auth: true")

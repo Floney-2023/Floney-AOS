@@ -47,6 +47,10 @@ class LoginViewModel @Inject constructor(
     private var _clickPasswordFind = MutableEventFlow<Boolean>()
     val clickPasswordFind: EventFlow<Boolean> get() = _clickPasswordFind
 
+    // 카카오 로그인 클릭
+    private var _clickKakao = MutableEventFlow<Boolean>()
+    val clickKakao: EventFlow<Boolean> get() = _clickKakao
+
     // 로그인하기 클릭
     fun onClickLogin() {
         viewModelScope.launch {
@@ -123,7 +127,9 @@ class LoginViewModel @Inject constructor(
 
     // 카카오 로그인 클릭
     fun onClickKakaoLogin() {
-
+        viewModelScope.launch {
+            _clickKakao.emit(true)
+        }
     }
 
     // 구글 로그인 클릭
