@@ -22,6 +22,7 @@ import com.aos.floney.ext.intentSerializable
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.setting.category.BookCategoryActivity
 import com.aos.floney.view.common.BaseAlertDialog
+import com.aos.floney.view.common.BaseChoiceAlertDialog
 import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
@@ -100,11 +101,27 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.onClickDelete.collect {
-                 BaseAlertDialog(title = "삭제하기", info = "삭제하시겠습니까?", false) {
-                    if(it) {
-                        viewModel.deleteHistory()
-                    }
-                }.show(supportFragmentManager, "baseAlertDialog")
+                Timber.e("it.isExistRepeat ${it.isExistRepeat}")
+                if(it.isExistRepeat) {
+                    // 반복내역 있음
+                    BaseChoiceAlertDialog(title = "이 내역을 삭제하시겠습니까?\n반복되는 내역입니다.", btnTextStr1 = "이 내역만 삭제", btnTextStr2 = "이후 모든 내역 삭제") {
+                        if(it) {
+                            // 이 내역만 삭제 선택
+                            viewModel.deleteHistory()
+                        } else {
+                            // 이후 모든 내역 삭제 선택
+                            // 반복내역삭제
+                            viewModel.deleteRepeatHistory()
+                        }
+                    }.show(supportFragmentManager, "baseChoiceDialog")
+                } else {
+                    // 반복내역 없음
+                    BaseAlertDialog(title = "삭제하기", info = "삭제하시겠습니까?", false) {
+                        if(it) {
+                            viewModel.deleteHistory()
+                        }
+                    }.show(supportFragmentManager, "baseAlertDialog")
+                }
             }
         }
         repeatOnStarted {

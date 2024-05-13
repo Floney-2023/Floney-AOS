@@ -230,4 +230,8 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
     override suspend fun deleteBookLines(bookLineKey: String): NetworkState<Void> {
         return bookService.deleteBookLines(bookLineKey)
     }
+
+    override suspend fun deleteBookLinesAll(bookLineKey: Int): NetworkState<Void> {
+        return bookService.deleteBooksLineAll(bookLineKey)
+    }
 }
