@@ -155,7 +155,7 @@ class MyPageInformWithdrawReasonCheckViewModel @Inject constructor() : BaseViewM
                 // 직접 입력 텍스트가 비어 있는 경우 Toast를 표시합니다.
                 baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_exit_blank_toast))
             } else {
-                viewModelScope.launch(Dispatchers.IO) {
+                viewModelScope.launch {
                     _nextPage.emit(checkedTermType)
                 }
             }

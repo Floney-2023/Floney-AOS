@@ -9,6 +9,8 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.aos.data.util.CurrencyUtil
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.BuildConfig.appsflyer_dev_key
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
@@ -26,13 +28,18 @@ import com.appsflyer.deeplink.DeepLinkListener
 import com.appsflyer.deeplink.DeepLinkResult
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel>(R.layout.activity_settle_up) {
+
+    @Inject
+    lateinit var sharedPreferenceUtil: SharedPreferenceUtil
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        CurrencyUtil.currency = sharedPreferenceUtil.getString("symbol", "원")
 
         setUpBottomNavigation()
         setupJetpackNavigation()

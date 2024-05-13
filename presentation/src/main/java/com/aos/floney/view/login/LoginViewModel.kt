@@ -3,6 +3,7 @@ package com.aos.floney.view.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
@@ -95,7 +96,7 @@ class LoginViewModel @Inject constructor(
                 if(it.myBookCurrency != "") {
                     // 화폐 단위 저장
                     prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
-
+                    CurrencyUtil.currency = getCurrencySymbolByCode(it.myBookCurrency)
                     _existBook.emit(true)
                 } else {
                     baseEvent(Event.ShowToastRes(R.string.currency_error))
