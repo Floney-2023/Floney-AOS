@@ -11,10 +11,9 @@ import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
-import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyModifyItem
-import com.aos.usecase.booksetting.BooksRepeatDeleteUseCase
 import com.aos.usecase.history.DeleteBookLineUseCase
+import com.aos.usecase.history.DeleteBooksLinesAllUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
@@ -31,7 +30,7 @@ class HistoryViewModel @Inject constructor(
     private val postBooksLinesUseCase: PostBooksLinesUseCase,
     private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
     private val deleteBookLineUseCase: DeleteBookLineUseCase,
-    private val booksRepeatDeleteUseCase: BooksRepeatDeleteUseCase
+    private val deleteBooksLinesAllUseCase: DeleteBooksLinesAllUseCase
 ) : BaseViewModel() {
 
     // 내역 추가 결과
@@ -274,13 +273,10 @@ class HistoryViewModel @Inject constructor(
     fun deleteRepeatHistory() {
         viewModelScope.launch(Dispatchers.IO) {
             baseEvent(Event.ShowLoading)
-            booksRepeatDeleteUseCase(
+            deleteBooksLinesAllUseCase(
                 modifyId
             ).onSuccess {
-//                val updatedList = _repeatList.value!!.filter { it.id != item.id }
-//                _repeatList.postValue(updatedList)
-
-                Timber.e("it success")
+                _deleteBookLines.emit(true)
 
                 baseEvent(Event.HideLoading)
             }.onFailure {

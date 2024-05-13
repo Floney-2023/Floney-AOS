@@ -78,4 +78,5 @@ interface BookRemoteDataSource {
     suspend fun postBooksExcel(postBooksExcelBody: PostBooksExcelBody): NetworkState<ResponseBody>
     suspend fun postBooksOut(postBooksOutBody: PostBooksOutBody): NetworkState<Void>
     suspend fun deleteBookLines(bookLineKey: String): NetworkState<Void>
+    suspend fun deleteBookLinesAll(bookLineKey: Int): NetworkState<Void>
 }
