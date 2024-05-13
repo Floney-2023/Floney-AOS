@@ -6,6 +6,7 @@ import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
+import com.aos.data.entity.response.book.GetBooksEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
@@ -21,6 +22,7 @@ import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostNaverShortenUrlEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
@@ -62,7 +64,9 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToLong
 
 import com.aos.model.book.PostBooksCategoryAddModel
+import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.book.UiBookRepeatModel
+import com.aos.model.settlement.NaverShortenUrlModel
 
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
@@ -426,4 +430,30 @@ fun List<GetBookRepeatEntity>.toUiBookRepeatModel(): List<UiBookRepeatModel> {
             it.id, it.description, repeatDurationInKorean, it.lineSubCategory, it.assetSubCategory, it.money.toInt(), false
         )
     }
+}
+fun GetBooksEntity.toUiBookEntranceModel() : UiBookEntranceModel {
+    return UiBookEntranceModel(
+        bookName = this.bookName,
+        bookImg = this.bookImg,
+        bookInfo = formatBookInfo(this.startDay, this.memberCount)
+    )
+}
+
+fun PostNaverShortenUrlEntity.toNaverShortenUrlModel(): NaverShortenUrlModel {
+    return NaverShortenUrlModel(
+        result = this.result.url
+    )
+}
+fun formatBookInfo(startDay: String, memberCount: Int): String {
+    // 입력된 날짜 형식
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
+    // 출력할 날짜 형식
+    val outputFormat = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
+
+    // startDay를 Date 객체로 파싱
+    val date = inputFormat.parse(startDay)
+    // 파싱된 Date 객체를 새로운 형식으로 포매팅
+    val formattedDate = date?.let { outputFormat.format(it) } ?: ""
+
+    return "$formattedDate 개설 ꞏ ${memberCount}명"
 }

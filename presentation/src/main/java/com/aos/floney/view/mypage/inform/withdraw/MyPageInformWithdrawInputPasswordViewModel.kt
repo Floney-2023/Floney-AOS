@@ -83,6 +83,10 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
             baseEvent(Event.ShowLoading)
             withdrawUseCase(prefs.getString("accessToken",""), type.value!!, reason.value).onSuccess {
                 baseEvent(Event.HideLoading)
+
+                prefs.setString("bookKey","")
+                prefs.setString("accessToken","")
+
                 _withdrawPage.emit(true)
             }.onFailure {
                 baseEvent(Event.HideLoading)

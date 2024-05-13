@@ -31,7 +31,8 @@ class BookSettingRepeatFragment : BaseFragment<FragmentBookSettingRepeatBinding,
             getString(R.string.book_setting_category_repeat_title),
             dialogInfo,
             getString(R.string.book_setting_category_repeat_left_button),
-            getString(R.string.book_setting_category_repeat_right_button)
+            getString(R.string.book_setting_category_repeat_right_button),
+            false
         ) { checked ->
             if (checked)
                 viewModel.deleteCategory(item)

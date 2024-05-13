@@ -31,7 +31,8 @@ class BookSettingCurrencyFragment : BaseFragment<FragmentBookSettingCurrencyBind
             getString(R.string.book_setting_currency_dialog_title),
             dialogInfo,
             getString(R.string.book_setting_currency_dialog_left_button),
-            getString(R.string.book_setting_currency_dialog_right_button)
+            getString(R.string.book_setting_currency_dialog_right_button),
+            false
         ) { checked ->
             if (checked)
                 viewModel.settingCurrency(item)

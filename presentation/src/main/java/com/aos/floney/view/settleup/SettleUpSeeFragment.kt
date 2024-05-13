@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
@@ -32,6 +34,8 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSeeViewModel>(R.layout.fragment_settle_up_see) , UiSettlementSeeModel.OnItemClickListener {
 
+    private val activityViewModel: SettleUpViewModel by activityViewModels()
+
     override fun onItemClick(item: Settlement) {
         viewModel.seeDetailSettlement(item)
     }
@@ -43,12 +47,13 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
         setUpViewModelObserver()
     }
     private fun setUpUi() {
+        activityViewModel.bottomSee(false)
         binding.setVariable(BR.eventHolder, this@SettleUpSeeFragment)
     }
 
     private fun setUpViewModelObserver() {
         repeatOnStarted {
-            // 다음 페이지 이동
+            // 처음 정산 페이지
             viewModel.startPage.collect {
                 if(it) {
                     val activity = requireActivity() as SettleUpActivity
@@ -56,9 +61,20 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
                 }
             }
         }
-
         repeatOnStarted {
-            // 처음 정산 페이지로
+            // 정산 페이지 권한 여부 확인
+            viewModel.homePage.collect {
+                if(it) { // bookKey 유효할 시
+                    setUpNavigate()
+                }
+                else { // bookKey 유효 X, 홈 화면으로 이동
+                    val activity = requireActivity() as SettleUpActivity
+                    activity.startHomeActivity()
+                }
+            }
+        }
+        repeatOnStarted {
+            // 정산 상세 페이지
             viewModel.settlementDetailPage.collect {
                 if(it>0) {
                     val action =
@@ -66,6 +82,17 @@ class SettleUpSeeFragment : BaseFragment<FragmentSettleUpSeeBinding, SettleUpSee
                     findNavController().navigate(action)
                 }
             }
+        }
+
+    }
+    private fun setUpNavigate(){
+        if (viewModel.id.value?.toInt() !=-1) { // 원링크 이동 시, 정산 내역 상세 페이지로 이동
+            val action =
+                SettleUpSeeFragmentDirections.actionSettleUpSeeFragmentToSettleUpDetailSeeFragment(
+                    viewModel.id.value!!.toLong()
+                )
+            viewModel.settingReset() // 값 리셋. 원링크 이전 화면 이동 시, 자동 다음 화면 방지
+            findNavController().navigate(action)
         }
     }
 }

@@ -71,6 +71,9 @@ dependencies {
 
     implementation("com.tbuonomo:dotsindicator:5.0")
 
+    // deep-link
+    implementation 'com.appsflyer:af-android-sdk:6.9.0'
+
     // google AdMob
     implementation("com.google.android.gms:play-services-ads:22.6.0")
 

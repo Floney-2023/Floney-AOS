@@ -35,6 +35,26 @@ fun ImageView.setImageToUrl(url: String?) {
     }
 }
 
+
+@BindingAdapter("setBookImageToUrl")
+fun ImageView.setBookImageToUrl(url: String?) {
+    url?.let {
+        if(it.equals("") || it == null) {
+            Glide.with(this)
+                .load(R.drawable.icon_book_profile)
+                .into(this)
+        } else if(it.equals("btn_book_default")) {
+            Glide.with(this)
+                .load(R.drawable.btn_book_profile)
+                .into(this)
+        } else {
+            Glide.with(this)
+                .load(url)
+                .into(this)
+        }
+    }
+}
+
 @BindingAdapter("setAlarmImage")
 fun ImageView.setAlarmImage(url: String?) {
     url?.let {

@@ -10,6 +10,7 @@ import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -17,6 +18,7 @@ import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.NaverShortenUrlModel
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
@@ -154,4 +156,10 @@ interface BookRepository {
 
     // 가계부 나가기
     suspend fun postBooksOut(bookKey: String): Result<Void?>
+
+    // 참여코드로 가계부 정보 불러오기
+    suspend fun getBooks(code: String): Result<UiBookEntranceModel>
+
+    // 가계부 단축 URl
+    suspend fun postShortenUrl(id: String, secretKey: String, url: String): Result<NaverShortenUrlModel>
 }

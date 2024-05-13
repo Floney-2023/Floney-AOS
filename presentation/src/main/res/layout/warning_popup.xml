@@ -19,10 +19,11 @@
         android:paddingBottom="28dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_popup_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="14dp"
-            android:src="@drawable/item_exit_popup" />
+            android:src="@drawable/item_red_exit_popup"/>
 
         <TextView
             android:id="@+id/tv_popup_title"
@@ -34,7 +35,7 @@
 
         <TextView
             android:id="@+id/tv_popup_info"
-            android:layout_width="wrap_content"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/floney_pretendard_regular"
             android:gravity="center"
@@ -56,6 +57,7 @@
                 android:textAppearance="@style/left_button" />
 
             <View
+                android:id="@+id/view_padding"
                 android:layout_width="12dp"
                 android:layout_height="0dp" />
 
@@ -64,9 +66,9 @@
                 android:layout_width="124dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/onboard_area1"
+                android:fontFamily="@font/pretendard_medium"
                 android:textAllCaps="false"
-                android:textAppearance="@style/right_button"
-                android:fontFamily="@font/pretendard_medium" />
+                android:textAppearance="@style/right_button" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -60,6 +60,7 @@
                 android:textAllCaps="false" />
 
             <View
+                android:id="@+id/middle_view"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/grayscale10"/>
@@ -68,11 +69,11 @@
                 android:id="@+id/btn_right"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:textSize="16dp"
-                android:text="아니오"
                 android:layout_weight="1"
-                android:fontFamily="@font/pretendard_semibold" />
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="아니오"
+                android:textAllCaps="false"
+                android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -22,6 +22,7 @@ import com.aos.data.mapper.toGetBooksCodeModel
 import com.aos.data.mapper.toGetBooksInfoCurrencyModel
 import com.aos.data.mapper.toGetCheckUserBookModel
 import com.aos.data.mapper.toGetsettleUpLastModel
+import com.aos.data.mapper.toNaverShortenUrlModel
 import com.aos.data.mapper.toPostBooksCategoryAddModel
 import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
@@ -33,6 +34,7 @@ import com.aos.data.mapper.toPostBooksLinesModel
 import com.aos.data.mapper.toUiBookCategory
 import com.aos.data.mapper.toPostSettlementAddModel
 import com.aos.data.mapper.toUiBookBudgetModel
+import com.aos.data.mapper.toUiBookEntranceModel
 import com.aos.data.mapper.toUiBookRepeatModel
 import com.aos.data.mapper.toUiBookSettingModel
 import com.aos.data.mapper.toUiMemberSelectModel
@@ -49,6 +51,7 @@ import com.aos.model.book.PostBooksJoinModel
 import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
+import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -56,6 +59,7 @@ import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.NaverShortenUrlModel
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
@@ -65,7 +69,6 @@ import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
 import okhttp3.ResponseBody
 import timber.log.Timber
-import java.io.File
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRemoteDataSource) :
@@ -694,6 +697,35 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
                     Result.failure(IllegalStateException("unKnownError"))
                 }
             }
+        }
+    }
+    override suspend fun getBooks(
+        code: String
+    ): Result<UiBookEntranceModel> {
+        when (val data = bookDataSource.getBooks(code)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiBookEntranceModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+
+    override suspend fun postShortenUrl(
+        id: String,
+        secretKey: String,
+        url: String
+    ): Result<NaverShortenUrlModel>{
+        when (val data = bookDataSource.postShortenUrl(id, secretKey, url)){
+            is NetworkState.Success -> return Result.success(data.body.toNaverShortenUrlModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
         }
     }
 }

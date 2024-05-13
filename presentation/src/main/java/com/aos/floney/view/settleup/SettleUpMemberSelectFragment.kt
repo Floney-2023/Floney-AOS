@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
@@ -28,7 +29,7 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class SettleUpMemberSelectFragment : BaseFragment<FragmentSettleUpMemberSelectBinding, SettleUpMemberSelectViewModel>(R.layout.fragment_settle_up_member_select) , UiMemberSelectModel.OnItemClickListener {
-
+    private val activityViewModel: SettleUpViewModel by activityViewModels()
     override fun onItemClick(item: BookUsers) {
         viewModel.settingSettlementMember(item)
     }
@@ -40,6 +41,7 @@ class SettleUpMemberSelectFragment : BaseFragment<FragmentSettleUpMemberSelectBi
         setUpViewModelObserver()
     }
     private fun setUpUi() {
+        activityViewModel.bottomSee(false)
         binding.setVariable(BR.eventHolder, this@SettleUpMemberSelectFragment)
     }
 

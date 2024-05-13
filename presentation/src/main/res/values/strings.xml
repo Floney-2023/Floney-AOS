@@ -220,6 +220,12 @@
     <string name="book_add_invite_select_dialog_input_select">코드 입력하기</string>
     <string name="book_add_invite_select_dialog_add_button">추가하기</string>
 
+    <!--5-2 가계부 초대받기(팀원)-->
+    <string name="book_entrance_title">초대받은 가계부에\n입장하기</string>
+    <string name="book_entrance_code">초대 코드</string>
+    <string name="book_entrance_button">입장하기</string>
+    <string name="book_entrance_code_button"><u>코드 입력하기</u></string>
+
     <!--5-3 가계부 초대받기(공통)-->
     <string name="my_page_book_add_invite_check_code_title">가계부 코드 입력</string>
     <string name="my_page_book_add_invite_check_code_info">가계부에 입장하기 위해\n초대 받은 가계부의 코드를 입력하세요.</string>
@@ -235,6 +241,11 @@
         <item>토</item>
         <item>일</item>
     </string-array>
+
+    <!-- 6. 홈 화면-->
+    <string name="home_dialog_title">접근 권한이 없어요</string>
+    <string name="home_dialog_info">해당 가계부의 멤버가 아닙니다.\n소속된 가계부를 다시 확인해 주세요.</string>
+    <string name="home_dialog_right_button">확인</string>
 
     <!--7-1 가계부설정 -->
     <string name="book_setting_title">가계부 설정</string>

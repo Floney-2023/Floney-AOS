@@ -49,7 +49,8 @@ class BookSettingEditFragment :
                         getString(R.string.book_setting_exit_dialog_title),
                         getString(R.string.book_setting_exit_dialog_info, bookName),
                         getString(R.string.book_setting_exit_dialog_delete_button),
-                        getString(R.string.book_setting_exit_dialog_cancel_button)
+                        getString(R.string.book_setting_exit_dialog_cancel_button),
+                        false
                     ) {  checked ->
                         if (checked)
                             viewModel.deleteBook()

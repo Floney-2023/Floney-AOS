@@ -45,7 +45,7 @@ class SettleUpCompleteViewModel @Inject constructor(
     private var _settlementModel = MutableLiveData<UiSettlementAddModel>()
     val settlementModel: LiveData<UiSettlementAddModel> get() = _settlementModel
 
-    // 다음 정산 페이지
+    // 이전 페이지
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
 
@@ -64,6 +64,12 @@ class SettleUpCompleteViewModel @Inject constructor(
     // 정보 load 완료
     private var _getInform = MutableEventFlow<Boolean>()
     val getInform: EventFlow<Boolean> get() = _getInform
+
+
+    // 처음 정산하기 페이지
+    private var _settlementSharePage = MutableEventFlow<Boolean>()
+    val settlementSharePage: EventFlow<Boolean> get() = _settlementSharePage
+
     init {
         getOutcomesItems()
     }
@@ -124,9 +130,11 @@ class SettleUpCompleteViewModel @Inject constructor(
             }
         }
     }
-    // 이전 페이지로
+    // 공유하기
     fun onClickedSharePage(){
-
+        viewModelScope.launch {
+            _settlementSharePage.emit(true)
+        }
     }
     // exit 버튼 클릭 -> 처음 정산하기 페이지
     fun onClickedExit() {

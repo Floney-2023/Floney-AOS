@@ -3,6 +3,7 @@ package com.aos.floney.module
 import com.aos.data.api.AlarmService
 import com.aos.data.api.AnalyzeService
 import com.aos.data.api.BookService
+import com.aos.data.api.NaverShortenUrlService
 import com.aos.data.api.UserService
 import com.aos.data.repository.remote.alarm.AlarmRemoteDataSourceImpl
 import com.aos.data.repository.remote.analyze.AnalyzeRemoteDataSourceImpl
@@ -24,7 +25,7 @@ object DataSourceModule {
 
     @Singleton
     @Provides
-    fun provideBookRemoteDataSourceImpl(bookService: BookService) = BookRemoteDataSourceImpl(bookService)
+    fun provideBookRemoteDataSourceImpl(bookService: BookService, naverShortenUrlService : NaverShortenUrlService) = BookRemoteDataSourceImpl(bookService, naverShortenUrlService)
 
     @Singleton
     @Provides

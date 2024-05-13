@@ -116,6 +116,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <argument
+            android:name="bookKey"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settleUpDetailSeeFragment"
