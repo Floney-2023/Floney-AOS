@@ -129,6 +129,8 @@ class MyPageInformMainViewModel @Inject constructor(
             if(prefs.getString("accessToken","").isNotEmpty()) {
                 baseEvent(Event.ShowLoading)
                 logoutUseCase(prefs.getString("accessToken","")).onSuccess {
+                    prefs.setString("accessToken", "")
+                    prefs.setString("refreshToken", "")
                     _logOutPage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)

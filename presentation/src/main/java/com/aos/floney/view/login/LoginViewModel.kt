@@ -12,9 +12,12 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.Currency
 import com.aos.model.book.CurrencyInform
 import com.aos.model.book.getCurrencySymbolByCode
+import com.aos.model.user.SocialUserModel
 import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
+import com.aos.usecase.login.AuthTokenCheckUseCase
 import com.aos.usecase.login.LoginUseCase
+import com.kakao.sdk.template.model.Social
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,15 +31,16 @@ class LoginViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val loginUseCase: LoginUseCase,
     private val checkUserBookUseCase: CheckUserBookUseCase,
-    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase
+    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase,
+    private val authTokenCheckUseCase: AuthTokenCheckUseCase,
 ): BaseViewModel() {
 
     var email = MutableLiveData<String>("")
     var password = MutableLiveData<String>("")
 
     // 회원가입 클릭
-    private var _clickSignUp = MutableEventFlow<Boolean>()
-    val clickSignUp: EventFlow<Boolean> get() = _clickSignUp
+    private var _clickSignUp = MutableEventFlow<String>()
+    val clickSignUp: EventFlow<String> get() = _clickSignUp
 
     // 가계부 존재 여부
     private var _existBook = MutableEventFlow<Boolean>()
@@ -49,6 +53,9 @@ class LoginViewModel @Inject constructor(
     // 카카오 로그인 클릭
     private var _clickKakao = MutableEventFlow<Boolean>()
     val clickKakao: EventFlow<Boolean> get() = _clickKakao
+
+    // 소셜 로그인 임시 값
+    private var tempSocialData: SocialUserModel? = null
 
     // 로그인하기 클릭
     fun onClickLogin() {
@@ -110,6 +117,37 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    // 회원 가입 여부 확인
+    fun isAuthTokenCheck(provider: String, token: String) {
+        viewModelScope.launch {
+            authTokenCheckUseCase(provider, token).onSuccess {
+            baseEvent(Event.HideLoading)
+                Timber.e("it $it")
+                if(it) {
+                    // 가입 내역 있음 로그인
+                } else {
+                    // 가입 내역 없음 회원가입
+                    _clickSignUp.emit("social")
+                }
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
+            }
+        }
+    }
+
+    // 소셜 데이터 임시 저장
+    fun setSocialTempData(provider: String, token: String, email: String, nickname: String) {
+        tempSocialData = SocialUserModel(
+            provider, token, email, nickname
+        )
+    }
+
+    // 소셜 데이터 임시 불러오기
+    fun getSocialTempData(): SocialUserModel {
+        return tempSocialData!!
+    }
+
     // 비밀번호 찾기 클릭
     fun onClickFindPassword() {
         viewModelScope.launch {
@@ -120,13 +158,14 @@ class LoginViewModel @Inject constructor(
     // 회원가입 클릭
     fun onClickSignUp() {
         viewModelScope.launch {
-            _clickSignUp.emit(true)
+            _clickSignUp.emit("normal")
         }
     }
 
     // 카카오 로그인 클릭
     fun onClickKakaoLogin() {
         viewModelScope.launch {
+            baseEvent(Event.ShowLoading)
             _clickKakao.emit(true)
         }
     }

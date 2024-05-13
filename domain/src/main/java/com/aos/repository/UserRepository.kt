@@ -10,6 +10,10 @@ interface UserRepository {
 
     // 회원가입
     suspend fun postSignUpUser(email: String, nickname: String, password: String, receiveMarketing: Boolean): Result<PostSignUpUserModel>
+    // 간편 회원가입
+    suspend fun postSocialSignUpUser(provider: String, token: String, email: String, nickname: String, receiveMarketing: Boolean): Result<PostSignUpUserModel>
+    // 회원가입 여부 확인
+    suspend fun getAuthTokenCheck(provider: String, token: String): Result<Boolean>
     // 회원가입 이메일 전송
     suspend fun getSendEmail(email: String): Result<Void?>
     // 이메일 인증

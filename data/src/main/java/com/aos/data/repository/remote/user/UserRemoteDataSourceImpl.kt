@@ -7,6 +7,7 @@ import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostRecentBookkeySaveBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.request.user.PostSocialSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
 import com.aos.data.entity.response.user.DeleteWithdrawEntity
@@ -33,6 +34,22 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
                 nickname = nickname,
                 password = password,
                 receiveMarketing = receiveMarketing
+            )
+        )
+    }
+
+    override suspend fun postSocialSignUpUser(
+        provider: String,
+        token: String,
+        email: String,
+        nickname: String,
+        receiveMarketing: Boolean
+    ): NetworkState<PostSignUpUserEntity> {
+        return userService.postSocialSignUpUser(
+            provider = provider,
+            token = token,
+            postSocialSignUpUserBody = PostSocialSignUpUserBody(
+                email, nickname, receiveMarketing
             )
         )
     }
@@ -82,5 +99,9 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
     }
     override suspend fun postRecentBookkeySave(postRecentBookkeySaveBody: PostRecentBookkeySaveBody): NetworkState<Void> {
         return userService.postRecentBookkeySave(postRecentBookkeySaveBody)
+    }
+
+    override suspend fun getAuthTokenCheck(provider: String, token: String): NetworkState<Boolean> {
+        return userService.getAuthTokenCheck(provider, token)
     }
 }

@@ -9,6 +9,7 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.databinding.FragmentMyPageInformProfilechangeBinding
 import com.aos.floney.databinding.FragmentMyPageWithdrawInputPasswordBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.floney.view.signup.SignUpInputEmailFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -33,9 +34,15 @@ class MyPageInformWithdrawInputPasswordFragment :
         repeatOnStarted {
             viewModel.dialogPage.collect() {
                 if(it) {
-                    val exitDialogFragment = MyPageInformWithdrawDialogFragment { checked ->
-                        if (checked)
+                    val exitDialogFragment = WarningPopupDialog(
+                        getString(R.string.mypage_main_inform_exit_popup_title),
+                        getString(R.string.mypage_main_inform_exit_popup_info),
+                        getString(R.string.mypage_main_inform_exit_popup_btn_exit),
+                        getString(R.string.mypage_main_inform_exit_popup_btn_cancel),
+                    ) { checked ->
+                        if (checked) {
                             viewModel.requestWithdraw()
+                        }
                     }
                     exitDialogFragment.show(parentFragmentManager, "WithdrawDialog")
                 }
