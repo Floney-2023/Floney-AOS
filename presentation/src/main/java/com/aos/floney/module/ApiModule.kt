@@ -3,6 +3,7 @@ package com.aos.floney.module
 import android.content.Context
 import android.content.SharedPreferences
 import com.aos.data.BuildConfig
+import com.aos.data.api.NaverShortenUrlService
 import com.aos.data.util.AuthInterceptor
 import com.aos.data.util.CustomCallAdapterFactory
 import com.aos.data.util.HeaderInterceptor
@@ -19,6 +20,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module

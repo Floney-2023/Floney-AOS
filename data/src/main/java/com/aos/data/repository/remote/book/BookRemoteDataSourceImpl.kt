@@ -1,6 +1,7 @@
 package com.aos.data.repository.remote.book
 
 import com.aos.data.api.BookService
+import com.aos.data.api.NaverShortenUrlService
 import com.aos.data.entity.request.book.DeleteBookCategoryBody
 import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksChangeBody
@@ -38,13 +39,13 @@ import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostNaverShortenUrlEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
 import okhttp3.ResponseBody
-import java.io.File
 import javax.inject.Inject
 
-class BookRemoteDataSourceImpl @Inject constructor(private val bookService: BookService): BookRemoteDataSource {
+class BookRemoteDataSourceImpl @Inject constructor(private val bookService: BookService, private val naverShortenUrlService: NaverShortenUrlService): BookRemoteDataSource {
 
     override suspend fun getCheckUserBook(): NetworkState<GetCheckUserBookEntity> {
         return bookService.getCheckUserBook()
@@ -234,5 +235,13 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
 
     override suspend fun getBooks(code: String): NetworkState<GetBooksEntity> {
         return bookService.getBooks(code)
+    }
+
+    override suspend fun postShortenUrl(
+        id: String,
+        secretKey: String,
+        url: String
+    ): NetworkState<PostNaverShortenUrlEntity> {
+        return naverShortenUrlService.postShortenUrl(id, secretKey, url)
     }
 }

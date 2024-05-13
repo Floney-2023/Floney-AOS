@@ -57,15 +57,14 @@ class SettleUpDetailSeeFragment : BaseFragment<FragmentSettleUpDetailSeeBinding,
         repeatOnStarted {
             // 처음 정산 페이지로 (공유 페이지 - 임시)
             viewModel.sharedPage.collect {
-                if(it) {
-                    onSharedBtnClicked()
+                if(it.isNotEmpty()) {
+                    onSharedBtnClicked(it)
                 }
             }
         }
 
     }
-    private fun onSharedBtnClicked() {
-        val url = "https://floney.onelink.me${BuildConfig.appsflyer_settlement_url}?settlementId=${viewModel.settlementModel.value!!.id ?: ""}&bookKey=${sharedPreferenceUtil.getString("bookKey", "")}"
+    private fun onSharedBtnClicked(url : String) {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/html"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, url)

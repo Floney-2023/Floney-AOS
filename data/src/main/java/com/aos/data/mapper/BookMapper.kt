@@ -22,6 +22,7 @@ import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostNaverShortenUrlEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
@@ -65,6 +66,7 @@ import kotlin.math.roundToLong
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.book.UiBookRepeatModel
+import com.aos.model.settlement.NaverShortenUrlModel
 
 // 유저 가계부 유효 확인
 fun GetCheckUserBookEntity.toGetCheckUserBookModel(): GetCheckUserBookModel {
@@ -434,6 +436,12 @@ fun GetBooksEntity.toUiBookEntranceModel() : UiBookEntranceModel {
         bookName = this.bookName,
         bookImg = this.bookImg,
         bookInfo = formatBookInfo(this.startDay, this.memberCount)
+    )
+}
+
+fun PostNaverShortenUrlEntity.toNaverShortenUrlModel(): NaverShortenUrlModel {
+    return NaverShortenUrlModel(
+        result = this.result.url
     )
 }
 fun formatBookInfo(startDay: String, memberCount: Int): String {

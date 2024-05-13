@@ -37,10 +37,10 @@ import com.aos.data.entity.response.settlement.GetBooksUsersEntity
 import com.aos.data.entity.response.settlement.GetSettleUpLastEntity
 import com.aos.data.entity.response.settlement.GetSettlementSeeEntity
 import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
+import com.aos.data.entity.response.settlement.PostNaverShortenUrlEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.util.NetworkState
 import okhttp3.ResponseBody
-import java.io.File
 
 interface BookRemoteDataSource {
 
@@ -80,4 +80,5 @@ interface BookRemoteDataSource {
     suspend fun postBooksOut(postBooksOutBody: PostBooksOutBody): NetworkState<Void>
     suspend fun deleteBookLines(bookLineKey: String): NetworkState<Void>
     suspend fun getBooks(code: String): NetworkState<GetBooksEntity>
+    suspend fun postShortenUrl(id: String, secretKey: String,url:String): NetworkState<PostNaverShortenUrlEntity>
 }

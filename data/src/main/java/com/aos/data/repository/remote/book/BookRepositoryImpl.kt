@@ -18,11 +18,11 @@ import com.aos.data.entity.request.book.PostBooksOutBody
 import com.aos.data.entity.request.settlement.Outcomes
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
 import com.aos.data.entity.request.settlement.PostSettlementAddBody
-import com.aos.data.entity.response.book.GetBooksEntity
 import com.aos.data.mapper.toGetBooksCodeModel
 import com.aos.data.mapper.toGetBooksInfoCurrencyModel
 import com.aos.data.mapper.toGetCheckUserBookModel
 import com.aos.data.mapper.toGetsettleUpLastModel
+import com.aos.data.mapper.toNaverShortenUrlModel
 import com.aos.data.mapper.toPostBooksCategoryAddModel
 import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
@@ -59,6 +59,7 @@ import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.home.UiBookMonthModel
 import com.aos.model.settlement.GetSettlementLastModel
+import com.aos.model.settlement.NaverShortenUrlModel
 import com.aos.model.settlement.UiMemberSelectModel
 import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
@@ -68,7 +69,6 @@ import com.aos.repository.BookRepository
 import com.aos.util.NetworkState
 import okhttp3.ResponseBody
 import timber.log.Timber
-import java.io.File
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRemoteDataSource) :
@@ -681,6 +681,22 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     ): Result<UiBookEntranceModel> {
         when (val data = bookDataSource.getBooks(code)) {
             is NetworkState.Success -> return Result.success(data.body.toUiBookEntranceModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+
+    override suspend fun postShortenUrl(
+        id: String,
+        secretKey: String,
+        url: String
+    ): Result<NaverShortenUrlModel>{
+        when (val data = bookDataSource.postShortenUrl(id, secretKey, url)){
+            is NetworkState.Success -> return Result.success(data.body.toNaverShortenUrlModel())
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)
             )

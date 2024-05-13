@@ -6,6 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.BuildConfig
+import com.aos.floney.BuildConfig.appsflyer_settlement_url
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -15,6 +17,7 @@ import com.aos.model.settlement.UiSettlementAddModel
 import com.aos.model.settlement.settleOutcomes
 import com.aos.usecase.settlement.BooksOutComesUseCase
 import com.aos.usecase.settlement.BooksUsersUseCase
+import com.aos.usecase.settlement.NaverShortenUrlUseCase
 import com.aos.usecase.settlement.SettlementAddUseCase
 import com.aos.usecase.settlement.SettlementDetailSeeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,12 +25,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
+import com.aos.floney.BuildConfig.naver_client_id
+import com.aos.floney.BuildConfig.naver_client_secret
 
 @HiltViewModel
 class SettleUpDetailSeeViewModel @Inject constructor(
     stateHandle: SavedStateHandle,
     private val prefs: SharedPreferenceUtil,
-    private val settlementDetailSeeUseCase : SettlementDetailSeeUseCase
+    private val settlementDetailSeeUseCase : SettlementDetailSeeUseCase,
+    private val naverShortenUrlUseCase : NaverShortenUrlUseCase
 ): BaseViewModel() {
 
 
@@ -41,8 +47,8 @@ class SettleUpDetailSeeViewModel @Inject constructor(
     val back: EventFlow<Boolean> get() = _back
 
     // 공유하기 페이지
-    private var _sharedPage = MutableEventFlow<Boolean>()
-    val sharedPage: EventFlow<Boolean> get() = _sharedPage
+    private var _sharedPage = MutableEventFlow<String>()
+    val sharedPage: EventFlow<String> get() = _sharedPage
 
 
     init {
@@ -65,8 +71,16 @@ class SettleUpDetailSeeViewModel @Inject constructor(
     }
     // 공유하기
     fun onClickedSharePage(){
-        viewModelScope.launch {
-            _sharedPage.emit(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            naverShortenUrlUseCase(naver_client_id, naver_client_secret, provideSettlementUrl()).onSuccess {
+                // 불러오기 성공
+                _sharedPage.emit(it.result)
+                baseEvent(Event.HideLoading)
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpDetailSeeViewModel)))
+            }
         }
     }
     // exit 버튼 클릭 -> 이전 페이지
@@ -74,5 +88,9 @@ class SettleUpDetailSeeViewModel @Inject constructor(
         viewModelScope.launch {
             _back.emit(true)
         }
+    }
+    // url 생성
+    fun provideSettlementUrl(): String {
+        return "https://floney.onelink.me${appsflyer_settlement_url}?settlementId=${settlementModel.value!!.id ?: ""}&bookKey=${prefs.getString("bookKey", "")}"
     }
 }
