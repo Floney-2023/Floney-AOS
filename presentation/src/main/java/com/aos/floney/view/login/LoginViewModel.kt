@@ -98,6 +98,7 @@ class LoginViewModel @Inject constructor(
                     prefs.setString("bookKey", it.bookKey)
                     searchCurrency()
                 } else {
+                    baseEvent(Event.HideLoading)
                     _existBook.emit(false)
                 }
             }.onFailure {
@@ -111,11 +112,13 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
                 if(it.myBookCurrency != "") {
+                    baseEvent(Event.HideLoading)
                     // 화폐 단위 저장
                     prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
 
                     _existBook.emit(true)
                 } else {
+                    baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToastRes(R.string.currency_error))
                 }
             }.onFailure {
@@ -128,7 +131,6 @@ class LoginViewModel @Inject constructor(
     fun isAuthTokenCheck(provider: String, token: String) {
         viewModelScope.launch {
             authTokenCheckUseCase(provider, token).onSuccess {
-            baseEvent(Event.HideLoading)
                 Timber.e("it $it")
                 if(it) {
                     // 가입 내역 있음 로그인
@@ -149,7 +151,6 @@ class LoginViewModel @Inject constructor(
     private fun getSocialLogin(provider: String, token: String) {
         viewModelScope.launch {
             socialLoginUseCase(provider, token).onSuccess {
-                baseEvent(Event.HideLoading)
                 prefs.setString("accessToken", it.accessToken)
                 prefs.setString("refreshToken", it.refreshToken)
 

@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.base.BaseViewModel
@@ -20,6 +21,7 @@ import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
@@ -33,13 +35,17 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layout.activity_login) {
 
-    lateinit var googleResultLauncher: ActivityResultLauncher<Intent>
-    lateinit var mAuth: FirebaseAuth
+    private lateinit var googleResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var googleClient: GoogleSignInClient
+    private lateinit var mAuth: FirebaseAuth
+    @Inject
+    lateinit var prefs: SharedPreferenceUtil
 
     override fun onStart() {
         super.onStart()
@@ -51,7 +57,23 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 firebaseAuthWithGoogle(account, account.idToken ?: "")
             } else {
                 viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                viewModel.baseEvent(BaseViewModel.Event.HideLoading)
             }
+        }
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("918730717655-fv6illgnhvl3ne5sha3qjjr9kbjuk4ri.apps.googleusercontent.com")
+            .requestEmail()
+            .requestProfile()
+            .build()
+
+        googleClient = GoogleSignIn.getClient(this, gso)
+
+        if(prefs.getString("accessToken", "") == "") {
+            // 카카오 로그아웃
+            UserApiClient.instance.logout {}
+            // 구글 로그아웃
+            googleClient.signOut()
         }
     }
 
@@ -168,10 +190,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                    viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                 } else if (token != null) {
                     UserApiClient.instance.me { user, error ->
                         if (error != null) {
                             viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                            viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                         } else if (user != null) {
                             if (user.kakaoAccount != null) {
                                 viewModel.setSocialTempData(
@@ -183,6 +207,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                                 viewModel.isAuthTokenCheck("kakao", token.accessToken)
                             } else {
                                 viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                                viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                             }
                         }
                     }
@@ -225,9 +250,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                                         viewModel.isAuthTokenCheck("kakao", token.accessToken)
                                     } else {
                                         viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                                        viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                                     }
                                 } else {
                                     viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                                    viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                                 }
                             }
                         }
@@ -245,13 +272,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
     // 구글 로그인
     private fun onClickGoogleLogin() {
         Timber.e("onClickGoogleLogin")
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("918730717655-fv6illgnhvl3ne5sha3qjjr9kbjuk4ri.apps.googleusercontent.com")
-            .requestEmail()
-            .requestProfile()
-            .build()
-
-        val googleClient = GoogleSignIn.getClient(this, gso)
         googleResultLauncher.launch(googleClient.signInIntent)
 
     }
@@ -274,9 +294,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                             viewModel.isAuthTokenCheck("google", token)
                         } else {
                             viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                            viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                         }
                     } else {
                         viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                        viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                     }
                 })
     }
