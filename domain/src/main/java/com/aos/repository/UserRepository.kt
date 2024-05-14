@@ -22,6 +22,7 @@ interface UserRepository {
     suspend fun getSendTempPassword(email: String): Result<Void?>
     // 임시 비밀번호 발송
     suspend fun postLogin(email: String, password: String): Result<PostLoginModel>
+    suspend fun getSocialLogin(provider: String, token: String): Result<PostLoginModel>
     // 비밀번호 변경
     suspend fun putPasswordChange(newPassword: String, oldPassword: String): Result<Void?>
     // 유저 닉네임 변경

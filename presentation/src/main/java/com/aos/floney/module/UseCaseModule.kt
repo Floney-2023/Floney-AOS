@@ -17,6 +17,7 @@ import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import com.aos.usecase.home.GetMoneyHistoryMonthUseCase
 import com.aos.usecase.login.AuthTokenCheckUseCase
+import com.aos.usecase.login.SocialLoginUseCase
 import com.aos.usecase.signup.CheckEmailCodeUseCase
 import com.aos.usecase.signup.SendEmailUseCase
 import com.aos.usecase.password.SendTempPasswordUseCase
@@ -89,5 +90,8 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideSignUpSocialUseCase(userRepository: UserRepository) = SignUpSocialUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideSocialLoginUseCase(userRepository: UserRepository) = SocialLoginUseCase(userRepository)
 
 }

@@ -151,6 +151,19 @@ class UserRepositoryImpl @Inject constructor(private val userRemoteDataSource: U
             is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
         }
     }
+
+    override suspend fun getSocialLogin(provider: String, token: String): Result<PostLoginModel> {
+        when (val data =
+            userRemoteDataSource.getSocialLogin(provider, token)) {
+            is NetworkState.Success -> return Result.success(data.body.toPostLoginModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+
     override suspend fun putPasswordChange(newPassword: String, oldPassword: String): Result<Void?> {
         when (val data =
             userRemoteDataSource.putPasswordChange(PutPasswordChangeBody(newPassword, oldPassword))) {

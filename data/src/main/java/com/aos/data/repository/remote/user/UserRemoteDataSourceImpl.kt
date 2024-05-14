@@ -70,6 +70,13 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
         return userService.postLogin(PostLoginBody(email, password))
     }
 
+    override suspend fun getSocialLogin(
+        provider: String,
+        token: String,
+    ): NetworkState<PostLoginEntity> {
+        return userService.getSocialLogin(provider, token)
+    }
+
     override suspend fun putPasswordChange(putPasswordChangeBody : PutPasswordChangeBody): NetworkState<Void> {
         return userService.putPasswordChange(putPasswordChangeBody)
     }

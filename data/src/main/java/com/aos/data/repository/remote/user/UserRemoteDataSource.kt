@@ -55,6 +55,12 @@ interface UserRemoteDataSource {
         password: String
     ): NetworkState<PostLoginEntity>
 
+    // 소셜로그인
+    suspend fun getSocialLogin(
+        provider: String,
+        token: String
+    ): NetworkState<PostLoginEntity>
+
     // 비밀번호 변경
     suspend fun putPasswordChange(
         putPasswordChangeBody: PutPasswordChangeBody

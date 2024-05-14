@@ -17,6 +17,7 @@ import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.login.AuthTokenCheckUseCase
 import com.aos.usecase.login.LoginUseCase
+import com.aos.usecase.login.SocialLoginUseCase
 import com.kakao.sdk.template.model.Social
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +34,7 @@ class LoginViewModel @Inject constructor(
     private val checkUserBookUseCase: CheckUserBookUseCase,
     private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase,
     private val authTokenCheckUseCase: AuthTokenCheckUseCase,
+    private val socialLoginUseCase: SocialLoginUseCase,
 ): BaseViewModel() {
 
     var email = MutableLiveData<String>("")
@@ -99,8 +101,9 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
     // 화폐 설정 조회
-    fun searchCurrency(){
+    private fun searchCurrency(){
         viewModelScope.launch {
             booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
                 if(it.myBookCurrency != "") {
@@ -125,10 +128,28 @@ class LoginViewModel @Inject constructor(
                 Timber.e("it $it")
                 if(it) {
                     // 가입 내역 있음 로그인
+                    getSocialLogin(provider, token)
                 } else {
                     // 가입 내역 없음 회원가입
+                    baseEvent(Event.HideLoading)
                     _clickSignUp.emit("social")
                 }
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
+            }
+        }
+    }
+
+    // 소셜 로그인 시도
+    private fun getSocialLogin(provider: String, token: String) {
+        viewModelScope.launch {
+            socialLoginUseCase(provider, token).onSuccess {
+                baseEvent(Event.HideLoading)
+                prefs.setString("accessToken", it.accessToken)
+                prefs.setString("refreshToken", it.refreshToken)
+
+                checkUserBooks()
             }.onFailure {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))

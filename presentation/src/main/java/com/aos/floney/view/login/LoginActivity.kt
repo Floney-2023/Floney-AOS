@@ -177,6 +177,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                                 viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                             } else if (user != null) {
                                 if (token != null) {
+                                    Timber.e("user $user")
+                                    Timber.e("token $token")
                                     if (user.kakaoAccount != null) {
                                         viewModel.setSocialTempData(
                                             "kakao",

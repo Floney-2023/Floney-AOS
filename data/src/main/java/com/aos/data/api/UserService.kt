@@ -71,6 +71,14 @@ interface UserService {
         @Body postLoginBody: PostLoginBody
     ): NetworkState<PostLoginEntity>
 
+    // 소셜 로그인
+    @GET("auth/{provider}/login")
+    @Headers("Auth: false")
+    suspend fun getSocialLogin(
+        @Path("provider") provider: String,
+        @Query("token") token: String
+    ): NetworkState<PostLoginEntity>
+
     // 비밀번호 변경
     @PUT("users/password")
     @Headers("Auth: true")
