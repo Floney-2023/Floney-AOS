@@ -230,10 +230,12 @@ class HomeViewModel @Inject constructor(
         _calendar.value.set(Calendar.MONTH, month - 1)
         _calendar.value.set(Calendar.DATE, date)
 
-        if (_clickedShowType.value == "month") {
-            getFormatDateMonth()
-        } else {
-            getFormatDateDay()
+        viewModelScope.launch {
+            if (_clickedShowType.value == "month") {
+                _clickedNextMonth.emit(getFormatDateMonth())
+            } else {
+                _clickedNextMonth.emit(getFormatDateDay())
+            }
         }
     }
 

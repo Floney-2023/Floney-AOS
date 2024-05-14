@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
@@ -14,6 +15,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpInputInfoFragment : BaseFragment<FragmentSignUpInputInfoBinding, SignUpInputInfoViewModel>(R.layout.fragment_sign_up_input_info) {
+    private val activityViewModel: SignUpViewModel by activityViewModels()
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.setSocialInfo(activityViewModel.getSocialUserModel()?.nickname ?: "", activityViewModel.getSocialUserModel()?.token ?: "", activityViewModel.getSocialUserModel()?.provider ?: "")
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

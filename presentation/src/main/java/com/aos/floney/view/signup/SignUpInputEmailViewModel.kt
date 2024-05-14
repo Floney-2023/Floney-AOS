@@ -24,7 +24,6 @@ class SignUpInputEmailViewModel @Inject constructor(
 
     var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
 
-
     // 뒤로가기
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
@@ -71,5 +70,9 @@ class SignUpInputEmailViewModel @Inject constructor(
     // 이메일 유효성 체크
     private fun isEmailValid(): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email.value!!).matches()
+    }
+
+    fun setEmail(socialEmail: String) {
+        email.value = socialEmail
     }
 }

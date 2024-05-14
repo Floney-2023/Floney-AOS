@@ -11,6 +11,7 @@ import timber.log.Timber
 @BindingAdapter("setImageToUrl")
 fun ImageView.setImageToUrl(url: String?) {
     url?.let {
+        Timber.e("setImageToUrl $it")
         if(it.equals("user_default")) {
             Glide.with(this)
                 .load(R.drawable.icon_default_profile)
@@ -29,7 +30,7 @@ fun ImageView.setImageToUrl(url: String?) {
                 .into(this)
         } else {
             Glide.with(this)
-                .load(url)
+                .load(R.drawable.btn_book_profile)
                 .into(this)
         }
     }

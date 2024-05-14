@@ -6,6 +6,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id("com.google.gms.google-services")
 }
 
 Properties properties = new Properties()
@@ -56,6 +57,13 @@ dependencies {
 
     implementation project(':data')
     implementation project(':domain')
+
+    // 구글 로그인
+
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.4'
+    implementation 'com.google.android.gms:play-services-auth:21.1.1'
 
     // 카카오로그인
     implementation "com.kakao.sdk:v2-all:2.14.0" // 전체 모듈 설치, 2.11.0 버전부터 지원

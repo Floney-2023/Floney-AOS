@@ -3,9 +3,12 @@ package com.aos.floney.view.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.base.BaseViewModel
@@ -14,22 +17,69 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.util.NetworkUtils
 import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
-import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.password.find.PasswordFindActivity
-import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layout.activity_login) {
+
+    private lateinit var googleResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var googleClient: GoogleSignInClient
+    private lateinit var mAuth: FirebaseAuth
+    @Inject
+    lateinit var prefs: SharedPreferenceUtil
+
+    override fun onStart() {
+        super.onStart()
+
+         googleResultLauncher= registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if(it.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account, account.idToken ?: "")
+            } else {
+                viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                viewModel.baseEvent(BaseViewModel.Event.HideLoading)
+            }
+        }
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("918730717655-fv6illgnhvl3ne5sha3qjjr9kbjuk4ri.apps.googleusercontent.com")
+            .requestEmail()
+            .requestProfile()
+            .build()
+
+        googleClient = GoogleSignIn.getClient(this, gso)
+
+        if(prefs.getString("accessToken", "") == "") {
+            // 카카오 로그아웃
+            UserApiClient.instance.logout {}
+            // 구글 로그아웃
+            googleClient.signOut()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
 
         setUpViewModelObserver()
     }
@@ -37,10 +87,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
     private fun setUpViewModelObserver() {
         repeatOnStarted {
             viewModel.existBook.collect {
-                if(it) {
+                if (it) {
                     startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        overrideActivityTransition(
+                            Activity.OVERRIDE_TRANSITION_OPEN,
+                            android.R.anim.fade_in,
+                            android.R.anim.fade_out
+                        )
                     } else {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
@@ -48,7 +102,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 } else {
                     startActivity(Intent(this@LoginActivity, BookAddActivity::class.java))
                     if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        overrideActivityTransition(
+                            Activity.OVERRIDE_TRANSITION_OPEN,
+                            android.R.anim.fade_in,
+                            android.R.anim.fade_out
+                        )
                     } else {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
@@ -58,10 +116,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         }
         repeatOnStarted {
             viewModel.clickPasswordFind.collect {
-                if(it) {
+                if (it) {
                     startActivity(Intent(this@LoginActivity, PasswordFindActivity::class.java))
                     if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        overrideActivityTransition(
+                            Activity.OVERRIDE_TRANSITION_OPEN,
+                            android.R.anim.fade_in,
+                            android.R.anim.fade_out
+                        )
                     } else {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
@@ -71,21 +133,52 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
 
         repeatOnStarted {
             viewModel.clickSignUp.collect {
-                if(it) {
-                    startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                when (it) {
+                    "normal" -> startActivity(
+                        Intent(
+                            this@LoginActivity,
+                            SignUpActivity::class.java
+                        )
+                    )
+
+                    "social" -> {
+                        startActivity(
+                            Intent(
+                                this@LoginActivity,
+                                SignUpActivity::class.java
+                            ).putExtra("provider", viewModel.getSocialTempData().provider)
+                                .putExtra("token", viewModel.getSocialTempData().token)
+                                .putExtra("email", viewModel.getSocialTempData().email)
+                                .putExtra("nickname", viewModel.getSocialTempData().nickname)
+                        )
                     }
+
+                }
+
+                if (Build.VERSION.SDK_INT >= 34) {
+                    overrideActivityTransition(
+                        Activity.OVERRIDE_TRANSITION_OPEN,
+                        android.R.anim.fade_in,
+                        android.R.anim.fade_out
+                    )
+                } else {
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 }
             }
         }
 
         repeatOnStarted {
             viewModel.clickKakao.collect {
-                if(it) {
+                if (it) {
                     onClickedKakaoLogin()
+                }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.clickGoogle.collect {
+                if (it) {
+                    onClickGoogleLogin()
                 }
             }
         }
@@ -97,22 +190,25 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                    viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                 } else if (token != null) {
                     UserApiClient.instance.me { user, error ->
                         if (error != null) {
                             viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                            viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                         } else if (user != null) {
-                            Timber.e("user $user")
-                            Timber.e("token ${token?.accessToken ?: "kmbn"}")
-//                            LoginModel.login.email = user.kakaoAccount?.email.toString()
-//                            LoginModel.login.nickname =
-//                                user.kakaoAccount?.profile?.nickname.toString()
-//                            LoginModel.login.profile =
-//                                user.kakaoAccount?.profile?.profileImageUrl.toString()
-//                            LoginModel.login.provider = "kakao"
-//                            LoginModel.login.providerId = user.id.toString()
-//
-//                            loginViewModel.loginUser("KAKAO")
+                            if (user.kakaoAccount != null) {
+                                viewModel.setSocialTempData(
+                                    "kakao",
+                                    token.accessToken,
+                                    user.kakaoAccount!!.email ?: "",
+                                    user.kakaoAccount!!.profile?.nickname ?: ""
+                                )
+                                viewModel.isAuthTokenCheck("kakao", token.accessToken)
+                            } else {
+                                viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                                viewModel.baseEvent(BaseViewModel.Event.HideLoading)
+                            }
                         }
                     }
                 }
@@ -138,22 +234,28 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                         )
                     } else {
                         UserApiClient.instance.me { user, error ->
-                            Timber.e("callback error2 $error")
-                            Timber.e("callback user $user")
                             if (error != null) {
                                 viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                             } else if (user != null) {
-                                Timber.e("token ${token?.accessToken ?: "kmbn"}")
-                                Timber.e("user $user")
-//                            LoginModel.login.email = user.kakaoAccount?.email.toString()
-//                            LoginModel.login.nickname =
-//                                user.kakaoAccount?.profile?.nickname.toString()
-//                            LoginModel.login.profile =
-//                                user.kakaoAccount?.profile?.profileImageUrl.toString()
-//                            LoginModel.login.provider = "kakao"
-//                            LoginModel.login.providerId = user.id.toString()
-//
-//                            loginViewModel.loginUser("KAKAO")
+                                if (token != null) {
+                                    Timber.e("user $user")
+                                    Timber.e("token $token")
+                                    if (user.kakaoAccount != null) {
+                                        viewModel.setSocialTempData(
+                                            "kakao",
+                                            token.accessToken,
+                                            user.kakaoAccount!!.email ?: "",
+                                            user.kakaoAccount!!.profile?.nickname ?: ""
+                                        )
+                                        viewModel.isAuthTokenCheck("kakao", token.accessToken)
+                                    } else {
+                                        viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                                        viewModel.baseEvent(BaseViewModel.Event.HideLoading)
+                                    }
+                                } else {
+                                    viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
+                                    viewModel.baseEvent(BaseViewModel.Event.HideLoading)
+                                }
                             }
                         }
                     }
@@ -165,7 +267,39 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 )
             }
         }
+    }
 
+    // 구글 로그인
+    private fun onClickGoogleLogin() {
+        Timber.e("onClickGoogleLogin")
+        googleResultLauncher.launch(googleClient.signInIntent)
 
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, token: String) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this,
+                OnCompleteListener<AuthResult?> { task ->
+                    if (task.isSuccessful) {
+                        //로그인에 성공한다면 UI를 업데이트하고 계정 정보를 불러온다.
+                        val user: FirebaseUser? = mAuth.currentUser
+                        if(user != null) {
+                            viewModel.setSocialTempData(
+                                "google",
+                                token,
+                                user.email ?: "",
+                                user.displayName ?: "",
+                            )
+                            viewModel.isAuthTokenCheck("google", token)
+                        } else {
+                            viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                            viewModel.baseEvent(BaseViewModel.Event.HideLoading)
+                        }
+                    } else {
+                        viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                        viewModel.baseEvent(BaseViewModel.Event.HideLoading)
+                    }
+                })
     }
 }

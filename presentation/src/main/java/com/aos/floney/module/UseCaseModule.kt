@@ -16,9 +16,12 @@ import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import com.aos.usecase.home.GetMoneyHistoryMonthUseCase
+import com.aos.usecase.login.AuthTokenCheckUseCase
+import com.aos.usecase.login.SocialLoginUseCase
 import com.aos.usecase.signup.CheckEmailCodeUseCase
 import com.aos.usecase.signup.SendEmailUseCase
 import com.aos.usecase.password.SendTempPasswordUseCase
+import com.aos.usecase.signup.SignUpSocialUseCase
 import com.aos.usecase.signup.SignUpUseCase
 import dagger.Module
 import dagger.Provides
@@ -81,5 +84,14 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideDeleteBooksLinesAllUseCase(bookRepository: BookRepository) = DeleteBooksLinesAllUseCase(bookRepository)
+    @Provides
+    @Singleton
+    fun provideAuthTokenCheckUseCase(userRepository: UserRepository) = AuthTokenCheckUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideSignUpSocialUseCase(userRepository: UserRepository) = SignUpSocialUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideSocialLoginUseCase(userRepository: UserRepository) = SocialLoginUseCase(userRepository)
 
 }

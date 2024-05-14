@@ -174,6 +174,7 @@
                 android:id="@+id/iv_google"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
+                android:onClick="@{() -> vm.onClickGoogleLogin()}"
                 android:src="@drawable/btn_google"
                 app:layout_constraintEnd_toStartOf="@id/iv_apple"
                 app:layout_constraintStart_toEndOf="@id/iv_kakao"

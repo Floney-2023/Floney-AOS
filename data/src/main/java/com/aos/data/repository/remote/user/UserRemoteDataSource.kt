@@ -24,6 +24,16 @@ interface UserRemoteDataSource {
         receiveMarketing: Boolean,
     ): NetworkState<PostSignUpUserEntity>
 
+
+    // 소셜 회원가입
+    suspend fun postSocialSignUpUser(
+        provider: String,
+        token: String,
+        email: String,
+        nickname: String,
+        receiveMarketing: Boolean,
+    ): NetworkState<PostSignUpUserEntity>
+
     // 이메일 전송
     suspend fun getSendEmail(
         email: String
@@ -43,6 +53,12 @@ interface UserRemoteDataSource {
     suspend fun postLogin(
         email: String,
         password: String
+    ): NetworkState<PostLoginEntity>
+
+    // 소셜로그인
+    suspend fun getSocialLogin(
+        provider: String,
+        token: String
     ): NetworkState<PostLoginEntity>
 
     // 비밀번호 변경
@@ -88,4 +104,10 @@ interface UserRemoteDataSource {
     suspend fun postRecentBookkeySave(
         postRecentBookkeySaveBody: PostRecentBookkeySaveBody
     ): NetworkState<Void>
+
+    // 회원가입 여부 확인
+    suspend fun getAuthTokenCheck(
+        provider: String,
+        token: String
+    ): NetworkState<Boolean>
 }

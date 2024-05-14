@@ -6,6 +6,7 @@ import com.aos.data.entity.request.user.PostCheckPasswordBody
 import com.aos.data.entity.request.user.PostLoginBody
 import com.aos.data.entity.request.user.PostRecentBookkeySaveBody
 import com.aos.data.entity.request.user.PostSignUpUserBody
+import com.aos.data.entity.request.user.PostSocialSignUpUserBody
 import com.aos.data.entity.request.user.PutPasswordChangeBody
 import com.aos.data.entity.response.home.GetReceiveMarketingEntity
 import com.aos.data.entity.response.user.DeleteWithdrawEntity
@@ -21,6 +22,7 @@ import retrofit2.http.HTTP
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface UserService {
@@ -30,6 +32,15 @@ interface UserService {
     @Headers("Auth: false")
     suspend fun postSignUpUser( 
         @Body postSignUpUserBody: PostSignUpUserBody
+    ): NetworkState<PostSignUpUserEntity>
+
+    // 간편회원가입
+    @POST("auth/{provider}/signup")
+    @Headers("Auth: false")
+    suspend fun postSocialSignUpUser(
+        @Path("provider") provider: String,
+        @Query("token") token: String,
+        @Body postSocialSignUpUserBody: PostSocialSignUpUserBody
     ): NetworkState<PostSignUpUserEntity>
 
     // 이메일 전송
@@ -58,6 +69,14 @@ interface UserService {
     @Headers("Auth: false")
     suspend fun postLogin(
         @Body postLoginBody: PostLoginBody
+    ): NetworkState<PostLoginEntity>
+
+    // 소셜 로그인
+    @GET("auth/{provider}/login")
+    @Headers("Auth: false")
+    suspend fun getSocialLogin(
+        @Path("provider") provider: String,
+        @Query("token") token: String
     ): NetworkState<PostLoginEntity>
 
     // 비밀번호 변경
@@ -119,4 +138,12 @@ interface UserService {
     suspend fun postRecentBookkeySave(
         @Body postRecentBookkeySaveBody: PostRecentBookkeySaveBody
     ): NetworkState<Void>
+
+    // 회원가입 여부 확인
+    @GET("auth/{provider}/check")
+    @Headers("Auth: false")
+    suspend fun getAuthTokenCheck(
+        @Path("provider") provider: String,
+        @Query("token") token: String
+    ): NetworkState<Boolean>
 }
