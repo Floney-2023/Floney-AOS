@@ -39,6 +39,7 @@ class MyPageInformWithdrawInputPasswordFragment :
                         getString(R.string.mypage_main_inform_exit_popup_info),
                         getString(R.string.mypage_main_inform_exit_popup_btn_exit),
                         getString(R.string.mypage_main_inform_exit_popup_btn_cancel),
+                        false
                     ) { checked ->
                         if (checked) {
                             viewModel.requestWithdraw()

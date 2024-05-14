@@ -243,6 +243,7 @@ class BookRemoteDataSourceImpl @Inject constructor(private val bookService: Book
         url: String
     ): NetworkState<PostNaverShortenUrlEntity> {
         return naverShortenUrlService.postShortenUrl(id, secretKey, url)
+    }
         
     override suspend fun deleteBookLinesAll(bookLineKey: Int): NetworkState<Void> {
         return bookService.deleteBooksLineAll(bookLineKey)
