@@ -3,9 +3,11 @@ package com.aos.floney.view.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.base.BaseViewModel
@@ -14,22 +16,48 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.util.NetworkUtils
 import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
-import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.password.find.PasswordFindActivity
-import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import timber.log.Timber
+
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layout.activity_login) {
+
+    lateinit var googleResultLauncher: ActivityResultLauncher<Intent>
+    lateinit var mAuth: FirebaseAuth
+
+    override fun onStart() {
+        super.onStart()
+
+         googleResultLauncher= registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if(it.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account, account.idToken ?: "")
+            } else {
+                viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
 
         setUpViewModelObserver()
     }
@@ -124,6 +152,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 }
             }
         }
+
+        repeatOnStarted {
+            viewModel.clickGoogle.collect {
+                if (it) {
+                    onClickGoogleLogin()
+                }
+            }
+        }
     }
 
     // 카카오 로그인
@@ -204,7 +240,44 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                 )
             }
         }
+    }
 
+    // 구글 로그인
+    private fun onClickGoogleLogin() {
+        Timber.e("onClickGoogleLogin")
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("918730717655-fv6illgnhvl3ne5sha3qjjr9kbjuk4ri.apps.googleusercontent.com")
+            .requestEmail()
+            .requestProfile()
+            .build()
 
+        val googleClient = GoogleSignIn.getClient(this, gso)
+        googleResultLauncher.launch(googleClient.signInIntent)
+
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount, token: String) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this,
+                OnCompleteListener<AuthResult?> { task ->
+                    if (task.isSuccessful) {
+                        //로그인에 성공한다면 UI를 업데이트하고 계정 정보를 불러온다.
+                        val user: FirebaseUser? = mAuth.currentUser
+                        if(user != null) {
+                            viewModel.setSocialTempData(
+                                "google",
+                                token,
+                                user.email ?: "",
+                                user.displayName ?: "",
+                            )
+                            viewModel.isAuthTokenCheck("google", token)
+                        } else {
+                            viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                        }
+                    } else {
+                        viewModel.baseEvent(BaseViewModel.Event.ShowToast("구글 로그인에 실패하였습니다."))
+                    }
+                })
     }
 }

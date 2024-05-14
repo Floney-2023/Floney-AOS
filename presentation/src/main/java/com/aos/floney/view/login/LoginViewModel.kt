@@ -56,6 +56,10 @@ class LoginViewModel @Inject constructor(
     private var _clickKakao = MutableEventFlow<Boolean>()
     val clickKakao: EventFlow<Boolean> get() = _clickKakao
 
+    // 구글 로그인 클릭
+    private var _clickGoogle = MutableEventFlow<Boolean>()
+    val clickGoogle: EventFlow<Boolean> get() = _clickGoogle
+
     // 소셜 로그인 임시 값
     private var tempSocialData: SocialUserModel? = null
 
@@ -193,7 +197,10 @@ class LoginViewModel @Inject constructor(
 
     // 구글 로그인 클릭
     fun onClickGoogleLogin() {
-
+        viewModelScope.launch {
+            baseEvent(Event.ShowLoading)
+            _clickGoogle.emit(true)
+        }
     }
 
     // 애플 로그인 클릭
