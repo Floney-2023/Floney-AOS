@@ -1,4 +1,5 @@
 package com.aos.floney.base
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
@@ -56,10 +57,12 @@ abstract class BaseBottomSheetFragment<B : ViewDataBinding, VM : BaseViewModel>(
 
     override fun onStart() {
         super.onStart()
-        dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.let { bottomSheet ->
-            BottomSheetBehavior.from(bottomSheet).isGestureInsetBottomIgnored = false
-        }
+        dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            ?.let { bottomSheet ->
+                BottomSheetBehavior.from(bottomSheet).isGestureInsetBottomIgnored = false
+            }
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,22 +87,30 @@ abstract class BaseBottomSheetFragment<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun handleEvent(event: BaseViewModel.Event) {
-        when (event) {
-            is BaseViewModel.Event.ShowToast -> {
-                // Show Toast logic
+        try {
+            when (event) {
+                is BaseViewModel.Event.ShowToast -> {
+                    // Show Toast logic
+                }
+
+                is BaseViewModel.Event.ShowToastRes -> {
+                    // Show Toast from resources logic
+                }
+
+                is BaseViewModel.Event.ShowSuccessToast -> {
+                    // Show Toast logic
+                }
+
+                is BaseViewModel.Event.ShowSuccessToastRes -> {
+                    // Show Toast from resources logic
+                }
+
+                is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
+                is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
+                is BaseViewModel.Event.ExpiredToken -> {}
             }
-            is BaseViewModel.Event.ShowToastRes -> {
-                // Show Toast from resources logic
-            }
-            is BaseViewModel.Event.ShowSuccessToast -> {
-                // Show Toast logic
-            }
-            is BaseViewModel.Event.ShowSuccessToastRes -> {
-                // Show Toast from resources logic
-            }
-            is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
-            is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
-            is BaseViewModel.Event.ExpiredToken -> {}
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -166,7 +177,7 @@ abstract class BaseBottomSheetFragment<B : ViewDataBinding, VM : BaseViewModel>(
         loadingDialog.show()
     }
 
-    fun dismissLoadingDialog(){
+    fun dismissLoadingDialog() {
         try {
             loadingDialog.dismiss()
         } catch (e: Exception) {

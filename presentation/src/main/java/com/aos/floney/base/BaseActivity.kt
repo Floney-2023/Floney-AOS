@@ -78,50 +78,55 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
     }
 
     private fun handleEvent(event: BaseViewModel.Event) {
-        when (event) {
-            is BaseViewModel.Event.ShowToast -> {
-                if(event.message != "") {
-                    val errorToastDialog = ErrorToastDialog(this, event.message)
+        try {
+            when (event) {
+                is BaseViewModel.Event.ShowToast -> {
+                    if (event.message != "") {
+                        val errorToastDialog = ErrorToastDialog(this, event.message)
+                        errorToastDialog.show()
+
+                        Handler(Looper.myLooper()!!).postDelayed({
+                            errorToastDialog.dismiss()
+                        }, 2000)
+                    }
+                }
+
+                is BaseViewModel.Event.ShowToastRes -> {
+                    val errorToastDialog = ErrorToastDialog(this, getString(event.message))
                     errorToastDialog.show()
 
                     Handler(Looper.myLooper()!!).postDelayed({
                         errorToastDialog.dismiss()
                     }, 2000)
                 }
+
+                is BaseViewModel.Event.ShowSuccessToast -> {
+                    val successToastDialog = SuccessToastDialog(this, event.message)
+                    successToastDialog.show()
+
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        successToastDialog.dismiss()
+                    }, 2000)
+                }
+
+                is BaseViewModel.Event.ShowSuccessToastRes -> {
+                    val successToastDialog = SuccessToastDialog(this, getString(event.message))
+                    successToastDialog.show()
+
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        successToastDialog.dismiss()
+                    }, 2000)
+                }
+
+                is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
+                is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
+                is BaseViewModel.Event.ExpiredToken -> {
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finishAffinity()
+                }
             }
-
-            is BaseViewModel.Event.ShowToastRes -> {
-                val errorToastDialog = ErrorToastDialog(this, getString(event.message))
-                errorToastDialog.show()
-
-                Handler(Looper.myLooper()!!).postDelayed({
-                    errorToastDialog.dismiss()
-                }, 2000)
-            }
-            is BaseViewModel.Event.ShowSuccessToast -> {
-                val successToastDialog = SuccessToastDialog(this, event.message)
-                successToastDialog.show()
-
-                Handler(Looper.myLooper()!!).postDelayed({
-                    successToastDialog.dismiss()
-                }, 2000)
-            }
-
-            is BaseViewModel.Event.ShowSuccessToastRes -> {
-                val successToastDialog = SuccessToastDialog(this, getString(event.message))
-                successToastDialog.show()
-
-                Handler(Looper.myLooper()!!).postDelayed({
-                    successToastDialog.dismiss()
-                }, 2000)
-            }
-
-            is BaseViewModel.Event.ShowLoading -> showLoadingDialog()
-            is BaseViewModel.Event.HideLoading -> dismissLoadingDialog()
-            is BaseViewModel.Event.ExpiredToken -> {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finishAffinity()
-            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -175,7 +180,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         loadingDialog.show()
     }
 
-    private fun dismissLoadingDialog(){
+    private fun dismissLoadingDialog() {
         try {
             loadingDialog.dismiss()
         } catch (e: Exception) {

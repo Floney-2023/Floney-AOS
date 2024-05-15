@@ -39,7 +39,7 @@
             android:hint="@string/email"
             android:paddingStart="20dp"
             android:text="@={vm.email}"
-            android:textColor="@color/grayscale2"
+            android:textColor="@color/grayscale6"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
