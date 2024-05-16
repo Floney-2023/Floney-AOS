@@ -21,6 +21,7 @@ import com.aos.floney.databinding.ActivityHistoryBinding
 import com.aos.floney.ext.intentSerializable
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.setting.category.BookCategoryActivity
+import com.aos.floney.view.book.setting.favorite.BookFavoriteActivity
 import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.common.BaseChoiceAlertDialog
 import com.aos.floney.view.home.HomeActivity
@@ -198,6 +199,27 @@ class HistoryActivity :
                         }
                         finish()
                     }, 2000)
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.onClickFavorite.collect {
+                if(it) {
+                    BaseChoiceAlertDialog(title = "즐겨찾기에 추가하시겠습니까?", btnTextStr1 = "즐겨찾기에 추가", btnTextStr2 = "즐겨찾기 내역 보기") {
+                        if(it) {
+                            // 즐겨찾기에 추가
+                            viewModel.postAddFavorite()
+                        } else {
+                            // 즐겨찾기 내역 보기
+                            startActivity(Intent(this@HistoryActivity, BookFavoriteActivity::class.java))
+                            if (Build.VERSION.SDK_INT >= 34) {
+                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                            } else {
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                            }
+
+                        }
+                    }.show(supportFragmentManager, "baseChoiceDialog")
                 }
             }
         }

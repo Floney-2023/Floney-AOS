@@ -192,5 +192,13 @@ class BookSettingMainFragment :
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.favoritePage.collect(){
+                if(it) {
+                    val activity = requireActivity() as BookSettingActivity
+                    activity.startBookFavoriteActivity()
+                }
+            }
+        }
     }
 }
