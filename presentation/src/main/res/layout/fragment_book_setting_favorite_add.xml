@@ -5,80 +5,54 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
-
         <variable
             name="vm"
             type="com.aos.floney.view.history.HistoryViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.history.HistoryActivity">
+        tools:context=".view.signup.SignUpAgreeFragment">
 
         <ImageView
-            android:id="@+id/iv_close"
+            android:id="@+id/iv_icon_exit"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="22dp"
             android:onClick="@{() -> vm.onClickCloseBtn()}"
-            android:src="@drawable/icon_close"
-            app:layout_constraintStart_toStartOf="parent"
+            android:padding="5dp"
+            android:src="@drawable/icon_exit"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_favorite"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:padding="5dp"
-            android:src="@drawable/icon_favorite"
-            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
-            android:onClick="@{() -> vm.onClickFavorite()}"
-            app:layout_constraintBottom_toBottomOf="@id/iv_close"
-            app:layout_constraintEnd_toStartOf="@id/iv_repeat"
-            app:layout_constraintTop_toTopOf="@id/iv_close" />
-
-        <ImageView
-            android:id="@+id/iv_repeat"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:layout_marginEnd="20dp"
-            android:onClick="@{() -> vm.onClickRepeat()}"
-            android:padding="5dp"
-            android:src="@{vm.repeatClickItem != null ? @drawable/icon_repeat_enable : @drawable/icon_repeat}"
-            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@id/iv_close"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_close" />
-
         <TextView
+            android:id="@+id/tv_settlement_see_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
-            android:textColor="@{vm.mode.equals(`add`) ? @color/primary1 : @color/grayscale6}"
-            android:textSize="12sp"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@id/iv_repeat"
+            android:layout_marginTop="27dp"
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:text="즐겨찾기 추가"
+            android:textAppearance="@style/mypage_inform_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_repeat" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="64dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="금액"
             android:textColor="@color/grayscale6"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_close" />
+            app:layout_constraintTop_toBottomOf="@id/tv_settlement_see_title" />
 
         <EditText
             android:id="@+id/et_money"
@@ -158,45 +132,17 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="38dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:text="날짜"
-            android:textColor="@color/grayscale4"
-            android:textSize="14dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_category" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:onClick="@{() -> vm.onClickShowCalendar()}"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="@{vm.date}"
-            android:textColor="@{vm.date.equals(`날짜를 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_date" />
-
-        <TextView
             android:id="@+id/tv_asset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="자산"
             android:textColor="@color/grayscale4"
             android:textSize="14dp"
-            app:layout_constraintStart_toStartOf="@id/tv_date"
-            app:layout_constraintTop_toBottomOf="@id/tv_date" />
+            app:layout_constraintStart_toStartOf="@id/ll_category"
+            app:layout_constraintTop_toBottomOf="@id/ll_category" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -304,47 +250,17 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_delete_plan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_delete_plan" />
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_delete"
-            android:layout_width="118dp"
-            android:layout_height="66dp"
-            android:background="@color/grayscale2"
-            android:fontFamily="@font/pretendard_medium"
-            android:gravity="center"
-            android:onClick="@{() -> vm.onClickDeleteBtn()}"
-            android:text="삭제"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            android:visibility="@{vm.mode.equals(`modify`) ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_save"
-            android:layout_width="0dp"
-            android:layout_height="66dp"
-            android:background="@color/primary1"
-            android:fontFamily="@font/pretendard_medium"
-            android:gravity="center"
-            android:onClick="@{() -> vm.onClickSaveBtn()}"
-            android:text="저장하기"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_delete" />
-
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:text="@{`작성자 : ` + vm.nickname}"
-            android:textColor="@color/grayscale8"
-            app:layout_constraintBottom_toTopOf="@id/btn_save"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            android:background="@color/grayscale2"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp"
+            android:text="저장하기"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> vm.postAddFavorite()}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -2,6 +2,7 @@ package com.aos.data.mapper
 
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.response.book.GetBookCategoryEntity
+import com.aos.data.entity.response.book.GetBookFavoriteEntity
 import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
@@ -9,6 +10,7 @@ import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
+import com.aos.data.entity.response.book.PostBookFavoriteEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
@@ -25,11 +27,11 @@ import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostNaverShortenUrlEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.data.util.CurrencyUtil
-import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.book.BudgetItem
 import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
 import com.aos.model.book.MyBookUsers
+import com.aos.model.book.PostBookFavoriteModel
 import com.aos.model.book.PostBooksCreateModel
 import com.aos.model.book.PostBooksInfoCurrencyModel
 import com.aos.model.book.PostBooksJoinModel
@@ -65,6 +67,7 @@ import kotlin.math.roundToLong
 
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.UiBookEntranceModel
+import com.aos.model.book.UiBookFavoriteModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.settlement.NaverShortenUrlModel
 
@@ -456,4 +459,30 @@ fun formatBookInfo(startDay: String, memberCount: Int): String {
     val formattedDate = date?.let { outputFormat.format(it) } ?: ""
 
     return "$formattedDate 개설 ꞏ ${memberCount}명"
+}
+
+fun List<GetBookFavoriteEntity>.toUiBookFavorite(): List<UiBookFavoriteModel> {
+    return this.map {
+        UiBookFavoriteModel(
+            idx = it.id,
+            checked = false,
+            description = it.description,
+            lineCategoryName = it.lineCategoryName,
+            lineSubcategoryName = it.lineSubcategoryName,
+            assetSubcategoryName = it.assetSubcategoryName,
+            money = "${it.money.toInt()}${CurrencyUtil.currency}"
+        )
+    }
+}
+
+fun PostBookFavoriteEntity.toPostBookFavoriteModel(): PostBookFavoriteModel {
+    return PostBookFavoriteModel(
+        id = this.id,
+        money = this.money,
+        description = this.description,
+        lineCategoryName = this.lineCategoryName,
+        lineSubcategoryName = this.lineSubcategoryName,
+        assetSubcategoryName = this.assetSubcategoryName
+    )
+
 }

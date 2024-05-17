@@ -6,15 +6,15 @@
 
     <data>
 
-        <import type="com.aos.model.book.UiBookRepeatModel" />
+        <import type="com.aos.model.book.UiBookFavoriteModel" />
 
         <variable
             name="vm"
-            type="com.aos.floney.view.book.setting.repeat.BookSettingRepeatViewModel" />
+            type="com.aos.floney.view.book.setting.favorite.BookSettingFavoriteViewModel" />
 
         <variable
             name="eventHolder"
-            type="com.aos.model.book.UiBookRepeatModel.OnItemClickListener" />
+            type="com.aos.model.book.UiBookFavoriteModel.OnItemClickListener" />
 
         <import type="android.view.View" />
     </data>
@@ -54,7 +54,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="52dp"
             android:fontFamily="@font/floney_pretendard_bold"
-            android:text="반복 내역"
+            android:text="즐겨찾기"
             android:textSize="22dp"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/pretendard_medium"
-            android:text="반복 기능을 통해\n편하게 기록해 보세요"
+            android:text="자주 사용하는 내역을\n즐겨찾기로 편하게 기록해 보세요"
             android:textColor="@color/grayscale6"
             android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,12 +78,12 @@
             android:layout_height="76dp"
             android:layout_marginTop="98dp"
             android:layout_marginEnd="24dp"
-            android:src="@drawable/icon_book_setting_repeat"
+            android:src="@drawable/item_favorite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/ll_repeat"
+            android:id="@+id/ll_category"
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:layout_marginStart="20dp"
@@ -96,7 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_currency_info">
-           <TextView
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="4dp"
@@ -140,11 +140,11 @@
             android:layout_width="80dp"
             android:layout_height="86dp"
             android:src="@drawable/icon_empty_category"
-            android:visibility="@{vm.repeatList.size() > 0 ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{vm.favoriteList.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_wallet_item_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_repeat" />
+            app:layout_constraintTop_toBottomOf="@+id/ll_category" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_wallet_item_view"
@@ -153,13 +153,29 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/appCompatButton2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_repeat"
-            bind:diffCallback="@{(Object)UiBookRepeatModel.Companion}"
+            app:layout_constraintTop_toBottomOf="@+id/ll_category"
+            bind:diffCallback="@{(Object)UiBookFavoriteModel.Companion}"
             bind:eventHolder="@{eventHolder}"
-            bind:itemLayout="@{@layout/item_book_setting_repeat_view}"
-            bind:items="@{vm.repeatList}"
+            bind:itemLayout="@{@layout/item_book_setting_favorite_view}"
+            bind:items="@{vm.favoriteList}"
             bind:viewModel="@{vm}" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickAddBtn()}"
+            android:visibility="@{vm.edit ? View.GONE : View.VISIBLE}"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp"
+            android:text="추가하기"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

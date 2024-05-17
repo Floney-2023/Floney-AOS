@@ -11,16 +11,21 @@ import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
+import com.aos.model.home.DayMoneyFavoriteItem
 import com.aos.model.home.DayMoneyModifyItem
 import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.DeleteBooksLinesAllUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
+import com.aos.usecase.history.PostBooksFavoritesUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.text.NumberFormat
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +35,8 @@ class HistoryViewModel @Inject constructor(
     private val postBooksLinesUseCase: PostBooksLinesUseCase,
     private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
     private val deleteBookLineUseCase: DeleteBookLineUseCase,
-    private val deleteBooksLinesAllUseCase: DeleteBooksLinesAllUseCase
+    private val deleteBooksLinesAllUseCase: DeleteBooksLinesAllUseCase,
+    private val postBooksFavoritesUseCase : PostBooksFavoritesUseCase
 ) : BaseViewModel() {
 
     // 내역 추가 결과
@@ -64,6 +70,15 @@ class HistoryViewModel @Inject constructor(
     // 내역 삭제 버튼 클릭
     private var _onClickDelete = MutableEventFlow<OnClickedDelete>()
     val onClickDelete: EventFlow<OnClickedDelete> get() = _onClickDelete
+
+    // 즐겨찾기 클릭
+    private var _onClickFavorite = MutableEventFlow<Boolean>()
+    val onClickFavorite: EventFlow<Boolean> get() = _onClickFavorite
+
+    // 즐겨찾기 추가 결과
+    private var _postBooksFavorites = MutableEventFlow<Boolean>()
+    val postBooksFavorites: EventFlow<Boolean> get() = _postBooksFavorites
+
 
     // 날짜
     private var tempDate = ""
@@ -159,7 +174,14 @@ class HistoryViewModel @Inject constructor(
             item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
         modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
-
+    fun setIntentFavoriteData(item: DayMoneyFavoriteItem) {
+        mode.value = "add"
+        cost.value = NumberFormat.getNumberInstance().format(item.money.toInt()) + CurrencyUtil.currency
+        flow.value = item.lineCategoryName
+        asset.value = item.assetSubcategoryName
+        line.value = item.lineSubcategoryName
+        content.value = item.description
+    }
     // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -495,4 +517,36 @@ class HistoryViewModel @Inject constructor(
             else -> ""
         }
     }
+
+    // 즐겨찾기 버튼 클릭
+    fun onClickFavorite(){
+        viewModelScope.launch {
+            _onClickFavorite.emit(true)
+        }
+    }
+
+    // 즐겨찾기 추가
+    fun postAddFavorite() {
+        if (isAllInputData()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                postBooksFavoritesUseCase(
+                    bookKey = prefs.getString("bookKey", ""),
+                    money = cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2)
+                        .toDouble(),
+                    description = content.value!!,
+                    lineCategoryName = flow.value!!,
+                    lineSubcategoryName = line.value!!,
+                    assetSubcategoryName = asset.value!!
+                ).onSuccess {
+                    _postBooksFavorites.emit(true)
+                    baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
+                }.onFailure {
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
+                }
+            }
+        } else {
+            baseEvent(Event.ShowToast("모든 값을 입력해 주세요"))
+        }
+    }
+
 }

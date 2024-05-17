@@ -6,6 +6,7 @@ import com.aos.data.entity.request.settlement.Duration
 import com.aos.data.entity.request.book.PostBooksCategoryAddBody
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksExcelBody
+import com.aos.data.entity.request.book.PostBooksFavoritesBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
@@ -23,6 +24,7 @@ import com.aos.data.mapper.toGetBooksInfoCurrencyModel
 import com.aos.data.mapper.toGetCheckUserBookModel
 import com.aos.data.mapper.toGetsettleUpLastModel
 import com.aos.data.mapper.toNaverShortenUrlModel
+import com.aos.data.mapper.toPostBookFavoriteModel
 import com.aos.data.mapper.toPostBooksCategoryAddModel
 import com.aos.data.mapper.toUiBookInfoModel
 import com.aos.data.mapper.toUiBookMonthModel
@@ -35,6 +37,7 @@ import com.aos.data.mapper.toUiBookCategory
 import com.aos.data.mapper.toPostSettlementAddModel
 import com.aos.data.mapper.toUiBookBudgetModel
 import com.aos.data.mapper.toUiBookEntranceModel
+import com.aos.data.mapper.toUiBookFavorite
 import com.aos.data.mapper.toUiBookRepeatModel
 import com.aos.data.mapper.toUiBookSettingModel
 import com.aos.data.mapper.toUiMemberSelectModel
@@ -43,6 +46,7 @@ import com.aos.data.mapper.toUiSettlementSeeModel
 import com.aos.data.util.RetrofitFailureStateException
 import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
+import com.aos.model.book.PostBookFavoriteModel
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.PostBooksChangeModel
 import com.aos.model.book.PostBooksCreateModel
@@ -52,6 +56,7 @@ import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
 import com.aos.model.book.UiBookEntranceModel
+import com.aos.model.book.UiBookFavoriteModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -720,6 +725,63 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     ): Result<NaverShortenUrlModel>{
         when (val data = bookDataSource.postShortenUrl(id, secretKey, url)){
             is NetworkState.Success -> return Result.success(data.body.toNaverShortenUrlModel())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+
+    override suspend fun getBookFavorite(
+        bookKey: String,
+        categoryType: String
+    ): Result<List<UiBookFavoriteModel>> {
+        when (val data = bookDataSource.getBookFavorite(bookKey, categoryType)) {
+            is NetworkState.Success -> return Result.success(data.body.toUiBookFavorite())
+            is NetworkState.Failure -> return Result.failure(
+                RetrofitFailureStateException(data.error, data.code)
+            )
+
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> return Result.failure(IllegalStateException("unKnownError"))
+        }
+    }
+
+    override suspend fun deleteBookFavorite(bookKey: String, favoriteId: Int): Result<Void?> {
+        when (val data =
+            bookDataSource.deleteBookFavorite(bookKey, favoriteId)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
+    override suspend fun postBooksFavorites(
+        bookKey: String,
+        money:Double,
+        description: String,
+        lineCategoryName : String,
+        lineSubcategoryName : String,
+        assetSubcategoryName : String
+    ): Result<PostBookFavoriteModel> {
+        when (val data = bookDataSource.postBooksFavorites(bookKey,
+            PostBooksFavoritesBody(money, description, lineCategoryName, lineSubcategoryName, assetSubcategoryName))
+        ) {
+            is NetworkState.Success -> return Result.success(data.body.toPostBookFavoriteModel())
             is NetworkState.Failure -> return Result.failure(
                 RetrofitFailureStateException(data.error, data.code)
             )

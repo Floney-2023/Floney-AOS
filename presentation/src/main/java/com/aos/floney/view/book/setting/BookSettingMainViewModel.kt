@@ -103,6 +103,10 @@ class BookSettingMainViewModel @Inject constructor(
     private var _exitPage = MutableEventFlow<Boolean>()
     val exitPage: EventFlow<Boolean> get() = _exitPage
 
+    // 가계부 즐겨찾기 페이지
+    private var _favoritePage = MutableEventFlow<Boolean>()
+    val favoritePage: EventFlow<Boolean> get() = _favoritePage
+
     // 마이페이지 정보 읽어오기
     fun searchBookSettingItems()
     {
@@ -243,7 +247,9 @@ class BookSettingMainViewModel @Inject constructor(
     // 즐겨찾기 설정
     fun onClickFavorite()
     {
-
+        viewModelScope.launch {
+            _favoritePage.emit(true)
+        }
     }
     // 가계부 초기화하기
     fun onClickBookInit()

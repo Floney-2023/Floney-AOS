@@ -26,19 +26,22 @@ class BookSettingCategoryFragment : BaseFragment<FragmentBookSettingCategoryBind
     }
     override fun onItemClick(item: UiBookCategory) {
 
-        val dialogInfo = getString(R.string.book_setting_category_dialog_info, item.name)
+        if (viewModel.edit.value!!){
 
-        val exitDialogFragment = WarningPopupDialog(
-            getString(R.string.book_setting_category_dialog_title),
-            dialogInfo,
-            getString(R.string.book_setting_category_dialog_left_button),
-            getString(R.string.book_setting_category_dialog_right_button),
-            false
-        ) { checked ->
-            if (checked)
-                viewModel.deleteCategory(item)
+            val dialogInfo = getString(R.string.book_setting_category_dialog_info, item.name)
+
+            val exitDialogFragment = WarningPopupDialog(
+                getString(R.string.book_setting_category_dialog_title),
+                dialogInfo,
+                getString(R.string.book_setting_category_dialog_left_button),
+                getString(R.string.book_setting_category_dialog_right_button),
+                false
+            ) { checked ->
+                if (checked)
+                    viewModel.deleteCategory(item)
+            }
+            exitDialogFragment.show(parentFragmentManager, "initDialog")
         }
-        exitDialogFragment.show(parentFragmentManager, "initDialog")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -81,6 +81,9 @@
             android:name=".view.book.setting.category.BookCategoryActivity"
             android:exported="false" />
         <activity
+            android:name=".view.book.setting.favorite.BookFavoriteActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.book.entrance.BookEntranceActivity"
             android:exported="true">
             <intent-filter android:autoVerify="true">

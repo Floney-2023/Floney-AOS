@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/book_favorite_nav"
+    app:startDestination="@id/bookSettingFavoriteFragment">
+
+    <activity
+        android:id="@+id/bookFavoriteActivity"
+        android:name="com.aos.floney.view.book.setting.favorite.BookFavoriteActivity"
+        tools:layout="@layout/activity_book_favorite"
+        android:label="BookFavoriteActivity" />
+    <fragment
+        android:id="@+id/bookSettingFavoriteFragment"
+        android:name="com.aos.floney.view.book.setting.favorite.BookSettingFavoriteFragment"
+        android:label="BookSettingFavoriteFragment"
+        tools:layout="@layout/fragment_book_setting_favorite">
+        <action
+            android:id="@+id/action_bookSettingFavoriteFragment_to_bookSettingFavoriteAddFragment"
+            app:destination="@id/bookSettingFavoriteAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookSettingFavoriteAddFragment"
+        android:name="com.aos.floney.view.book.setting.favorite.BookSettingFavoriteAddFragment"
+        android:label="BookSettingFavoriteAddFragment"
+        tools:layout="@layout/fragment_book_setting_favorite_add" />
+
+</navigation>

@@ -8,6 +8,7 @@ import com.aos.data.entity.response.home.GetBookInfoEntity
 import com.aos.data.entity.response.home.GetBookMonthEntity
 import com.aos.data.entity.request.book.PostBooksCreateBody
 import com.aos.data.entity.request.book.PostBooksExcelBody
+import com.aos.data.entity.request.book.PostBooksFavoritesBody
 import com.aos.data.entity.request.book.PostBooksInfoAssetBody
 import com.aos.data.entity.request.book.PostBooksInfoBudgetBody
 import com.aos.data.entity.request.book.PostBooksInfoCarryOverBody
@@ -22,12 +23,14 @@ import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
 import com.aos.data.entity.request.settlement.PostSettlementAddBody
+import com.aos.data.entity.response.book.GetBookFavoriteEntity
 import com.aos.data.entity.response.book.GetBookRepeatEntity
 import com.aos.data.entity.response.book.GetBooksBudgetEntity
 import com.aos.data.entity.response.book.GetBooksCodeEntity
 import com.aos.data.entity.response.book.GetBooksEntity
 import com.aos.data.entity.response.book.GetBooksInfoCurrencyEntity
 import com.aos.data.entity.response.book.GetBooksInfoEntity
+import com.aos.data.entity.response.book.PostBookFavoriteEntity
 import com.aos.data.entity.response.book.PostBooksCategoryAddEntity
 import com.aos.data.entity.response.book.PostBooksCreateEntity
 import com.aos.data.entity.response.book.PostBooksInfoCurrencyEntity
@@ -309,4 +312,28 @@ interface BookService {
     suspend fun getBooks(
         @Query("code") code: String
     ): NetworkState<GetBooksEntity>
+
+    // 즐겨찾기 분류 항목 별 조회
+    @GET("books/{bookKey}/favorites")
+    @Headers("Auth: true")
+    suspend fun getBookFavorite(
+        @Path("bookKey") bookKey: String,
+        @Query("categoryType") categoryType: String
+    ): NetworkState<List<GetBookFavoriteEntity>>
+
+    // 즐겨찾기 삭제
+    @HTTP(method = "DELETE", path="books/{bookKey}/favorites/{favoriteId}", hasBody = true)
+    @Headers("Auth: true")
+    suspend fun deleteBookFavorite(
+        @Path("bookKey") bookKey: String,
+        @Path("favoriteId") favoriteId: Int
+    ): NetworkState<Void>
+
+    // 즐겨찾기 추가
+    @POST("books/{bookKey}/favorites")
+    @Headers("Auth: true")
+    suspend fun postBooksFavorites(
+        @Path("bookKey") bookKey : String,
+        @Body postBooksFavoritesBody: PostBooksFavoritesBody
+    ): NetworkState<PostBookFavoriteEntity>
 }
