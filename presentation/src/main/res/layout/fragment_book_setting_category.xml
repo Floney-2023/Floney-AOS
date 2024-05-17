@@ -149,8 +149,8 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="86dp"
             android:src="@drawable/icon_empty_category"
             android:visibility="@{vm.categoryList.size() > 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/rv_wallet_item_view"

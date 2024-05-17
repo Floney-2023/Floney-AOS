@@ -209,7 +209,7 @@
                     android:text="@{vm.bookSettingInfo.carryOver ? @string/book_setting_carryInfo_yes : @string/book_setting_carryInfo_no}"
                     android:textColor="@{vm.bookSettingInfo.carryOver ? @color/primary2 : @color/grayscale2}"
                     android:textSize="10dp"
-                    app:fontFamily="@{vm.bookSettingInfo.carryOver}"
+                    android:fontFamily="@font/pretendard_bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_book_setting_carryInfo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tv_book_setting_carryInfo" />
