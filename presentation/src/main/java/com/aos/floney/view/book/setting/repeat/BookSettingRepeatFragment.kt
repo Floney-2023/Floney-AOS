@@ -24,20 +24,21 @@ import dagger.hilt.android.AndroidEntryPoint
 class BookSettingRepeatFragment : BaseFragment<FragmentBookSettingRepeatBinding, BookSettingRepeatViewModel>(R.layout.fragment_book_setting_repeat) , UiBookRepeatModel.OnItemClickListener {
 
     override fun onItemClick(item: UiBookRepeatModel) {
+        if (viewModel.edit.value!!){
+            val dialogInfo = getString(R.string.book_setting_category_repeat_info)
 
-        val dialogInfo = getString(R.string.book_setting_category_repeat_info)
-
-        val exitDialogFragment = WarningPopupDialog(
-            getString(R.string.book_setting_category_repeat_title),
-            dialogInfo,
-            getString(R.string.book_setting_category_repeat_left_button),
-            getString(R.string.book_setting_category_repeat_right_button),
-            false
-        ) { checked ->
-            if (checked)
-                viewModel.deleteCategory(item)
+            val exitDialogFragment = WarningPopupDialog(
+                getString(R.string.book_setting_category_repeat_title),
+                dialogInfo,
+                getString(R.string.book_setting_category_repeat_left_button),
+                getString(R.string.book_setting_category_repeat_right_button),
+                false
+            ) { checked ->
+                if (checked)
+                    viewModel.deleteCategory(item)
+            }
+            exitDialogFragment.show(parentFragmentManager, "repeatDialog")
         }
-        exitDialogFragment.show(parentFragmentManager, "repeatDialog")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

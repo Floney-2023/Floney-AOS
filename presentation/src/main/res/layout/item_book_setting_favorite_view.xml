@@ -8,10 +8,10 @@
     <data>
         <variable
             name="item"
-            type="com.aos.model.book.UiBookFavorite" />
+            type="com.aos.model.book.UiBookFavoriteModel" />
         <variable
             name="eventHolder"
-            type="com.aos.model.book.UiBookFavorite.OnItemClickListener" />
+            type="com.aos.model.book.UiBookFavoriteModel.OnItemClickListener" />
         <import type="android.view.View" />
 
     </data>
@@ -29,6 +29,7 @@
             android:paddingTop="16dp"
             android:paddingEnd="34dp"
             android:paddingBottom="16dp"
+            android:onClick="@{() -> eventHolder.onItemClick(item)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,6 @@
                 android:id="@+id/iv_bool_activated"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:onClick="@{() -> eventHolder.onItemClick(item)}"
                 android:src="@drawable/icon_delete"
                 android:visibility="@{item.checked ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="@{item.info}"
+                android:text="@{item.assetSubcategoryName + ` ‧ `+ item.lineSubcategoryName}"
                 android:textColor="@color/grayscale6"
                 android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"

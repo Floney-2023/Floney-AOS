@@ -6,7 +6,7 @@
 
     <data>
 
-        <import type="com.aos.model.book.UiBookFavorite" />
+        <import type="com.aos.model.book.UiBookFavoriteModel" />
 
         <variable
             name="vm"
@@ -14,7 +14,7 @@
 
         <variable
             name="eventHolder"
-            type="com.aos.model.book.UiBookFavorite.OnItemClickListener" />
+            type="com.aos.model.book.UiBookFavoriteModel.OnItemClickListener" />
 
         <import type="android.view.View" />
     </data>
@@ -157,7 +157,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_category"
-            bind:diffCallback="@{(Object)UiBookFavorite.Companion}"
+            bind:diffCallback="@{(Object)UiBookFavoriteModel.Companion}"
             bind:eventHolder="@{eventHolder}"
             bind:itemLayout="@{@layout/item_book_setting_favorite_view}"
             bind:items="@{vm.favoriteList}"

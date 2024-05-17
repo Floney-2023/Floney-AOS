@@ -8,11 +8,8 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
-import com.aos.model.book.UiBookCategory
-import com.aos.model.book.UiBookFavorite
-import com.aos.usecase.booksetting.BooksCategoryDeleteUseCase
+import com.aos.model.book.UiBookFavoriteModel
 import com.aos.usecase.booksetting.BooksFavoriteDeleteUseCase
-import com.aos.usecase.history.GetBookCategoryUseCase
 import com.aos.usecase.history.GetBookFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -51,8 +48,8 @@ class BookSettingFavoriteViewModel @Inject constructor(
     var flow = MutableLiveData<String>("지출")
 
     // 내용
-    var _favoriteList = MutableLiveData<List<UiBookFavorite>>()
-    val favoriteList: LiveData<List<UiBookFavorite>> get() = _favoriteList
+    var _favoriteList = MutableLiveData<List<UiBookFavoriteModel>>()
+    val favoriteList: LiveData<List<UiBookFavoriteModel>> get() = _favoriteList
 
     init {
         getBookCategory()
@@ -68,8 +65,8 @@ class BookSettingFavoriteViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory(flow.value!!)).onSuccess { it ->
                 val item = it.map {
-                    UiBookFavorite(
-                        it.idx, edit.value!!, it.description,it.info, it.money
+                    UiBookFavoriteModel(
+                        it.idx, edit.value!!, it.description,it.lineCategoryName,it.lineSubcategoryName,it.assetSubcategoryName, it.money
                     )
                 }
                 _favoriteList.postValue(item)
@@ -93,7 +90,7 @@ class BookSettingFavoriteViewModel @Inject constructor(
     }
 
     // 내역 삭제
-    fun deleteFavorite(item : UiBookFavorite) {
+    fun deleteFavorite(item : UiBookFavoriteModel) {
         viewModelScope.launch(Dispatchers.IO) {
             booksFavoriteDeleteUseCase(
                 bookKey = prefs.getString("bookKey", ""),

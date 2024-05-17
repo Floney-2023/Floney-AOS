@@ -12,7 +12,7 @@ import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
 import com.aos.model.book.UiBookEntranceModel
-import com.aos.model.book.UiBookFavorite
+import com.aos.model.book.UiBookFavoriteModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -27,8 +27,6 @@ import com.aos.model.settlement.UiSettlementAddModel
 import com.aos.model.settlement.UiSettlementSeeModel
 import com.aos.model.settlement.settleOutcomes
 import okhttp3.ResponseBody
-import java.io.File
-import java.time.Duration
 
 interface BookRepository {
 
@@ -166,7 +164,7 @@ interface BookRepository {
     suspend fun postShortenUrl(id: String, secretKey: String, url: String): Result<NaverShortenUrlModel>
 
     // 즐겨찾기 분류 항목 별 조회
-    suspend fun getBookFavorite(bookKey: String, categoryType: String): Result<List<UiBookFavorite>>
+    suspend fun getBookFavorite(bookKey: String, categoryType: String): Result<List<UiBookFavoriteModel>>
 
     // 즐겨찾기 삭제
     suspend fun deleteBookFavorite(bookKey: String,  favoriteId: Int): Result<Void?>

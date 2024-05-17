@@ -56,7 +56,7 @@ import com.aos.model.book.PostBooksLinesModel
 import com.aos.model.book.UiBookBudgetModel
 import com.aos.model.book.UiBookCategory
 import com.aos.model.book.UiBookEntranceModel
-import com.aos.model.book.UiBookFavorite
+import com.aos.model.book.UiBookFavoriteModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.book.UiBookSettingModel
 import com.aos.model.home.GetCheckUserBookModel
@@ -737,7 +737,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     override suspend fun getBookFavorite(
         bookKey: String,
         categoryType: String
-    ): Result<List<UiBookFavorite>> {
+    ): Result<List<UiBookFavoriteModel>> {
         when (val data = bookDataSource.getBookFavorite(bookKey, categoryType)) {
             is NetworkState.Success -> return Result.success(data.body.toUiBookFavorite())
             is NetworkState.Failure -> return Result.failure(

@@ -27,7 +27,6 @@ import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostNaverShortenUrlEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.data.util.CurrencyUtil
-import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.book.BudgetItem
 import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
@@ -68,7 +67,7 @@ import kotlin.math.roundToLong
 
 import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.UiBookEntranceModel
-import com.aos.model.book.UiBookFavorite
+import com.aos.model.book.UiBookFavoriteModel
 import com.aos.model.book.UiBookRepeatModel
 import com.aos.model.settlement.NaverShortenUrlModel
 
@@ -462,13 +461,15 @@ fun formatBookInfo(startDay: String, memberCount: Int): String {
     return "$formattedDate 개설 ꞏ ${memberCount}명"
 }
 
-fun List<GetBookFavoriteEntity>.toUiBookFavorite(): List<UiBookFavorite> {
+fun List<GetBookFavoriteEntity>.toUiBookFavorite(): List<UiBookFavoriteModel> {
     return this.map {
-        UiBookFavorite(
+        UiBookFavoriteModel(
             idx = it.id,
             checked = false,
             description = it.description,
-            info = "${it.assetSubcategoryName} ‧ ${it.lineSubcategoryName}",
+            lineCategoryName = it.lineCategoryName,
+            lineSubcategoryName = it.lineSubcategoryName,
+            assetSubcategoryName = it.assetSubcategoryName,
             money = "${it.money.toInt()}${CurrencyUtil.currency}"
         )
     }

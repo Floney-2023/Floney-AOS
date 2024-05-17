@@ -6,22 +6,19 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
-import com.aos.floney.databinding.FragmentBookSettingCategoryBinding
 import com.aos.floney.databinding.FragmentBookSettingFavoriteBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.common.BaseAlertDialog
-import com.aos.floney.view.common.WarningPopupDialog
-import com.aos.model.book.UiBookCategory
-import com.aos.model.book.UiBookFavorite
+import com.aos.model.book.UiBookFavoriteModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBinding, BookSettingFavoriteViewModel>(R.layout.fragment_book_setting_favorite) , UiBookFavorite.OnItemClickListener {
+class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBinding, BookSettingFavoriteViewModel>(R.layout.fragment_book_setting_favorite) , UiBookFavoriteModel.OnItemClickListener {
     override fun onResume() {
         super.onResume()
         viewModel.getBookCategory()
     }
-    override fun onItemClick(item: UiBookFavorite) {
+    override fun onItemClick(item: UiBookFavoriteModel) {
         if (viewModel.edit.value!!)
         {
 
@@ -42,7 +39,10 @@ class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBind
                 "해당 내역을 불러오겠습니까?",
                 false
             ) { checked ->
-
+                if (checked){
+                    val activity = requireActivity() as BookFavoriteActivity
+                    activity.startHistoryAddActivity(item)
+                }
             }
             exitDialogFragment.show(parentFragmentManager, "favoriteLoadDialog")
         }

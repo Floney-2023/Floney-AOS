@@ -51,3 +51,12 @@ data class DayMoneyModifyItem(
     val writerNickName: String,
     val repeatDuration: String
 ): Serializable
+
+// 즐겨찾기 전달 아이템
+data class DayMoneyFavoriteItem(
+    val money: String,
+    val description: String,
+    val lineCategoryName: String,
+    val lineSubcategoryName: String,
+    val assetSubcategoryName: String
+): Serializable

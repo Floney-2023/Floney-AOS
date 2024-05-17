@@ -27,6 +27,7 @@ import com.aos.floney.view.common.BaseChoiceAlertDialog
 import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
+import com.aos.model.home.DayMoneyFavoriteItem
 import com.aos.model.home.DayMoneyModifyItem
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -73,11 +74,20 @@ class HistoryActivity :
         return date
     }
 
+    // 즐겨찾기 데이터 가져오기 (존재할 경우 실행)
+    private fun getFavoriteData() {
+        intent.intentSerializable("favoriteItem", DayMoneyFavoriteItem::class.java)
+            ?.let {
+                viewModel.setIntentFavoriteData(it) }
+    }
+
     // 캘린더 bottomSheet 구현
     private fun setUpCalendarBottomSheet() {
+        getFavoriteData()
+
         val date = if(getIntentAddData() == "") {
             getModifyData()
-        } else {
+        } else{
             getIntentAddData()
         }
 
