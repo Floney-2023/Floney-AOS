@@ -15,6 +15,8 @@ import android.text.style.StyleSpan
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
+import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.ViewModel
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
@@ -47,10 +49,14 @@ class HistoryActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setUpUi()
         setUpViewModelObserver()
         setUpCalendarBottomSheet()
     }
 
+    private fun setUpUi(){
+        binding.setVariable(BR.vm, viewModel)
+    }
     // 내역 추가 데이터 가져오기
     private fun getIntentAddData(): String {
         val date = intent.getStringExtra("date") ?: ""
@@ -78,7 +84,7 @@ class HistoryActivity :
     private fun getFavoriteData() {
         intent.intentSerializable("favoriteItem", DayMoneyFavoriteItem::class.java)
             ?.let {
-                viewModel.setIntentFavoriteData(it) }
+                viewModel.setIntentFavoriteData(it)}
     }
 
     // 캘린더 bottomSheet 구현
