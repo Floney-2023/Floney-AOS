@@ -177,10 +177,10 @@ class HistoryViewModel @Inject constructor(
     fun setIntentFavoriteData(item: DayMoneyFavoriteItem) {
         mode.value = "add"
         cost.value = NumberFormat.getNumberInstance().format(item.money.toInt()) + CurrencyUtil.currency
-        flow.value = item.lineCategoryName
         asset.value = item.assetSubcategoryName
         line.value = item.lineSubcategoryName
         content.value = item.description
+        onClickFlow(item.lineCategoryName)
     }
     // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory() {
