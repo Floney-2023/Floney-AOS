@@ -7,6 +7,7 @@ import com.aos.usecase.analyze.PostAnalyzeAssetUseCase
 import com.aos.usecase.analyze.PostAnalyzeIPlanUseCase
 import com.aos.usecase.analyze.PostAnalyzeInComeCategoryUseCase
 import com.aos.usecase.analyze.PostAnalyzeOutComeCategoryUseCase
+import com.aos.usecase.bookadd.ChangeBookImgUseCase
 import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.DeleteBooksLinesAllUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
@@ -97,5 +98,8 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideGetChangeProfileUseCase(userRepository: UserRepository) = ChangeProfileUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideChangeBookImgUseCase(bookRepository: BookRepository) = ChangeBookImgUseCase(bookRepository)
 
 }

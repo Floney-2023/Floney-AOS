@@ -62,7 +62,7 @@ class SignUpInputInfoViewModel @Inject constructor(
                                 // 일반 회원가입인지 소셜 회원가입인지 구분
                                 Timber.e("socialProvider $socialProvider")
                                 Timber.e("social Token $socialToken")
-                                if(socialToken == null) {
+                                if(socialToken.equals("")) {
                                     // 일반 회원가입
                                     signUpUseCase(email = email.value ?: "", nickname = nickname.value ?: "", password = password.value ?: "", receiveMarketing = marketing.value ?: false).onSuccess {
                                         // 엑세스 토큰 저장

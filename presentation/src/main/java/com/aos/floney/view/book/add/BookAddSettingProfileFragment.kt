@@ -1,5 +1,6 @@
 package com.aos.floney.view.book.add
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
@@ -22,6 +23,7 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.databinding.ActivityBookAddBinding
 import com.aos.floney.databinding.FragmentBookAddSettingProfileBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.common.ChoiceImageDialog
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,39 +38,27 @@ class BookAddSettingProfileFragment : BaseFragment<FragmentBookAddSettingProfile
 
     // 사진 찍기 결과
     private val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicture()) {
+        viewModel.createBitmapFile(viewModel.getTakeCaptureUri())
+
+        Glide.with(requireContext())
+            .load(viewModel.getImageBitmap())
+            .fitCenter()
+            .centerCrop()
+            .into(binding.ivProfileCardView)
     }
 
     private val imageResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val imageUri = result.data?.data
-            imageUri?.let {
-                lifecycleScope.launch {
-//                    try {
-//                        val path = ImgFileMaker.getFullPathFromUri(requireContext(), it)!!
-//                        val angle = RotateTransform.getRotationAngle(path)
-//                        val rotateBitmap = RotateTransform.rotateImage(
-//                            BitmapFactory.decodeFile(path),
-//                            angle.toFloat(),
-//                            it
-//                        )
-//
-//                        activityRecruit2ViewModel.setThumbnailImageFile(
-//                            ImgFileMaker.saveBitmapToFile(rotateBitmap!!, path)
-//                        )
-//
-//                        binding.thumbnailIv.visibility = View.VISIBLE
-//                        Glide.with(requireActivity()).load(imageUri).into(binding.thumbnailIv)
-//
-//                        binding.thumbnailPhotoCl.setBackgroundResource(R.drawable.custom_radius_8_stroke_g300_solid_fff)
-//                        binding.thumbnailPhotoTv.visibility = View.GONE
-//                        binding.thumbnailInfoTv.visibility = View.GONE
-//                    } catch (e: Exception) {
-//                        activity.showErrorMsg("해당 이미지는 사용할 수 없습니다.")
-//                    }
-//                }
-                }
+        if (result.resultCode == Activity.RESULT_OK) {
+            lifecycleScope.launch {
+                viewModel.createBitmapFile(result.data?.data)
+
+                Glide.with(requireContext())
+                    .load(viewModel.getImageBitmap())
+                    .fitCenter()
+                    .centerCrop()
+                    .into(binding.ivProfileCardView)
             }
         }
     }
@@ -107,36 +97,69 @@ class BookAddSettingProfileFragment : BaseFragment<FragmentBookAddSettingProfile
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.onClickChange.collect {
+                if (it) {
+                    if (viewModel.getImageBitmap() != null) {
+                        viewModel.onClickNextPage()
+                    } else {
+                        viewModel.baseEvent(BaseViewModel.Event.ShowToast("변경할 이미지가 선택되지 않았습니다."))
+                    }
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.onClickDefaultProfile.collect {
+                if (it) {
+                    BaseAlertDialog("프로필 변경", "기본 프로필로 변경하시겠습니까?", true) {
+                        if(it) {
+                            // 랜덤 이미지
+                            val bitmap = BitmapFactory.decodeResource(
+                                requireContext().resources,
+                                R.drawable.icon_default_profile
+                            )
+
+                            Glide.with(requireContext())
+                                .load(bitmap)
+                                .fitCenter()
+                                .centerCrop()
+                                .into(binding.ivProfileCardView)
+
+                            viewModel.onClickNextPage()
+                        }
+                    }.show(parentFragmentManager, "baseAlertDialog")
+                }
+            }
+        }
     }
 
     private fun onClickChoiceImage() {
         if(checkGalleryPermission()) {
             ChoiceImageDialog(requireContext(), {
                 // 사진 촬영하기
-                viewModel.setTakeCaptureUri(createTempImageFile())
+                viewModel.setTakeCaptureUri(viewModel.createTempImageFile())
                 takePhoto.launch(viewModel.getTakeCaptureUri())
             }, {
                 // 앨범에서 사진 선택
                 selectGallery()
             }, {
                 // 랜덤 이미지
+                val bitmap = BitmapFactory.decodeResource(
+                    requireContext().resources,
+                    viewModel.getRandomProfileDrawable()
+                )
+
+                viewModel.setImageBitmap(bitmap)
+
+                Glide.with(requireContext())
+                    .load(bitmap)
+                    .fitCenter()
+                    .centerCrop()
+                    .into(binding.ivProfileCardView)
             }).show()
         } else {
             viewModel.baseEvent(BaseViewModel.Event.ShowToast("이미지 접근 권한이 허용되지 않았습니다. "))
         }
-    }
-
-    // 사진 촬영을 위해 임시 파일 생성
-    private fun createTempImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmmss").format(Date())
-        val content = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
-            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-        }
-        return requireActivity().contentResolver.insert(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            content
-        )
     }
 
     private fun selectGallery() {
@@ -161,7 +184,6 @@ class BookAddSettingProfileFragment : BaseFragment<FragmentBookAddSettingProfile
         )
 
         return if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.TIRAMISU) {
-            Timber.e("true")
             if(imagePermission == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(
                     requireActivity(), arrayOf(
@@ -174,7 +196,6 @@ class BookAddSettingProfileFragment : BaseFragment<FragmentBookAddSettingProfile
                 true
             }
         } else{
-            Timber.e("else")
             if(readPermission == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(
                     requireActivity(), arrayOf(

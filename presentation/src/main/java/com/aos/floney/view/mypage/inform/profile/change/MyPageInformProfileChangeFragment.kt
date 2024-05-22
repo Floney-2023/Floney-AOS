@@ -3,6 +3,7 @@ package com.aos.floney.view.mypage.inform.profile.change
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,6 +18,7 @@ import com.aos.floney.base.BaseFragment
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.databinding.FragmentMyPageInformProfilechangeBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.common.ChoiceImageDialog
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,11 +63,19 @@ class MyPageInformProfileChangeFragment :
     }
 
     private fun setupUi() {
-        Glide.with(requireContext())
-            .load(viewModel.getUserProfile())
-            .fitCenter()
-            .centerCrop()
-            .into(binding.profileImg)
+        if(viewModel.getUserProfile().equals("user_default")) {
+            Glide.with(requireContext())
+                .load(R.drawable.icon_default_profile)
+                .fitCenter()
+                .centerCrop()
+                .into(binding.profileImg)
+        } else {
+            Glide.with(requireContext())
+                .load(viewModel.getUserProfile())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.profileImg)
+        }
     }
 
     private fun setUpViewModelObserver() {
@@ -86,12 +96,34 @@ class MyPageInformProfileChangeFragment :
         repeatOnStarted {
             viewModel.onClickChange.collect {
                 if (it) {
-                    Timber.e("viewModel.getImageBitmap() ${viewModel.getImageBitmap()}")
                     if (viewModel.getImageBitmap() != null) {
                         viewModel.uploadImageFile(viewModel.getImageBitmap()!!)
                     } else {
                         viewModel.baseEvent(BaseViewModel.Event.ShowToast("변경할 이미지가 선택되지 않았습니다."))
                     }
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.onClickDefaultProfile.collect {
+                if (it) {
+                    BaseAlertDialog("프로필 변경", "기본 프로필로 변경하시겠습니까?", true) {
+                        if(it) {
+                            // 랜덤 이미지
+                            val bitmap = BitmapFactory.decodeResource(
+                                requireContext().resources,
+                                R.drawable.icon_default_profile
+                            )
+
+                            Glide.with(requireContext())
+                                .load(bitmap)
+                                .fitCenter()
+                                .centerCrop()
+                                .into(binding.profileImg)
+
+                            viewModel.uploadImageFile(bitmap)
+                        }
+                    }.show(parentFragmentManager, "baseAlertDialog")
                 }
             }
         }
@@ -108,6 +140,18 @@ class MyPageInformProfileChangeFragment :
                 selectGallery()
             }, {
                 // 랜덤 이미지
+                val bitmap = BitmapFactory.decodeResource(
+                    requireContext().resources,
+                    viewModel.getRandomProfileDrawable()
+                )
+
+                viewModel.setImageBitmap(bitmap)
+
+                Glide.with(requireContext())
+                    .load(bitmap)
+                    .fitCenter()
+                    .centerCrop()
+                    .into(binding.profileImg)
             }).show()
         } else {
             viewModel.baseEvent(BaseViewModel.Event.ShowToast("이미지 접근 권한이 허용되지 않았습니다. "))

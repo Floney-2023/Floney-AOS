@@ -16,6 +16,7 @@ import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.request.book.PostBooksOutBody
+import com.aos.data.entity.request.book.PostChangeBookImgBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
@@ -88,4 +89,5 @@ interface BookRemoteDataSource {
     suspend fun getBookFavorite(bookKey: String, categoryType: String): NetworkState<List<GetBookFavoriteEntity>>
     suspend fun deleteBookFavorite(bookKey:String, favoriteId: Int): NetworkState<Void>
     suspend fun postBooksFavorites(bookKey:String, postBooksFavoritesBody: PostBooksFavoritesBody): NetworkState<PostBookFavoriteEntity>
+    suspend fun postChangeBookImg(postChangeBookImgBody: PostChangeBookImgBody): NetworkState<Void>
 }

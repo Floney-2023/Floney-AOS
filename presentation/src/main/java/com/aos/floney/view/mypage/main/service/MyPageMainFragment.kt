@@ -56,6 +56,20 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
     override fun onResume() {
         super.onResume()
         viewModel.searchMypageItems()
+
+        if(viewModel.getUserProfile().equals("user_default")) {
+            Glide.with(requireContext())
+                .load(R.drawable.icon_default_profile)
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
+        } else {
+            Glide.with(requireContext())
+                .load(viewModel.getUserProfile())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,13 +81,6 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@MyPageMainFragment)
-
-        Glide.with(requireContext())
-            .load(viewModel.getUserProfile())
-            .fitCenter()
-            .centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .into(binding.ivProfile)
     }
 
     private fun setUpViewModelObserver() {

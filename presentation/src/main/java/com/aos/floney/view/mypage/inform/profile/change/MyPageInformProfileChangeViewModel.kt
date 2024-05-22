@@ -4,11 +4,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.CommonUtil
+import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.ext.getResourceUri
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.mypage.ChangeProfileUseCase
@@ -24,6 +27,7 @@ import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Random
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,6 +48,10 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
     // 변경하기 버튼 클릭
     private var _onClickChange = MutableEventFlow<Boolean>()
     val onClickChange: EventFlow<Boolean> get() = _onClickChange
+
+    // 기본 프로필로 변경 버튼 클릭
+    private var _onClickDefaultProfile = MutableEventFlow<Boolean>()
+    val onClickDefaultProfile: EventFlow<Boolean> get() = _onClickDefaultProfile
 
     // 사진 촬영 uri
     private var takeCaptureUri: Uri? = null
@@ -127,6 +135,22 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
         }
     }
 
+    // 랜덤 이미지 uri 가져오기
+    fun getRandomProfileDrawable(): Int {
+        val random = kotlin.random.Random.nextInt(0, 5)
+        val drawable: Int = when(random) {
+            0 -> R.drawable.random_profile_icon_1
+            1 -> R.drawable.random_profile_icon_2
+            2 -> R.drawable.random_profile_icon_3
+            3 -> R.drawable.random_profile_icon_4
+            4 -> R.drawable.random_profile_icon_5
+            5 -> R.drawable.random_profile_icon_6
+            else -> R.drawable.random_profile_icon_1
+        }
+
+        return drawable
+    }
+
     // 이전 페이지로 이동
     fun onClickPreviousPage() {
         viewModelScope.launch {
@@ -143,7 +167,9 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
 
     // 기본 이미지로 설정
     fun onClickBasicSettingImage() {
-
+        viewModelScope.launch {
+            _onClickDefaultProfile.emit(true)
+        }
     }
 
     // 변경하기 버튼 클릭
@@ -165,7 +191,7 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
     }
 
     // 임시 촬영 파일 저장
-    private fun setImageBitmap(bitmap: Bitmap?) {
+    fun setImageBitmap(bitmap: Bitmap?) {
         imageBitmap = bitmap
     }
 

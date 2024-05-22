@@ -132,7 +132,7 @@ class LoginViewModel @Inject constructor(
     fun isAuthTokenCheck(provider: String, token: String) {
         viewModelScope.launch {
             authTokenCheckUseCase(provider, token).onSuccess {
-                Timber.e("it $it")
+                Timber.e("iuiut $it")
                 if(it) {
                     // 가입 내역 있음 로그인
                     getSocialLogin(provider, token)

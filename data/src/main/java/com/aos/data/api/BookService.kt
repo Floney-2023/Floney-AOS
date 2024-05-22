@@ -19,6 +19,7 @@ import com.aos.data.entity.request.book.PostBooksLinesBody
 import com.aos.data.entity.request.book.PostBooksLinesEntity
 import com.aos.data.entity.request.book.PostBooksNameBody
 import com.aos.data.entity.request.book.PostBooksOutBody
+import com.aos.data.entity.request.book.PostChangeBookImgBody
 import com.aos.data.entity.response.book.GetBookCategoryEntity
 import com.aos.data.entity.response.book.PostBooksChangeEntity
 import com.aos.data.entity.request.settlement.PostBooksOutcomesBody
@@ -336,4 +337,11 @@ interface BookService {
         @Path("bookKey") bookKey : String,
         @Body postBooksFavoritesBody: PostBooksFavoritesBody
     ): NetworkState<PostBookFavoriteEntity>
+
+    // 가계부 프로필 이미지 변경
+    @POST("books/info/bookImg")
+    @Headers("Auth: true")
+    suspend fun postChangeBookImg(
+        @Body postChangeBookImgBody: PostChangeBookImgBody
+    ): NetworkState<Void>
 }
