@@ -111,4 +111,8 @@ class UserRemoteDataSourceImpl @Inject constructor(private val userService: User
     override suspend fun getAuthTokenCheck(provider: String, token: String): NetworkState<Boolean> {
         return userService.getAuthTokenCheck(provider, token)
     }
+
+    override suspend fun getChangeProfile(profileImg: String): NetworkState<Void> {
+        return userService.getChangeProfile(profileImg)
+    }
 }

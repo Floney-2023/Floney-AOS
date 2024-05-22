@@ -32,6 +32,8 @@ import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.aos.model.user.MyBooks
 import com.aos.model.user.UiMypageSearchModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -54,6 +56,20 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
     override fun onResume() {
         super.onResume()
         viewModel.searchMypageItems()
+
+        if(viewModel.getUserProfile().equals("user_default")) {
+            Glide.with(requireContext())
+                .load(R.drawable.icon_default_profile)
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
+        } else {
+            Glide.with(requireContext())
+                .load(viewModel.getUserProfile())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

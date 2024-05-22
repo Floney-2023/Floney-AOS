@@ -1,5 +1,6 @@
 package com.aos.data.api
 
+import android.net.Network
 import com.aos.data.entity.request.user.DeleteWithdrawBody
 import com.aos.data.entity.request.user.PostCheckEmailCodeBody
 import com.aos.data.entity.request.user.PostCheckPasswordBody
@@ -146,4 +147,10 @@ interface UserService {
         @Path("provider") provider: String,
         @Query("token") token: String
     ): NetworkState<Boolean>
+
+    @GET("users/profileimg/update")
+    @Headers("Auth: true")
+    suspend fun getChangeProfile(
+        @Query("profileImg") profileImg: String
+    ): NetworkState<Void>
 }

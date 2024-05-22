@@ -100,7 +100,6 @@
 
                         <ImageView
                             android:id="@+id/iv_profile"
-                            setImageToUrl="@{vm.mypageInfo.profileImg}"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:background="@drawable/background_circle_image"

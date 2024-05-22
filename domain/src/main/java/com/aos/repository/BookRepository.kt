@@ -166,9 +166,12 @@ interface BookRepository {
     // 즐겨찾기 분류 항목 별 조회
     suspend fun getBookFavorite(bookKey: String, categoryType: String): Result<List<UiBookFavoriteModel>>
 
+    // 즐겨찾기 추가
+    suspend fun postBooksFavorites(bookKey: String, money:Double, description: String, lineCategoryName : String, lineSubcategoryName : String, assetSubcategoryName : String): Result<PostBookFavoriteModel>
+
     // 즐겨찾기 삭제
     suspend fun deleteBookFavorite(bookKey: String,  favoriteId: Int): Result<Void?>
 
-    // 즐겨찾기 추가
-    suspend fun postBooksFavorites(bookKey: String, money:Double, description: String, lineCategoryName : String, lineSubcategoryName : String, assetSubcategoryName : String): Result<PostBookFavoriteModel>
+    // 가계부 프로필 변경
+    suspend fun postChangeBookImg(bookKey: String, url: String): Result<Void?>
 }

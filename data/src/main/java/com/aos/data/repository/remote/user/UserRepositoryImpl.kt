@@ -334,4 +334,26 @@ class UserRepositoryImpl @Inject constructor(private val userRemoteDataSource: U
             }
         }
     }
+
+    override suspend fun getChangeProfile(profileImg: String): Result<Void?> {
+        when (val data =
+            userRemoteDataSource.getChangeProfile(profileImg)) {
+            is NetworkState.Success -> {
+                return Result.success(data.body)
+            }
+            is NetworkState.Failure -> {
+                return Result.failure(
+                    RetrofitFailureStateException(data.error, data.code)
+                )
+            }
+            is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
+            is NetworkState.UnknownError -> {
+                return if(data.errorState == "body값이 null로 넘어옴") {
+                    Result.success(null)
+                } else {
+                    Result.failure(IllegalStateException("unKnownError"))
+                }
+            }
+        }
+    }
 }

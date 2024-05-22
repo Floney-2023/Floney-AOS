@@ -3,6 +3,7 @@ package com.aos.floney.view.mypage.main.service
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CommonUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -233,4 +234,10 @@ class MyPageMainViewModel @Inject constructor(
             _adMobPage.emit(true)
         }
     }
+
+    // 유저 프로필 이미지 불러오기
+    fun getUserProfile(): String {
+        return CommonUtil.userProfileImg
+    }
+
 }

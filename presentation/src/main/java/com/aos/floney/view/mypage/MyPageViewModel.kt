@@ -3,6 +3,7 @@ package com.aos.floney.view.mypage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CommonUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -70,7 +71,6 @@ class MyPageViewModel @Inject constructor(
     {
         viewModelScope.launch(Dispatchers.IO) {
             mypageSearchUseCase().onSuccess {
-
                 var sortedBooks= it.myBooks.sortedByDescending { it.bookKey == prefs.getString("bookKey","") }
 
                 val updatedResult = it.copy(myBooks = sortedBooks.map { myBook ->
@@ -80,6 +80,9 @@ class MyPageViewModel @Inject constructor(
                         myBook.copy(recentCheck = false)
                     }
                 })
+
+                CommonUtil.userEmail = it.email
+                CommonUtil.userProfileImg = it.profileImg
 
                 _mypageInfo.postValue(updatedResult)
             }.onFailure {

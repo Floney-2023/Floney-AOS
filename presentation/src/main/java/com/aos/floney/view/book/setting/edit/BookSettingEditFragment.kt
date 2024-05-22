@@ -12,6 +12,7 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.common.WarningPopupDialog
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class BookSettingEditFragment :

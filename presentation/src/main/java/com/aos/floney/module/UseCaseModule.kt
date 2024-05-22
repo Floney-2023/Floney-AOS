@@ -7,6 +7,7 @@ import com.aos.usecase.analyze.PostAnalyzeAssetUseCase
 import com.aos.usecase.analyze.PostAnalyzeIPlanUseCase
 import com.aos.usecase.analyze.PostAnalyzeInComeCategoryUseCase
 import com.aos.usecase.analyze.PostAnalyzeOutComeCategoryUseCase
+import com.aos.usecase.bookadd.ChangeBookImgUseCase
 import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.DeleteBooksLinesAllUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
@@ -18,6 +19,7 @@ import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import com.aos.usecase.home.GetMoneyHistoryMonthUseCase
 import com.aos.usecase.login.AuthTokenCheckUseCase
 import com.aos.usecase.login.SocialLoginUseCase
+import com.aos.usecase.mypage.ChangeProfileUseCase
 import com.aos.usecase.signup.CheckEmailCodeUseCase
 import com.aos.usecase.signup.SendEmailUseCase
 import com.aos.usecase.password.SendTempPasswordUseCase
@@ -93,5 +95,11 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideSocialLoginUseCase(userRepository: UserRepository) = SocialLoginUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideGetChangeProfileUseCase(userRepository: UserRepository) = ChangeProfileUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideChangeBookImgUseCase(bookRepository: BookRepository) = ChangeBookImgUseCase(bookRepository)
 
 }

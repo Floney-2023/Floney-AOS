@@ -114,6 +114,7 @@ class BookSettingMainViewModel @Inject constructor(
             booksSettingGetUseCase(prefs.getString("bookKey","")).onSuccess {
                 // me가 true인 항목이 맨 앞에 오도록 정렬
                 val sortedList = it.ourBookUsers.sortedByDescending { it.me }
+
                 _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
 
             }.onFailure {

@@ -88,7 +88,6 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        getBookInfo(prefs.getString("bookKey", ""))
         getFormatDateMonth()
         setAdvertisement()
     }
@@ -104,7 +103,7 @@ class HomeViewModel @Inject constructor(
     }
 
     // 가계부 정보 가져오기
-    private fun getBookInfo(code: String) {
+    fun getBookInfo(code: String) {
         viewModelScope.launch {
             baseEvent(Event.ShowLoading)
             getBookInfoUseCase(code).onSuccess {

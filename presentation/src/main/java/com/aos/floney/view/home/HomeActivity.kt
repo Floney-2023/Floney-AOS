@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.databinding.library.baseAdapters.BR
+import androidx.lifecycle.lifecycleScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
@@ -31,12 +33,22 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
 import com.aos.floney.view.common.WarningPopupDialog
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home),
     UiBookDayModel.OnItemClickListener {
     private val fragmentManager = supportFragmentManager
     private var mRewardAd: RewardedAd? = null
+
+    override fun onResume() {
+        super.onResume()
+        val prefs = SharedPreferenceUtil(this)
+        lifecycleScope.launch {
+            viewModel.getBookInfo(prefs.getString("bookKey", ""))
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,7 +61,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this)
     }
-
 
     private fun setUpViewModelObserver() {
         viewModel.clickedShowType.observe(this) { showType ->
