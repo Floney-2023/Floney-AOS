@@ -50,7 +50,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         binding.setVariable(BR.eventHolder, this)
     }
 
-
     private fun setUpViewModelObserver() {
         viewModel.clickedShowType.observe(this) { showType ->
             when (showType) {

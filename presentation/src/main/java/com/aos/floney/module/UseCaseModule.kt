@@ -18,6 +18,7 @@ import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import com.aos.usecase.home.GetMoneyHistoryMonthUseCase
 import com.aos.usecase.login.AuthTokenCheckUseCase
 import com.aos.usecase.login.SocialLoginUseCase
+import com.aos.usecase.mypage.ChangeProfileUseCase
 import com.aos.usecase.signup.CheckEmailCodeUseCase
 import com.aos.usecase.signup.SendEmailUseCase
 import com.aos.usecase.password.SendTempPasswordUseCase
@@ -93,5 +94,8 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideSocialLoginUseCase(userRepository: UserRepository) = SocialLoginUseCase(userRepository)
+    @Provides
+    @Singleton
+    fun provideGetChangeProfileUseCase(userRepository: UserRepository) = ChangeProfileUseCase(userRepository)
 
 }

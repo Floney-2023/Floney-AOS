@@ -1,5 +1,6 @@
 package com.aos.floney.view.book.add
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -42,6 +43,13 @@ class BookAddSettingProfileViewModel @Inject constructor(
     // 가계부 초대코드
     var inviteCode = MutableLiveData<String>()
 
+    // 이미지 선택 버튼 클릭
+    private var _onClickChoiceImage = MutableEventFlow<Boolean>()
+    val onClickChoiceImage: EventFlow<Boolean> get() = _onClickChoiceImage
+
+    // 사진 촬영 uri
+    private var takeCaptureUri: Uri? = null
+
     // 이전 페이지로 이동
     fun onClickPreviousPage() {
         viewModelScope.launch {
@@ -74,6 +82,18 @@ class BookAddSettingProfileViewModel @Inject constructor(
 
     // 이미지 설정
     fun onClickSettingImage(){
+        viewModelScope.launch {
+            _onClickChoiceImage.emit(true)
+        }
+    }
 
+    // 임시 촬영 파일 저장
+    fun setTakeCaptureUri(uri: Uri?) {
+        takeCaptureUri = uri
+    }
+
+    // 임시 촬영 파일 불러오기
+    fun getTakeCaptureUri(): Uri? {
+        return takeCaptureUri
     }
 }

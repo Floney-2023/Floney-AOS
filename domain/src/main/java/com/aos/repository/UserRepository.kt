@@ -41,4 +41,6 @@ interface UserRepository {
     suspend fun postCheckPassword(password: String): Result<Void?>
     // 최근 접근 가계부키 저장
     suspend fun postRecentBookkeySave(bookKey: String): Result<Void?>
+    // 이미지 변경
+    suspend fun getChangeProfile(profileImg: String): Result<Void?>
 }

@@ -32,6 +32,8 @@ import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpActivity
 import com.aos.model.user.MyBooks
 import com.aos.model.user.UiMypageSearchModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -65,6 +67,13 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@MyPageMainFragment)
+
+        Glide.with(requireContext())
+            .load(viewModel.getUserProfile())
+            .fitCenter()
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(binding.ivProfile)
     }
 
     private fun setUpViewModelObserver() {

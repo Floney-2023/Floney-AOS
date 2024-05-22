@@ -110,4 +110,9 @@ interface UserRemoteDataSource {
         provider: String,
         token: String
     ): NetworkState<Boolean>
+
+    // 프로필 변경
+    suspend fun getChangeProfile(
+        profileImg: String
+    ): NetworkState<Void>
 }
