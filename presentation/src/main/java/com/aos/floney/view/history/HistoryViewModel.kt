@@ -313,6 +313,11 @@ class HistoryViewModel @Inject constructor(
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
     }
 
+    // 즐겨찾기 데이터 입력 되었는지 체크
+    private fun isFavoriteInputData(): Boolean {
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+    }
+
     // 수정된 내용이 있는지 체크
     private fun isExistEdit(): Boolean {
         return cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
@@ -527,7 +532,7 @@ class HistoryViewModel @Inject constructor(
 
     // 즐겨찾기 추가
     fun postAddFavorite() {
-        if (isAllInputData()) {
+        if (isFavoriteInputData()) {
             viewModelScope.launch(Dispatchers.IO) {
                 postBooksFavoritesUseCase(
                     bookKey = prefs.getString("bookKey", ""),
