@@ -98,7 +98,7 @@ class BookSettingFavoriteViewModel @Inject constructor(
             ).onSuccess {
                 val updatedList = _favoriteList.value!!.filter { it.idx != item.idx }
                 _favoriteList.postValue(updatedList)
-                baseEvent(Event.ShowToast("삭제가 완료되었습니다."))
+                baseEvent(Event.ShowSuccessToast("삭제가 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
             }

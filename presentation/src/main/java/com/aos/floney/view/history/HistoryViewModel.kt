@@ -175,12 +175,13 @@ class HistoryViewModel @Inject constructor(
         modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
     fun setIntentFavoriteData(item: DayMoneyFavoriteItem) {
+
         mode.value = "add"
         cost.value = NumberFormat.getNumberInstance().format(item.money.toInt()) + CurrencyUtil.currency
-        asset.value = item.assetSubcategoryName
         line.value = item.lineSubcategoryName
+        asset.value = item.assetSubcategoryName
         content.value = item.description
-        onClickFlow(item.lineCategoryName)
+        flow.value = item.lineCategoryName
     }
     // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory() {
@@ -311,6 +312,11 @@ class HistoryViewModel @Inject constructor(
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
+    }
+
+    // 즐겨찾기 데이터 입력 되었는지 체크
+    private fun isFavoriteInputData(): Boolean {
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
     }
 
     // 수정된 내용이 있는지 체크
@@ -527,7 +533,7 @@ class HistoryViewModel @Inject constructor(
 
     // 즐겨찾기 추가
     fun postAddFavorite() {
-        if (isAllInputData()) {
+        if (isFavoriteInputData()) {
             viewModelScope.launch(Dispatchers.IO) {
                 postBooksFavoritesUseCase(
                     bookKey = prefs.getString("bookKey", ""),
@@ -539,7 +545,7 @@ class HistoryViewModel @Inject constructor(
                     assetSubcategoryName = asset.value!!
                 ).onSuccess {
                     _postBooksFavorites.emit(true)
-                    baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
+                    baseEvent(Event.ShowSuccessToast("즐겨찾기에 추가되었습니다."))
                 }.onFailure {
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
                 }
