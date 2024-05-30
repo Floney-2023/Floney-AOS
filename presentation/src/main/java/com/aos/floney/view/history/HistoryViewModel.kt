@@ -165,7 +165,7 @@ class HistoryViewModel @Inject constructor(
         _repeatClickItem.value = UiBookCategory(
             idx = 1,
             checked = true,
-            name = getConvertReceiveRepeatValue(item.repeatDuration),
+            name = item.repeatDuration,
             default = true
         )
 

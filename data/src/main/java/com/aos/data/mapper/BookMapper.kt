@@ -187,7 +187,7 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
             writerEmail = it.writerEmail,
             writerNickName = it.writerNickname,
             writerProfileImg = it.writerProfileImg,
-            repeatDuration = it.repeatDuration
+            repeatDuration = getConvertReceiveRepeatValue(it.repeatDuration)
         )
     }
 
@@ -485,4 +485,17 @@ fun PostBookFavoriteEntity.toPostBookFavoriteModel(): PostBookFavoriteModel {
         assetSubcategoryName = this.assetSubcategoryName
     )
 
+}
+
+private fun getConvertReceiveRepeatValue(value: String): String {
+    Timber.e("value $value")
+    return when(value) {
+        "NONE" -> ""
+        "EVERYDAY" -> "매일"
+        "WEEK" -> "매주"
+        "MONTH" -> "매달"
+        "WEEKDAY" -> "주중"
+        "WEEKEND" -> "주말"
+        else -> ""
+    }
 }

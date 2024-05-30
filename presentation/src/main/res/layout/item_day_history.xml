@@ -10,6 +10,8 @@
         <variable
             name="eventHolder"
             type="com.aos.model.home.UiBookDayModel.OnItemClickListener" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -51,17 +53,40 @@
             app:layout_constraintStart_toEndOf="@id/cv_profile_card_view"
             app:layout_constraintTop_toTopOf="@id/cv_profile_card_view" />
 
-        <TextView
-            android:id="@+id/tv_category"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:text="@{item.lineSubCategory + ` ‧ ` +item.assetSubCategory}"
-            android:textColor="@color/grayscale6"
-            android:textSize="12dp"
-            app:layout_constraintStart_toEndOf="@id/cv_profile_card_view"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name">
+
+            <TextView
+                android:id="@+id/tv_repeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/custom_radius_8_solid_primary10"
+                android:visibility="@{item.repeatDuration.equals(``) ? View.GONE : View.VISIBLE}"
+                android:paddingStart="6dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="4dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{item.repeatDuration}"
+                android:textColor="@color/primary2"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{item.lineSubCategory + ` ‧ ` +item.assetSubCategory}"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,9 +96,9 @@
             android:text="@{item.money}"
             android:textColor="@color/grayscale2"
             android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_category"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_name" />
+            app:layout_constraintTop_toTopOf="@+id/tv_name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
