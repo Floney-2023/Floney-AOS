@@ -235,7 +235,7 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             postBooksLinesUseCase(
                 bookKey = prefs.getString("bookKey", ""),
-                money = cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2)
+                money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
                     .toInt(),
                 flow = flow.value!!,
                 asset = asset.value!!,

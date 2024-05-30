@@ -53,12 +53,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@{item.expenses.income}"
-            android:textSize="9sp"
+            bind:adjustDayMoneyText="@{item.expenses.income}"
             android:textColor="@color/blue1"
+            android:textSize="9dp"
             android:visibility="@{item.expenses.income.equals(``) ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
@@ -67,12 +67,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:ellipsize="end"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@{item.expenses.outcome}"
+            bind:adjustDayMoneyText="@{item.expenses.outcome}"
             android:textColor="@color/red"
-            android:textSize="9sp"
+            android:textSize="9dp"
             android:visibility="@{item.expenses.outcome.equals(``) ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/tv_cost" />
 

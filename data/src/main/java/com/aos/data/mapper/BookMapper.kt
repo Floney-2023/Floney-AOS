@@ -490,7 +490,7 @@ fun PostBookFavoriteEntity.toPostBookFavoriteModel(): PostBookFavoriteModel {
 private fun getConvertReceiveRepeatValue(value: String): String {
     Timber.e("value $value")
     return when(value) {
-        "NONE" -> ""
+        "NONE" -> "없음"
         "EVERYDAY" -> "매일"
         "WEEK" -> "매주"
         "MONTH" -> "매달"
