@@ -17,5 +17,5 @@ data class PostSettlementAddEntity(
 data class Details(
     val money: Double,
     val userNickname: String,
-    val userProfileImg: String
+    val userProfileImg: String?
 )
