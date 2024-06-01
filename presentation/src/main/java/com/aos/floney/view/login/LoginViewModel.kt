@@ -92,7 +92,7 @@ class LoginViewModel @Inject constructor(
     }
 
     // 유저 가계부 유효 확인
-    private fun checkUserBooks() {
+    fun checkUserBooks() {
         viewModelScope.launch {
             checkUserBookUseCase().onSuccess {
                 if(it.bookKey != "") {
@@ -109,7 +109,7 @@ class LoginViewModel @Inject constructor(
     }
 
     // 화폐 설정 조회
-    private fun searchCurrency(){
+    fun searchCurrency(){
         viewModelScope.launch {
             booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
                 if(it.myBookCurrency != "") {
@@ -119,10 +119,12 @@ class LoginViewModel @Inject constructor(
                     CurrencyUtil.currency = getCurrencySymbolByCode(it.myBookCurrency)
                     _existBook.emit(true)
                 } else {
+                    _existBook.emit(false)
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToastRes(R.string.currency_error))
                 }
             }.onFailure {
+                _existBook.emit(false)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
             }
         }

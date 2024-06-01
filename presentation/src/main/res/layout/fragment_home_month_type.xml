@@ -160,9 +160,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="@{vm.getExtData.totalOutcome}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:text="@{vm.getExtData.totalOutcome}"
+                bind:adjustTotalMoneyText="@{vm.getExtData.totalOutcome}"
                 app:layout_constraintEnd_toEndOf="@id/tv_total_outcome"
                 app:layout_constraintStart_toStartOf="@id/tv_total_outcome"
                 app:layout_constraintTop_toBottomOf="@id/tv_total_outcome" />
@@ -185,9 +186,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="@{vm.getExtData.totalIncome}"
+                bind:adjustTotalMoneyText="@{vm.getExtData.totalIncome}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:text="@{vm.getExtData.totalIncome}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tv_total_income"
                 app:layout_constraintTop_toBottomOf="@id/tv_total_income" />

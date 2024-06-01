@@ -14,6 +14,8 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModel
@@ -45,6 +47,7 @@ class HistoryActivity :
     BaseActivity<ActivityHistoryBinding, HistoryViewModel>(R.layout.activity_history), UiBookCategory.OnItemClickListener {
     private lateinit var calendarBottomSheetDialog: CalendarBottomSheetDialog
     private lateinit var categoryBottomSheetDialog: CategoryBottomSheetDialog
+    private lateinit var launcher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +55,20 @@ class HistoryActivity :
         setUpUi()
         setUpViewModelObserver()
         setUpCalendarBottomSheet()
+        setUpFavoriteItem()
     }
-
+    private fun setUpFavoriteItem()
+    {
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // 즐겨찾기 데이터 가져오기 (존재할 경우 실행)
+                val data: Intent? = result.data
+                data?.intentSerializable("favoriteItem", DayMoneyFavoriteItem::class.java)
+                    ?.let {
+                        viewModel.setIntentFavoriteData(it)}
+            }
+        }
+    }
     private fun setUpUi(){
         binding.setVariable(BR.vm, viewModel)
     }
@@ -80,16 +95,8 @@ class HistoryActivity :
         return date
     }
 
-    // 즐겨찾기 데이터 가져오기 (존재할 경우 실행)
-    private fun getFavoriteData() {
-        intent.intentSerializable("favoriteItem", DayMoneyFavoriteItem::class.java)
-            ?.let {
-                viewModel.setIntentFavoriteData(it)}
-    }
-
     // 캘린더 bottomSheet 구현
     private fun setUpCalendarBottomSheet() {
-        getFavoriteData()
 
         val date = if(getIntentAddData() == "") {
             getModifyData()
@@ -226,13 +233,17 @@ class HistoryActivity :
                             // 즐겨찾기에 추가
                             viewModel.postAddFavorite()
                         } else {
-                            // 즐겨찾기 내역 보기
-                            startActivity(Intent(this@HistoryActivity, BookFavoriteActivity::class.java))
-                            if (Build.VERSION.SDK_INT >= 34) {
-                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                            } else {
-                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                            }
+
+                            val intent = Intent(this@HistoryActivity, BookFavoriteActivity::class.java).putExtra("entryPoint", "history")
+                            launcher.launch(intent)
+
+//                            // 즐겨찾기 내역 보기
+//                            startActivity(Intent(this@HistoryActivity, BookFavoriteActivity::class.java))
+//                            if (Build.VERSION.SDK_INT >= 34) {
+//                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+//                            } else {
+//                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//                            }
 
                         }
                     }.show(supportFragmentManager, "baseChoiceDialog")

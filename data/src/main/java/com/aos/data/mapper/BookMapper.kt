@@ -187,7 +187,7 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
             writerEmail = it.writerEmail,
             writerNickName = it.writerNickname,
             writerProfileImg = it.writerProfileImg,
-            repeatDuration = it.repeatDuration
+            repeatDuration = getConvertReceiveRepeatValue(it.repeatDuration)
         )
     }
 
@@ -338,7 +338,7 @@ fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
         Details(
             money = if (it.money.toInt() == 0 ) "" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong().absoluteValue)}${CurrencyUtil.currency}",
             userNickname = it.userNickname,
-            useruserProfileImg = it.userProfileImg,
+            useruserProfileImg = it.userProfileImg?: "user_default",
             moneyInfo = if (it.money > 0) "을 보내야해요." else if (it.money < 0) "을 받아야해요." else "정산할 금액이 없어요."
         )
     }
@@ -470,7 +470,8 @@ fun List<GetBookFavoriteEntity>.toUiBookFavorite(): List<UiBookFavoriteModel> {
             lineCategoryName = it.lineCategoryName,
             lineSubcategoryName = it.lineSubcategoryName,
             assetSubcategoryName = it.assetSubcategoryName,
-            money = "${it.money.toInt()}${CurrencyUtil.currency}"
+            money = "${it.money.toInt()}${CurrencyUtil.currency}",
+            exceptStatus = it.exceptStatus
         )
     }
 }
@@ -482,7 +483,21 @@ fun PostBookFavoriteEntity.toPostBookFavoriteModel(): PostBookFavoriteModel {
         description = this.description,
         lineCategoryName = this.lineCategoryName,
         lineSubcategoryName = this.lineSubcategoryName,
-        assetSubcategoryName = this.assetSubcategoryName
+        assetSubcategoryName = this.assetSubcategoryName,
+        exceptStatus = this.exceptStatus
     )
 
+}
+
+private fun getConvertReceiveRepeatValue(value: String): String {
+    Timber.e("value $value")
+    return when(value) {
+        "NONE" -> "없음"
+        "EVERYDAY" -> "매일"
+        "WEEK" -> "매주"
+        "MONTH" -> "매달"
+        "WEEKDAY" -> "주중"
+        "WEEKEND" -> "주말"
+        else -> ""
+    }
 }

@@ -1,5 +1,7 @@
 package com.aos.floney.ext
 
+import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -63,4 +65,49 @@ fun View.setLayoutWeight(weight: Float) {
     val layoutParams = this.layoutParams as LinearLayout.LayoutParams
     layoutParams.weight = weight
     this.layoutParams = layoutParams
+}
+
+
+@BindingAdapter("bind:setTextWithEllipsis")
+fun TextView.setTextWithEllipsis(text: String?) {
+    text?.let {
+        if (it.length > 10) {
+            this.text = "${it.substring(0, 10)}..."
+        } else {
+            this.text = it
+        }
+    }
+}
+
+@BindingAdapter("bind:adjustTotalMoneyText")
+fun TextView.adjustTotalMoneyText(amount: String?) {
+    amount?.let{
+        val amountValue = amount.replace(",", "").replace(CurrencyUtil.currency,"").toLongOrNull() ?: return
+
+        when {
+            amountValue < 1_000_000_000 -> {
+                this.textSize = 18f
+            }
+            amountValue in 1_000_000_000..99_999_999_999 -> {
+                this.textSize = 16f
+            }
+        }
+    }
+}
+
+@BindingAdapter("bind:adjustDayMoneyText")
+fun TextView.adjustDayMoneyText(amount: String?) {
+    amount?.let{
+        val amountValue = kotlin.math.abs(amount.replace(",", "").toLongOrNull() ?: return)
+        when {
+            amountValue < 1_000_000_000 -> {
+                this.textSize = 9f
+                this.text = amount
+            }
+            amountValue in 1_000_000_000..99_999_999_999 -> {
+                this.textSize = 8f
+                this.text = "$amount.."
+            }
+        }
+    }
 }

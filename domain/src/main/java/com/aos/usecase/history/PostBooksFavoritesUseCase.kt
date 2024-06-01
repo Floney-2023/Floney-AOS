@@ -12,8 +12,9 @@ class PostBooksFavoritesUseCase @Inject constructor(private val bookRepository: 
        description: String,
        lineCategoryName: String,
        lineSubcategoryName: String,
-       assetSubcategoryName: String
+       assetSubcategoryName: String,
+       exceptStatus : Boolean
     ): Result<PostBookFavoriteModel> {
-        return bookRepository.postBooksFavorites(bookKey, money, description, lineCategoryName, lineSubcategoryName, assetSubcategoryName)
+        return bookRepository.postBooksFavorites(bookKey, money, description, lineCategoryName, lineSubcategoryName, assetSubcategoryName,exceptStatus)
     }
 }

@@ -4,8 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
-import com.aos.floney.util.EventFlow
-import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.home.GetBookInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +23,8 @@ class BookFavoriteViewModel @Inject constructor(
     // 현재 로그인된 계정 닉네임
     private lateinit var myNickname: String
 
+    // 내역 추가 -> 즐겨찾기 화면 이동 여부
+    var entryCheck : Boolean = false
 
     init{
         getBookInfo()
@@ -62,7 +62,9 @@ class BookFavoriteViewModel @Inject constructor(
             }
         }
     }
-    fun getMyNickname(): String {
-        return myNickname
+    fun setEntryPoint(entryPoint: String) {
+        if (entryPoint!=""){
+            entryCheck = true
+        }
     }
 }

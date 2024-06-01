@@ -165,7 +165,7 @@ class HistoryViewModel @Inject constructor(
         _repeatClickItem.value = UiBookCategory(
             idx = 1,
             checked = true,
-            name = getConvertReceiveRepeatValue(item.repeatDuration),
+            name = item.repeatDuration,
             default = true
         )
 
@@ -175,13 +175,13 @@ class HistoryViewModel @Inject constructor(
         modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
     fun setIntentFavoriteData(item: DayMoneyFavoriteItem) {
-
         mode.value = "add"
         cost.value = NumberFormat.getNumberInstance().format(item.money.toInt()) + CurrencyUtil.currency
         line.value = item.lineSubcategoryName
         asset.value = item.assetSubcategoryName
         content.value = item.description
         flow.value = item.lineCategoryName
+        deleteChecked = item.exceptStatus
     }
     // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory() {
@@ -235,7 +235,7 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             postBooksLinesUseCase(
                 bookKey = prefs.getString("bookKey", ""),
-                money = cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2)
+                money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
                     .toInt(),
                 flow = flow.value!!,
                 asset = asset.value!!,
@@ -542,7 +542,8 @@ class HistoryViewModel @Inject constructor(
                     description = content.value!!,
                     lineCategoryName = flow.value!!,
                     lineSubcategoryName = line.value!!,
-                    assetSubcategoryName = asset.value!!
+                    assetSubcategoryName = asset.value!!,
+                    exceptStatus = deleteChecked
                 ).onSuccess {
                     _postBooksFavorites.emit(true)
                     baseEvent(Event.ShowSuccessToast("즐겨찾기에 추가되었습니다."))

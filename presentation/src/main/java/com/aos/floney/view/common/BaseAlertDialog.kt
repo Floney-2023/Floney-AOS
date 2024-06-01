@@ -12,8 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.aos.floney.R
 import com.aos.floney.databinding.BaseAlertDialogBinding
-import com.aos.floney.databinding.WarningPopupBinding
-import com.aos.floney.ext.setLayoutWeight
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

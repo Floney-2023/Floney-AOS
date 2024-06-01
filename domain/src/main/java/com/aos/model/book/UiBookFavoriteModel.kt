@@ -10,7 +10,8 @@ data class UiBookFavoriteModel(
     val lineCategoryName : String,
     val lineSubcategoryName : String,
     val assetSubcategoryName : String,
-    val money: String
+    val money: String,
+    val exceptStatus : Boolean
 ){
     interface OnItemClickListener {
         fun onItemClick(item: UiBookFavoriteModel)

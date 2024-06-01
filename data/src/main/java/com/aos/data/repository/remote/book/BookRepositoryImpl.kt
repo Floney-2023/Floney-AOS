@@ -366,6 +366,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
             )
             is NetworkState.NetworkError -> return Result.failure(IllegalStateException("NetworkError"))
             is NetworkState.UnknownError ->{
+
                 Timber.e("UnknownError ${data.errorState}, ${data.t}")
                 return Result.failure(IllegalStateException("unKnownError"))
             }
@@ -800,10 +801,11 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
         description: String,
         lineCategoryName : String,
         lineSubcategoryName : String,
-        assetSubcategoryName : String
+        assetSubcategoryName : String,
+        exceptStatus : Boolean
     ): Result<PostBookFavoriteModel> {
         when (val data = bookDataSource.postBooksFavorites(bookKey,
-            PostBooksFavoritesBody(money, description, lineCategoryName, lineSubcategoryName, assetSubcategoryName))
+            PostBooksFavoritesBody(money, description, lineCategoryName, lineSubcategoryName, assetSubcategoryName, exceptStatus))
         ) {
             is NetworkState.Success -> return Result.success(data.body.toPostBookFavoriteModel())
             is NetworkState.Failure -> return Result.failure(
