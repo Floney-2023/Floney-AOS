@@ -50,26 +50,20 @@ class MyPageSettingAlarmViewModel @Inject constructor(
     // 이전 페이지로 이동
     fun onClickPreviousPage()
     {
-        viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
-            marketingChangeUseCase(agree = marketingTerms.value ?: false).onSuccess {
-                _back.emit(true)
-
-                // 유저 마케팅 수신 동의 여부 변경
-                baseEvent(Event.ShowToastRes(R.string.mypage_main_setting_marketing_response))
-                baseEvent(Event.HideLoading)
-            }.onFailure {
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageSettingAlarmViewModel)))
-            }
+        viewModelScope.launch {
+            _back.emit(true)
         }
     }
     // 마케팅 동의 변경 토글 버튼 클릭
     fun onClickMarketingTerms()
     {
-        viewModelScope.launch {
-            withContext(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
+            marketingChangeUseCase(agree = !(marketingTerms.value)!!).onSuccess {
                 _marketingTerms.postValue(!_marketingTerms.value!!)
+                // 유저 마케팅 수신 동의 여부 변경
+                baseEvent(Event.ShowSuccessToastRes(R.string.mypage_main_setting_marketing_response))
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageSettingAlarmViewModel)))
             }
         }
     }
