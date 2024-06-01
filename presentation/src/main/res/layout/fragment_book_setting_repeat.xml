@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
             android:layout_marginEnd="20dp"
+            android:visibility="@{vm.repeatList.size() == 0 ? View.GONE : View.VISIBLE}"
             android:text="@{vm.edit ? `완료` : `편집`}"
             android:textSize="14dp"
             android:fontFamily="@font/pretendard_medium"
@@ -101,24 +102,24 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:background="@{vm.flow == `지출` ? @drawable/custom_radius_8_solid_white : null}"
+                android:background="@{vm.flow.equals(`지출`) ? @drawable/custom_radius_8_solid_white : null}"
                 android:fontFamily="@font/pretendard_semibold"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                 android:text="지출"
-                android:textColor="@{vm.flow == `지출` ? @color/grayscale2 : @color/grayscale8}"
+                android:textColor="@{vm.flow.equals(`지출`) ? @color/grayscale2 : @color/grayscale8}"
                 android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@{vm.flow == `수입` ? @drawable/custom_radius_8_solid_white : null}"
+                android:background="@{vm.flow.equals(`수입`) ? @drawable/custom_radius_8_solid_white : null}"
                 android:fontFamily="@font/pretendard_semibold"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                 android:text="수입"
-                android:textColor="@{vm.flow == `수입` ? @color/grayscale2 : @color/grayscale8}"
+                android:textColor="@{vm.flow.equals(`수입`) ? @color/grayscale2 : @color/grayscale8}"
                 android:textSize="14dp" />
 
             <TextView
@@ -126,12 +127,12 @@
                 android:layout_height="30dp"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:background="@{vm.flow == `이체` ? @drawable/custom_radius_8_solid_white : null}"
+                android:background="@{vm.flow.equals(`이체`) ? @drawable/custom_radius_8_solid_white : null}"
                 android:fontFamily="@font/pretendard_semibold"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`이체`)}"
                 android:text="이체"
-                android:textColor="@{vm.flow == `이체` ? @color/grayscale2 : @color/grayscale8}"
+                android:textColor="@{vm.flow.equals(`이체`) ? @color/grayscale2 : @color/grayscale8}"
                 android:textSize="14dp" />
 
         </LinearLayout>
