@@ -109,6 +109,5 @@ fun TextView.adjustDayMoneyText(amount: String?) {
                 this.text = "$amount.."
             }
         }
-
     }
 }

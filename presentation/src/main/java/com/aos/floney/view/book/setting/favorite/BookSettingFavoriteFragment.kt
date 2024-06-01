@@ -3,17 +3,22 @@ package com.aos.floney.view.book.setting.favorite
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingFavoriteBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.common.BaseAlertDialog
+import com.aos.floney.view.home.HomeViewModel
 import com.aos.model.book.UiBookFavoriteModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBinding, BookSettingFavoriteViewModel>(R.layout.fragment_book_setting_favorite) , UiBookFavoriteModel.OnItemClickListener {
+    private val activityViewModel: BookFavoriteViewModel by activityViewModels()
+
     override fun onResume() {
         super.onResume()
         viewModel.getBookCategory()
@@ -32,8 +37,7 @@ class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBind
             }
             exitDialogFragment.show(parentFragmentManager, "favoriteLoadDialog")
         }
-        else{
-
+        else if (activityViewModel.entryCheck){
             val exitDialogFragment = BaseAlertDialog(
                 "즐겨찾기",
                 "해당 내역을 불러오겠습니까?",
