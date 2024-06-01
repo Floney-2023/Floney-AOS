@@ -66,7 +66,7 @@ class BookSettingFavoriteViewModel @Inject constructor(
             getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory(flow.value!!)).onSuccess { it ->
                 val item = it.map {
                     UiBookFavoriteModel(
-                        it.idx, edit.value!!, it.description,it.lineCategoryName,it.lineSubcategoryName,it.assetSubcategoryName, it.money
+                        it.idx, edit.value!!, it.description,it.lineCategoryName,it.lineSubcategoryName,it.assetSubcategoryName, it.money, it.exceptStatus
                     )
                 }
                 _favoriteList.postValue(item)

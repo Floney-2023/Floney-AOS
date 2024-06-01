@@ -8,5 +8,6 @@ data class PostBooksFavoritesBody (
     val description: String,
     val lineCategoryName: String,
     val lineSubcategoryName: String,
-    val assetSubcategoryName: String
+    val assetSubcategoryName: String,
+    val exceptStatus : Boolean
 )

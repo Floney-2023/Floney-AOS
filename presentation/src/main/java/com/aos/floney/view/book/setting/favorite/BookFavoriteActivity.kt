@@ -54,7 +54,8 @@ class BookFavoriteActivity : BaseActivity<ActivityBookFavoriteBinding, BookFavor
                     description = item.description,
                     lineCategoryName = item.lineCategoryName,
                     lineSubcategoryName = item.lineSubcategoryName,
-                    assetSubcategoryName = item.assetSubcategoryName
+                    assetSubcategoryName = item.assetSubcategoryName,
+                    exceptStatus = item.exceptStatus
                 ))
 
         setResult(RESULT_OK, intent)

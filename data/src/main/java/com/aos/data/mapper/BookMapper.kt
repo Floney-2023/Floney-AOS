@@ -470,7 +470,8 @@ fun List<GetBookFavoriteEntity>.toUiBookFavorite(): List<UiBookFavoriteModel> {
             lineCategoryName = it.lineCategoryName,
             lineSubcategoryName = it.lineSubcategoryName,
             assetSubcategoryName = it.assetSubcategoryName,
-            money = "${it.money.toInt()}${CurrencyUtil.currency}"
+            money = "${it.money.toInt()}${CurrencyUtil.currency}",
+            exceptStatus = it.exceptStatus
         )
     }
 }
@@ -482,7 +483,8 @@ fun PostBookFavoriteEntity.toPostBookFavoriteModel(): PostBookFavoriteModel {
         description = this.description,
         lineCategoryName = this.lineCategoryName,
         lineSubcategoryName = this.lineSubcategoryName,
-        assetSubcategoryName = this.assetSubcategoryName
+        assetSubcategoryName = this.assetSubcategoryName,
+        exceptStatus = this.exceptStatus
     )
 
 }
