@@ -1,4 +1,4 @@
-package com.aos.floney.view.book.add
+package com.aos.floney.view.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

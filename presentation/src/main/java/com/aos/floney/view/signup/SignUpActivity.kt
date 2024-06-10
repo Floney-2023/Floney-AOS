@@ -3,18 +3,14 @@ package com.aos.floney.view.signup
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySignUpBinding
-import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.login.LoginActivity
-import com.aos.model.user.SocialUserModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class SignUpActivity() :
@@ -61,7 +57,7 @@ class SignUpActivity() :
     }
 
     fun startBookAddActivity() {
-        startActivity(Intent(this, BookAddActivity::class.java))
+        startActivity(Intent(this, SignUpCompleteActivity::class.java))
         if (Build.VERSION.SDK_INT >= 34) {
             overrideActivityTransition(
                 Activity.OVERRIDE_TRANSITION_OPEN,

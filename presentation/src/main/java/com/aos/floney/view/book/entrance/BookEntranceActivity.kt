@@ -29,6 +29,7 @@ import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.signup.SignUpActivity
+import com.aos.floney.view.signup.SignUpCompleteActivity
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.deeplink.DeepLink
 import com.appsflyer.deeplink.DeepLinkListener
@@ -75,7 +76,7 @@ class BookEntranceActivity : BaseActivity<ActivityBookEntranceBinding, BookEntra
                             finishAffinity()
                         }
                         else{
-                            val intent = Intent(this@BookEntranceActivity, BookAddActivity::class.java)
+                            val intent = Intent(this@BookEntranceActivity, SignUpCompleteActivity::class.java)
                             startActivity(intent)
                             if (Build.VERSION.SDK_INT >= 34) {
                                 overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
