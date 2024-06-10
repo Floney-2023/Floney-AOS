@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CommonUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
@@ -14,6 +15,7 @@ import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.usecase.bookadd.BooksEntranceUseCase
 import com.aos.usecase.bookadd.BooksJoinUseCase
+import com.aos.usecase.mypage.MypageSearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +25,7 @@ import javax.inject.Inject
 class BookEntranceViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val booksJoinUseCase: BooksJoinUseCase,
+    private val mypageSearchUseCase: MypageSearchUseCase,
     private val booksEntranceUseCase : BooksEntranceUseCase
 ): BaseViewModel() {
 
@@ -66,10 +69,26 @@ class BookEntranceViewModel @Inject constructor(
     }
 
     fun onClickEntrance(){
+        // 가입된 가계부 수 읽어오기
+        viewModelScope.launch(Dispatchers.IO) {
+            mypageSearchUseCase().onSuccess {
+                if (it.myBooks.size < 2)
+                    bookEntrance()
+                else {
+                    _newBookCreatePage.emit(false)
+                }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookEntranceViewModel)))
+            }
+        }
+    }
+    fun bookEntrance()
+    {
         if(inviteCode.value!!.isNotEmpty()) {
             // 참여 코드 전송
             viewModelScope.launch(Dispatchers.IO) {
                 baseEvent(Event.ShowLoading)
+
                 booksJoinUseCase(inviteCode.value!!).onSuccess {
                     // 참여 완료, 참여 가계부 키 설정
                     prefs.setString("bookKey", it.bookKey)
@@ -86,7 +105,6 @@ class BookEntranceViewModel @Inject constructor(
             baseEvent(Event.ShowToastRes(R.string.book_add_invite_check_request_empty_code))
         }
     }
-
     fun onClickedSkipBtn(){
         viewModelScope.launch {
             _inviteCodeExit.emit(true)

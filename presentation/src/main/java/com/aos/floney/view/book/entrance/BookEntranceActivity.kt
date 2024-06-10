@@ -22,8 +22,10 @@ import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment
 import com.aos.floney.view.book.setting.category.BookCategoryActivity
 import com.aos.floney.view.common.BaseAlertDialog
+import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.login.LoginActivity
+import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity
 import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.signup.SignUpActivity
@@ -59,15 +61,30 @@ class BookEntranceActivity : BaseActivity<ActivityBookEntranceBinding, BookEntra
             viewModel.inviteCodeExit.collect {
                 Timber.e("nextPage $it")
                 if(it) {
-                    // 자동 로그인 기능 구현
+                    // 로그인 여부 확인
                     if(sharedPreferenceUtil.getString("accessToken", "") != "") {
-                        val intent = Intent(this@BookEntranceActivity, HomeActivity::class.java)
-                        startActivity(intent)
-                        if (Build.VERSION.SDK_INT >= 34) {
-                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                        } else {
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        // 가계부 존재하는 경우, 홈으로. 존재하지 않는 경우, 가계부 추가 화면으로
+                        if (sharedPreferenceUtil.getString("bookKey", "") != ""){
+                            val intent = Intent(this@BookEntranceActivity, HomeActivity::class.java)
+                            startActivity(intent)
+                            if (Build.VERSION.SDK_INT >= 34) {
+                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                            } else {
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                            }
+                            finishAffinity()
                         }
+                        else{
+                            val intent = Intent(this@BookEntranceActivity, BookAddActivity::class.java)
+                            startActivity(intent)
+                            if (Build.VERSION.SDK_INT >= 34) {
+                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                            } else {
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                            }
+
+                        }
+
                     } else {
                         val intent = Intent(this@BookEntranceActivity, LoginActivity::class.java)
                         startActivity(intent)
@@ -76,6 +93,7 @@ class BookEntranceActivity : BaseActivity<ActivityBookEntranceBinding, BookEntra
                         } else {
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                         }
+                        finishAffinity()
                     }
                 }
             }
@@ -96,11 +114,31 @@ class BookEntranceActivity : BaseActivity<ActivityBookEntranceBinding, BookEntra
         }
         repeatOnStarted {
             viewModel.newBookCreatePage.collect{
-                startActivity(Intent(this@BookEntranceActivity, HomeActivity::class.java))
-                if (Build.VERSION.SDK_INT >= 34) {
-                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                } else {
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                if (it){
+                    startActivity(Intent(this@BookEntranceActivity, HomeActivity::class.java))
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                }
+                else {
+                    val exitDialogFragment = WarningPopupDialog(
+                        "사용중인 가계부를 확인하세요",
+                        "사용할 수 있는 가계부를 초과하였습니다.\n" +
+                                "마이페이지에서 내 가계부를 확인해 주세요.",
+                        getString(R.string.home_dialog_right_button),
+                        getString(R.string.home_dialog_right_button),
+                        true
+                    ) { checked ->
+                        startActivity(Intent(this@BookEntranceActivity, MyPageActivity::class.java))
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
+                    }
+                    exitDialogFragment.show(supportFragmentManager, "clickDialog")
                 }
             }
         }
