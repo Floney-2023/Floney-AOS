@@ -35,8 +35,13 @@ class BookAddInputBookNameViewModel @Inject constructor(
     }
     // 다음 페이지로 이동 -> 가계부 이름 전달
     fun onClickNextPage(){
-        viewModelScope.launch(Dispatchers.IO) {
-            _nextPage.emit(true)
+        if (bookName.value.isNullOrBlank()){
+            baseEvent(Event.ShowToast("이름을 입력하세요."))
+        }
+        else {
+            viewModelScope.launch(Dispatchers.IO) {
+                _nextPage.emit(true)
+            }
         }
     }
 }
