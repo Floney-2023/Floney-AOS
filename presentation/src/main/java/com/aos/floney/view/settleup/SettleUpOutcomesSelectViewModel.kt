@@ -119,7 +119,7 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
         _userEmail.value = selectedEmails
         _outcome.value = selectedOutcomes
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (selectedEmails.isNotEmpty()) {
                 val advertiseTime = prefs.getString("advertiseTime", "")
                 val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
