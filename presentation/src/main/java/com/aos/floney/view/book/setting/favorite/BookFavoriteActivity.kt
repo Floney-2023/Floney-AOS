@@ -12,6 +12,7 @@ import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookFavoriteModel
 import com.aos.model.home.DayMoneyFavoriteItem
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class BookFavoriteActivity : BaseActivity<ActivityBookFavoriteBinding, BookFavoriteViewModel>(R.layout.activity_book_favorite) {

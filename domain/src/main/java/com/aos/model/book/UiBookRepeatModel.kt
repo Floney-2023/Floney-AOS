@@ -9,7 +9,7 @@ data class UiBookRepeatModel(
     val repeatDuration: String,
     val lineSubCategory : String,
     val assetSubCategory : String,
-    val money: Int,
+    val money: String,
     val isDelete : Boolean = false
 ){
     interface OnItemClickListener {

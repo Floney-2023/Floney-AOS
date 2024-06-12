@@ -14,6 +14,7 @@ import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.home.HomeViewModel
 import com.aos.model.book.UiBookFavoriteModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBinding, BookSettingFavoriteViewModel>(R.layout.fragment_book_setting_favorite) , UiBookFavoriteModel.OnItemClickListener {
