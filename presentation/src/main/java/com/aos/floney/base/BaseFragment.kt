@@ -52,7 +52,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         AppCompatDialog(requireContext()).apply {
             setContentView(R.layout.item_progress_loading)
             setCancelable(false)
-            window?.setDimAmount(0.2f)
+            window?.setDimAmount(0.4f)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }

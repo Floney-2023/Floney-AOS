@@ -57,7 +57,7 @@
                 android:background="@drawable/background_circle_image"
                 android:clipToOutline="true"
                 android:onClick="@{() -> vm.onClickSettingImage()}"
-                setImageToUrl="@{vm.profileImg.equals(`book_default`)? `btn_book_default`: vm.profileImg}"  />
+                setBookImageToUrl="@{vm.profileImg.equals(``)? `btn_book_default`: vm.profileImg}"  />
 
 
             <ToggleButton

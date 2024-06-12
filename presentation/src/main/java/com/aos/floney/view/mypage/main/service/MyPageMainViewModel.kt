@@ -22,6 +22,7 @@ import com.aos.floney.util.getAdvertiseCheck
 import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.user.MyBooks
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import kotlin.math.abs
@@ -195,27 +196,39 @@ class MyPageMainViewModel @Inject constructor(
 
     // 최근 저장 가계부 저장
     fun settingBookKey(bookKey: String){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             baseEvent(Event.ShowLoading)
-            recentBookKeySaveUseCase(bookKey).onSuccess {
-                prefs.setString("bookKey",bookKey)
 
-                val sortedBooks= _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey}
+            // 애니메이션 사이클 지속 시간 계산
+            val animationDelay = 200L
+            val animationDuration = 600L
+            val minimumCycleDuration = animationDuration + animationDelay * 2
 
-                val updatedResult = _mypageInfo.value!!.copy(myBooks = sortedBooks.map { myBook ->
-                    if (myBook.bookKey == bookKey) {
-                        myBook.copy(recentCheck = true)
-                    } else {
-                        myBook.copy(recentCheck = false)
-                    }
-                })
+            withContext(Dispatchers.IO) {
+                recentBookKeySaveUseCase(bookKey).onSuccess {
 
-                _mypageInfo.postValue(updatedResult)
-                baseEvent(Event.HideLoading)
-            }.onFailure {
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                    prefs.setString("bookKey", bookKey)
+
+                    val sortedBooks = _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey }
+
+                    val updatedResult = _mypageInfo.value!!.copy(myBooks = sortedBooks.map { myBook ->
+                        if (myBook.bookKey == bookKey) {
+                            myBook.copy(recentCheck = true)
+                        } else {
+                            myBook.copy(recentCheck = false)
+                        }
+                    })
+
+                    // 최소 한 싸이클이 완료될 때까지 지연
+                    delay(minimumCycleDuration)
+                    baseEvent(Event.HideLoading)
+                    _mypageInfo.postValue(updatedResult)
+                }.onFailure {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+                }
             }
+            baseEvent(Event.HideLoading)
         }
     }
 

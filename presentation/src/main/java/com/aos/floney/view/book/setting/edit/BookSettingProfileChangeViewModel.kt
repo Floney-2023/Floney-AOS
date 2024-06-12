@@ -198,7 +198,7 @@ class BookSettingProfileChangeViewModel @Inject constructor(
 
     // 임시 촬영 파일 저장
     fun setImageBitmap(bitmap: Bitmap?) {
-        imageBitmap = bitmap
+        imageBitmap = bitmap?.let { cropBitmapToSquare(it) }
     }
 
     // 임시 촬영 파일 불러오기
@@ -214,6 +214,12 @@ class BookSettingProfileChangeViewModel @Inject constructor(
     // 유저 프로필 이미지 불러오기
     fun getUserProfile(): String {
         return CommonUtil.userProfileImg
+    }
+    fun cropBitmapToSquare(bitmap: Bitmap): Bitmap {
+        val size = Math.min(bitmap.width, bitmap.height)
+        val x = (bitmap.width - size) / 2
+        val y = (bitmap.height - size) / 2
+        return Bitmap.createBitmap(bitmap, x, y, size, size)
     }
 
 }
