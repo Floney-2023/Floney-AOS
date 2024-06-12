@@ -8,6 +8,7 @@ import com.aos.usecase.home.GetBookInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -29,22 +30,6 @@ class BookFavoriteViewModel @Inject constructor(
     init{
         getBookInfo()
     }
-
-    // 오늘 날짜 가져오기
-    fun getTodayString(): String{
-        val year = _calendar.value.get(Calendar.YEAR)
-        val month = if ((_calendar.value.get(Calendar.MONTH) + 1) < 10) {
-            "0${_calendar.value.get(Calendar.MONTH) + 1}"
-        } else {
-            _calendar.value.get(Calendar.MONTH) + 1
-        }
-        val day = if (_calendar.value.get(Calendar.DATE) < 10) {
-            "0${_calendar.value.get(Calendar.DATE)}"
-        } else {
-            _calendar.value.get(Calendar.DATE)
-        }
-        return "$year.$month.$day"
-    }
     private fun getBookInfo() {
         viewModelScope.launch {
             baseEvent(Event.ShowLoading)
@@ -63,7 +48,7 @@ class BookFavoriteViewModel @Inject constructor(
         }
     }
     fun setEntryPoint(entryPoint: String) {
-        if (entryPoint!=""){
+        if (entryPoint != "null"){
             entryCheck = true
         }
     }

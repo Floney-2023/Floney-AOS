@@ -97,6 +97,7 @@ class BookAddSettingProfileViewModel @Inject constructor(
                     if(getImageBitmap() != null) {
                         uploadImageFile(getImageBitmap()!!, it.bookKey)
                     } else {
+                        baseEvent(Event.HideLoading)
                         _nextPage.emit(true)
                     }
                 }.onFailure {

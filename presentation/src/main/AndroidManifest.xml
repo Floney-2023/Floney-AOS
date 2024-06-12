@@ -43,6 +43,9 @@
             android:name=".view.signup.SignUpActivity"
             android:exported="false" />
         <activity
+            android:name=".view.signup.SignUpCompleteActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.login.LoginActivity"
             android:exported="false" />
         <activity

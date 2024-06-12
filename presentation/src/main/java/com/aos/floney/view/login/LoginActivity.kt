@@ -19,6 +19,7 @@ import com.aos.floney.view.book.add.BookAddActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.password.find.PasswordFindActivity
 import com.aos.floney.view.signup.SignUpActivity
+import com.aos.floney.view.signup.SignUpCompleteActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -100,7 +101,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                     }
                     finish()
                 } else {
-                    startActivity(Intent(this@LoginActivity, BookAddActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, SignUpCompleteActivity::class.java))
                     if (Build.VERSION.SDK_INT >= 34) {
                         overrideActivityTransition(
                             Activity.OVERRIDE_TRANSITION_OPEN,

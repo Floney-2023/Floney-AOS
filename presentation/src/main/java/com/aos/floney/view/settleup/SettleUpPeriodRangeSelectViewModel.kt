@@ -192,7 +192,8 @@ class SettleUpPeriodRangeSelectViewModel @Inject constructor(
             _endDate.value = clickItem
         } else if (_startDate.value != null && areCalendarsEqual(clickItem,_startDate.value!!)) {
             // startDate가 존재하고, 클릭된 item이 같은 startDate인 경우.
-            _startDate.value = null
+            _startDate.value = clickItem
+            _endDate.value = null
         } else {
             // startDate가 존재하지 않는 경우
             _startDate.value = clickItem

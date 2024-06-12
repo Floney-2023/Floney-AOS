@@ -23,7 +23,9 @@ import com.aos.usecase.settlement.BooksOutComesUseCase
 import com.aos.usecase.settlement.BooksUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -119,23 +121,36 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
         _userEmail.value = selectedEmails
         _outcome.value = selectedOutcomes
 
-        viewModelScope.launch {
-            if (selectedEmails.isNotEmpty()) {
-                val advertiseTime = prefs.getString("advertiseTime", "")
-                val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
-                val showNextPage = getAdvertiseCheck(advertiseTime) > 0 || getAdvertiseTenMinutesCheck(advertiseTenMinutes) > 0
+        viewModelScope.launch(Dispatchers.Main) {
+            baseEvent(Event.ShowLoading)
 
-                if (getAdvertiseCheck(advertiseTime) <= 0) {
-                    prefs.setString("advertiseTime", "")
-                }
-                if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
-                    prefs.setString("advertiseTenMinutes", "")
-                }
+            // 애니메이션 사이클 지속 시간 계산
+            val animationDelay = 200L
+            val animationDuration = 600L
+            val minimumCycleDuration = animationDuration + animationDelay * 2
 
-                _nextPage.emit(!showNextPage)
-            }
-            else {
-                baseEvent(Event.ShowToastRes(R.string.settle_up_outcomes_select_title))
+            withContext(Dispatchers.IO) {
+                if (selectedEmails.isNotEmpty()) {
+                    val advertiseTime = prefs.getString("advertiseTime", "")
+                    val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
+                    val showNextPage =
+                        getAdvertiseCheck(advertiseTime) > 0 || getAdvertiseTenMinutesCheck(
+                            advertiseTenMinutes
+                        ) > 0
+
+                    if (getAdvertiseCheck(advertiseTime) <= 0) {
+                        prefs.setString("advertiseTime", "")
+                    }
+                    if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
+                        prefs.setString("advertiseTenMinutes", "")
+                    }
+                    // 최소 한 싸이클이 완료될 때까지 지연
+                    delay(minimumCycleDuration)
+                    baseEvent(Event.HideLoading)
+                    _nextPage.emit(!showNextPage)
+                } else {
+                    baseEvent(Event.ShowToastRes(R.string.settle_up_outcomes_select_title))
+                }
             }
         }
     }

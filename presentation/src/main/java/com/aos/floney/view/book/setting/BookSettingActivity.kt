@@ -12,6 +12,7 @@ import com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment
 import com.aos.floney.view.book.setting.category.BookCategoryActivity
 import com.aos.floney.view.book.setting.favorite.BookFavoriteActivity
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.signup.SignUpCompleteActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +41,7 @@ class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSetting
     // 가계부 추가 생성 화면으로 이동
 
     fun startBookAddActivity() {
-        startActivity(Intent(this, BookAddActivity::class.java))
+        startActivity(Intent(this, SignUpCompleteActivity::class.java))
         finishAffinity()
     }
 

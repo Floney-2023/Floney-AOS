@@ -430,7 +430,7 @@ fun List<GetBookRepeatEntity>.toUiBookRepeatModel(): List<UiBookRepeatModel> {
             else -> it.repeatDuration // 만약 매칭되는 값이 없을 경우 기본값 사용
         }
         UiBookRepeatModel(
-            it.id, it.description, repeatDurationInKorean, it.lineSubCategory, it.assetSubCategory, it.money.toInt(), false
+            it.id, it.description, repeatDurationInKorean, it.lineSubCategory, it.assetSubCategory, "${NumberFormat.getNumberInstance().format(it.money.toInt())}${CurrencyUtil.currency}", false
         )
     }
 }
@@ -470,7 +470,7 @@ fun List<GetBookFavoriteEntity>.toUiBookFavorite(): List<UiBookFavoriteModel> {
             lineCategoryName = it.lineCategoryName,
             lineSubcategoryName = it.lineSubcategoryName,
             assetSubcategoryName = it.assetSubcategoryName,
-            money = "${it.money.toInt()}${CurrencyUtil.currency}",
+            money = "${NumberFormat.getNumberInstance().format(it.money.toInt())}${CurrencyUtil.currency}",
             exceptStatus = it.exceptStatus
         )
     }

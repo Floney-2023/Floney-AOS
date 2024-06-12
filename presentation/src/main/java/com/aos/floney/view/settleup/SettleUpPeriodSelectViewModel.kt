@@ -67,24 +67,30 @@ class SettleUpPeriodSelectViewModel @Inject constructor(
     }
     // 정산 내역 체크하러 가기
     fun onClickedNextPage() {
-        val userEmails = memberArray.value!!.map { it }
-        viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
-            booksOutComesUseCase(userEmails, startDay.value!!, endDay.value!!, prefs.getString("bookKey","")).onSuccess {
-                if (it!!.outcomes.isEmpty())
-                {
+        if (startDay.value!="" && endDay.value!="")
+        {
+            val userEmails = memberArray.value!!.map { it }
+            viewModelScope.launch(Dispatchers.IO) {
+                baseEvent(Event.ShowLoading)
+                booksOutComesUseCase(userEmails, startDay.value!!, endDay.value!!, prefs.getString("bookKey","")).onSuccess {
+                    if (it!!.outcomes.isEmpty())
+                    {
+                        baseEvent(Event.HideLoading)
+                        baseEvent(Event.ShowToastRes(R.string.settle_up_period_select_error_messsage))
+                    }
+                    else {
+                        // 내역 존재 시 이동
+                        _nextPage.emit(true)
+                        baseEvent(Event.HideLoading)
+                    }
+                }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToastRes(R.string.settle_up_period_select_error_messsage))
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpPeriodSelectViewModel)))
                 }
-                else {
-                    // 내역 존재 시 이동
-                    _nextPage.emit(true)
-                    baseEvent(Event.HideLoading)
-                }
-            }.onFailure {
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpPeriodSelectViewModel)))
             }
+        }
+        else {
+            baseEvent(Event.ShowToast("기간을 설정해주세요."))
         }
     }
     // 이전 페이지로

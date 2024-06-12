@@ -176,6 +176,20 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.supposePage.collect {
+                if (it){
+                    val url = "https://m.cafe.naver.com/ca-fe/web/cafes/31054271/menus/5"
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+                    // Chrome 브라우저 패키지명 설정
+                    intent.setPackage("com.android.chrome")
+                    if (intent.resolveActivity(requireActivity().packageManager) != null) {
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
     }
     private fun settingAdvertiseTime(){
         viewModel.updateAdvertiseTime()
