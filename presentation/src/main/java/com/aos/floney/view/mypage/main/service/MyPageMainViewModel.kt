@@ -81,6 +81,10 @@ class MyPageMainViewModel @Inject constructor(
     private var _adMobPage = MutableEventFlow<Boolean>()
     val adMobPage: EventFlow<Boolean> get() = _adMobPage
 
+    // 제안하기 페이지
+    private var _supposePage = MutableEventFlow<Boolean>()
+    val supposePage: EventFlow<Boolean> get() = _supposePage
+
     init{
         settingAdvertiseTime()
         searchMypageItems()
@@ -253,4 +257,10 @@ class MyPageMainViewModel @Inject constructor(
         return CommonUtil.userProfileImg
     }
 
+    // 카페 제안하기
+    fun onClickSuppose(){
+        viewModelScope.launch {
+            _supposePage.emit(true)
+        }
+    }
 }

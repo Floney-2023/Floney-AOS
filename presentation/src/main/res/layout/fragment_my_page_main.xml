@@ -230,6 +230,7 @@
                             android:background="@drawable/custom_radius_12_gradation_card_view"
                             android:orientation="vertical"
                             android:padding="25dp"
+                            android:onClick="@{() -> vm.onClickSuppose()}"
                             app:layout_constraintDimensionRatio="1:1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/space_between_squares"
