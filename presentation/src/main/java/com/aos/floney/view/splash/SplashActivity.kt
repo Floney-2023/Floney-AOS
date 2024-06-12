@@ -15,6 +15,7 @@ import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.onboard.OnBoardActivity
 import com.aos.data.util.CurrencyUtil
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.signup.SignUpCompleteActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -51,7 +52,15 @@ class SplashActivity :
                 }
             } else {
                 // 자동 로그인 기능 구현
-                if(sharedPreferenceUtil.getString("accessToken", "") != "") {
+                if(sharedPreferenceUtil.getString("accessToken", "") != "" && sharedPreferenceUtil.getString("bookKey", "") == "") {
+                    val intent = Intent(this@SplashActivity, SignUpCompleteActivity::class.java)
+                    startActivity(intent)
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                } else if(sharedPreferenceUtil.getString("accessToken", "") != "") {
                     val intent = Intent(this@SplashActivity, HomeActivity::class.java)
                     startActivity(intent)
                     if (Build.VERSION.SDK_INT >= 34) {
@@ -59,7 +68,7 @@ class SplashActivity :
                     } else {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
-                } else {
+                }  else {
                     val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                     startActivity(intent)
                     if (Build.VERSION.SDK_INT >= 34) {
