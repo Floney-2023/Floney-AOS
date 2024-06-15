@@ -82,7 +82,7 @@
                     android:backgroundTint="@null"
                     android:gravity="center"
                     android:inputType="number"
-                    android:maxLength="18"
+                    android:maxLength="15"
                     android:hint="@string/book_setting_bottom_asset_hint"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@{vm.cost}"
