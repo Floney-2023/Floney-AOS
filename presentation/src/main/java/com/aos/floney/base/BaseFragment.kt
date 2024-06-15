@@ -52,7 +52,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         AppCompatDialog(requireContext()).apply {
             setContentView(R.layout.item_progress_loading)
             setCancelable(false)
-            window?.setDimAmount(0.4f)
+            window?.setDimAmount(0.7f)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         }
     }
@@ -155,42 +155,31 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         val circle3 = loadingDialog.findViewById<View>(R.id.circle3)
 
         val animationDelay = 200L // 애니메이션 시작 지연 시간 (0.2초)
-        val animationDuration = 600L // 애니메이션 지속 시간 (0.6초)
+        val animationDuration = 600L * 2 // 애니메이션 지속 시간 (0.6초)
 
-        val animator1 = ObjectAnimator.ofFloat(circle1, "translationY", 0f, -30f, 0f).apply {
+        val animator1 = ObjectAnimator.ofFloat(circle1, "translationY", 0f, -50f, 0f).apply {
             duration = animationDuration
             interpolator = AccelerateDecelerateInterpolator()
-            repeatMode = ValueAnimator.RESTART
-            repeatCount = 100 // 한 번만 실행
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = 100
             startDelay = animationDelay * 0
         }
 
-        val animator2 = ObjectAnimator.ofFloat(circle2, "translationY", 0f, -30f, 0f).apply {
+        val animator2 = ObjectAnimator.ofFloat(circle2, "translationY", 0f, -50f, 0f).apply {
             duration = animationDuration
             interpolator = AccelerateDecelerateInterpolator()
-            repeatMode = ValueAnimator.RESTART
-            repeatCount = 100 // 한 번만 실행
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = 100
             startDelay = animationDelay * 1
         }
 
-        val animator3 = ObjectAnimator.ofFloat(circle3, "translationY", 0f, -30f, 0f).apply {
+        val animator3 = ObjectAnimator.ofFloat(circle3, "translationY", 0f, -50f, 0f).apply {
             duration = animationDuration
             interpolator = AccelerateDecelerateInterpolator()
-            repeatMode = ValueAnimator.RESTART
-            repeatCount = 100 // 한 번만 실행
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = 100
             startDelay = animationDelay * 2
         }
-
-        // 마지막 애니메이션인 animator3에 대한 리스너 설정
-        animator3.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                super.onAnimationEnd(animation)
-                animator1.cancel()
-                animator2.cancel()
-                animator3.cancel()
-                dismissLoadingDialog()
-            }
-        })
 
         // 애니메이션들을 함께 실행
         animator1.start()
@@ -199,7 +188,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
 
         loadingDialog.show()
     }
-
     fun dismissLoadingDialog(){
         try {
             loadingDialog.dismiss()
