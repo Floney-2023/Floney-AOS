@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.BuildConfig
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -19,6 +20,7 @@ import com.aos.usecase.booksetting.BooksSettingGetUseCase
 import com.aos.usecase.mypage.AlarmSaveGetUseCase
 import com.aos.usecase.settlement.BooksOutComesUseCase
 import com.aos.usecase.settlement.BooksUsersUseCase
+import com.aos.usecase.settlement.NaverShortenUrlUseCase
 import com.aos.usecase.settlement.SettlementAddUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +34,8 @@ class SettleUpCompleteViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val settlementAddUseCase : SettlementAddUseCase,
     private val booksSettingGetUseCase : BooksSettingGetUseCase,
-    private val alarmSaveGetUseCase : AlarmSaveGetUseCase
+    private val alarmSaveGetUseCase : AlarmSaveGetUseCase,
+    private val naverShortenUrlUseCase : NaverShortenUrlUseCase
 ): BaseViewModel() {
 
 
@@ -67,8 +70,8 @@ class SettleUpCompleteViewModel @Inject constructor(
 
 
     // 처음 정산하기 페이지
-    private var _settlementSharePage = MutableEventFlow<Boolean>()
-    val settlementSharePage: EventFlow<Boolean> get() = _settlementSharePage
+    private var _settlementSharePage = MutableEventFlow<String>()
+    val settlementSharePage: EventFlow<String> get() = _settlementSharePage
 
     init {
         getOutcomesItems()
@@ -132,8 +135,18 @@ class SettleUpCompleteViewModel @Inject constructor(
     }
     // 공유하기
     fun onClickedSharePage(){
-        viewModelScope.launch {
-            _settlementSharePage.emit(true)
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            naverShortenUrlUseCase(
+                BuildConfig.naver_client_id,
+                BuildConfig.naver_client_secret, provideSettlementUrl()).onSuccess {
+                // 불러오기 성공
+                _settlementSharePage.emit(it.result)
+                baseEvent(Event.HideLoading)
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpCompleteViewModel)))
+            }
         }
     }
     // exit 버튼 클릭 -> 처음 정산하기 페이지
@@ -141,5 +154,9 @@ class SettleUpCompleteViewModel @Inject constructor(
         viewModelScope.launch {
             _settlementPage.emit(true)
         }
+    }
+    // url 생성
+    fun provideSettlementUrl(): String {
+        return "https://floney.onelink.me${BuildConfig.appsflyer_settlement_url}?settlementId=${settlementModel.value!!.id ?: ""}&bookKey=${prefs.getString("bookKey", "")}"
     }
 }
