@@ -3,6 +3,7 @@ package com.aos.floney.view.settleup
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.fragment.findNavController
 import com.aos.data.util.SharedPreferenceUtil
@@ -31,6 +32,7 @@ class SettleUpCompleteFragment : BaseFragment<FragmentSettleUpCompleteBinding, S
 
         setUpUi()
         setUpViewModelObserver()
+        setUpBackPressed()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@SettleUpCompleteFragment)
@@ -71,6 +73,17 @@ class SettleUpCompleteFragment : BaseFragment<FragmentSettleUpCompleteBinding, S
                 }
             }
         }
+    }
+
+    private fun setUpBackPressed()
+    {
+        // 뒤로가기 버튼 눌림 감지
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val activity = requireActivity() as SettleUpActivity
+                activity.startSettleUpActivity()
+            }
+        })
     }
     private fun onSharedBtnClicked(url: String) {
         val sharingIntent = Intent(Intent.ACTION_SEND)
