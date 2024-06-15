@@ -33,7 +33,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
 import com.aos.floney.view.common.WarningPopupDialog
-import com.bumptech.glide.Glide
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -90,9 +89,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                         .putExtra("nickname", viewModel.getMyNickname())
                 )
                 if (Build.VERSION.SDK_INT >= 34) {
-                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, R.anim.slide_in, R.anim.slide_out_down)
                 } else {
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out_down)
                 }
             }
         }

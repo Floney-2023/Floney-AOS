@@ -34,8 +34,7 @@ class BookSettingActivity : BaseActivity<ActivityBookSettingBinding, BookSetting
 
     // 홈 화면으로 이동
     fun startHomeActivity() {
-        startActivity(Intent(this, HomeActivity::class.java))
-        finishAffinity()
+        finish()
     }
 
     // 가계부 추가 생성 화면으로 이동
