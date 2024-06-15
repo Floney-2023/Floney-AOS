@@ -10,14 +10,8 @@ import com.aos.floney.BuildConfig
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentSettleUpCompleteBinding
-import com.aos.floney.databinding.FragmentSettleUpOutcomesSelectBinding
-import com.aos.floney.databinding.FragmentSettleUpPeriodSelectBinding
 import com.aos.floney.ext.repeatOnStarted
-import com.aos.model.settlement.BookUsers
 import com.aos.model.settlement.Details
-import com.aos.model.settlement.Outcomes
-import com.aos.model.settlement.UiMemberSelectModel
-import com.aos.model.settlement.UiOutcomesSelectModel
 import com.aos.model.settlement.UiSettlementAddModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -72,14 +66,13 @@ class SettleUpCompleteFragment : BaseFragment<FragmentSettleUpCompleteBinding, S
         repeatOnStarted {
             // 정산 공유 링크
             viewModel.settlementSharePage.collect {
-                if(it) {
-                    onSharedBtnClicked()
+                if(it!="") {
+                    onSharedBtnClicked(it)
                 }
             }
         }
     }
-    private fun onSharedBtnClicked() {
-        val url = "https://floney.onelink.me${BuildConfig.appsflyer_settlement_url}?settlementId=${viewModel.settlementModel.value!!.id ?: ""}&bookKey=${sharedPreferenceUtil.getString("bookKey", "")}"
+    private fun onSharedBtnClicked(url: String) {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/html"
         sharingIntent.putExtra(Intent.EXTRA_TEXT, url)

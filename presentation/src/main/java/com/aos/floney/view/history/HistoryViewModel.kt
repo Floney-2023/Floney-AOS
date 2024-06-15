@@ -126,7 +126,8 @@ class HistoryViewModel @Inject constructor(
     private var parent = ""
 
     // 예산/자산 제외 설정 여부
-    private var deleteChecked = false
+    val deleteChecked: MutableLiveData<Boolean> = MutableLiveData(false)
+
 
     // 내역 수정 시 해당 아이템 Id
     private var modifyId = 0
@@ -160,7 +161,7 @@ class HistoryViewModel @Inject constructor(
         line.value = item.lineSubCategory
         content.value = item.description
         _nickname.value = item.writerNickName
-        deleteChecked = item.exceptStatus
+        deleteChecked.value = item.exceptStatus
         Timber.e("item.repeatDuration ${item.repeatDuration}")
         _repeatClickItem.value = UiBookCategory(
             idx = 1,
@@ -181,7 +182,7 @@ class HistoryViewModel @Inject constructor(
         asset.value = item.assetSubcategoryName
         content.value = item.description
         flow.value = item.lineCategoryName
-        deleteChecked = item.exceptStatus
+        deleteChecked.value = item.exceptStatus
     }
     // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory() {
@@ -242,7 +243,7 @@ class HistoryViewModel @Inject constructor(
                 line = line.value!!,
                 lineDate = date.value!!.replace(".", "-"),
                 description = content.value!!,
-                except = deleteChecked,
+                except = deleteChecked.value!!,
                 nickname = nickname.value!!,
                 repeatDuration = getConvertSendRepeatValue()
             ).onSuccess {
@@ -268,7 +269,7 @@ class HistoryViewModel @Inject constructor(
                 line = line.value!!,
                 lineDate = date.value!!.replace(".", "-"),
                 description = content.value!!,
-                except = deleteChecked,
+                except = deleteChecked.value!!,
                 nickname = nickname.value!!,
             ).onSuccess {
                 _postModifyBooksLines.emit(true)
@@ -316,7 +317,7 @@ class HistoryViewModel @Inject constructor(
 
     // 즐겨찾기 데이터 입력 되었는지 체크
     private fun isFavoriteInputData(): Boolean {
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
     // 수정된 내용이 있는지 체크
@@ -387,7 +388,7 @@ class HistoryViewModel @Inject constructor(
 
     // 예산/자산 제외 스위치 값 저장
     fun onDeleteCheckedChange(checked: Boolean) {
-        deleteChecked = checked
+        deleteChecked.value = checked
     }
 
     // 캘린더 날짜 선택 시 값 저장
@@ -539,11 +540,11 @@ class HistoryViewModel @Inject constructor(
                     bookKey = prefs.getString("bookKey", ""),
                     money = cost.value!!.replace(",", "").substring(0, cost.value!!.length - 2)
                         .toDouble(),
-                    description = content.value!!,
+                    description = if (content.value=="") "분류" else content.value!!,
                     lineCategoryName = flow.value!!,
                     lineSubcategoryName = line.value!!,
                     assetSubcategoryName = asset.value!!,
-                    exceptStatus = deleteChecked
+                    exceptStatus = deleteChecked.value!!
                 ).onSuccess {
                     _postBooksFavorites.emit(true)
                     baseEvent(Event.ShowSuccessToast("즐겨찾기에 추가되었습니다."))

@@ -297,6 +297,7 @@
             android:layout_height="24dp"
             android:layout_marginEnd="18dp"
             android:background="@null"
+            android:checked="@={vm.deleteChecked}"
             android:onCheckedChanged="@{(switch, checked) -> vm.onDeleteCheckedChange(checked)}"
             android:thumb="@drawable/switch_thumb"
             android:track="@drawable/switch_track_selector"
