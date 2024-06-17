@@ -68,7 +68,7 @@ class BookSettingProfileChangeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             changeBookImgUseCase(prefs.getString("bookKey", ""), path).onSuccess {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowSuccessToast("프로필 변경이 성공하였습니다."))
+                baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
@@ -94,6 +94,7 @@ class BookSettingProfileChangeViewModel @Inject constructor(
             // 다운로드 링크 가져오기
             it.storage.downloadUrl.addOnSuccessListener {uri ->
                 // 성공
+                CommonUtil.bookProfile = uri.toString()
                 getChangeProfile(uri.toString())
             }.addOnFailureListener {
                 // 실패

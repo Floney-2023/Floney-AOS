@@ -104,7 +104,7 @@ class BookSettingProfileChangeFragment :
                                 .centerCrop()
                                 .into(binding.ivProfileCardView)
 
-                            viewModel.uploadImageFile(bitmap)
+                            viewModel.setImageBitmap(bitmap)
                         }
                     }.show(parentFragmentManager, "baseAlertDialog")
                 }
