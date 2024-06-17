@@ -57,14 +57,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
+            android:minWidth="34dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
             android:textColor="@{vm.mode.equals(`add`) ? @color/primary1 : @color/grayscale6}"
             android:textSize="12sp"
             android:gravity="center"
+            app:layout_constraintStart_toStartOf="@+id/iv_repeat"
             app:layout_constraintBottom_toBottomOf="@id/iv_repeat"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/iv_repeat"
             app:layout_constraintTop_toBottomOf="@id/iv_repeat" />
 
         <TextView

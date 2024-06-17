@@ -119,7 +119,12 @@ class HistoryViewModel @Inject constructor(
     // 반복 설정
     val _repeatItem = MutableLiveData<List<UiBookCategory>>()
     val repeatItem: LiveData<List<UiBookCategory>> get() = _repeatItem
-    private var _repeatClickItem = MutableLiveData<UiBookCategory?>(null)
+    private var _repeatClickItem = MutableLiveData<UiBookCategory?>(UiBookCategory(
+        idx = 1,
+        checked = true,
+        name = "없음",
+        default = true
+    ))
     val repeatClickItem: LiveData<UiBookCategory?> get() = _repeatClickItem
 
     // 자산, 지출, 수입, 이체 카테고리 조회에 사용
@@ -135,7 +140,7 @@ class HistoryViewModel @Inject constructor(
 
     init {
         val array = arrayListOf<UiBookCategory>(
-            UiBookCategory(0, false, "없음", true),
+            UiBookCategory(0, true, "없음", true),
             UiBookCategory(1, false, "매일", false),
             UiBookCategory(2, false, "매주", false),
             UiBookCategory(3, false, "매달", false),
@@ -310,26 +315,27 @@ class HistoryViewModel @Inject constructor(
 
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
-        if(cost.value == "") {
-            baseEvent(Event.ShowToast("금액을 입력해주세요"))
-        } else if (asset.value == "자산을 선택하세요") {
-            baseEvent(Event.ShowToast("자산을 선택해주세요"))
-        } else if (line.value == "분류를 선택하세요") {
-            baseEvent(Event.ShowToast("분류를 선택해주세요"))
-        }
+        createErrorMsg()
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
     private fun isFavoriteInputData(): Boolean {
+        createErrorMsg()
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+    }
+
+    // 에러 메세지 생성
+    private fun createErrorMsg() {
         if(cost.value == "") {
             baseEvent(Event.ShowToast("금액을 입력해주세요"))
         } else if (asset.value == "자산을 선택하세요") {
             baseEvent(Event.ShowToast("자산을 선택해주세요"))
         } else if (line.value == "분류를 선택하세요") {
             baseEvent(Event.ShowToast("분류를 선택해주세요"))
+        } else if (content.value != "") {
+            baseEvent(Event.ShowToast("내용을 입력해주세요"))
         }
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
     // 수정된 내용이 있는지 체크
