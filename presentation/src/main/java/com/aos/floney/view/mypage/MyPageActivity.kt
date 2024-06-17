@@ -35,10 +35,13 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
 
         setUpUi()
         setUpBottomNavigation()
+
+        viewModel.searchMypageItems()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@MyPageActivity)
     }
+
     fun startAlarmActivity() {
         startActivity(Intent(this, MyPageAlarmActivity::class.java))
         if (Build.VERSION.SDK_INT >= 34) {

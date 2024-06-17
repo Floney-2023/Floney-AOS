@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.CommonUtil
@@ -22,6 +24,7 @@ import com.letspl.oceankeeper.util.RotateTransform
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -53,6 +56,10 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
     private var _onClickDefaultProfile = MutableEventFlow<Boolean>()
     val onClickDefaultProfile: EventFlow<Boolean> get() = _onClickDefaultProfile
 
+    // 프로필 변경 성공
+    private var _successProfileChange = MutableEventFlow<Boolean>()
+    val successProfileChange: EventFlow<Boolean> get() = _successProfileChange
+
     // 사진 촬영 uri
     private var takeCaptureUri: Uri? = null
     private var imageBitmap: Bitmap? = null
@@ -61,7 +68,7 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             changeProfileUseCase(path).onSuccess {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowSuccessToast("프로필 변경이 성공하였습니다."))
+                _successProfileChange.emit(true)
             }.onFailure {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
@@ -87,7 +94,6 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
             // 다운로드 링크 가져오기
             it.storage.downloadUrl.addOnSuccessListener {uri ->
                 // 성공
-                CommonUtil.userProfileImg = uri.toString()
                 getChangeProfile(uri.toString())
             }.addOnFailureListener {
                 // 실패
