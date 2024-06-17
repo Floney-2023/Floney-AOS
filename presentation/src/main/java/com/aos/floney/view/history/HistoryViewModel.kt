@@ -226,8 +226,6 @@ class HistoryViewModel @Inject constructor(
                 "add" -> postAddHistory()
                 "modify" -> postModifyHistory()
             }
-        } else {
-            baseEvent(Event.ShowToast("모든 값을 입력해 주세요"))
         }
     }
 
@@ -312,11 +310,25 @@ class HistoryViewModel @Inject constructor(
 
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
+        if(cost.value != "") {
+            baseEvent(Event.ShowToast("금액을 입력해주세요"))
+        } else if (asset.value != "자산을 선택하세요") {
+            baseEvent(Event.ShowToast("자산을 선택해주세요"))
+        } else if (line.value != "분류를 선택하세요") {
+            baseEvent(Event.ShowToast("분류를 선택해주세요"))
+        }
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
     private fun isFavoriteInputData(): Boolean {
+        if(cost.value != "") {
+            baseEvent(Event.ShowToast("금액을 입력해주세요"))
+        } else if (asset.value != "자산을 선택하세요") {
+            baseEvent(Event.ShowToast("자산을 선택해주세요"))
+        } else if (line.value != "분류를 선택하세요") {
+            baseEvent(Event.ShowToast("분류를 선택해주세요"))
+        }
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
@@ -552,8 +564,6 @@ class HistoryViewModel @Inject constructor(
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
                 }
             }
-        } else {
-            baseEvent(Event.ShowToast("모든 값을 입력해 주세요"))
         }
     }
 
