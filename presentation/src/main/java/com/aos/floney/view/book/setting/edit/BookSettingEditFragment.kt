@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
+import com.aos.data.util.CommonUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingEditBinding
@@ -34,7 +35,11 @@ class BookSettingEditFragment :
             viewModel.profileChangePage.collect() {
                 if(it) {
                     val profileChangeAction = BookSettingEditFragmentDirections.actionBookSettingEditFragmentToBookSettingProfileChangeFragment(
-                        viewModel.profileImg.value!!,
+                        if(CommonUtil.bookProfile == "") {
+                            viewModel.profileImg.value!!
+                        } else {
+                            CommonUtil.bookProfile
+                        },
                         viewModel.profileCheck.value!!,
                         viewModel.roleCheck.value!!
                     )

@@ -63,9 +63,7 @@ class MyPageViewModel @Inject constructor(
     // 가계부 추가 BottomSheet
     private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
     val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
-    init{
-        searchMypageItems()
-    }
+
     // 마이페이지 정보 읽어오기
     fun searchMypageItems()
     {
@@ -80,6 +78,10 @@ class MyPageViewModel @Inject constructor(
                         myBook.copy(recentCheck = false)
                     }
                 })
+
+                if(CommonUtil.userProfileImg != "" && CommonUtil.userProfileImg != it.profileImg) {
+                    baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
+                }
 
                 CommonUtil.userEmail = it.email
                 CommonUtil.userProfileImg = it.profileImg

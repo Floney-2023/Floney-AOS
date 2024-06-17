@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CommonUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -116,7 +117,6 @@ class BookSettingMainViewModel @Inject constructor(
                 val sortedList = it.ourBookUsers.sortedByDescending { it.me }
 
                 _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
-
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
             }
