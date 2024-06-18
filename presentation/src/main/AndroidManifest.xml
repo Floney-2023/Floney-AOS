@@ -78,7 +78,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="floney.onelink.me" android:pathPrefix="${appsflyer_settlement_url}" />
             </intent-filter>
-2        </activity>
+        </activity>
         <activity
             android:name=".view.book.setting.BookSettingActivity"
             android:exported="false" />
@@ -105,6 +105,12 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="floney"/>
             </intent-filter>
         </activity>
          <activity

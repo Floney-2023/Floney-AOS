@@ -2,6 +2,7 @@ package com.aos.floney.view.splash
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -14,7 +15,9 @@ import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.onboard.OnBoardActivity
 import com.aos.data.util.CurrencyUtil
+import com.aos.floney.view.book.entrance.BookEntranceActivity
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpCompleteActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -31,10 +34,14 @@ class SplashActivity :
         super.onCreate(savedInstanceState)
 
         setupSplashAnimation()
-
         CurrencyUtil.currency = sharedPreferenceUtil.getString("symbol", "원")
     }
 
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
     // logo animation
     private fun setupSplashAnimation() {
         val animation = AnimationUtils.loadAnimation(this, R.anim.splash_animation)
@@ -61,13 +68,7 @@ class SplashActivity :
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
                 } else if(sharedPreferenceUtil.getString("accessToken", "") != "") {
-                    val intent = Intent(this@SplashActivity, HomeActivity::class.java)
-                    startActivity(intent)
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }
+                    handleIntent(intent)
                 }  else {
                     val intent = Intent(this@SplashActivity, LoginActivity::class.java)
                     startActivity(intent)
@@ -80,5 +81,57 @@ class SplashActivity :
             }
             finish()
         }, 2000)
+    }
+    private fun handleIntent(intent: Intent) {
+        val data: Uri? = intent.data
+        if (data != null) {
+            navigateToAppropriateActivity(data)
+        } else {
+            // 딥 링크가 없을 경우 홈 화면으로 이동
+            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+            startActivity(intent)
+            if (Build.VERSION.SDK_INT >= 34) {
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+            } else {
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
+        }
+    }
+
+    private fun navigateToAppropriateActivity(data: Uri) {
+        data?.let {
+            val campaign = it.getQueryParameter("campaign")
+            when (campaign) {
+                "floney_share" -> {
+                    val inviteCode = it.getQueryParameter("inviteCode")
+                    val intent = Intent(this@SplashActivity, BookEntranceActivity::class.java)
+
+                    // 데이터를 Intent에 추가
+                    intent.putExtra("settlementId", it.getQueryParameter("inviteCode"))
+
+                    startActivity(intent)
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                }
+                "floney_settlement_share" -> {
+
+                    val intent = Intent(this@SplashActivity, SettleUpActivity::class.java)
+
+                    // 데이터를 Intent에 추가
+                    intent.putExtra("settlementId", it.getQueryParameter("settlementId"))
+                    intent.putExtra("bookKey", it.getQueryParameter("bookKey"))
+
+                    startActivity(intent)
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                }
+            }
+        }
     }
 }

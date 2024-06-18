@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.BuildConfig.appsflyer_dev_key
@@ -16,12 +14,8 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySettleUpBinding
 import com.aos.floney.view.analyze.AnalyzeActivity
-import com.aos.floney.view.book.add.BookAddActivity
-import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.home.HomeActivity
-import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.mypage.MyPageActivity
-import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.deeplink.DeepLink
 import com.appsflyer.deeplink.DeepLinkListener
@@ -41,6 +35,7 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         super.onCreate(savedInstanceState)
         CurrencyUtil.currency = sharedPreferenceUtil.getString("symbol", "원")
 
+        setShareSettlementInform()
         setUpBottomNavigation()
         setupJetpackNavigation()
     }
@@ -141,11 +136,7 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
                         val bookKey = deepLinkObj.values["bookKey"].toString()
 
                         Timber.e("settlement ${settlementId} ------ ${bookKey}")
-                        if (settlementId != null && bookKey.isNotEmpty()) {
-                            viewModel.settingBookKey(settlementId, bookKey)
-                        } else {
-                            Log.d("DeepLink", "SettleUp not found")
-                        }
+                        goShareSettlement(settlementId, bookKey)
                     }
                     DeepLinkResult.Status.NOT_FOUND -> {
                         Timber.d("deep Deep link not found")
@@ -185,6 +176,18 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
                 }
             }
         })
+    }
+    private fun setShareSettlementInform(){ // 딥 링크로 부터 받아온 값
+        val settlementId = intent.getStringExtra("settlementId")?:""
+        val bookKey = intent.getStringExtra("bookKey")?:""
+        goShareSettlement(settlementId.toLong(), bookKey)
+    }
+    private fun goShareSettlement(settlementId: Long, bookKey: String) {
+        if (settlementId != null && bookKey.isNotEmpty()) {
+            viewModel.settingBookKey(settlementId, bookKey)
+        } else {
+            Log.d("DeepLink", "SettleUp not found")
+        }
     }
 
 }
