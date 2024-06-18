@@ -164,6 +164,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_previous_month" />
 
         <View
+            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#b3000000"
