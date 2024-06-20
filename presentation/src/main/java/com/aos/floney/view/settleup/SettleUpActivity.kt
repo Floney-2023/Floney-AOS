@@ -178,11 +178,11 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         })
     }
     private fun setShareSettlementInform(){ // 딥 링크로 부터 받아온 값
-        val settlementId = intent.getStringExtra("settlementId")?:""
+        val settlementId = intent.getStringExtra("settlementId")?.toLong()
         val bookKey = intent.getStringExtra("bookKey")?:""
-        goShareSettlement(settlementId.toLong(), bookKey)
+        goShareSettlement(settlementId, bookKey)
     }
-    private fun goShareSettlement(settlementId: Long, bookKey: String) {
+    private fun goShareSettlement(settlementId: Long?, bookKey: String) {
         if (settlementId != null && bookKey.isNotEmpty()) {
             viewModel.settingBookKey(settlementId, bookKey)
         } else {

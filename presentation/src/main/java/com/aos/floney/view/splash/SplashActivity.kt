@@ -2,11 +2,15 @@ package com.aos.floney.view.splash
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.PackageManager.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Base64
+import android.util.Log
 import android.view.animation.AnimationUtils
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
@@ -21,6 +25,7 @@ import com.aos.floney.view.settleup.SettleUpActivity
 import com.aos.floney.view.signup.SignUpCompleteActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.security.MessageDigest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,7 +37,7 @@ class SplashActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        getAppKeyHash()
         setupSplashAnimation()
         CurrencyUtil.currency = sharedPreferenceUtil.getString("symbol", "원")
     }
@@ -132,6 +137,21 @@ class SplashActivity :
                     }
                 }
             }
+        }
+    }
+    private fun getAppKeyHash() {
+        try {
+            val info = packageManager.getPackageInfo(packageName, GET_SIGNATURES)
+            for (signature in info.signatures) {
+                var md: MessageDigest
+                md = MessageDigest.getInstance("SHA")
+                md.update(signature.toByteArray())
+                val something = String(Base64.encode(md.digest(), 0))
+                Timber.e("Hashkey ${something}")
+            }
+        } catch (e: Exception) {
+            // TODO Auto-generated catch block
+            Log.e("name not found", e.toString())
         }
     }
 }
