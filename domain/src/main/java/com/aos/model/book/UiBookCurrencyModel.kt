@@ -56,3 +56,4 @@ fun getCurrencySymbolByCode(code: String): String {
     val currency = currencyList.find { it.code == code }
     return currency?.symbol ?: ""
 }
+

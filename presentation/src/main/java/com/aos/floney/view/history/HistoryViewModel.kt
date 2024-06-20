@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.data.util.checkDecimalPoint
+import com.aos.data.util.getCurrencyCodeBySymbol
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.formatNumber
 import com.aos.floney.ext.parseErrorMsg
@@ -133,6 +135,10 @@ class HistoryViewModel @Inject constructor(
     private var modifyId = 0
     private var modifyItem: DayMoneyModifyItem? = null
 
+    // 화폐 소수점 표시 가능 여부
+    val _currencyDecimalPoint = MutableLiveData<Boolean>()
+    val currencyDecimalPoint: LiveData<Boolean> get() = _currencyDecimalPoint
+
     init {
         val array = arrayListOf<UiBookCategory>(
             UiBookCategory(0, false, "없음", true),
@@ -143,6 +149,9 @@ class HistoryViewModel @Inject constructor(
             UiBookCategory(5, false, "주말", false)
         )
         _repeatItem.postValue(array)
+
+        // CurrencyUtil.currency 값을 가져와서 소수점 표시 여부 설정
+        _currencyDecimalPoint.value = checkDecimalPoint()
     }
 
     // 내역 추가 시에는 날짜만 세팅함
