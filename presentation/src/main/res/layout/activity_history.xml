@@ -90,7 +90,6 @@
             android:fontFamily="@font/pretendard_bold"
             android:gravity="left|center_vertical"
             android:hint="금액을 입력하세요"
-            android:inputType="number"
             android:maxLength="18"
             android:onTextChanged="@{vm.onCostTextChanged}"
             android:text="@{vm.cost}"
@@ -100,7 +99,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_money"
             app:layout_constraintTop_toBottomOf="@id/tv_money"
-            bind:setSelection="@{vm.cost}" />
+            bind:setSelection="@{vm.cost}"
+            bind:inputTypeBasedOnDecimal="@{true}"/>
 
         <LinearLayout
             android:id="@+id/ll_category"

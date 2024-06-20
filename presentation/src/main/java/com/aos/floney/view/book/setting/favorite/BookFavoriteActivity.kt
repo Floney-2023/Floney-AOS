@@ -45,7 +45,7 @@ class BookFavoriteActivity : BaseActivity<ActivityBookFavoriteBinding, BookFavor
     // 내역 추가 화면으로 이동
     fun startHistoryAddActivity(item: UiBookFavoriteModel) {
         // 정규식을 사용하여 숫자 부분만 추출
-        val moneyNumbersOnly = item.money.replace(Regex("[^0-9]"), "")
+        val moneyNumbersOnly = item.money.replace(Regex("[^0-9.]"), "")
 
         val intent = Intent()
         intent

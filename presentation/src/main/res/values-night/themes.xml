@@ -312,7 +312,7 @@
     </style>
 
     <style name="mypage_card_view_1">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/grayscale2</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
