@@ -27,6 +27,7 @@ import com.aos.data.entity.response.settlement.PostBooksOutcomesEntity
 import com.aos.data.entity.response.settlement.PostNaverShortenUrlEntity
 import com.aos.data.entity.response.settlement.PostSettlementAddEntity
 import com.aos.data.util.CurrencyUtil
+import com.aos.data.util.checkDecimalPoint
 import com.aos.model.book.BudgetItem
 import com.aos.model.book.GetBooksCodeModel
 import com.aos.model.book.GetBooksInfoCurrencyModel
@@ -319,7 +320,7 @@ fun List<PostBooksOutcomesEntity>.toUiOutcomesSelectModel(): UiOutcomesSelectMod
         Outcomes(
             id = index, // 인덱스를 id로 사용
             money = item.money.roundToLong(),
-            moneyFormat ="${NumberFormat.getNumberInstance().format(item.money.roundToLong())}${CurrencyUtil.currency}" ,
+            moneyFormat ="${NumberFormat.getNumberInstance().format(formatAmount(item.money))}${CurrencyUtil.currency}" ,
             category = "${item.category[0]} ‧ ${item.category[1]}",
             assetType = item.assetType,
             content = item.content,
@@ -395,23 +396,32 @@ fun GetBooksInfoCurrencyEntity.toGetBooksInfoCurrencyModel() : GetBooksInfoCurre
 
 fun GetBooksBudgetEntity.toUiBookBudgetModel(): UiBookBudgetModel {
     val budgetList = listOf(
-        BudgetItem("1", "${NumberFormat.getNumberInstance().format(this.january.toInt())}${CurrencyUtil.currency}", this.january > 0.0),
-        BudgetItem("2","${NumberFormat.getNumberInstance().format(this.february.toInt())}${CurrencyUtil.currency}", this.february > 0.0),
-        BudgetItem("3","${NumberFormat.getNumberInstance().format(this.march.toInt())}${CurrencyUtil.currency}", this.march > 0.0),
-        BudgetItem("4", "${NumberFormat.getNumberInstance().format(this.april.toInt())}${CurrencyUtil.currency}", this.april > 0.0),
-        BudgetItem("5", "${NumberFormat.getNumberInstance().format(this.may.toInt())}${CurrencyUtil.currency}", this.may > 0.0),
-        BudgetItem("6", "${NumberFormat.getNumberInstance().format(this.june.toInt())}${CurrencyUtil.currency}", this.june > 0.0),
-        BudgetItem("7", "${NumberFormat.getNumberInstance().format(this.july.toInt())}${CurrencyUtil.currency}", this.july > 0.0),
-        BudgetItem("8", "${NumberFormat.getNumberInstance().format(this.august.toInt())}${CurrencyUtil.currency}", this.august > 0.0),
-        BudgetItem("9","${NumberFormat.getNumberInstance().format(this.september.toInt())}${CurrencyUtil.currency}", this.september > 0.0),
-        BudgetItem("10", "${NumberFormat.getNumberInstance().format(this.october.toInt())}${CurrencyUtil.currency}", this.october > 0.0),
-        BudgetItem("11", "${NumberFormat.getNumberInstance().format(this.november.toInt())}${CurrencyUtil.currency}", this.november > 0.0),
-        BudgetItem("12", "${NumberFormat.getNumberInstance().format(this.december.toInt())}${CurrencyUtil.currency}", this.december > 0.0)
+        BudgetItem("1", "${NumberFormat.getNumberInstance().format(formatAmount(this.january))}${CurrencyUtil.currency}", this.january > 0.0),
+        BudgetItem("2", "${NumberFormat.getNumberInstance().format(formatAmount(this.february))}${CurrencyUtil.currency}", this.february > 0.0),
+        BudgetItem("3", "${NumberFormat.getNumberInstance().format(formatAmount(this.march))}${CurrencyUtil.currency}", this.march > 0.0),
+        BudgetItem("4", "${NumberFormat.getNumberInstance().format(formatAmount(this.april))}${CurrencyUtil.currency}", this.april > 0.0),
+        BudgetItem("5", "${NumberFormat.getNumberInstance().format(formatAmount(this.may))}${CurrencyUtil.currency}", this.may > 0.0),
+        BudgetItem("6", "${NumberFormat.getNumberInstance().format(formatAmount(this.june))}${CurrencyUtil.currency}", this.june > 0.0),
+        BudgetItem("7", "${NumberFormat.getNumberInstance().format(formatAmount(this.july))}${CurrencyUtil.currency}", this.july > 0.0),
+        BudgetItem("8", "${NumberFormat.getNumberInstance().format(formatAmount(this.august))}${CurrencyUtil.currency}", this.august > 0.0),
+        BudgetItem("9", "${NumberFormat.getNumberInstance().format(formatAmount(this.september))}${CurrencyUtil.currency}", this.september > 0.0),
+        BudgetItem("10", "${NumberFormat.getNumberInstance().format(formatAmount(this.october))}${CurrencyUtil.currency}", this.october > 0.0),
+        BudgetItem("11", "${NumberFormat.getNumberInstance().format(formatAmount(this.november))}${CurrencyUtil.currency}", this.november > 0.0),
+        BudgetItem("12", "${NumberFormat.getNumberInstance().format(formatAmount(this.december))}${CurrencyUtil.currency}", this.december > 0.0)
     )
     return UiBookBudgetModel(
         budgetList = budgetList
     )
 }
+
+fun formatAmount(amount: Double): Double {
+    return if (amount % 1.0 == 0.0) {
+        amount.toInt().toDouble() // 정수로 변환한 후 다시 Double로 변환
+    } else {
+        amount // 소수점 이하 값 포함
+    }
+}
+
 fun PostBooksCategoryAddEntity.toPostBooksCategoryAddModel() : PostBooksCategoryAddModel {
     return PostBooksCategoryAddModel(name = this.name ?: "")
 }
@@ -430,7 +440,7 @@ fun List<GetBookRepeatEntity>.toUiBookRepeatModel(): List<UiBookRepeatModel> {
             else -> it.repeatDuration // 만약 매칭되는 값이 없을 경우 기본값 사용
         }
         UiBookRepeatModel(
-            it.id, it.description, repeatDurationInKorean, it.lineSubCategory, it.assetSubCategory, "${NumberFormat.getNumberInstance().format(it.money.toInt())}${CurrencyUtil.currency}", false
+            it.id, it.description, repeatDurationInKorean, it.lineSubCategory, it.assetSubCategory, "${NumberFormat.getNumberInstance().format(formatAmount(it.money))}${CurrencyUtil.currency}", false
         )
     }
 }
@@ -470,7 +480,7 @@ fun List<GetBookFavoriteEntity>.toUiBookFavorite(): List<UiBookFavoriteModel> {
             lineCategoryName = it.lineCategoryName,
             lineSubcategoryName = it.lineSubcategoryName,
             assetSubcategoryName = it.assetSubcategoryName,
-            money = "${NumberFormat.getNumberInstance().format(it.money.toInt())}${CurrencyUtil.currency}",
+            money = "${NumberFormat.getNumberInstance().format(formatAmount(it.money))}${CurrencyUtil.currency}",
             exceptStatus = it.exceptStatus
         )
     }

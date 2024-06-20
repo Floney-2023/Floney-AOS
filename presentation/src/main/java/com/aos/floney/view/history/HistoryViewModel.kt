@@ -135,10 +135,6 @@ class HistoryViewModel @Inject constructor(
     private var modifyId = 0
     private var modifyItem: DayMoneyModifyItem? = null
 
-    // 화폐 소수점 표시 가능 여부
-    val _currencyDecimalPoint = MutableLiveData<Boolean>()
-    val currencyDecimalPoint: LiveData<Boolean> get() = _currencyDecimalPoint
-
     init {
         val array = arrayListOf<UiBookCategory>(
             UiBookCategory(0, false, "없음", true),
@@ -149,9 +145,6 @@ class HistoryViewModel @Inject constructor(
             UiBookCategory(5, false, "주말", false)
         )
         _repeatItem.postValue(array)
-
-        // CurrencyUtil.currency 값을 가져와서 소수점 표시 여부 설정
-        _currencyDecimalPoint.value = checkDecimalPoint()
     }
 
     // 내역 추가 시에는 날짜만 세팅함
@@ -184,9 +177,10 @@ class HistoryViewModel @Inject constructor(
             item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
         modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
+    // 즐겨찾기 내역 불러오기
     fun setIntentFavoriteData(item: DayMoneyFavoriteItem) {
         mode.value = "add"
-        cost.value = NumberFormat.getNumberInstance().format(item.money.toInt()) + CurrencyUtil.currency
+        cost.value = NumberFormat.getNumberInstance().format(if (checkDecimalPoint() && item.money.contains('.')) item.money.toDouble() else item.money.toInt()) + CurrencyUtil.currency
         line.value = item.lineSubcategoryName
         asset.value = item.assetSubcategoryName
         content.value = item.description
@@ -246,7 +240,7 @@ class HistoryViewModel @Inject constructor(
             postBooksLinesUseCase(
                 bookKey = prefs.getString("bookKey", ""),
                 money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
-                    .toInt(),
+                    .toDouble(),
                 flow = flow.value!!,
                 asset = asset.value!!,
                 line = line.value!!,
@@ -271,8 +265,8 @@ class HistoryViewModel @Inject constructor(
             postBooksLinesChangeUseCase(
                 lineId = modifyId,
                 bookKey = prefs.getString("bookKey", ""),
-                money = tempMoney.substring(0, tempMoney.length - 1)
-                    .toInt(),
+                money = tempMoney.replace(CurrencyUtil.currency, "")
+                    .toDouble(),
                 flow = flow.value!!,
                 asset = asset.value!!,
                 line = line.value!!,

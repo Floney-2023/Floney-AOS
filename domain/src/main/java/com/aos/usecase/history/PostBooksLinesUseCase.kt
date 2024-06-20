@@ -6,7 +6,7 @@ import com.aos.repository.BookRepository
 class PostBooksLinesUseCase(private val bookRepository: BookRepository) {
     suspend operator fun invoke(
        bookKey: String,
-       money: Int,
+       money: Double,
        flow: String,
        asset:String,
        line: String,

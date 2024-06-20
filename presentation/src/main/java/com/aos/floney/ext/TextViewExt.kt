@@ -109,13 +109,13 @@ fun TextView.adjustTotalMoneyText(amount: String?) {
 @BindingAdapter("bind:adjustDayMoneyText")
 fun TextView.adjustDayMoneyText(amount: String?) {
     amount?.let{
-        val amountValue = kotlin.math.abs(amount.replace(",", "").toLongOrNull() ?: return)
+        val amountValue = kotlin.math.abs(amount.replace(",", "").toDoubleOrNull() ?: return)
         when {
             amountValue < 1_000_000_000 -> {
                 this.textSize = 9f
                 this.text = amount
             }
-            amountValue in 1_000_000_000..99_999_999_999 -> {
+            amountValue in 1_000_000_000f..9.9999998E10f -> {
                 this.textSize = 8f
                 this.text = "$amount.."
             }

@@ -5,6 +5,7 @@ import android.text.InputType
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
+import com.aos.data.util.checkDecimalPoint
 import timber.log.Timber
 
 @BindingAdapter("bind:setSelection")
@@ -21,8 +22,8 @@ fun EditText.setSelection(str: String) {
 }
 
 @BindingAdapter("bind:inputTypeBasedOnDecimal")
-fun EditText.setInputTypeBasedOnDecimal(allowDecimal: Boolean) {
-    if (allowDecimal) {
+fun EditText.setInputTypeBasedOnDecimal(check: Boolean) {
+    if (checkDecimalPoint()) {
         this.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
     } else {
         this.inputType = InputType.TYPE_CLASS_NUMBER
