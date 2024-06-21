@@ -336,7 +336,7 @@ class HistoryViewModel @Inject constructor(
             baseEvent(Event.ShowToast("자산을 선택해주세요"))
         } else if (line.value == "분류를 선택하세요") {
             baseEvent(Event.ShowToast("분류를 선택해주세요"))
-        } else if (content.value != "") {
+        } else if (content.value == "") {
             baseEvent(Event.ShowToast("내용을 입력해주세요"))
         }
     }
