@@ -180,7 +180,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
 
     override suspend fun postBooksLines(
         bookKey: String,
-        money: Int,
+        money: Double,
         flow: String,
         asset: String,
         line: String,
@@ -217,7 +217,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
     override suspend fun postBooksLinesChange(
         lineId: Int,
         bookKey: String,
-        money: Int,
+        money: Double,
         flow: String,
         asset: String,
         line: String,

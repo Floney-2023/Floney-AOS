@@ -8,7 +8,7 @@ class PostBooksLinesChangeUseCase(private val bookRepository: BookRepository) {
     suspend operator fun invoke(
        lineId: Int,
        bookKey: String,
-       money: Int,
+       money: Double,
        flow: String,
        asset:String,
        line: String,

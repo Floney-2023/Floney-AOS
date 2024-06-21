@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
+import com.aos.data.util.checkDecimalPoint
 import com.aos.model.analyze.Asset
 import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzePlanModel
@@ -17,8 +18,18 @@ import java.text.NumberFormat
 fun String.formatNumber(): String {
      return if(this != "") {
          val text = this.replace("${CurrencyUtil.currency}", "")
-         if(text != "") {
-             DecimalFormat("###,###").format(text.replace(",", "").toLong())
+
+         if (text.endsWith(".")){
+             text
+         }
+         else if (checkDecimalPoint() && text.length>=15){
+             "999,999,999.99"
+         }
+         else if (!checkDecimalPoint() && text.length>=15) {
+             "99,999,999,999"
+         }
+         else if(text != "") {
+             DecimalFormat("#,###.##").format(text.replace(",", "").toDouble())
          } else {
              ""
          }
@@ -98,13 +109,13 @@ fun TextView.adjustTotalMoneyText(amount: String?) {
 @BindingAdapter("bind:adjustDayMoneyText")
 fun TextView.adjustDayMoneyText(amount: String?) {
     amount?.let{
-        val amountValue = kotlin.math.abs(amount.replace(",", "").toLongOrNull() ?: return)
+        val amountValue = kotlin.math.abs(amount.replace(",", "").toDoubleOrNull() ?: return)
         when {
             amountValue < 1_000_000_000 -> {
                 this.textSize = 9f
                 this.text = amount
             }
-            amountValue in 1_000_000_000..99_999_999_999 -> {
+            amountValue in 1_000_000_000f..9.9999998E10f -> {
                 this.textSize = 8f
                 this.text = "$amount.."
             }

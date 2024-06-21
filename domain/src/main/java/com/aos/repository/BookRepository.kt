@@ -54,7 +54,7 @@ interface BookRepository {
     // 가계부 내역 추가
     suspend fun postBooksLines(
         bookKey: String,
-        money: Int,
+        money: Double,
         flow: String,
         asset: String,
         line: String,
@@ -69,7 +69,7 @@ interface BookRepository {
     suspend fun postBooksLinesChange(
         lineId: Int,
         bookKey: String,
-        money: Int,
+        money: Double,
         flow: String,
         asset: String,
         line: String,

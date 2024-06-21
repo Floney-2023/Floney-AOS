@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.data.util.checkDecimalPoint
+import com.aos.data.util.getCurrencyCodeBySymbol
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.formatNumber
 import com.aos.floney.ext.parseErrorMsg
@@ -180,9 +182,10 @@ class HistoryViewModel @Inject constructor(
             item.money.substring(2, item.money.length).trim() + CurrencyUtil.currency
         modifyItem!!.lineCategory = getCategory(item.lineCategory)
     }
+    // 즐겨찾기 내역 불러오기
     fun setIntentFavoriteData(item: DayMoneyFavoriteItem) {
         mode.value = "add"
-        cost.value = NumberFormat.getNumberInstance().format(item.money.toInt()) + CurrencyUtil.currency
+        cost.value = NumberFormat.getNumberInstance().format(if (checkDecimalPoint() && item.money.contains('.')) item.money.toDouble() else item.money.toInt()) + CurrencyUtil.currency
         line.value = item.lineSubcategoryName
         asset.value = item.assetSubcategoryName
         content.value = item.description
@@ -240,7 +243,7 @@ class HistoryViewModel @Inject constructor(
             postBooksLinesUseCase(
                 bookKey = prefs.getString("bookKey", ""),
                 money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
-                    .toInt(),
+                    .toDouble(),
                 flow = flow.value!!,
                 asset = asset.value!!,
                 line = line.value!!,
@@ -265,8 +268,8 @@ class HistoryViewModel @Inject constructor(
             postBooksLinesChangeUseCase(
                 lineId = modifyId,
                 bookKey = prefs.getString("bookKey", ""),
-                money = tempMoney.substring(0, tempMoney.length - 1)
-                    .toInt(),
+                money = tempMoney.replace(CurrencyUtil.currency, "")
+                    .toDouble(),
                 flow = flow.value!!,
                 asset = asset.value!!,
                 line = line.value!!,

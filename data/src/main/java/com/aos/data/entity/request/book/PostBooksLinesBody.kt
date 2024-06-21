@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PostBooksLinesBody (
     val bookKey: String,
-    val money: Int,
+    val money: Double,
     val flow: String,
     val asset:String,
     val line: String,
