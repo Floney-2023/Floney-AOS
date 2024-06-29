@@ -79,7 +79,13 @@ class BookSettingCategoryViewModel @Inject constructor(
 
     fun onClickPreviousPage() {
         viewModelScope.launch {
-            _back.emit(true)
+            if (edit.value!!)
+            {
+                _back.emit(false)
+            }
+            else{
+                _back.emit(true)
+            }
         }
     }
     // 자산/분류 카테고리 항목 가져오기
@@ -129,7 +135,7 @@ class BookSettingCategoryViewModel @Inject constructor(
 
     // 자산, 지출, 수입, 이체 클릭
     fun onClickFlow(type: String) {
-        flow.postValue(type)
+        flow.value = type
         getBookCategory()
     }
 }

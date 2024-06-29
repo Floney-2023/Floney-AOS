@@ -56,6 +56,7 @@ class BookSettingCategoryAddViewModel @Inject constructor(
                     flow.value!!,
                     name.value!!
                 ).onSuccess {
+                    baseEvent(Event.ShowSuccessToast("추가 완료되었습니다"))
                     _completePage.emit(it.name)
                 }.onFailure {
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingCategoryAddViewModel)))
