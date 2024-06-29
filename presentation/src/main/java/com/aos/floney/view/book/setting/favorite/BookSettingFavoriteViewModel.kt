@@ -124,7 +124,7 @@ class BookSettingFavoriteViewModel @Inject constructor(
 
     // 자산, 지출, 수입, 이체 클릭
     fun onClickFlow(type: String) {
-        flow.postValue(type)
+        flow.value = type
         getBookCategory()
     }
 }
