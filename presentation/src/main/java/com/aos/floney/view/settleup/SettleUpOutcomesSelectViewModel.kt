@@ -149,7 +149,8 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
                     baseEvent(Event.HideLoading)
                     _nextPage.emit(!showNextPage)
                 } else {
-                    baseEvent(Event.ShowToastRes(R.string.settle_up_outcomes_select_title))
+                    baseEvent(Event.ShowToast("정산할 내역을 선택해주세요."))
+                    baseEvent(Event.HideLoading)
                 }
             }
         }
