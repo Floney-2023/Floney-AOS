@@ -19,7 +19,7 @@ class OnBoardShowFlowFragment : BaseFragment<FragmentOnBoardShowFlowBinding, OnB
     private fun setUpViewModelObserver() {
         viewModel.onClickSkipBtn.observe(viewLifecycleOwner) {
             val activity = requireActivity() as OnBoardActivity
-            activity.onChangeViewPagerItem(2)
+            activity.startLoginActivity()
         }
     }
 }
