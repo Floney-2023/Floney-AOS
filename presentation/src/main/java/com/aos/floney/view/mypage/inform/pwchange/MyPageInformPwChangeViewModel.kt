@@ -56,7 +56,7 @@ class MyPageInformPwChangeViewModel @Inject constructor(
                                 baseEvent(Event.ShowLoading)
                                 passwordChangeUseCase(newPassword = newPassword.value ?: "", oldPassword = nowPassword.value ?: "").onSuccess {
                                     // 비밀번호 변경 성공
-                                    baseEvent(Event.ShowToast("비밀번호 변경이 완료되었습니다"))
+                                    baseEvent(Event.ShowSuccessToast("비밀번호 변경이 완료되었습니다"))
                                     baseEvent(Event.HideLoading)
                                     _checkBtn.emit(true)
                                 }.onFailure {
