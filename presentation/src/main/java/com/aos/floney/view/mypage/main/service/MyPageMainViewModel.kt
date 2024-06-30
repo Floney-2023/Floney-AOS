@@ -201,7 +201,6 @@ class MyPageMainViewModel @Inject constructor(
     // 최근 저장 가계부 저장
     fun settingBookKey(bookKey: String){
         viewModelScope.launch(Dispatchers.Main) {
-            baseEvent(Event.ShowLoading)
 
             // 애니메이션 사이클 지속 시간 계산
             val animationDelay = 200L
@@ -210,29 +209,32 @@ class MyPageMainViewModel @Inject constructor(
 
             withContext(Dispatchers.IO) {
                 recentBookKeySaveUseCase(bookKey).onSuccess {
-
                     prefs.setString("bookKey", bookKey)
 
-                    val sortedBooks = _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey }
+                    if (mypageInfo.value!!.myBooks.size != 1) {// 가계부가 2개 이상일 때만 로딩 싸이클
+                        baseEvent(Event.ShowLoading)
 
-                    val updatedResult = _mypageInfo.value!!.copy(myBooks = sortedBooks.map { myBook ->
-                        if (myBook.bookKey == bookKey) {
-                            myBook.copy(recentCheck = true)
-                        } else {
-                            myBook.copy(recentCheck = false)
-                        }
-                    })
+                        val sortedBooks =
+                            _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey }
 
-                    // 최소 한 싸이클이 완료될 때까지 지연
-                    delay(minimumCycleDuration)
-                    baseEvent(Event.HideLoading)
-                    _mypageInfo.postValue(updatedResult)
+                        val updatedResult =
+                            _mypageInfo.value!!.copy(myBooks = sortedBooks.map { myBook ->
+                                if (myBook.bookKey == bookKey) {
+                                    myBook.copy(recentCheck = true)
+                                } else {
+                                    myBook.copy(recentCheck = false)
+                                }
+                            })
+
+                        delay(minimumCycleDuration)
+                        baseEvent(Event.HideLoading)
+
+                        _mypageInfo.postValue(updatedResult)
+                    }
                 }.onFailure {
-                    baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                 }
             }
-            baseEvent(Event.HideLoading)
         }
     }
 

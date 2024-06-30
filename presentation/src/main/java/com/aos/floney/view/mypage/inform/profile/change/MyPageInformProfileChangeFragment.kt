@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.aos.data.util.CommonUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.base.BaseViewModel
@@ -88,7 +89,7 @@ class MyPageInformProfileChangeFragment :
     private fun setUpViewModelObserver() {
         repeatOnStarted {
             viewModel.back.collect() {
-                if (it) {
+                if(it){
                     findNavController().popBackStack()
                 }
             }
