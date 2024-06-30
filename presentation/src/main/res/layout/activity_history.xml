@@ -264,7 +264,6 @@
             android:gravity="right|center_vertical"
             android:hint="내용을 입력하세요"
             android:inputType="text"
-            android:maxLines="1"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"

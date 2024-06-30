@@ -47,7 +47,11 @@ class SignUpInputEmailViewModel @Inject constructor(
                         _nextPage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SignUpInputEmailViewModel)))
+                        if(it.message.parseErrorMsg(this@SignUpInputEmailViewModel).equals("이미 존재하는 유저입니다")) {
+                            baseEvent(Event.ShowToast("이미 등록된 이메일 입니다."))
+                        } else {
+                            baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SignUpInputEmailViewModel)))
+                        }
                     }
                 }
             } else {
