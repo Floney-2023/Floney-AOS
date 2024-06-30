@@ -59,9 +59,8 @@ class MyPageSettingAlarmViewModel @Inject constructor(
     {
         viewModelScope.launch(Dispatchers.IO) {
             marketingChangeUseCase(agree = !(marketingTerms.value)!!).onSuccess {
-                _marketingTerms.postValue(!_marketingTerms.value!!)
                 // 유저 마케팅 수신 동의 여부 변경
-                baseEvent(Event.ShowSuccessToastRes(R.string.mypage_main_setting_marketing_response))
+                _marketingTerms.postValue(!_marketingTerms.value!!)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageSettingAlarmViewModel)))
             }
