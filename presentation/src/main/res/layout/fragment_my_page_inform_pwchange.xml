@@ -69,9 +69,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="92"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleDrawable="@drawable/custom_password_toggle_selector">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
@@ -79,7 +80,8 @@
                     android:hint="@string/mypage_main_inform_pwchange_nowpw_tint"
                     android:padding="16dp"
                     android:textAppearance="@style/login_edit_text"
-                    android:text="@={vm.nowPassword}"/>
+                    android:text="@={vm.nowPassword}"
+                    android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -113,9 +115,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleDrawable="@drawable/custom_password_toggle_selector">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/new_password_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,7 +126,8 @@
                     android:hint="@string/mypage_main_inform_pwchange_nowpw_tint"
                     android:padding="16dp"
                     android:text="@={vm.newPassword}"
-                    android:textAppearance="@style/login_edit_text" />
+                    android:textAppearance="@style/login_edit_text"
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <View
@@ -162,9 +166,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="92"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleDrawable="@drawable/custom_password_toggle_selector">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/new_password_check_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -172,7 +177,8 @@
                     android:hint="@string/mypage_main_inform_pwchange_newpw_check_tint"
                     android:padding="16dp"
                     android:text="@={vm.newRePassword}"
-                    android:textAppearance="@style/login_edit_text" />
+                    android:textAppearance="@style/login_edit_text"
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
