@@ -1,19 +1,16 @@
 package com.aos.floney.ext
 
-import android.util.Log
-import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.checkDecimalPoint
 import com.aos.model.analyze.Asset
-import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzePlanModel
-import timber.log.Timber
 import java.text.DecimalFormat
-import java.text.NumberFormat
+
 
 fun String.formatNumber(): String {
      return if(this != "") {
@@ -121,4 +118,12 @@ fun TextView.adjustDayMoneyText(amount: String?) {
             }
         }
     }
+}
+
+@BindingAdapter("bind:setLayoutMargin")
+fun TextView.setLayoutMargin(margin: Float) {
+    val layoutParams = this.layoutParams as MarginLayoutParams
+    val marginPx = (margin * this.context.resources.displayMetrics.density).toInt()
+    layoutParams.setMargins(marginPx, marginPx, marginPx, marginPx)
+    this.layoutParams = layoutParams
 }
