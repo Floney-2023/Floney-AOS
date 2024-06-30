@@ -137,7 +137,9 @@
                     app:layout_constraintEnd_toEndOf="@id/et_email"
                     app:layout_constraintStart_toStartOf="@id/et_email"
                     app:layout_constraintTop_toBottomOf="@+id/tv_password"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@null"
+                    app:passwordToggleDrawable="@drawable/toogle_icon_status">
 
                     <EditText
                         android:layout_width="match_parent"
@@ -174,7 +176,9 @@
                     app:layout_constraintEnd_toEndOf="@id/et_email"
                     app:layout_constraintStart_toStartOf="@id/et_email"
                     app:layout_constraintTop_toBottomOf="@+id/tv_re_password"
-                    app:passwordToggleEnabled="true">
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@null"
+                    app:passwordToggleDrawable="@drawable/toogle_icon_status">
 
                     <EditText
                         android:layout_width="match_parent"
@@ -220,6 +224,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="20dp"
+                    android:inputType="text"
                     android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
                     android:fontFamily="@font/pretendard_medium"
                     android:hint="@string/request_nickname"

@@ -39,7 +39,7 @@
     <string name="check_password_rule">비밀번호 양식을 확인해주세요.</string>
     <string name="not_match_password">비밀번호가 일치하지 않습니다.</string>
     <string name="re_password">비밀번호 확인</string>
-    <string name="password_rule">* 영문(대소문자 구분 없음), 숫자, 특수문자 포함 8자 이상</string>
+    <string name="password_rule">비밀번호 양식을 확인해주세요.</string>
     <string name="password">비밀번호</string>
     <string name="find_pw">비밀번호 찾기</string>
     <string name="sign_up">회원가입 하기</string>

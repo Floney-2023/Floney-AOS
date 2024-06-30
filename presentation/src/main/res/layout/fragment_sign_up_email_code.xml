@@ -194,7 +194,7 @@
                 android:background="@drawable/custom_edittext_underline"
                 android:fontFamily="@font/pretendard_semibold"
                 android:gravity="center"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLength="1"
                 android:paddingBottom="8dp"
