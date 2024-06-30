@@ -23,6 +23,8 @@ class PasswordFindViewModel @Inject constructor(
     var email = MutableLiveData<String>("")
     private var _nextPage = MutableEventFlow<Boolean>()
     val nextPage: EventFlow<Boolean> get() = _nextPage
+    var _previousPage = MutableEventFlow<Boolean>()
+    val previousPage: EventFlow<Boolean> get() = _previousPage
 
     // 임시 비밀번호 보내기
     fun onClickSendTempPassword() {
@@ -48,6 +50,12 @@ class PasswordFindViewModel @Inject constructor(
         } else {
             // 이메일이 비어 있을 경우
             baseEvent(Event.ShowToastRes(R.string.sign_up_request_email))
+        }
+    }
+
+    fun onClickedPreviousBtn() {
+        viewModelScope.launch {
+            _previousPage.emit(true)
         }
     }
 
