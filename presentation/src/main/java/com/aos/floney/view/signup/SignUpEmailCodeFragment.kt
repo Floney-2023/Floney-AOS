@@ -3,6 +3,7 @@ package com.aos.floney.view.signup
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -77,6 +78,21 @@ class SignUpEmailCodeFragment : BaseFragment<FragmentSignUpEmailCodeBinding, Sig
                 }
                 override fun afterTextChanged(s: Editable?) {}
             })
+
+            editTexts[i].setOnKeyListener { v, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
+                    // 백스페이스 키가 눌렸을 때의 동작
+                    if (editTexts[i].text.isEmpty() && i > 0) {
+                        // 현재 EditText가 비어 있을 때 이전 EditText로 포커스 이동
+                        editTexts[i - 1].requestFocus()
+                        true // 이벤트를 처리했음을 알림
+                    } else {
+                        false
+                    }
+                } else {
+                    false
+                }
+            }
         }
     }
 
