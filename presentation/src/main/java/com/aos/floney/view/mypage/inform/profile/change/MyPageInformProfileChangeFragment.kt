@@ -37,13 +37,15 @@ class MyPageInformProfileChangeFragment :
 
     // 사진 찍기 결과
     private val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        viewModel.createBitmapFile(viewModel.getTakeCaptureUri())
+        if(it) {
+            viewModel.createBitmapFile(viewModel.getTakeCaptureUri())
 
-        Glide.with(requireContext())
-            .load(viewModel.getImageBitmap())
-            .fitCenter()
-            .centerCrop()
-            .into(binding.profileImg)
+            Glide.with(requireContext())
+                .load(viewModel.getImageBitmap())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.profileImg)
+        }
     }
 
     private val imageResult = registerForActivityResult(
