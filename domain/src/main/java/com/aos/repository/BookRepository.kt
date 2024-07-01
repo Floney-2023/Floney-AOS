@@ -122,7 +122,7 @@ interface BookRepository {
     suspend fun getBooksInfoCurrency(bookKey: String): Result<GetBooksInfoCurrencyModel>
 
     // 가계부 자산 설정하기
-    suspend fun postBooksInfoAsset(bookKey: String, asset: Int): Result<Void?>
+    suspend fun postBooksInfoAsset(bookKey: String, asset: Long): Result<Void?>
 
     // 가계부 이월설정 On/Off
     suspend fun postBooksInfoCarryOver(status: Boolean, bookKey: String): Result<Void?>
@@ -131,7 +131,7 @@ interface BookRepository {
     suspend fun getBooksBudget(bookKey: String, date: String): Result<UiBookBudgetModel>
 
     // 가계부 예산 설정하기
-    suspend fun postBooksInfoBudget(bookKey: String, budget: Int, date: String): Result<Void?>
+    suspend fun postBooksInfoBudget(bookKey: String, budget: Long, date: String): Result<Void?>
 
     // 하위 카테고리 삭제
     suspend fun deleteBookCategory(bookKey: String,  parent: String, name: String): Result<Void?>
