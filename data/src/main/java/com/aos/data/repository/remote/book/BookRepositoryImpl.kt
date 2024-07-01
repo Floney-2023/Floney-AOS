@@ -484,7 +484,7 @@ class BookRepositoryImpl @Inject constructor(private val bookDataSource: BookRem
             }
         }
     }
-    override suspend fun postBooksInfoAsset(bookKey: String, asset: Int): Result<Void?> {
+    override suspend fun postBooksInfoAsset(bookKey: String, asset: Long): Result<Void?> {
         when (val data =
             bookDataSource.postBooksInfoAsset(PostBooksInfoAssetBody(bookKey, asset))) {
             is NetworkState.Success -> {
