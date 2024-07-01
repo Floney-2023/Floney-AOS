@@ -152,9 +152,9 @@
 
     <!--signUp-->
     <string name="sign_up_exist_email">이미 등록된 이메일입니다.</string>
-    <string name="sign_up_request_valid_email">유효한 이메일을 입력해주세요</string>
-    <string name="sign_up_request_email">이메일 주소를 입력해주세요</string>
-    <string name="sign_up_request_email_hint">이메일을 입력해주세요</string>
+    <string name="sign_up_request_valid_email">유효한 이메일을 입력해주세요.</string>
+    <string name="sign_up_request_email">이메일 주소를 입력해주세요.</string>
+    <string name="sign_up_request_email_hint">이메일을 입력해주세요.</string>
     <string name="sign_up_valid_email">이메일 인증하기</string>
     <string name="sign_up_valid_email_text">이메일 인증을 위해 사용 가능한\n이메일을 입력해주세요</string>
     <string name="sign_up_send_mail">메일 보내기</string>

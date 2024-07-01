@@ -20,7 +20,13 @@ fun String?.parseErrorMsg(event: BaseViewModel? = null): String {
             event?.baseEvent(BaseViewModel.Event.ExpiredToken)
             ""
         } else {
-            jsonObject.getString("message")
+            val msg = jsonObject.getString("message")
+            if(msg.substring(msg.length - 1, msg.length) == ".") {
+                msg
+            } else {
+                "$msg."
+            }
+
         }
     }
 }

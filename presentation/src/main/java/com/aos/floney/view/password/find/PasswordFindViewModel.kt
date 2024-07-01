@@ -37,10 +37,13 @@ class PasswordFindViewModel @Inject constructor(
                     sendTempPasswordUseCase(email.value!!).onSuccess {
                         // 전송 성공
                         baseEvent(Event.HideLoading)
-//                        _nextPage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@PasswordFindViewModel)))
+                        if(it.message.parseErrorMsg(this@PasswordFindViewModel).equals("해당 이메일로 가입된 유저가 없습니다.")) {
+                            baseEvent(Event.ShowToast("일치하는 회원이 없습니다."))
+                        } else {
+                            baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@PasswordFindViewModel)))
+                        }
                     }
                 }
             } else {
