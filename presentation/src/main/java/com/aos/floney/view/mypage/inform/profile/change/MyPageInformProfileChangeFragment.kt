@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.aos.data.util.CommonUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.base.BaseViewModel
@@ -36,13 +37,15 @@ class MyPageInformProfileChangeFragment :
 
     // 사진 찍기 결과
     private val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        viewModel.createBitmapFile(viewModel.getTakeCaptureUri())
+        if(it) {
+            viewModel.createBitmapFile(viewModel.getTakeCaptureUri())
 
-        Glide.with(requireContext())
-            .load(viewModel.getImageBitmap())
-            .fitCenter()
-            .centerCrop()
-            .into(binding.profileImg)
+            Glide.with(requireContext())
+                .load(viewModel.getImageBitmap())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.profileImg)
+        }
     }
 
     private val imageResult = registerForActivityResult(
@@ -88,7 +91,7 @@ class MyPageInformProfileChangeFragment :
     private fun setUpViewModelObserver() {
         repeatOnStarted {
             viewModel.back.collect() {
-                if (it) {
+                if(it){
                     findNavController().popBackStack()
                 }
             }

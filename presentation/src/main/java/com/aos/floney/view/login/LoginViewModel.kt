@@ -78,7 +78,13 @@ class LoginViewModel @Inject constructor(
                         checkUserBooks()
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
+                        if(it.message.parseErrorMsg(this@LoginViewModel).equals("잘못된 정보로 로그인에 실패했습니다")){
+                            baseEvent(Event.ShowToast("이메일 또는 비밀번호를 다시 확인하세요."))
+                        } else if(it.message.parseErrorMsg(this@LoginViewModel).equals("해당 이메일로 가입된 유저가 없습니다")) {
+                            baseEvent(Event.ShowToast("가입된 정보가 없습니다."))
+                        } else{
+                            baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
+                        }
                     }
                 } else {
                     // 비밀번호가 비어있음

@@ -56,11 +56,18 @@ class MyPageInformPwChangeViewModel @Inject constructor(
                                 baseEvent(Event.ShowLoading)
                                 passwordChangeUseCase(newPassword = newPassword.value ?: "", oldPassword = nowPassword.value ?: "").onSuccess {
                                     // 비밀번호 변경 성공
+                                    baseEvent(Event.ShowSuccessToast("비밀번호 변경이 완료되었습니다"))
                                     baseEvent(Event.HideLoading)
                                     _checkBtn.emit(true)
                                 }.onFailure {
                                     baseEvent(Event.HideLoading)
-                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel)))
+                                    if(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel).equals("비밀번호가 같지 않습니다.")) {
+                                        baseEvent(Event.ShowToast("현재 비밀번호가 일치하지 않습니다."))
+                                    } else if(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel).equals("이전 비밀번호와 같습니다.")){
+                                        baseEvent(Event.ShowToast("이전에 사용한 비밀번호 입니다."))
+                                    } else {
+                                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel)))
+                                    }
                                 }
                             }
                         } else {
@@ -76,11 +83,11 @@ class MyPageInformPwChangeViewModel @Inject constructor(
                     baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_pwchange_not_match_password))
                 }
             } else {
-                // 비밀번호 확인 비어있을 경우
+                // 새 비밀번호 확인 비어있을 경우
                 baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_pwchange_request_input_re_password))
             }
         } else {
-            // 비밀번호 비어있을 경우
+            // 새 비밀번호 비어있을 경우
             baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_pwchange_request_input_password))
         }
     }

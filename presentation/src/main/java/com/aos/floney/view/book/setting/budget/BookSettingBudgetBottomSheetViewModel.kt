@@ -69,13 +69,13 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
             }
         }
     }
-    fun settingCost(): Int {
+    fun settingCost(): Long {
         if (cost.value=="")
             return 0
         else if (cost.value!!.length<=4)
-            return cost.value!!.substring(0, cost.value!!.length-1).toInt()
+            return cost.value!!.substring(0, cost.value!!.length-1).toLong()
         else if (cost.value!="")
-            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toInt()
+            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toLong()
         else
             return 0
     }

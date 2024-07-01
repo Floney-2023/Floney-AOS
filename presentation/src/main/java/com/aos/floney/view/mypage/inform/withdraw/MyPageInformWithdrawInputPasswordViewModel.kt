@@ -67,7 +67,7 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
                     _dialogPage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformWithdrawInputPasswordViewModel)))
+                    baseEvent(Event.ShowToast("비밀번호가 일치하지 않습니다."))
                 }
             }
         } else {
@@ -90,7 +90,7 @@ class MyPageInformWithdrawInputPasswordViewModel @Inject constructor(
                 _withdrawPage.emit(true)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformWithdrawInputPasswordViewModel)))
+                baseEvent(Event.ShowToast("알 수 없는 오류입니다. 다시 시도해 주세요."))
             }
         }
     }
