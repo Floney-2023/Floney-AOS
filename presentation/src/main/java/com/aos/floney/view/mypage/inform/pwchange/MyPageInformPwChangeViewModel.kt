@@ -61,7 +61,13 @@ class MyPageInformPwChangeViewModel @Inject constructor(
                                     _checkBtn.emit(true)
                                 }.onFailure {
                                     baseEvent(Event.HideLoading)
-                                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel)))
+                                    if(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel).equals("비밀번호가 같지 않습니다.")) {
+                                        baseEvent(Event.ShowToast("현재 비밀번호가 일치하지 않습니다."))
+                                    } else if(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel).equals("이전 비밀번호와 같습니다.")){
+                                        baseEvent(Event.ShowToast("이전에 사용한 비밀번호 입니다."))
+                                    } else {
+                                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel)))
+                                    }
                                 }
                             }
                         } else {
