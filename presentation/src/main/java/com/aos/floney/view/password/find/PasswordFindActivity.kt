@@ -25,14 +25,25 @@ class PasswordFindActivity : BaseActivity<ActivityPasswordFindBinding, PasswordF
     private fun setupViewModelObserver() {
         repeatOnStarted {
             viewModel.previousPage.collect {
-                startActivity(Intent(this@PasswordFindActivity, LoginActivity::class.java))
-                if (Build.VERSION.SDK_INT >= 34) {
-                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                } else {
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                }
-                finish()
+                moveLoginActivity()
             }
         }
+        repeatOnStarted {
+            viewModel.showSendDialog.collect {
+                SendPasswordBottomSheetFragment {
+                    moveLoginActivity()
+                }.show(supportFragmentManager, "")
+            }
+        }
+    }
+
+    private fun moveLoginActivity() {
+        startActivity(Intent(this@PasswordFindActivity, LoginActivity::class.java))
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
+        finish()
     }
 }
