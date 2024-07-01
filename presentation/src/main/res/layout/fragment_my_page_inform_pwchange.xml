@@ -69,7 +69,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="92"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@null"
+                app:passwordToggleDrawable="@drawable/toogle_icon_status">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -113,7 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@null"
+                app:passwordToggleDrawable="@drawable/toogle_icon_status">
 
                 <EditText
                     android:id="@+id/new_password_text"
@@ -162,7 +166,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="92"
                 app:hintEnabled="false"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@null"
+                app:passwordToggleDrawable="@drawable/toogle_icon_status">
 
                 <EditText
                     android:id="@+id/new_password_check_text"
