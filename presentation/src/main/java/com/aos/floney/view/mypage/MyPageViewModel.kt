@@ -82,7 +82,7 @@ class MyPageViewModel @Inject constructor(
                 if(CommonUtil.userProfileImg != "" && CommonUtil.userProfileImg != it.profileImg) {
                     baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
                 }
-
+                CommonUtil.provider = it.provider
                 CommonUtil.userEmail = it.email
                 CommonUtil.userProfileImg = it.profileImg
 
