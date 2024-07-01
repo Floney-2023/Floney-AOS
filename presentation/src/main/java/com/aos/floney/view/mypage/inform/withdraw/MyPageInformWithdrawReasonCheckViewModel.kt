@@ -3,19 +3,23 @@ package com.aos.floney.view.mypage.inform.withdraw
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.usecase.withdraw.WithdrawUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageInformWithdrawReasonCheckViewModel @Inject constructor() : BaseViewModel() {
+class MyPageInformWithdrawReasonCheckViewModel @Inject constructor(
+    private val prefs: SharedPreferenceUtil,
+    private val withdrawUseCase: WithdrawUseCase,
+) : BaseViewModel() {
 
     // 뒤로가기
     private var _back = MutableEventFlow<Boolean>()
@@ -50,6 +54,10 @@ class MyPageInformWithdrawReasonCheckViewModel @Inject constructor() : BaseViewM
     // 직접 입력하기 체크
     private var _directInputTerms = MutableLiveData<Boolean>(false)
     val directInputTerms: LiveData<Boolean> get() = _directInputTerms
+
+    // 탈퇴 완료
+    private var _withdrawPage = MutableEventFlow<Boolean>()
+    val withdrawPage: EventFlow<Boolean> get() = _withdrawPage
 
     init {
         // 각 체크박스의 상태를 변경할 때 다른 체크박스의 상태를 변경합니다.
@@ -190,6 +198,24 @@ class MyPageInformWithdrawReasonCheckViewModel @Inject constructor() : BaseViewM
             }
         } else {
             return null
+        }
+    }
+    // 탈퇴 요청
+    fun requestWithdraw(reasonType: String, reason: String)
+    {
+        viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
+            withdrawUseCase(prefs.getString("accessToken",""), reasonType, reason).onSuccess {
+                baseEvent(Event.HideLoading)
+
+                prefs.setString("bookKey","")
+                prefs.setString("accessToken","")
+
+                _withdrawPage.emit(true)
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast("알 수 없는 오류입니다. 다시 시도해 주세요."))
+            }
         }
     }
 }
