@@ -70,7 +70,12 @@
                 android:layout_weight="92"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
+<<<<<<< HEAD
                 app:passwordToggleDrawable="@drawable/custom_password_toggle_selector">
+=======
+                app:passwordToggleTint="@null"
+                app:passwordToggleDrawable="@drawable/toogle_icon_status">
+>>>>>>> fix/v1.0.1-findpw
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -116,7 +121,12 @@
                 android:layout_height="wrap_content"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
+<<<<<<< HEAD
                 app:passwordToggleDrawable="@drawable/custom_password_toggle_selector">
+=======
+                app:passwordToggleTint="@null"
+                app:passwordToggleDrawable="@drawable/toogle_icon_status">
+>>>>>>> fix/v1.0.1-findpw
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/new_password_text"
@@ -167,7 +177,12 @@
                 android:layout_weight="92"
                 app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
+<<<<<<< HEAD
                 app:passwordToggleDrawable="@drawable/custom_password_toggle_selector">
+=======
+                app:passwordToggleTint="@null"
+                app:passwordToggleDrawable="@drawable/toogle_icon_status">
+>>>>>>> fix/v1.0.1-findpw
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/new_password_check_text"
