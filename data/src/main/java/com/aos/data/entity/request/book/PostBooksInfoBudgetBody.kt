@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PostBooksInfoBudgetBody (
     val bookKey : String,
-    val budget : Int,
+    val budget : Long,
     val date : String
 )
