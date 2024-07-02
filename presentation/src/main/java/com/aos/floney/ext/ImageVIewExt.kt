@@ -96,17 +96,17 @@ fun ImageView.setAnalyzeImage(item: UiAnalyzePlanModel?) {
                 .into(this)
         } else {
             when(item.percent.toInt()) {
-                in 0..49 ->{
+                in 0..30 ->{
                     Glide.with(this)
                         .load(R.drawable.analyze_plan_0_49_icon)
                         .into(this)
                 }
-                in 50..79 -> {
+                in 31..60 -> {
                     Glide.with(this)
                         .load(R.drawable.analyze_plan_50_79_icon)
                         .into(this)
                 }
-                in 80..99 -> {
+                in 61..100 -> {
                     Glide.with(this)
                         .load(R.drawable.analyze_plan_80_99_icon)
                         .into(this)

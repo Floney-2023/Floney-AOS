@@ -179,8 +179,11 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
         } else {
             (((this.initBudget - this.leftMoney) / this.initBudget) * 100).toInt().toString()
         },
-        divMoney = "${
-            NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).round(2))
+        divMoney = "${if(leftMoney > 0) {
+            NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).roundToInt())
+        } else {
+            0
+        }
         }${CurrencyUtil.currency}".replace("-", "")
     )
 }

@@ -43,9 +43,9 @@ fun TextView.setPlanText(item: UiAnalyzePlanModel?) {
             this.text = "예산을 설정하고\n체계적인 소비 습관을 만들어 보세요!"
         } else {
             when(item.percent.toInt()) {
-                in 0..49 -> this.text = "쓸 수 있는 예산이\n충분해요!"
-                in 50..79 -> this.text = "조금씩 지출을\n줄여볼까요?"
-                in 80..99 -> this.text = "예산을 넘기지 않게\n주의하세요!"
+                in 0..30 -> this.text = "쓸 수 있는 예산이\n충분해요!"
+                in 31..60 -> this.text = "조금씩 지출을\n줄여볼까요?"
+                in 61..100 -> this.text = "예산을 넘기지 않게\n주의하세요!"
             }
         }
     } else {
