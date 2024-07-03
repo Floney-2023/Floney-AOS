@@ -112,6 +112,13 @@ class BookSettingProfileChangeFragment :
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.onChange.collect() {
+                if(it) {
+                    findNavController().popBackStack()
+                }
+            }
+        }
     }
     private fun onClickChoiceImage() {
         if (checkGalleryPermission()) {
