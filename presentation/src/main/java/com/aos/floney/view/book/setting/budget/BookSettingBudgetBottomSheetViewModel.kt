@@ -52,14 +52,13 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
             cost.postValue("")
     }
 
-    // 초기 자산 설정
+    // 예산 저장
     fun onClickSaveButton(){
         viewModelScope.launch {
             booksInfoBudgetUseCase(
                 prefs.getString("bookKey",""),
                 settingCost(),
                 date.value!! ).onSuccess {
-                // 변경 완료 토스트 메세지
                 if (cost.value!! == "")
                     _budgetSheet.emit("0${CurrencyUtil.currency}")
                 else

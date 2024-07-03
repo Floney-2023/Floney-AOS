@@ -71,7 +71,7 @@ class BookSettingAssetViewModel @Inject constructor(
                 prefs.getString("bookKey",""),
                 settingCost()).onSuccess {
 
-                baseEvent(Event.ShowToastRes(R.string.book_setting_bottom_asset_succcess))
+                baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
                 _initAssetSheet.emit(true)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
