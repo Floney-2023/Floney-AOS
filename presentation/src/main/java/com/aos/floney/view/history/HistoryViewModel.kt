@@ -325,7 +325,7 @@ class HistoryViewModel @Inject constructor(
     // 즐겨찾기 데이터 입력 되었는지 체크
     private fun isFavoriteInputData(): Boolean {
         createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
     // 에러 메세지 생성
@@ -561,7 +561,7 @@ class HistoryViewModel @Inject constructor(
                     bookKey = prefs.getString("bookKey", ""),
                     money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
                         .toDouble(),
-                    description = if (content.value=="") "분류" else content.value!!,
+                    description = if (content.value=="") line.value!! else content.value!!,
                     lineCategoryName = flow.value!!,
                     lineSubcategoryName = line.value!!,
                     assetSubcategoryName = asset.value!!,
