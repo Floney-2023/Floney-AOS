@@ -54,10 +54,12 @@ class BookSettingAssetViewModel @Inject constructor(
             val month = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH는 0부터 시작하므로 +1 해줌
             // "YYYY-MM" 형식으로 포맷
             val currentYearMonth = String.format("%d-%02d", year, month)
-
             postAnalyzeAssetUseCase(
                 prefs.getString("bookKey",""), currentYearMonth).onSuccess {
-                cost.postValue(it.initAsset)
+                    if (it.initAsset.equals("0${CurrencyUtil.currency}"))
+                        cost.postValue("")
+                    else
+                        cost.postValue(it.initAsset)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
             }
