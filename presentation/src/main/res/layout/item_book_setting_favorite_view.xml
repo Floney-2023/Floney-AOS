@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="@{item.description}"
+                bind:setTextWithEllipsis="@{item.description}"
                 android:textColor="@color/grayscale2"
                 android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/iv_bool_activated"
