@@ -16,6 +16,7 @@ import com.aos.usecase.booksetting.BooksNameChangeUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -126,6 +127,7 @@ class BookSettingEditViewModel @Inject constructor(
                 if(prefs.getString("bookKey","").isNotEmpty()) {
                     baseEvent(Event.ShowLoading)
                     booksDeleteUseCase(prefs.getString("bookKey","")).onSuccess {
+                        delay(1)
                         baseEvent(Event.HideLoading)
                         settingBookKey()
                     }.onFailure {

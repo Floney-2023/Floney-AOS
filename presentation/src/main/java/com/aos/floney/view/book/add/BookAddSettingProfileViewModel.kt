@@ -26,6 +26,7 @@ import com.letspl.oceankeeper.util.RotateTransform
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -97,6 +98,7 @@ class BookAddSettingProfileViewModel @Inject constructor(
                     if(getImageBitmap() != null) {
                         uploadImageFile(getImageBitmap()!!, it.bookKey)
                     } else {
+                        delay(1)
                         baseEvent(Event.HideLoading)
                         _nextPage.emit(true)
                     }
@@ -142,6 +144,7 @@ class BookAddSettingProfileViewModel @Inject constructor(
     private fun postChangeBookImg(bookKey: String, url: String) {
         viewModelScope.launch {
             changeBookImgUseCase(bookKey, url).onSuccess {
+                delay(1)
                 baseEvent(Event.HideLoading)
                 _nextPage.emit(true)
             }.onFailure {
