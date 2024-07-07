@@ -292,15 +292,21 @@ fun PostBooksChangeEntity.toPostBooksLinesChangeModel(): PostBooksChangeModel {
     )
 }
 
-fun List<GetBookCategoryEntity>.toUiBookCategory(): List<UiBookCategory> {
-    var idx = 0
-    return this.map {
-        UiBookCategory(
-            idx++, false, it.name, it.default
-        )
-    }
-}
+// 정렬 기준 정의
+val assetOrder = listOf("현금", "체크카드", "신용카드", "은행")
+val expenseOrder = listOf("식비", "카페/간식", "교통", "주거/통신", "의료/건강", "문화", "여행/숙박", "생활", "패션/미용", "육아", "교육", "경조사", "기타", "미분류")
+val incomeOrder = listOf("급여", "부수입", "용돈", "금융소득", "사업소득", "상여금", "기타", "미분류")
+val transferOrder = listOf("이체", "저축", "현금", "투자", "보험", "카드대금", "대출", "기타", "미분류")
 
+fun List<GetBookCategoryEntity>.toUiBookCategory(): List<UiBookCategory> {
+    val allOrders = assetOrder + expenseOrder + incomeOrder + transferOrder
+    return this.sortedWith(compareBy({ allOrders.indexOf(it.name).takeIf { it >= 0 } ?: Int.MAX_VALUE }, { it.name }))
+        .mapIndexed { idx, it ->
+            UiBookCategory(
+                idx, false, it.name, it.default
+            )
+        }
+}
 fun GetSettleUpLastEntity.toGetsettleUpLastModel() : GetSettlementLastModel {
     return GetSettlementLastModel(passedDays = this.passedDays)
 }
