@@ -101,7 +101,7 @@ class BookSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding,
             // 예산 설정 bottomSheet
             viewModel.yearSetting.collect {
                 ChoiceYearPickerBottomSheet(requireContext(), viewModel.year.value!!) {
-                    
+
                     val successToast = SuccessToastDialog(requireContext(), "변경이 완료되었습니다.")
                     successToast.show()
 

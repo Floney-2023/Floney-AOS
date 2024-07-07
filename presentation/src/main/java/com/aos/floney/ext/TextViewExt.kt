@@ -112,7 +112,7 @@ fun TextView.adjustDayMoneyText(amount: String?) {
                 this.textSize = 9f
                 this.text = amount
             }
-            amountValue in 1_000_000_000f..9.9999998E10f -> {
+            amountValue >= 1_000_000_000f -> {
                 this.textSize = 8f
                 this.text = "$amount.."
             }
