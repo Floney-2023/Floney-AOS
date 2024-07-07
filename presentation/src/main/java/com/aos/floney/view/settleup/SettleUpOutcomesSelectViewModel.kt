@@ -190,6 +190,6 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
 
     // 10분 광고 시간 기록
     fun updateAdvertiseTenMinutes(){
-        prefs.setString("advertiseTenMinutes", getCurrentDateTimeString())
+        prefs.setString("advertiseSettleUpTenMinutes", getCurrentDateTimeString())
     }
 }

@@ -296,7 +296,7 @@ class HomeViewModel @Inject constructor(
     }
     // 10분 광고 시간 기록
     fun updateAdvertiseTenMinutes(){
-        prefs.setString("advertiseTenMinutes", getCurrentDateTimeString())
+        prefs.setString("advertiseBookSettingTenMinutes", getCurrentDateTimeString())
     }
     // 광고 표시 여부
     fun setAdvertisement() {
