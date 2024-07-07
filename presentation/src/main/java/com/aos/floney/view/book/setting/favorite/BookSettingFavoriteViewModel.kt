@@ -85,8 +85,31 @@ class BookSettingFavoriteViewModel @Inject constructor(
 
     // 추가하기 버튼 클릭
     fun onClickAddBtn() {
+        var sum = 0
         viewModelScope.launch {
-            _addPage.emit(true)
+            getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("수입")).onSuccess { it ->
+                sum+=it.size
+                getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("이체")).onSuccess { it ->
+                    sum+=it.size
+                    getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("지출")).onSuccess { it ->
+                        sum+=it.size
+
+                        if (sum==15){
+                            baseEvent(Event.ShowToast("즐겨찾기 개수가 초과 되었습니다."))
+                        }
+                        else {
+                            _addPage.emit(true)
+                        }
+
+                    }.onFailure {
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
+                    }
+                }.onFailure {
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
+                }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
+            }
         }
     }
     // 편집버튼 클릭
