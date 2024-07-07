@@ -66,6 +66,7 @@
                 android:layout_height="32dp"
                 android:layout_gravity="bottom|end"
                 android:background="@drawable/btn_photo_camera"
+                android:onClick="@{() -> vm.onClickSettingImage()}"
                 android:textOff=""
                 android:textOn="" />
 
