@@ -255,6 +255,7 @@
             app:layout_constraintStart_toStartOf="@id/tv_category"
             app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
+
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -274,10 +275,9 @@
             app:constraintSet="@id/tv_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@id/tv_content"
             app:layout_constraintTop_toTopOf="@id/tv_content" />
-
 
         <TextView
             android:id="@+id/tv_delete_plan"
