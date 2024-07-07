@@ -284,11 +284,11 @@ class HomeViewModel @Inject constructor(
     fun onClickSettingPage() {
         viewModelScope.launch {
             val advertiseTime = prefs.getString("advertiseTime", "")
-            val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
+            val advertiseTenMinutes = prefs.getString("advertiseBookSettingTenMinutes", "")
             val showSettingPage = advertiseTime.isNotEmpty() || getAdvertiseTenMinutesCheck(advertiseTenMinutes) > 0
 
             if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
-                prefs.setString("advertiseTenMinutes", "")
+                prefs.setString("advertiseBookSettingTenMinutes", "")
             }
 
             _settingPage.emit(!showSettingPage)
