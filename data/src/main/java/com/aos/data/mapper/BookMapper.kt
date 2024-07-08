@@ -341,6 +341,13 @@ fun List<PostBooksOutcomesEntity>.toUiOutcomesSelectModel(): UiOutcomesSelectMod
 }
 fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
 
+    val expenses = this.details.map {
+        com.aos.model.settlement.Expenses(
+            money = if (it.money.toInt() == 0 ) "${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}${CurrencyUtil.currency}" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong() + this.outcome.roundToLong())}${CurrencyUtil.currency}",
+            userNickname = it.userNickname
+        )
+    }
+
     val details = this.details.map {
         Details(
             money = if (it.money.toInt() == 0 ) "${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}${CurrencyUtil.currency}" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong().absoluteValue)}${CurrencyUtil.currency}",
@@ -357,7 +364,8 @@ fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
         userCount = this.userCount,
         totalOutcome ="${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}${CurrencyUtil.currency}",
         outcome = "${NumberFormat.getNumberInstance().format(this.outcome.roundToLong())}${CurrencyUtil.currency}",
-        details = details
+        details = details,
+        expenses = expenses
     )
 }
 fun List<GetSettlementSeeEntity>.toUiSettlementSeeModel(): UiSettlementSeeModel {

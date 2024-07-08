@@ -154,9 +154,8 @@
             app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_total_expense"
             app:layout_constraintTop_toBottomOf="@+id/iv_top_dottedLine"
             bind:diffCallback="@{(Object)UiSettlementAddModel.Companion}"
-            bind:eventHolder="@{eventHolder}"
             bind:itemLayout="@{@layout/item_settlement_complete_user_view}"
-            bind:items="@{vm.settlementModel.details}"
+            bind:items="@{vm.settlementModel.expenses}"
             bind:viewModel="@{vm}" />
 
         <ImageView

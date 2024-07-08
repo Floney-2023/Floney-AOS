@@ -5,12 +5,7 @@
     <data>
         <variable
             name="item"
-            type="com.aos.model.settlement.Details" />
-
-        <variable
-            name="eventHolder"
-            type="com.aos.model.settlement.UiSettlementAddModel.OnItemClickListener" />
-
+            type="com.aos.model.settlement.Expenses" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
