@@ -108,33 +108,66 @@ class SplashActivity :
             val campaign = it.getQueryParameter("campaign")
             when (campaign) {
                 "floney_share" -> {
-                    val inviteCode = it.getQueryParameter("inviteCode")
-                    val intent = Intent(this@SplashActivity, BookEntranceActivity::class.java)
+                    if(sharedPreferenceUtil.getString("accessToken", "") == "") { // accessToken 유효 X
+                        val inviteCode = it.getQueryParameter("inviteCode")
+                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
 
-                    // 데이터를 Intent에 추가
-                    intent.putExtra("settlementId", it.getQueryParameter("inviteCode"))
+                        // 데이터를 Intent에 추가
+                        intent.putExtra("settlementId", it.getQueryParameter("inviteCode"))
 
-                    startActivity(intent)
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        startActivity(intent)
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
                     }
+                    else {
+                        val inviteCode = it.getQueryParameter("inviteCode")
+                        val intent = Intent(this@SplashActivity, BookEntranceActivity::class.java)
+
+                        // 데이터를 Intent에 추가
+                        intent.putExtra("settlementId", it.getQueryParameter("inviteCode"))
+
+                        startActivity(intent)
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
+                    }
+
                 }
                 "floney_settlement_share" -> {
+                    if(sharedPreferenceUtil.getString("accessToken", "") == "") { // accessToken 유효 X
+                        val inviteCode = it.getQueryParameter("inviteCode")
+                        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
 
-                    val intent = Intent(this@SplashActivity, SettleUpActivity::class.java)
+                        // 데이터를 Intent에 추가
+                        intent.putExtra("settlementId", it.getQueryParameter("inviteCode"))
 
-                    // 데이터를 Intent에 추가
-                    intent.putExtra("settlementId", it.getQueryParameter("settlementId"))
-                    intent.putExtra("bookKey", it.getQueryParameter("bookKey"))
-
-                    startActivity(intent)
-                    if (Build.VERSION.SDK_INT >= 34) {
-                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                    } else {
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        startActivity(intent)
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
                     }
+                    else {
+                        val intent = Intent(this@SplashActivity, SettleUpActivity::class.java)
+
+                        // 데이터를 Intent에 추가
+                        intent.putExtra("settlementId", it.getQueryParameter("settlementId"))
+                        intent.putExtra("bookKey", it.getQueryParameter("bookKey"))
+
+                        startActivity(intent)
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
+                    }
+
                 }
             }
         }

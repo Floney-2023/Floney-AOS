@@ -15,6 +15,7 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySettleUpBinding
 import com.aos.floney.view.analyze.AnalyzeActivity
 import com.aos.floney.view.home.HomeActivity
+import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.mypage.MyPageActivity
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.deeplink.DeepLink
@@ -130,13 +131,28 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
             override fun onDeepLinking(deepLinkResult: DeepLinkResult) {
                 when (deepLinkResult.status) {
                     DeepLinkResult.Status.FOUND -> {
-                        val deepLinkObj = deepLinkResult.deepLink
 
-                        val settlementId = deepLinkObj.values["settlementId"].toString().toLong()
-                        val bookKey = deepLinkObj.values["bookKey"].toString()
+                        if(sharedPreferenceUtil.getString("accessToken", "") == "") { // 로그인 상태 X
 
-                        Timber.e("settlement ${settlementId} ------ ${bookKey}")
-                        goShareSettlement(settlementId, bookKey)
+                            val intent = Intent(this@SettleUpActivity, LoginActivity::class.java)
+
+                            startActivity(intent)
+                            if (Build.VERSION.SDK_INT >= 34) {
+                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                            } else {
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                            }
+                            finishAffinity()
+                        }
+                        else{
+                            val deepLinkObj = deepLinkResult.deepLink
+
+                            val settlementId = deepLinkObj.values["settlementId"].toString().toLong()
+                            val bookKey = deepLinkObj.values["bookKey"].toString()
+
+                            Timber.e("settlement ${settlementId} ------ ${bookKey}")
+                            goShareSettlement(settlementId, bookKey)
+                        }
                     }
                     DeepLinkResult.Status.NOT_FOUND -> {
                         Timber.d("deep Deep link not found")

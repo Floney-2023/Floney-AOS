@@ -208,7 +208,7 @@ class MyPageMainViewModel @Inject constructor(
             val minimumCycleDuration = animationDuration + animationDelay * 2
 
             withContext(Dispatchers.IO) {
-                if (mypageInfo.value!!.myBooks.size != 1 || bookKey == prefs.getString("bookKey","")) {// 가계부가 2개 이상일 때만 로딩 싸이클
+                if (mypageInfo.value!!.myBooks.size != 1 && bookKey != prefs.getString("bookKey","")) {// 가계부가 2개 이상일 때만 로딩 싸이클
                     recentBookKeySaveUseCase(bookKey).onSuccess {
                         prefs.setString("bookKey", bookKey)
 

@@ -33,6 +33,7 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
 import com.aos.floney.view.common.WarningPopupDialog
+import com.aos.floney.view.login.LoginActivity
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -136,8 +137,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             }
         }
         repeatOnStarted {
-            // 접근 불가 가계부 dialog
-            viewModel.accessCheck.collect {
+                viewModel.accessCheck.collect {
                 if(it) {
                     val exitDialogFragment = WarningPopupDialog(
                         getString(R.string.home_dialog_title),
@@ -146,7 +146,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                         getString(R.string.home_dialog_right_button),
                         true
                     ) { checked ->
-
+                        val intent = Intent(this@HomeActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                        } else {
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        }
+                        finishAffinity()
                     }
                     exitDialogFragment.show(fragmentManager, "clickDialog")
                 }
