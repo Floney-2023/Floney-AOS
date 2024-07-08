@@ -20,6 +20,7 @@ import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.mypage.MypageSearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -95,6 +96,7 @@ class BookEntranceViewModel @Inject constructor(
                 booksJoinUseCase(inviteCode.value!!).onSuccess {
                     // 참여 완료, 참여 가계부 키 설정
                     prefs.setString("bookKey", it.bookKey)
+                    delay(1)
                     baseEvent(Event.HideLoading)
 
                     _newBookCreatePage.emit(true)
