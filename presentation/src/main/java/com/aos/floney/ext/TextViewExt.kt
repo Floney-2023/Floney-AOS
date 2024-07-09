@@ -127,3 +127,4 @@ fun TextView.setLayoutMargin(margin: Float) {
     layoutParams.setMargins(marginPx, marginPx, marginPx, marginPx)
     this.layoutParams = layoutParams
 }
+
