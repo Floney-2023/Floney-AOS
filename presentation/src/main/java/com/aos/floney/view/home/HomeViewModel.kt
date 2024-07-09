@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
@@ -20,6 +21,7 @@ import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -108,6 +110,10 @@ class HomeViewModel @Inject constructor(
             baseEvent(Event.ShowLoading)
             getBookInfoUseCase(code).onSuccess {
                 baseEvent(Event.HideLoading)
+
+                // 프로필 보기 여부 저장
+                prefs.setBoolean("seeProfileStatus", it.seeProfileStatus)
+
                 // 내 닉네임 저장
                 it.ourBookUsers.forEach {
                     if (it.me) {

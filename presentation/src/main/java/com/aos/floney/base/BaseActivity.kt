@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,7 +12,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -59,6 +63,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
 
         setupUi()
         setupObserve()
+        setupUI(findViewById(android.R.id.content))
     }
 
     private fun setupUi() {
@@ -175,6 +180,31 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
             loadingDialog.dismiss()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+}
+
+fun AppCompatActivity.hideKeyboard() {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    currentFocus?.let {
+        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+    }
+}
+
+fun AppCompatActivity.setupUI(view: View) {
+    // Set up touch listener for non-text box views to hide keyboard.
+    if (view !is EditText) {
+        view.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
+    }
+
+    // If a layout container, iterate over children and set up touch listeners.
+    if (view is ViewGroup) {
+        for (i in 0 until view.childCount) {
+            val innerView = view.getChildAt(i)
+            setupUI(innerView)
         }
     }
 }
