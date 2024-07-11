@@ -1,5 +1,6 @@
 package com.aos.floney.view.mypage.main.service
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -22,6 +23,7 @@ import com.aos.floney.util.getAdvertiseCheck
 import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.user.MyBooks
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import timber.log.Timber
