@@ -195,15 +195,15 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
     Timber.e("this.dayLiensResponse ${this.dayLinesResponse}")
     Timber.e("dayMoneyList $dayMoneyList")
 
-    var totalIncome = 0
-    var totalOutcome = 0
+    var totalIncome = 0.0
+    var totalOutcome = 0.0
 
     this.totalExpense.forEach {
         if (it.categoryType == "INCOME") {
-            totalIncome = it.money.toInt()
+            totalIncome = it.money
         }
         if (it.categoryType == "OUTCOME") {
-            totalOutcome = it.money.toInt()
+            totalOutcome = it.money
         }
     }
 
