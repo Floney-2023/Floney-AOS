@@ -9,6 +9,9 @@ import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +31,10 @@ class SettleUpViewModel @Inject constructor(
     private var _sharePage = MutableEventFlow<Boolean>()
     val sharePage: EventFlow<Boolean> get() = _sharePage
 
+    // 내역추가
+    private var _clickedAddHistory = MutableEventFlow<String>()
+    val clickedAddHistory: EventFlow<String> get() = _clickedAddHistory
+
 
     fun settingBookKey(id: Long, bk: String){
         viewModelScope.launch {
@@ -42,4 +49,18 @@ class SettleUpViewModel @Inject constructor(
             _bottom.postValue(check)
         }
     }
+
+    // 탭바로 추가할 경우
+    fun onClickTabAddHistory() {
+        viewModelScope.launch {
+            _clickedAddHistory.emit(setTodayDate())
+        }
+    }
+
+    // 오늘 날짜로 calendar 설정하기
+    private fun setTodayDate(): String {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return date
+    }
+
 }

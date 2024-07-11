@@ -13,10 +13,13 @@ import com.aos.floney.BuildConfig.appsflyer_dev_key
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySettleUpBinding
+import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeActivity
+import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.login.LoginActivity
 import com.aos.floney.view.mypage.MyPageActivity
+import com.aos.model.user.UserModel.userNickname
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.deeplink.DeepLink
 import com.appsflyer.deeplink.DeepLinkListener
@@ -39,7 +42,29 @@ class SettleUpActivity : BaseActivity<ActivitySettleUpBinding, SettleUpViewModel
         setShareSettlementInform()
         setUpBottomNavigation()
         setupJetpackNavigation()
+        setUpViewModelObserver()
     }
+
+    private fun setUpViewModelObserver() {
+        repeatOnStarted {
+            // 내역추가
+            viewModel.clickedAddHistory.collect {
+                startActivity(
+                    Intent(
+                        this@SettleUpActivity,
+                        HistoryActivity::class.java
+                    ).putExtra("date", it)
+                        .putExtra("nickname", userNickname)
+                )
+                if (Build.VERSION.SDK_INT >= 34) {
+                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, R.anim.slide_in, R.anim.slide_out_down)
+                } else {
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out_down)
+                }
+            }
+        }
+    }
+
     private fun setupJetpackNavigation() {
 
         val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment

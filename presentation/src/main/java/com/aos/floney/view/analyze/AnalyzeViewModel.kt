@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
@@ -37,6 +38,10 @@ class AnalyzeViewModel @Inject constructor(): BaseViewModel() {
     // 표시 중인 날짜
     private var _showDate = MutableLiveData<String>()
     val showDate: LiveData<String> get() = _showDate
+
+    // 내역추가
+    private var _clickedAddHistory = MutableEventFlow<String>()
+    val clickedAddHistory: EventFlow<String> get() = _clickedAddHistory
 
     init {
         getFormatDateMonth()
@@ -67,6 +72,19 @@ class AnalyzeViewModel @Inject constructor(): BaseViewModel() {
     // 다음 달 버튼 클릭
     fun onClickNextMonth() {
         updateCalendarMonth(1)
+    }
+
+    // 탭바로 추가할 경우
+    fun onClickTabAddHistory() {
+        viewModelScope.launch {
+            _clickedAddHistory.emit(setTodayDate())
+        }
+    }
+
+    // 오늘 날짜로 calendar 설정하기
+    private fun setTodayDate(): String {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return date
     }
 
     // 날짜 포멧 월만 결과 가져오기

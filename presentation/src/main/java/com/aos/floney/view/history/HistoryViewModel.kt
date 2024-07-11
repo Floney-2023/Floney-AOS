@@ -171,7 +171,7 @@ class HistoryViewModel @Inject constructor(
         content.value = item.description
         _nickname.value = item.writerNickName
         deleteChecked.value = item.exceptStatus
-        Timber.e("item.repeatDuration ${item.repeatDuration}")
+
         _repeatClickItem.value = UiBookCategory(
             idx = 1,
             checked = true,
@@ -250,7 +250,11 @@ class HistoryViewModel @Inject constructor(
                 asset = asset.value!!,
                 line = line.value!!,
                 lineDate = date.value!!.replace(".", "-"),
-                description = content.value!!,
+                description = if(content.value!! == ""){
+                    line.value!!.toString()
+                } else {
+                    content.value!!
+                },
                 except = deleteChecked.value!!,
                 nickname = nickname.value!!,
                 repeatDuration = getConvertSendRepeatValue()

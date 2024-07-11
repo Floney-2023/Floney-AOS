@@ -164,6 +164,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:background="@drawable/icon_add_circle"
+            android:onClick="@{() -> vm.onClickTabAddHistory()}"
             app:layout_constraintBottom_toBottomOf="@id/ll_bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

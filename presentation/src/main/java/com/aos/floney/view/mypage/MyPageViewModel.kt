@@ -20,6 +20,9 @@ import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.user.MyBooks
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
@@ -63,6 +66,10 @@ class MyPageViewModel @Inject constructor(
     // 가계부 추가 BottomSheet
     private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
     val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
+
+    // 내역추가
+    private var _clickedAddHistory = MutableEventFlow<String>()
+    val clickedAddHistory: EventFlow<String> get() = _clickedAddHistory
 
     // 마이페이지 정보 읽어오기
     fun searchMypageItems()
@@ -184,6 +191,19 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             _bookAddBottomSheet.emit(true)
         }
+    }
+
+    // 탭바로 추가할 경우
+    fun onClickTabAddHistory() {
+        viewModelScope.launch {
+            _clickedAddHistory.emit(setTodayDate())
+        }
+    }
+
+    // 오늘 날짜로 calendar 설정하기
+    private fun setTodayDate(): String {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return date
     }
 
 }

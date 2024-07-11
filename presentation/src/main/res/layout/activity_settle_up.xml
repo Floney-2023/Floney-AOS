@@ -61,6 +61,7 @@
             android:id="@+id/btn_add_history"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:onClick="@{() -> vm.onClickTabAddHistory()}"
             android:background="@drawable/icon_add_circle"
             android:visibility="@{vm.bottom ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/ll_bottom_navigation"
