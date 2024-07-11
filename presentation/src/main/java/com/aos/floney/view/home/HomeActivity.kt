@@ -32,9 +32,11 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
+import com.aos.floney.view.common.SuccessToastDialog
 import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.floney.view.login.LoginActivity
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.activity_home),
@@ -44,6 +46,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
 
     override fun onResume() {
         super.onResume()
+
         val prefs = SharedPreferenceUtil(this)
         lifecycleScope.launch {
             viewModel.getBookInfo(prefs.getString("bookKey", ""))
@@ -52,7 +55,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setUpAdMob()
         setUpUi()
         setUpViewModelObserver()
         setUpBottomNavigation()
@@ -97,30 +99,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             }
         }
         repeatOnStarted {
-            // 가계부 설정 페이지 이동
             viewModel.settingPage.collect {
-                if(it) {
-                    if (mRewardAd != null) {
-                        mRewardAd?.show(this@HomeActivity, OnUserEarnedRewardListener {
-                            fun onUserEarnedReward(rewardItem: RewardItem) {
-                                val rewardAmount = rewardItem.amount
-                                var rewardType = rewardItem.type
-
-                            }
-                        })
-                        mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-                            override fun onAdDismissedFullScreenContent() {
-                                viewModel.updateAdvertiseTenMinutes()
-                                goToBookSettingActivity()
-                                mRewardAd = null
-                                setUpAdMob()
-                            }
-
-                            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                                mRewardAd = null
-                            }
-                        }
-                    }
+                if (it) {
+                    setUpAdMob()
                 } else {
                     goToBookSettingActivity()
                 }
@@ -260,21 +241,53 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             }
         }
     }
-    private fun setUpAdMob(){
+    private fun setUpAdMob() {
+        showLoadingDialog()
         MobileAds.initialize(this)
 
         val adRequest = AdRequest.Builder().build()
         binding.adBanner.loadAd(adRequest)
 
-        RewardedAd.load(this,google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
+        RewardedAd.load(this, google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 mRewardAd = null
+                // 광고 로드 실패 시 로그 출력
+                Timber.e("광고가 아직 로드되지 않음 1-4")
             }
 
             override fun onAdLoaded(ad: RewardedAd) {
+                dismissLoadingDialog()
                 mRewardAd = ad
+                showAdMob()
+                // 광고 로드 성공 시 로그 출력
+                Timber.e("광고가 아직 로드되지 않음 1-5")
             }
         })
+    }
+    fun showAdMob(){
+        if (mRewardAd != null) {
+            mRewardAd?.show(this@HomeActivity, OnUserEarnedRewardListener {
+                fun onUserEarnedReward(rewardItem: RewardItem) {
+                    val rewardAmount = rewardItem.amount
+                    val rewardType = rewardItem.type
+                }
+            })
+            mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    dismissLoadingDialog()
+
+                    viewModel.updateAdvertiseTenMinutes()
+                    goToBookSettingActivity()
+                    mRewardAd = null
+                    Timber.e("광고가 로드됨")
+                }
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    dismissLoadingDialog()
+                    mRewardAd = null
+                    Timber.e("광고가 아직 로드되지 않음 1-2")
+                }
+            }
+        }
     }
     private fun setUpAccessCheck(){
         viewModel.setAccessCheck(intent.getBooleanExtra("accessCheck", false))

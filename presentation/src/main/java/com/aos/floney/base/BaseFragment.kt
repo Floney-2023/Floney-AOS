@@ -153,7 +153,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
-    private fun showLoadingDialog() {
+    fun showLoadingDialog() {
         val circle1 = loadingDialog.findViewById<View>(R.id.circle1)
         val circle2 = loadingDialog.findViewById<View>(R.id.circle2)
         val circle3 = loadingDialog.findViewById<View>(R.id.circle3)
