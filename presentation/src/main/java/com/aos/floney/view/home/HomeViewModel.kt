@@ -15,6 +15,7 @@ import com.aos.model.home.DayMoney
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
+import com.aos.model.user.UserModel.userNickname
 import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -113,6 +114,7 @@ class HomeViewModel @Inject constructor(
                 it.ourBookUsers.forEach {
                     if (it.me) {
                         myNickname = it.name
+                        userNickname = it.name
                     }
                 }
                 _bookInfo.postValue(it)
