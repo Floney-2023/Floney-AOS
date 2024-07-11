@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
@@ -212,6 +213,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // 탭바로 추가할 경우
+    fun onClickTabAddHistory() {
+        setTodayDate()
+
+        viewModelScope.launch {
+            _clickedAddHistory.emit(true)
+        }
+    }
+
     // 캘린더 값 변경
     private fun updateCalendarMonth(value: Int) {
         _calendar.value.set(Calendar.DAY_OF_MONTH, 1)
@@ -236,6 +246,14 @@ class HomeViewModel @Inject constructor(
                 _clickedNextMonth.emit(getFormatDateDay())
             }
         }
+    }
+
+    // 오늘 날짜로 calendar 설정하기
+    private fun setTodayDate() {
+        val dateArr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).split("-")
+        _calendar.value.set(Calendar.YEAR, dateArr[0].toInt())
+        _calendar.value.set(Calendar.MONTH, dateArr[1].toInt())
+        _calendar.value.set(Calendar.DATE, dateArr[2].toInt())
     }
 
     // 날짜 포멧 결과 가져오기
