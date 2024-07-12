@@ -260,7 +260,6 @@ class HistoryViewModel @Inject constructor(
                 repeatDuration = getConvertSendRepeatValue()
             ).onSuccess {
                 _postBooksLines.emit(true)
-                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
@@ -285,7 +284,6 @@ class HistoryViewModel @Inject constructor(
                 nickname = nickname.value!!,
             ).onSuccess {
                 _postModifyBooksLines.emit(true)
-                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
