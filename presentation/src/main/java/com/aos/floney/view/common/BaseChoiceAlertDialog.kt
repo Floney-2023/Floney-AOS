@@ -28,7 +28,7 @@ class BaseChoiceAlertDialog(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 다이얼로그가 취소되지 않도록 설정
-        isCancelable = false
+//        isCancelable = false
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = BaseChoiceAlertDialogBinding.inflate(inflater, container, false)
