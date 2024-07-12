@@ -3,6 +3,7 @@ package com.aos.floney.ext
 import android.graphics.Color
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.model.analyze.UiAnalyzePlanModel
 import com.bumptech.glide.Glide
@@ -46,6 +47,26 @@ fun ImageView.setBookImageToUrl(url: String?) {
         } else if(it.equals("btn_book_default")) {
             Glide.with(this)
                 .load(R.drawable.btn_book_profile)
+                .into(this)
+        } else {
+            Glide.with(this)
+                .load(url)
+                .into(this)
+        }
+    }
+}
+@BindingAdapter("setUserImageToUrl")
+fun ImageView.setUserImageToUrl(url: String?) {
+    url?.let {
+        val prefs = SharedPreferenceUtil(context)
+
+        if(!prefs.getBoolean("seeProfileStatus",true) || it.equals("user_default")) {
+            Glide.with(this)
+                .load(R.drawable.icon_default_profile)
+                .into(this)
+        } else if(it.equals("user_btn_default")) {
+            Glide.with(this)
+                .load(R.drawable.btn_profile)
                 .into(this)
         } else {
             Glide.with(this)

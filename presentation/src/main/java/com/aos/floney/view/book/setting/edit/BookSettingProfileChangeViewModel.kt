@@ -56,6 +56,11 @@ class BookSettingProfileChangeViewModel @Inject constructor(
     private var _onClickDefaultProfile = MutableEventFlow<Boolean>()
     val onClickDefaultProfile: EventFlow<Boolean> get() = _onClickDefaultProfile
 
+
+    // 변경하기 버튼 클릭
+    private var _onChange = MutableEventFlow<Boolean>()
+    val onChange: EventFlow<Boolean> get() = _onChange
+
     // 사진 촬영 uri
     private var takeCaptureUri: Uri? = null
     private var imageBitmap: Bitmap? = null
@@ -69,9 +74,10 @@ class BookSettingProfileChangeViewModel @Inject constructor(
             changeBookImgUseCase(prefs.getString("bookKey", ""), path).onSuccess {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
+                _onChange.emit(true)
             }.onFailure {
                 baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
+                baseEvent(Event.ShowToast("프로필 변경을 실패하였습니다."))
             }
         }
     }

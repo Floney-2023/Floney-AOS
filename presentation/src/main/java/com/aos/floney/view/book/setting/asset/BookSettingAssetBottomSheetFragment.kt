@@ -1,11 +1,14 @@
 package com.aos.floney.view.book.setting.asset
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import com.aos.floney.R
 import com.aos.floney.base.BaseBottomSheetFragment
 import com.aos.floney.databinding.BottomSheetBookSettingAssetBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.common.SuccessToastDialog
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -23,6 +26,12 @@ class BookSettingAssetBottomSheetFragment :
             // 나중에 하기 -> Bottomsheet 닫기
             viewModel.initAssetSheet.collect {
                 Timber.e("nextPage $it")
+                val successToast = SuccessToastDialog(requireContext(), "변경이 완료되었습니다.")
+                successToast.show()
+
+                Handler(Looper.myLooper()!!).postDelayed({
+                    successToast.dismiss()
+                }, 2000)
                 if(it) {
                     dismiss()
                 }

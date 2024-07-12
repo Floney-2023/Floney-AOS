@@ -118,6 +118,7 @@ class BookSettingRepeatViewModel @Inject constructor(
                 val updatedList = _repeatList.value!!.filter { it.id != item.id }
                 _repeatList.postValue(updatedList)
 
+                baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)

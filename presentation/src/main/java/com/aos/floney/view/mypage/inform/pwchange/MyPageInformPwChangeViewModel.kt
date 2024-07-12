@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.ext.parseErrorCode
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
@@ -61,13 +62,16 @@ class MyPageInformPwChangeViewModel @Inject constructor(
                                     _checkBtn.emit(true)
                                 }.onFailure {
                                     baseEvent(Event.HideLoading)
-                                    if(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel).equals("비밀번호가 같지 않습니다.")) {
-                                        baseEvent(Event.ShowToast("현재 비밀번호가 일치하지 않습니다."))
-                                    } else if(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel).equals("이전 비밀번호와 같습니다.")){
-                                        baseEvent(Event.ShowToast("이전에 사용한 비밀번호 입니다."))
-                                    } else {
-                                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageInformPwChangeViewModel)))
+
+                                    val errorCode = it.message.parseErrorCode()
+
+                                    val message = when (errorCode) {
+                                        "U008" -> "일치하는 회원이 없습니다."
+                                        "U017" -> "이전에 사용한 비밀번호 입니다."
+                                        "U002" -> "현재 비밀번호가 일치하지 않습니다."
+                                        else -> "알 수 없는 오류입니다. 다시 시도해 주세요."
                                     }
+                                    baseEvent(Event.ShowToast(message))
                                 }
                             }
                         } else {

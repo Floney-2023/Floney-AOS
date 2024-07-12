@@ -2,6 +2,8 @@ package com.aos.floney.view.book.setting.budget
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
@@ -14,6 +16,7 @@ import com.aos.floney.databinding.FragmentBookSettingBudgetBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeViewModel
 import com.aos.floney.view.analyze.ChoiceDatePickerBottomSheet
+import com.aos.floney.view.common.SuccessToastDialog
 import com.aos.model.book.BudgetItem
 import com.aos.model.book.UiBookBudgetModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,6 +101,14 @@ class BookSettingBudgetFragment : BaseFragment<FragmentBookSettingBudgetBinding,
             // 예산 설정 bottomSheet
             viewModel.yearSetting.collect {
                 ChoiceYearPickerBottomSheet(requireContext(), viewModel.year.value!!) {
+
+                    val successToast = SuccessToastDialog(requireContext(), "변경이 완료되었습니다.")
+                    successToast.show()
+
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        successToast.dismiss()
+                    }, 2000)
+
                     // 결과값
                     val item = it.split("-")
                     viewModel.getBudgetInform(item[0].toInt().toString(),it)

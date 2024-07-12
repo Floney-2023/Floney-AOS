@@ -103,7 +103,8 @@ class BookSettingBudgetViewModel @Inject constructor(
                     item // 변경 없음
                 }
             }
-
+            // 변경 완료 토스트 메세지
+            baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
             _budgetList.postValue(UiBookBudgetModel(updatedList))
         }
     }

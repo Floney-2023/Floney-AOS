@@ -18,6 +18,7 @@ import com.aos.model.home.DayMoneyModifyItem
 import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.DeleteBooksLinesAllUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
+import com.aos.usecase.history.GetBookFavoriteUseCase
 import com.aos.usecase.history.PostBooksFavoritesUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
@@ -38,7 +39,8 @@ class HistoryViewModel @Inject constructor(
     private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
     private val deleteBookLineUseCase: DeleteBookLineUseCase,
     private val deleteBooksLinesAllUseCase: DeleteBooksLinesAllUseCase,
-    private val postBooksFavoritesUseCase : PostBooksFavoritesUseCase
+    private val postBooksFavoritesUseCase : PostBooksFavoritesUseCase,
+    private val getBookFavoriteUseCase: GetBookFavoriteUseCase
 ) : BaseViewModel() {
 
     // 내역 추가 결과
@@ -169,7 +171,7 @@ class HistoryViewModel @Inject constructor(
         content.value = item.description
         _nickname.value = item.writerNickName
         deleteChecked.value = item.exceptStatus
-        Timber.e("item.repeatDuration ${item.repeatDuration}")
+
         _repeatClickItem.value = UiBookCategory(
             idx = 1,
             checked = true,
@@ -248,7 +250,11 @@ class HistoryViewModel @Inject constructor(
                 asset = asset.value!!,
                 line = line.value!!,
                 lineDate = date.value!!.replace(".", "-"),
-                description = content.value!!,
+                description = if(content.value!! == ""){
+                    line.value!!.toString()
+                } else {
+                    content.value!!
+                },
                 except = deleteChecked.value!!,
                 nickname = nickname.value!!,
                 repeatDuration = getConvertSendRepeatValue()
@@ -324,8 +330,8 @@ class HistoryViewModel @Inject constructor(
 
     // 즐겨찾기 데이터 입력 되었는지 체크
     private fun isFavoriteInputData(): Boolean {
-        createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+        createFavoriteErrorMsg()
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
     // 에러 메세지 생성
@@ -338,6 +344,16 @@ class HistoryViewModel @Inject constructor(
             baseEvent(Event.ShowToast("분류를 선택해주세요"))
         } else if (content.value == "") {
             baseEvent(Event.ShowToast("내용을 입력해주세요"))
+        }
+    }
+
+    private fun createFavoriteErrorMsg() {
+        if(cost.value == "") {
+            baseEvent(Event.ShowToast("금액을 입력해주세요"))
+        } else if (asset.value == "자산을 선택하세요") {
+            baseEvent(Event.ShowToast("자산을 선택해주세요"))
+        } else if (line.value == "분류를 선택하세요") {
+            baseEvent(Event.ShowToast("분류를 선택해주세요"))
         }
     }
 
@@ -556,22 +572,58 @@ class HistoryViewModel @Inject constructor(
     // 즐겨찾기 추가
     fun postAddFavorite() {
         if (isFavoriteInputData()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                postBooksFavoritesUseCase(
-                    bookKey = prefs.getString("bookKey", ""),
-                    money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
-                        .toDouble(),
-                    description = if (content.value=="") "분류" else content.value!!,
-                    lineCategoryName = flow.value!!,
-                    lineSubcategoryName = line.value!!,
-                    assetSubcategoryName = asset.value!!,
-                    exceptStatus = deleteChecked.value!!
-                ).onSuccess {
-                    _postBooksFavorites.emit(true)
-                    baseEvent(Event.ShowSuccessToast("즐겨찾기에 추가되었습니다."))
+            isFavoriteMaxData { isMax ->
+                if (isMax) {
+                    viewModelScope.launch(Dispatchers.IO) {
+                        postBooksFavoritesUseCase(
+                            bookKey = prefs.getString("bookKey", ""),
+                            money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
+                                .toDouble(),
+                            description = if (content.value=="") line.value!! else content.value!!,
+                            lineCategoryName = flow.value!!,
+                            lineSubcategoryName = line.value!!,
+                            assetSubcategoryName = asset.value!!,
+                            exceptStatus = deleteChecked.value!!
+                        ).onSuccess {
+                            _postBooksFavorites.emit(true)
+                            baseEvent(Event.ShowSuccessToast("즐겨찾기에 추가되었습니다."))
+                        }.onFailure {
+                            baseEvent(Event.ShowToast("${flow.value!!} ${it.message.parseErrorMsg(this@HistoryViewModel)}"))
+                        }
+                    }
+                } else {
+                    baseEvent(Event.ShowToast("즐겨찾기 개수가 초과 되었습니다."))
+                }
+            }
+
+
+        }
+    }
+    fun isFavoriteMaxData(onResult: (Boolean) -> Unit) {
+        var sum = 0
+        viewModelScope.launch {
+            getBookFavoriteUseCase(prefs.getString("bookKey", ""),"INCOME").onSuccess { it ->
+                sum+=it.size
+                getBookFavoriteUseCase(prefs.getString("bookKey", ""), "OUTCOME").onSuccess { it ->
+                    sum+=it.size
+                    getBookFavoriteUseCase(prefs.getString("bookKey", ""), "TRANSFER").onSuccess { it ->
+                        sum+=it.size
+
+                        if (sum==15){
+                            onResult(false)
+                        }
+                        else {
+                            onResult(true)
+                        }
+
+                    }.onFailure {
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
+                    }
                 }.onFailure {
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
                 }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
         }
     }

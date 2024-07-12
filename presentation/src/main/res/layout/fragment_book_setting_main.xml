@@ -456,8 +456,7 @@
                     android:paddingStart="24dp"
                     android:paddingTop="16dp"
                     android:paddingEnd="24dp"
-                    android:paddingBottom="16dp"
-                    android:layout_marginBottom="70dp"
+                    bind:setDynamicPaddingBottom="@{vm.bookSettingInfo.ourBookUsers[0].role.equals(`팀원·나`)}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_book_setting_excel">

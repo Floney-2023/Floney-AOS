@@ -1,5 +1,6 @@
 package com.aos.floney.view.mypage.main.service
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -22,6 +23,7 @@ import com.aos.floney.util.getAdvertiseCheck
 import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.user.MyBooks
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -208,10 +210,11 @@ class MyPageMainViewModel @Inject constructor(
             val minimumCycleDuration = animationDuration + animationDelay * 2
 
             withContext(Dispatchers.IO) {
-                recentBookKeySaveUseCase(bookKey).onSuccess {
-                    prefs.setString("bookKey", bookKey)
+                if (mypageInfo.value!!.myBooks.size != 1 && bookKey != prefs.getString("bookKey","")) {// 가계부가 2개 이상일 때만 로딩 싸이클
+                    recentBookKeySaveUseCase(bookKey).onSuccess {
+                        prefs.setString("bookKey", bookKey)
 
-                    if (mypageInfo.value!!.myBooks.size != 1) {// 가계부가 2개 이상일 때만 로딩 싸이클
+
                         baseEvent(Event.ShowLoading)
 
                         val sortedBooks =
@@ -230,9 +233,10 @@ class MyPageMainViewModel @Inject constructor(
                         baseEvent(Event.HideLoading)
 
                         _mypageInfo.postValue(updatedResult)
+
+                    }.onFailure {
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                     }
-                }.onFailure {
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                 }
             }
         }

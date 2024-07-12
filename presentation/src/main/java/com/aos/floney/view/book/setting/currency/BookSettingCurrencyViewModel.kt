@@ -23,6 +23,7 @@ import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.booksetting.BooksInitUseCase
 import com.aos.usecase.mypage.AlarmSaveGetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDateTime
@@ -122,6 +123,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
                         "icon_noti_currency",
                         it,
                         getCurrentDateTimeString()).onSuccess {
+                        delay(1)
                         baseEvent(Event.HideLoading)
                         Timber.e("save gg ")
                         _init.emit(true)

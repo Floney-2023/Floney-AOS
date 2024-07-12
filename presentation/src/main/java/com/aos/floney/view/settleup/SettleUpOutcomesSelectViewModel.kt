@@ -132,7 +132,7 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 if (selectedEmails.isNotEmpty()) {
                     val advertiseTime = prefs.getString("advertiseTime", "")
-                    val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
+                    val advertiseTenMinutes = prefs.getString("advertiseSettleUpTenMinutes", "")
                     val showNextPage =
                         getAdvertiseCheck(advertiseTime) > 0 || getAdvertiseTenMinutesCheck(
                             advertiseTenMinutes
@@ -142,7 +142,7 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
                         prefs.setString("advertiseTime", "")
                     }
                     if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
-                        prefs.setString("advertiseTenMinutes", "")
+                        prefs.setString("advertiseSettleUpTenMinutes", "")
                     }
                     // 최소 한 싸이클이 완료될 때까지 지연
                     delay(minimumCycleDuration)
@@ -190,6 +190,6 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
 
     // 10분 광고 시간 기록
     fun updateAdvertiseTenMinutes(){
-        prefs.setString("advertiseTenMinutes", getCurrentDateTimeString())
+        prefs.setString("advertiseSettleUpTenMinutes", getCurrentDateTimeString())
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
@@ -15,13 +16,16 @@ import com.aos.model.home.DayMoney
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
+import com.aos.model.user.UserModel.userNickname
 import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
@@ -108,10 +112,15 @@ class HomeViewModel @Inject constructor(
             baseEvent(Event.ShowLoading)
             getBookInfoUseCase(code).onSuccess {
                 baseEvent(Event.HideLoading)
+
+                // 프로필 보기 여부 저장
+                prefs.setBoolean("seeProfileStatus", it.seeProfileStatus)
+
                 // 내 닉네임 저장
                 it.ourBookUsers.forEach {
                     if (it.me) {
                         myNickname = it.name
+                        userNickname = it.name
                     }
                 }
                 _bookInfo.postValue(it)
@@ -212,6 +221,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // 탭바로 추가할 경우
+    fun onClickTabAddHistory() {
+        setTodayDate()
+
+        viewModelScope.launch {
+            _clickedAddHistory.emit(true)
+        }
+    }
+
     // 캘린더 값 변경
     private fun updateCalendarMonth(value: Int) {
         _calendar.value.set(Calendar.DAY_OF_MONTH, 1)
@@ -236,6 +254,14 @@ class HomeViewModel @Inject constructor(
                 _clickedNextMonth.emit(getFormatDateDay())
             }
         }
+    }
+
+    // 오늘 날짜로 calendar 설정하기
+    private fun setTodayDate() {
+        val dateArr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).split("-")
+        _calendar.value.set(Calendar.YEAR, dateArr[0].toInt())
+        _calendar.value.set(Calendar.MONTH, dateArr[1].toInt())
+        _calendar.value.set(Calendar.DATE, dateArr[2].toInt())
     }
 
     // 날짜 포멧 결과 가져오기
@@ -284,11 +310,11 @@ class HomeViewModel @Inject constructor(
     fun onClickSettingPage() {
         viewModelScope.launch {
             val advertiseTime = prefs.getString("advertiseTime", "")
-            val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
+            val advertiseTenMinutes = prefs.getString("advertiseBookSettingTenMinutes", "")
             val showSettingPage = advertiseTime.isNotEmpty() || getAdvertiseTenMinutesCheck(advertiseTenMinutes) > 0
 
             if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
-                prefs.setString("advertiseTenMinutes", "")
+                prefs.setString("advertiseBookSettingTenMinutes", "")
             }
 
             _settingPage.emit(!showSettingPage)
@@ -296,7 +322,7 @@ class HomeViewModel @Inject constructor(
     }
     // 10분 광고 시간 기록
     fun updateAdvertiseTenMinutes(){
-        prefs.setString("advertiseTenMinutes", getCurrentDateTimeString())
+        prefs.setString("advertiseBookSettingTenMinutes", getCurrentDateTimeString())
     }
     // 광고 표시 여부
     fun setAdvertisement() {
