@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
 
     </data>
@@ -20,11 +19,11 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
+            android:fontFamily="@font/floney_pretendard_bold"
             android:gravity="center"
             android:lineSpacingExtra="-3sp"
-            android:fontFamily="@font/floney_pretendard_bold"
-            android:textSize="16dp"
-            android:textColor="@color/grayscale1"/>
+            android:textColor="@color/grayscale1"
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/tv_popup_info"
@@ -42,28 +41,30 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grayscale10"/>
+            android:background="@color/grayscale10" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:weightSum="2"
-            android:padding="1dp">
+            android:padding="1dp"
+            android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_left"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="네"
-                android:textSize="16dp"
-                android:layout_weight="1"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textColor="@color/grayscale2"
+                android:textSize="16dp" />
 
             <View
                 android:id="@+id/middle_view"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/grayscale10"/>
+                android:background="@color/grayscale10" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_right"
@@ -73,6 +74,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="아니오"
                 android:textAllCaps="false"
+                android:textColor="@color/grayscale2"
                 android:textSize="16dp" />
         </LinearLayout>
     </LinearLayout>

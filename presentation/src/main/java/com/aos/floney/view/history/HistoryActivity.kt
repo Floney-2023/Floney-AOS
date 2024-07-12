@@ -3,22 +3,12 @@ package com.aos.floney.view.history
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
-import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.ViewModel
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHistoryBinding
@@ -30,11 +20,9 @@ import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.common.BaseChoiceAlertDialog
 import com.aos.floney.view.home.HomeActivity
 import com.aos.model.book.UiBookCategory
-import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyFavoriteItem
 import com.aos.model.home.DayMoneyModifyItem
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -44,7 +32,8 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class HistoryActivity :
-    BaseActivity<ActivityHistoryBinding, HistoryViewModel>(R.layout.activity_history), UiBookCategory.OnItemClickListener {
+    BaseActivity<ActivityHistoryBinding, HistoryViewModel>(R.layout.activity_history),
+    UiBookCategory.OnItemClickListener {
     private lateinit var calendarBottomSheetDialog: CalendarBottomSheetDialog
     private lateinit var categoryBottomSheetDialog: CategoryBottomSheetDialog
     private lateinit var launcher: ActivityResultLauncher<Intent>
@@ -57,21 +46,25 @@ class HistoryActivity :
         setUpCalendarBottomSheet()
         setUpFavoriteItem()
     }
-    private fun setUpFavoriteItem()
-    {
-        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // 즐겨찾기 데이터 가져오기 (존재할 경우 실행)
-                val data: Intent? = result.data
-                data?.intentSerializable("favoriteItem", DayMoneyFavoriteItem::class.java)
-                    ?.let {
-                        viewModel.setIntentFavoriteData(it)}
+
+    private fun setUpFavoriteItem() {
+        launcher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    // 즐겨찾기 데이터 가져오기 (존재할 경우 실행)
+                    val data: Intent? = result.data
+                    data?.intentSerializable("favoriteItem", DayMoneyFavoriteItem::class.java)
+                        ?.let {
+                            viewModel.setIntentFavoriteData(it)
+                        }
+                }
             }
-        }
     }
-    private fun setUpUi(){
+
+    private fun setUpUi() {
         binding.setVariable(BR.vm, viewModel)
     }
+
     // 내역 추가 데이터 가져오기
     private fun getIntentAddData(): String {
         val date = intent.getStringExtra("date") ?: ""
@@ -85,11 +78,10 @@ class HistoryActivity :
     // 내역 수정 데이터 가져오기
     private fun getModifyData(): String {
         var date = ""
-        intent.intentSerializable("dayItem", DayMoneyModifyItem::class.java)
-            ?.let {
-                viewModel.setIntentModifyData(it)
-                date = it.lineDate
-            }
+        intent.intentSerializable("dayItem", DayMoneyModifyItem::class.java)?.let {
+            viewModel.setIntentModifyData(it)
+            date = it.lineDate
+        }
 
         Timber.e("date $date")
         return date
@@ -98,17 +90,21 @@ class HistoryActivity :
     // 캘린더 bottomSheet 구현
     private fun setUpCalendarBottomSheet() {
 
-        val date = if(getIntentAddData() == "") {
+        val date = if (getIntentAddData() == "") {
             getModifyData()
-        } else{
+        } else {
             getIntentAddData()
         }
 
-        calendarBottomSheetDialog = CalendarBottomSheetDialog(this@HistoryActivity, date, DayDisableDecorator(this@HistoryActivity), {date ->
-            viewModel.setCalendarDate(date)
-        }, {
-            viewModel.onClickCalendarChoice()
-        })
+        calendarBottomSheetDialog = CalendarBottomSheetDialog(this@HistoryActivity,
+            date,
+            DayDisableDecorator(this@HistoryActivity),
+            { date ->
+                viewModel.setCalendarDate(date)
+            },
+            {
+                viewModel.onClickCalendarChoice()
+            })
     }
 
     private fun setUpViewModelObserver() {
@@ -116,7 +112,11 @@ class HistoryActivity :
             viewModel.deleteBookLines.collect {
                 startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
                 if (Build.VERSION.SDK_INT >= 34) {
-                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                    overrideActivityTransition(
+                        Activity.OVERRIDE_TRANSITION_OPEN,
+                        android.R.anim.fade_in,
+                        android.R.anim.fade_out
+                    )
                 } else {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 }
@@ -126,10 +126,14 @@ class HistoryActivity :
         repeatOnStarted {
             viewModel.onClickDelete.collect {
                 Timber.e("it.isExistRepeat ${it.isExistRepeat}")
-                if(it.isExistRepeat) {
+                if (it.isExistRepeat) {
                     // 반복내역 있음
-                    BaseChoiceAlertDialog(title = "이 내역을 삭제하시겠습니까?\n반복되는 내역입니다.", btnTextStr1 = "이 내역만 삭제", btnTextStr2 = "이후 모든 내역 삭제") {
-                        if(it) {
+                    BaseChoiceAlertDialog(
+                        title = "이 내역을 삭제하시겠습니까?\n반복되는 내역입니다.",
+                        btnTextStr1 = "이 내역만 삭제",
+                        btnTextStr2 = "이후 모든 내역 삭제"
+                    ) {
+                        if (it) {
                             // 이 내역만 삭제 선택
                             viewModel.deleteHistory()
                         } else {
@@ -141,7 +145,7 @@ class HistoryActivity :
                 } else {
                     // 반복내역 없음
                     BaseAlertDialog(title = "삭제하기", info = "삭제하시겠습니까?", false) {
-                        if(it) {
+                        if (it) {
                             viewModel.deleteHistory()
                         }
                     }.show(supportFragmentManager, "baseAlertDialog")
@@ -150,8 +154,8 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.showCalendar.collect {
-                if(it) {
-                    if(!calendarBottomSheetDialog.isShowing) {
+                if (it) {
+                    if (!calendarBottomSheetDialog.isShowing) {
                         calendarBottomSheetDialog.show()
                     }
                 }
@@ -159,19 +163,33 @@ class HistoryActivity :
         }
         repeatOnStarted {
             viewModel.onClickCategory.collect {
-                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity, {
-                    // 완료 버튼 클릭
-                    viewModel.onClickCategoryChoiceDate()
-                }, {
-                    // 편집 버튼 클릭
-                    startActivity(Intent(this@HistoryActivity, BookCategoryActivity::class.java).putExtra("entryPoint", "history"))
-                })
+                categoryBottomSheetDialog = CategoryBottomSheetDialog(this@HistoryActivity,
+                    it,
+                    viewModel,
+                    this@HistoryActivity,
+                    {
+                        // 완료 버튼 클릭
+                        viewModel.onClickCategoryChoiceDate()
+                    },
+                    {
+                        // 편집 버튼 클릭
+                        startActivity(
+                            Intent(
+                                this@HistoryActivity, BookCategoryActivity::class.java
+                            ).putExtra("entryPoint", "history")
+                        )
+                    })
+                val behavior = categoryBottomSheetDialog.behavior
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.isHideable = false
                 categoryBottomSheetDialog.show()
             }
         }
         repeatOnStarted {
             viewModel.onClickRepeat.collect {
-                SetRepeatBottomSheetDialog(this@HistoryActivity, it, viewModel, this@HistoryActivity) {
+                SetRepeatBottomSheetDialog(
+                    this@HistoryActivity, it, viewModel, this@HistoryActivity
+                ) {
                     // 완료 버튼 클릭
                     viewModel.onClickRepeatChoice()
                 }.show()
@@ -180,26 +198,34 @@ class HistoryActivity :
 
         repeatOnStarted {
             viewModel.postBooksLines.collect {
-                if(it) {
-                    Handler(Looper.myLooper()!!).postDelayed({
-                        startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
-                        if (Build.VERSION.SDK_INT >= 34) {
-                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                        } else {
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                        }
-                        finish()
-                    }, 2000)
+                if (it) {
+                    startActivity(
+                        Intent(
+                            this@HistoryActivity, HomeActivity::class.java
+                        ).putExtra("isSave", "exist")
+                    )
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(
+                            Activity.OVERRIDE_TRANSITION_OPEN,
+                            android.R.anim.fade_in,
+                            android.R.anim.fade_out
+                        )
+                    } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                    finish()
                 }
             }
         }
 
         repeatOnStarted {
             viewModel.onClickCloseBtn.collect {
-                if(it) {
+                if (it) {
                     // 수정 내역 있음
-                    BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
-                        if(it) {
+                    BaseAlertDialog(
+                        title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false
+                    ) {
+                        if (it) {
                             finish()
                         }
                     }.show(supportFragmentManager, "baseAlertDialog")
@@ -212,29 +238,43 @@ class HistoryActivity :
 
         repeatOnStarted {
             viewModel.postModifyBooksLines.collect {
-                if(it) {
-                    Handler(Looper.myLooper()!!).postDelayed({
-                        startActivity(Intent(this@HistoryActivity, HomeActivity::class.java))
-                        if (Build.VERSION.SDK_INT >= 34) {
-                            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                        } else {
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                        }
-                        finish()
-                    }, 2000)
+                if (it) {
+                    startActivity(
+                        Intent(
+                            this@HistoryActivity, HomeActivity::class.java
+                        ).putExtra("isSave", "exist")
+                    )
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(
+                            Activity.OVERRIDE_TRANSITION_OPEN,
+                            android.R.anim.fade_in,
+                            android.R.anim.fade_out
+                        )
+                    } else {
+                        overridePendingTransition(
+                            android.R.anim.fade_in, android.R.anim.fade_out
+                        )
+                    }
+                    finish()
                 }
             }
         }
         repeatOnStarted {
             viewModel.onClickFavorite.collect {
-                if(it) {
-                    BaseChoiceAlertDialog(title = "즐겨찾기에 추가하시겠습니까?", btnTextStr1 = "즐겨찾기에 추가", btnTextStr2 = "즐겨찾기 내역 보기") {
-                        if(it) {
+                if (it) {
+                    BaseChoiceAlertDialog(
+                        title = "즐겨찾기에 추가하시겠습니까?",
+                        btnTextStr1 = "즐겨찾기에 추가",
+                        btnTextStr2 = "즐겨찾기 내역 보기"
+                    ) {
+                        if (it) {
                             // 즐겨찾기에 추가
                             viewModel.postAddFavorite()
                         } else {
 
-                            val intent = Intent(this@HistoryActivity, BookFavoriteActivity::class.java).putExtra("entryPoint", "history")
+                            val intent = Intent(
+                                this@HistoryActivity, BookFavoriteActivity::class.java
+                            ).putExtra("entryPoint", "history")
                             launcher.launch(intent)
 
 //                            // 즐겨찾기 내역 보기

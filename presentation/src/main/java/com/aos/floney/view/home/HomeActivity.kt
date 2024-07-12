@@ -32,6 +32,7 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
 import com.aos.floney.BuildConfig.google_app_reward_key
+import com.aos.floney.base.BaseViewModel
 import com.aos.floney.view.common.SuccessToastDialog
 import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.floney.view.login.LoginActivity
@@ -50,6 +51,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         val prefs = SharedPreferenceUtil(this)
         lifecycleScope.launch {
             viewModel.getBookInfo(prefs.getString("bookKey", ""))
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Timber.e("intent.getStringExtra(\"isSave\") ${intent.getStringExtra("isSave")}")
+        if(intent.getStringExtra("isSave") != null) {
+            viewModel.baseEvent(BaseViewModel.Event.ShowSuccessToast("저장이 완료되었습니다."))
+            intent.removeExtra("isSave")
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {

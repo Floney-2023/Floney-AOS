@@ -267,6 +267,7 @@
             android:inputType="text"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
+            android:maxLength="20"
             android:paddingBottom="10dp"
             android:text="@={vm.content}"
             android:textColor="@color/grayscale2"

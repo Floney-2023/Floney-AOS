@@ -260,7 +260,6 @@ class HistoryViewModel @Inject constructor(
                 repeatDuration = getConvertSendRepeatValue()
             ).onSuccess {
                 _postBooksLines.emit(true)
-                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
@@ -285,7 +284,6 @@ class HistoryViewModel @Inject constructor(
                 nickname = nickname.value!!,
             ).onSuccess {
                 _postModifyBooksLines.emit(true)
-                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
@@ -325,7 +323,7 @@ class HistoryViewModel @Inject constructor(
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
         createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" &&_repeatClickItem.value != null
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
@@ -342,8 +340,6 @@ class HistoryViewModel @Inject constructor(
             baseEvent(Event.ShowToast("자산을 선택해주세요"))
         } else if (line.value == "분류를 선택하세요") {
             baseEvent(Event.ShowToast("분류를 선택해주세요"))
-        } else if (content.value == "") {
-            baseEvent(Event.ShowToast("내용을 입력해주세요"))
         }
     }
 
@@ -362,13 +358,18 @@ class HistoryViewModel @Inject constructor(
         return cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
     }
 
+    // 추가한 내용이 있는지 체크
+    private fun isExistAdd(): Boolean {
+        return cost.value != "" || asset.value != "자산을 선택하세요" || line.value != "분류를 선택하세요" || content.value != ""
+    }
+
     // 닫기 버튼 클릭
     fun onClickCloseBtn() {
         viewModelScope.launch {
             if (modifyItem != null) {
                 _onClickCloseBtn.emit(isExistEdit())
             } else {
-                _onClickCloseBtn.emit(false)
+                _onClickCloseBtn.emit(isExistAdd())
             }
         }
     }
