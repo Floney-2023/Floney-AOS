@@ -38,6 +38,7 @@ private val colorArr = listOf<Int>(
     Color.parseColor("#9B8BFF"),
     Color.parseColor("#D3CCFF")
 )
+
 private val randomColorArr = arrayListOf<Int>()
 private var stepIdx = 0
 private var colorIdx = 0
@@ -59,8 +60,8 @@ fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutCom
                 }${CurrencyUtil.currency}을\n덜 사용했어요"
             } else {
                 "저번달 대비 ${
-                    NumberFormat.getNumberInstance().format(this.total - differance)
-                }${CurrencyUtil.currency}을\n더 사용했어요"
+                    NumberFormat.getNumberInstance().format(differance)
+                }${CurrencyUtil.currency}을\n덜 사용했어요"
             }
         }",
         size = this.analyzeResult.size,
@@ -68,9 +69,11 @@ fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutCom
             AnalyzeResult(
                 category = it.category,
                 money = it.money,
-                uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}${CurrencyUtil.currency}",
+                uiMoney = "${
+                    NumberFormat.getNumberInstance().format(it.money)
+                }${CurrencyUtil.currency}",
                 percent = (it.money / total) * 100.0,
-                uiPercent = "${((it.money / total) * 100.0).round(1)}%",
+                uiPercent = "${((it.money / total) * 100.0).roundToInt()}%",
                 color = when (stepIdx) {
                     0 -> {
                         stepIdx++
@@ -121,9 +124,11 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
             AnalyzeResult(
                 category = it.category,
                 money = it.money,
-                uiMoney = "${NumberFormat.getNumberInstance().format(it.money)}${CurrencyUtil.currency}",
+                uiMoney = "${
+                    NumberFormat.getNumberInstance().format(it.money)
+                }${CurrencyUtil.currency}",
                 percent = (it.money / total) * 100.0,
-                uiPercent = "${((it.money / total) * 100.0).round(1)}%",
+                uiPercent = "${((it.money / total) * 100.0).roundToInt()}%",
                 color = when (stepIdx) {
                     0 -> {
                         stepIdx++
@@ -149,8 +154,11 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
 }
 
 fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
-    val tempLeftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}${CurrencyUtil.currency}".substring(
-        1, "${NumberFormat.getNumberInstance().format(this.leftMoney)}${CurrencyUtil.currency}".length
+    val tempLeftMoney = "${
+        NumberFormat.getNumberInstance().format(this.leftMoney)
+    }${CurrencyUtil.currency}".substring(
+        1,
+        "${NumberFormat.getNumberInstance().format(this.leftMoney)}${CurrencyUtil.currency}".length
     )
 
     // 남은 일 수 계산 
@@ -160,15 +168,22 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
     val enemyDay = lastDayOfMonth - today + 1
 
     return UiAnalyzePlanModel(
-        initBudget = "${NumberFormat.getNumberInstance().format(this.initBudget)}${CurrencyUtil.currency}",
-        leftMoney = "${NumberFormat.getNumberInstance().format(this.leftMoney)}${CurrencyUtil.currency}",
+        initBudget = "${
+            NumberFormat.getNumberInstance().format(this.initBudget)
+        }${CurrencyUtil.currency}",
+        leftMoney = "${
+            NumberFormat.getNumberInstance().format(this.leftMoney)
+        }${CurrencyUtil.currency}",
         percent = if (this.leftMoney < 0) {
             "100"
         } else {
             (((this.initBudget - this.leftMoney) / this.initBudget) * 100).toInt().toString()
         },
-        divMoney = "${
-            NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).round(2))
+        divMoney = "${if(leftMoney > 0) {
+            NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).roundToInt())
+        } else {
+            0
+        }
         }${CurrencyUtil.currency}".replace("-", "")
     )
 }
@@ -179,14 +194,14 @@ fun PostAnalyzeAssetEntity.toUiAnalyzeAssetModel(): UiAnalyzeAssetModel {
 
     for ((key, value) in this.assetInfo) {
         // 최대 자산 저장
-        if(maxAsset < value) {
+        if (maxAsset < value) {
             maxAsset = value
         }
     }
 
     for ((key, value) in this.assetInfo) {
         // 최대 자산 저장
-        if(value <= 0.0) {
+        if (value <= 0.0) {
             listAsset.add(
                 Asset(
                     key.substring(key.length - 2, key.length).toInt(),
@@ -212,14 +227,20 @@ fun PostAnalyzeAssetEntity.toUiAnalyzeAssetModel(): UiAnalyzeAssetModel {
             "나의 자산이\n지난달보다 감소했어요"
         },
         difference = if (this.difference >= 0) {
-            "지난달 대비 ${NumberFormat.getNumberInstance().format(this.difference)}${CurrencyUtil.currency}이\n증가했어요"
+            "지난달 대비 ${
+                NumberFormat.getNumberInstance().format(this.difference)
+            }${CurrencyUtil.currency}이\n증가했어요"
         } else {
             "지난달 대비 ${
                 NumberFormat.getNumberInstance().format(this.difference)
             }${CurrencyUtil.currency}이\n감소했어요".replace("-", "")
         },
-        initAsset = "${NumberFormat.getNumberInstance().format(this.initAsset)}${CurrencyUtil.currency}",
-        currentAsset = "${NumberFormat.getNumberInstance().format(this.currentAsset)}${CurrencyUtil.currency}",
+        initAsset = "${
+            NumberFormat.getNumberInstance().format(this.initAsset)
+        }${CurrencyUtil.currency}",
+        currentAsset = "${
+            NumberFormat.getNumberInstance().format(this.currentAsset)
+        }${CurrencyUtil.currency}",
         analyzeResult = listAsset
     )
 }
