@@ -33,6 +33,7 @@ import com.aos.model.book.UiBookCategory
 import com.aos.model.home.DayMoney
 import com.aos.model.home.DayMoneyFavoriteItem
 import com.aos.model.home.DayMoneyModifyItem
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -166,6 +167,9 @@ class HistoryActivity :
                     // 편집 버튼 클릭
                     startActivity(Intent(this@HistoryActivity, BookCategoryActivity::class.java).putExtra("entryPoint", "history"))
                 })
+                val behavior = categoryBottomSheetDialog.behavior
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                behavior.isHideable = false
                 categoryBottomSheetDialog.show()
             }
         }
