@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
                 android:lineSpacingExtra="0dp"
-                android:text="@{item.lineSubCategory + ` ‧ ` +item.assetSubCategory}"
+                android:text="@{item.assetSubCategory + ` ‧ ` +item.lineSubCategory}"
                 android:textColor="@color/grayscale6"
                 android:textSize="12dp" />
         </LinearLayout>
