@@ -360,13 +360,18 @@ class HistoryViewModel @Inject constructor(
         return cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
     }
 
+    // 추가한 내용이 있는지 체크
+    private fun isExistAdd(): Boolean {
+        return cost.value != "" || asset.value != "자산을 선택하세요" || line.value != "분류를 선택하세요" || content.value != ""
+    }
+
     // 닫기 버튼 클릭
     fun onClickCloseBtn() {
         viewModelScope.launch {
             if (modifyItem != null) {
                 _onClickCloseBtn.emit(isExistEdit())
             } else {
-                _onClickCloseBtn.emit(false)
+                _onClickCloseBtn.emit(isExistAdd())
             }
         }
     }
