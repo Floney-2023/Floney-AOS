@@ -15,7 +15,6 @@ import com.aos.model.analyze.UiAnalyzePlanModel
 import timber.log.Timber
 import java.text.NumberFormat
 import java.util.Calendar
-import javax.inject.Inject
 import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.random.Random
@@ -54,10 +53,22 @@ fun PostAnalyzeCategoryOutComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryOutCom
         NumberFormat.getNumberInstance().format(this.total)
     }${CurrencyUtil.currency}을\n소비했어요",
         differance = "${
-            if (this.differance > this.total) {
+            if (differance < 0 && total == 0.0) {
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(this.differance * -1.0)
+                }${CurrencyUtil.currency}을\n덜 사용했어요"
+            } else if (this.differance == this.total) {
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(differance)
+                }${CurrencyUtil.currency}을\n더 사용했어요"
+            } else if (this.differance > this.total) {
                 "저번달 대비 ${
                     NumberFormat.getNumberInstance().format(this.differance - total)
-                }${CurrencyUtil.currency}을\n덜 사용했어요"
+                }${CurrencyUtil.currency}을\n더 사용했어요"
+            } else if (total > differance) {
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(differance)
+                }${CurrencyUtil.currency}을\n더 사용했어요"
             } else {
                 "저번달 대비 ${
                     NumberFormat.getNumberInstance().format(differance)
@@ -105,18 +116,33 @@ fun PostAnalyzeCategoryInComeEntity.toUiAnalyzeModel(): UiAnalyzeCategoryInComeM
     randomColorArr.clear()
     getRandomColor(this.analyzeResult.size)
 
+    Timber.e("different $differance")
+    Timber.e("total $total")
+
     return UiAnalyzeCategoryInComeModel(total = "총 ${
         NumberFormat.getNumberInstance().format(this.total)
     }${CurrencyUtil.currency}을\n소비했어요",
         differance = "${
-            if (this.differance > this.total) {
+            if (differance < 0 && total == 0.0) {
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(this.differance * -1.0)
+                }${CurrencyUtil.currency}을\n덜 벌었어요"
+            } else if (this.differance == this.total) {
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(differance)
+                }${CurrencyUtil.currency}을\n더 벌었어요"
+            } else if (this.differance > this.total) {
                 "저번달 대비 ${
                     NumberFormat.getNumberInstance().format(this.differance - total)
-                }${CurrencyUtil.currency}을\n덜 사용했어요"
+                }${CurrencyUtil.currency}을\n더 벌었어요"
+            } else if (differance < 0 && total > differance) {
+                "저번달 대비 ${
+                    NumberFormat.getNumberInstance().format(differance * -1.0)
+                }${CurrencyUtil.currency}을\n더 벌었어요"
             } else {
                 "저번달 대비 ${
-                    NumberFormat.getNumberInstance().format(this.total - differance)
-                }${CurrencyUtil.currency}을\n더 사용했어요"
+                    NumberFormat.getNumberInstance().format(differance)
+                }${CurrencyUtil.currency}을\n더 벌었어요"
             }
         }",
         size = this.analyzeResult.size,
@@ -179,11 +205,12 @@ fun PostAnalyzeBudgetEntity.toUiAnalyzePlanModel(): UiAnalyzePlanModel {
         } else {
             (((this.initBudget - this.leftMoney) / this.initBudget) * 100).toInt().toString()
         },
-        divMoney = "${if(leftMoney > 0) {
-            NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).roundToInt())
-        } else {
-            0
-        }
+        divMoney = "${
+            if (leftMoney > 0) {
+                NumberFormat.getNumberInstance().format((this.leftMoney / enemyDay).roundToInt())
+            } else {
+                0
+            }
         }${CurrencyUtil.currency}".replace("-", "")
     )
 }
