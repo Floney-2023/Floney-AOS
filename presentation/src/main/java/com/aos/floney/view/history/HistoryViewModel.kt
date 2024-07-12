@@ -325,7 +325,7 @@ class HistoryViewModel @Inject constructor(
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
         createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" &&_repeatClickItem.value != null
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
@@ -342,8 +342,6 @@ class HistoryViewModel @Inject constructor(
             baseEvent(Event.ShowToast("자산을 선택해주세요"))
         } else if (line.value == "분류를 선택하세요") {
             baseEvent(Event.ShowToast("분류를 선택해주세요"))
-        } else if (content.value == "") {
-            baseEvent(Event.ShowToast("내용을 입력해주세요"))
         }
     }
 
