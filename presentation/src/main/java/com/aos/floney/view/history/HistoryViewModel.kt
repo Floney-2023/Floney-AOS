@@ -355,12 +355,12 @@ class HistoryViewModel @Inject constructor(
 
     // 수정된 내용이 있는지 체크
     private fun isExistEdit(): Boolean {
-        return cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
+        return date.value != modifyItem!!.lineDate || cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
     }
 
     // 추가한 내용이 있는지 체크
     private fun isExistAdd(): Boolean {
-        return cost.value != "" || asset.value != "자산을 선택하세요" || line.value != "분류를 선택하세요" || content.value != ""
+        return date.value != "날짜를 선택하세요" || cost.value != "" || asset.value != "자산을 선택하세요" || line.value != "분류를 선택하세요" || content.value != ""
     }
 
     // 닫기 버튼 클릭
