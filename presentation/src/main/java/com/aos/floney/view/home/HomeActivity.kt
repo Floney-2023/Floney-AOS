@@ -47,6 +47,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     override fun onResume() {
         super.onResume()
 
+        setUpAdMob()
         val prefs = SharedPreferenceUtil(this)
         lifecycleScope.launch {
             viewModel.getBookInfo(prefs.getString("bookKey", ""))
@@ -101,7 +102,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         repeatOnStarted {
             viewModel.settingPage.collect {
                 if (it) {
-                    setUpAdMob()
+                    if (mRewardAd != null) {
+                        showAdMob()
+                    }else{
+                        resetUpAdMob()
+                    }
                 } else {
                     goToBookSettingActivity()
                 }
@@ -118,7 +123,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             }
         }
         repeatOnStarted {
-                viewModel.accessCheck.collect {
+            viewModel.accessCheck.collect {
                 if(it) {
                     val exitDialogFragment = WarningPopupDialog(
                         getString(R.string.home_dialog_title),
@@ -252,7 +257,27 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 mRewardAd = null
                 // 광고 로드 실패 시 로그 출력
-                Timber.e("광고가 아직 로드되지 않음 1-4")
+                Timber.e("광고가 아직 로드되지 않음")
+            }
+
+            override fun onAdLoaded(ad: RewardedAd) {
+                dismissLoadingDialog()
+                mRewardAd = ad
+            }
+        })
+    }
+    private fun resetUpAdMob() {
+        showLoadingDialog()
+        MobileAds.initialize(this)
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adBanner.loadAd(adRequest)
+
+        RewardedAd.load(this, google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                mRewardAd = null
+                // 광고 로드 실패 시 로그 출력
+                Timber.e("광고가 아직 로드되지 않음")
             }
 
             override fun onAdLoaded(ad: RewardedAd) {
@@ -260,32 +285,30 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                 mRewardAd = ad
                 showAdMob()
                 // 광고 로드 성공 시 로그 출력
-                Timber.e("광고가 아직 로드되지 않음 1-5")
+                Timber.e("광고가 로드됨")
             }
         })
     }
     fun showAdMob(){
-        if (mRewardAd != null) {
-            mRewardAd?.show(this@HomeActivity, OnUserEarnedRewardListener {
-                fun onUserEarnedReward(rewardItem: RewardItem) {
-                    val rewardAmount = rewardItem.amount
-                    val rewardType = rewardItem.type
-                }
-            })
-            mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-                override fun onAdDismissedFullScreenContent() {
-                    dismissLoadingDialog()
+        mRewardAd?.show(this@HomeActivity, OnUserEarnedRewardListener {
+            fun onUserEarnedReward(rewardItem: RewardItem) {
+                val rewardAmount = rewardItem.amount
+                val rewardType = rewardItem.type
+            }
+        })
+        mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                dismissLoadingDialog()
 
-                    viewModel.updateAdvertiseTenMinutes()
-                    goToBookSettingActivity()
-                    mRewardAd = null
-                    Timber.e("광고가 로드됨")
-                }
-                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                    dismissLoadingDialog()
-                    mRewardAd = null
-                    Timber.e("광고가 아직 로드되지 않음 1-2")
-                }
+                viewModel.updateAdvertiseTenMinutes()
+                goToBookSettingActivity()
+                mRewardAd = null
+                Timber.e("광고가 로드됨")
+            }
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                dismissLoadingDialog()
+                mRewardAd = null
+                Timber.e("광고가 아직 로드되지 않음 1-2")
             }
         }
     }
