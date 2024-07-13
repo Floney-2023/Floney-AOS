@@ -17,18 +17,10 @@
         android:label="SettleUpStartFragment" >
         <action
             android:id="@+id/action_settleUpStartFragment_to_settleUpMemberSelectFragment"
-            app:destination="@id/settleUpMemberSelectFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/settleUpMemberSelectFragment" />
         <action
             android:id="@+id/action_settleUpStartFragment_to_settleUpSeeFragment"
-            app:destination="@id/settleUpSeeFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/settleUpSeeFragment" />
     </fragment>
     <fragment
         android:id="@+id/settleUpMemberSelectFragment"
@@ -37,11 +29,7 @@
         tools:layout="@layout/fragment_settle_up_member_select">
         <action
             android:id="@+id/action_settleUpMemberSelectFragment_to_settleUpPeriodSelectFragment"
-            app:destination="@id/settleUpPeriodSelectFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" >
+            app:destination="@id/settleUpPeriodSelectFragment" >
         </action>
     </fragment>
     <fragment
@@ -54,11 +42,7 @@
             app:argType="string[]" />
         <action
             android:id="@+id/action_settleUpPeriodSelectFragment_to_settleUpOutcomesSelectFragment"
-            app:destination="@id/settleUpOutcomesSelectFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/settleUpOutcomesSelectFragment" />
     </fragment>
     <fragment
         android:id="@+id/settleUpOutcomesSelectFragment"
@@ -76,11 +60,7 @@
             app:argType="string"/>
         <action
             android:id="@+id/action_settleUpOutcomesSelectFragment_to_settleUpCompleteFragment"
-            app:destination="@id/settleUpCompleteFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/settleUpCompleteFragment" />
     </fragment>
     <fragment
         android:id="@+id/settleUpCompleteFragment"
@@ -111,11 +91,7 @@
         tools:layout="@layout/fragment_settle_up_see" >
         <action
             android:id="@+id/action_settleUpSeeFragment_to_settleUpDetailSeeFragment"
-            app:destination="@id/settleUpDetailSeeFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/settleUpDetailSeeFragment" />
         <argument
             android:name="id"
             app:argType="long" />

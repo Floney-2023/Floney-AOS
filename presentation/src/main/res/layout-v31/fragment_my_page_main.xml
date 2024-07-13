@@ -49,23 +49,22 @@
                 android:id="@+id/iv_alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="70dp"
+                android:layout_marginEnd="8dp"
                 android:onClick="@{() -> vm.onClickAlarmPage()}"
                 android:src="@drawable/icon_notification"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_title"
+                app:layout_constraintEnd_toStartOf="@+id/iv_setting_button"
+                app:layout_constraintTop_toTopOf="@+id/tv_mypage_title" />
 
             <ImageView
                 android:id="@+id/iv_setting_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
                 android:onClick="@{() -> vm.onClickSettingPage()}"
                 android:src="@drawable/icon_settings"
-                app:layout_constraintStart_toEndOf="@+id/iv_alarm"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_alarm" />
 
 
             <androidx.core.widget.NestedScrollView

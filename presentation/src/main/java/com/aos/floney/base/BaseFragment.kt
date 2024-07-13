@@ -11,10 +11,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.transition.ChangeBounds
+import android.transition.Fade
+import android.transition.Slide
+import android.transition.TransitionSet
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
@@ -23,6 +29,7 @@ import androidx.appcompat.app.AppCompatDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.ViewModelLazy
 import com.aos.floney.BR
 import com.aos.floney.R
@@ -30,6 +37,8 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.common.ErrorToastDialog
 import com.aos.floney.view.common.SuccessToastDialog
 import com.aos.floney.view.login.LoginActivity
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import timber.log.Timber
 import java.lang.reflect.ParameterizedType
 
@@ -67,6 +76,8 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         _binding = DataBindingUtil.bind(view!!)!!
+
+
         return view
     }
 
@@ -150,6 +161,16 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         with(binding) {
             setVariable(BR.vm, viewModel)
             lifecycleOwner = viewLifecycleOwner
+
+            enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+                duration = 350L
+                interpolator = DecelerateInterpolator()
+            }
+
+            returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
+                duration = 350L
+                interpolator = DecelerateInterpolator()
+            }
         }
     }
 
