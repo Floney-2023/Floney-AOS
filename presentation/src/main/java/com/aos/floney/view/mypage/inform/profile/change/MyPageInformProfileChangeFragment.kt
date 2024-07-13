@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -70,8 +71,23 @@ class MyPageInformProfileChangeFragment :
 
         setUpViewModelObserver()
         setupUi()
+        setUpBackPressHandler()
     }
-
+    private fun setUpBackPressHandler() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (viewModel.getImageBitmap() != null) {
+                    BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
+                        if(it) {
+                            findNavController().popBackStack()
+                        }
+                    }.show(parentFragmentManager, "baseAlertDialog")
+                } else {
+                    findNavController().popBackStack()
+                }
+            }
+        })
+    }
     private fun setupUi() {
         if(viewModel.getUserProfile().equals("user_default")) {
             Glide.with(requireContext())
@@ -92,7 +108,15 @@ class MyPageInformProfileChangeFragment :
         repeatOnStarted {
             viewModel.back.collect() {
                 if(it){
-                    findNavController().popBackStack()
+                    if (viewModel.getImageBitmap() != null) {
+                        BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
+                            if(it) {
+                                findNavController().popBackStack()
+                            }
+                        }.show(parentFragmentManager, "baseAlertDialog")
+                    } else {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
@@ -122,7 +146,7 @@ class MyPageInformProfileChangeFragment :
                             // 랜덤 이미지
                             val bitmap = BitmapFactory.decodeResource(
                                 requireContext().resources,
-                                R.drawable.icon_default_profile
+                                R.drawable.btn_profile
                             )
 
                             Glide.with(requireContext())
