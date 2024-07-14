@@ -353,7 +353,7 @@ fun PostSettlementAddEntity.toPostSettlementAddModel(): UiSettlementAddModel {
             money = if (it.money.toInt() == 0 ) "${NumberFormat.getNumberInstance().format(this.totalOutcome.roundToLong())}${CurrencyUtil.currency}" else "${NumberFormat.getNumberInstance().format(it.money.roundToLong().absoluteValue)}${CurrencyUtil.currency}",
             userNickname = it.userNickname,
             useruserProfileImg = it.userProfileImg?: "user_default",
-            moneyInfo = if (it.money > 0) "을 보내야해요." else if (it.money < 0) "을 받아야해요." else "정산할 금액이 없어요."
+            moneyInfo = if (it.money < 0) "을 보내야해요." else if (it.money > 0) "을 받아야해요." else "정산할 금액이 없어요."
         )
     }
     return UiSettlementAddModel(
