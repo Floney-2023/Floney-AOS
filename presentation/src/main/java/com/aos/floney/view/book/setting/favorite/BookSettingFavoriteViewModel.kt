@@ -87,13 +87,14 @@ class BookSettingFavoriteViewModel @Inject constructor(
     fun onClickAddBtn() {
         var sum = 0
         viewModelScope.launch {
+            baseEvent(Event.ShowLoading)
             getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("수입")).onSuccess { it ->
                 sum+=it.size
                 getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("이체")).onSuccess { it ->
                     sum+=it.size
                     getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("지출")).onSuccess { it ->
                         sum+=it.size
-
+                        baseEvent(Event.HideLoading)
                         if (sum==15){
                             baseEvent(Event.ShowToast("즐겨찾기 개수가 초과 되었습니다."))
                         }
@@ -102,12 +103,16 @@ class BookSettingFavoriteViewModel @Inject constructor(
                         }
 
                     }.onFailure {
+                        baseEvent(Event.HideLoading)
                         baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
                     }
                 }.onFailure {
+                    baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
                 }
             }.onFailure {
+
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
             }
         }
@@ -121,14 +126,18 @@ class BookSettingFavoriteViewModel @Inject constructor(
     // 내역 삭제
     fun deleteFavorite(item : UiBookFavoriteModel) {
         viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
             booksFavoriteDeleteUseCase(
                 bookKey = prefs.getString("bookKey", ""),
                 item.idx
             ).onSuccess {
                 val updatedList = _favoriteList.value!!.filter { it.idx != item.idx }
                 _favoriteList.postValue(updatedList)
+
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowSuccessToast("삭제가 완료되었습니다."))
             }.onFailure {
+                baseEvent(Event.ShowLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
             }
         }
