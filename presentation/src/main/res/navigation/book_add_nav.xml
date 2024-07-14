@@ -18,18 +18,10 @@
         <action
             android:id="@+id/action_bookAddInviteCheckFragment_to_bookAddInviteSuccessFragment"
             app:destination="@id/bookAddInviteSuccessFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/bookAddInviteCheckFragment" />
         <action
             android:id="@+id/action_bookAddInviteCheckFragment_to_bookAddInputBookNameFragment"
             app:destination="@id/bookAddInputBookNameFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/bookAddInviteCheckFragment"/>
     </fragment>
     <fragment
@@ -46,11 +38,7 @@
         android:label="BookAddInputBookNameFragment">
         <action
             android:id="@+id/action_bookAddInputBookNameFragment_to_bookAddSettingProfileFragment"
-            app:destination="@id/bookAddSettingProfileFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:destination="@id/bookAddSettingProfileFragment"/>
     </fragment>
     <fragment
         android:id="@+id/bookAddSettingProfileFragment"
@@ -59,11 +47,7 @@
         android:label="BookAddSettingProfileFragment" >
         <action
             android:id="@+id/action_bookAddSettingProfileFragment_to_bookAddCreateSuccessFragment"
-            app:destination="@id/bookAddCreateSuccessFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/bookAddCreateSuccessFragment"/>
         <argument
             android:name="bookname"
             app:argType="string" />

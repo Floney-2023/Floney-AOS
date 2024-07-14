@@ -19,6 +19,8 @@ import kotlinx.coroutines.launch
 class AnalyzePlanFragment : BaseFragment<FragmentAnalyzePlanBinding, AnalyzePlanViewModel>(R.layout.fragment_analyze_plan) {
 
     private val activityViewModel: AnalyzeViewModel by activityViewModels()
+    override val applyTransition: Boolean = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

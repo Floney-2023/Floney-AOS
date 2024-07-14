@@ -65,16 +65,13 @@ class SettleUpSeeViewModel @Inject constructor(
     fun getSettlementInform(){
         val result = if (bookKey.value.isNullOrEmpty()) prefs.getString("bookKey", "") else bookKey.value
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             if (result != null) {
                 settlementSeeUseCase(result).onSuccess {
                     // 불러오기 성공, 유효 bookKey
                     prefs.setString("bookKey",result)
                     _settlementList.postValue(it)
-                    baseEvent(Event.HideLoading)
                     _homePage.emit(true)
                 }.onFailure {
-                    baseEvent(Event.HideLoading)
                     _homePage.emit(false)
                 }
             }

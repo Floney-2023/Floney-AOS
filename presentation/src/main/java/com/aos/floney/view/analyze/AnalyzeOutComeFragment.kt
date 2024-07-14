@@ -19,6 +19,7 @@ class AnalyzeOutComeFragment :
     BaseFragment<FragmentAnalyzeOutComeBinding, AnalyzeOutComeViewModel>(R.layout.fragment_analyze_out_come),
     UiAnalyzeCategoryOutComeModel.OnItemClickListener {
     private val activityViewModel: AnalyzeViewModel by activityViewModels()
+    override val applyTransition: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

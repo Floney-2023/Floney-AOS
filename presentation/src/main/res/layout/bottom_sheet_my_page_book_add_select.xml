@@ -41,7 +41,7 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@string/book_add_invite_select_dialog_info"
-                android:textColor="@color/grayscale8"
+                android:textColor="@color/grayscale6"
                 android:textSize="12sp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,6 +60,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/book_add_invite_select_dialog_create_select"
+                    android:fontFamily="@font/pretendard_regular"
                     android:textColor="@{vm.bookCreateTerms ? @color/grayscale2 : @color/grayscale8}"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -96,6 +97,7 @@
                     android:text="@string/book_add_invite_select_dialog_input_select"
                     android:textColor="@{vm.codeInputTerms ? @color/grayscale2 : @color/grayscale8}"
                     android:textSize="14sp"
+                    android:fontFamily="@font/pretendard_regular"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
