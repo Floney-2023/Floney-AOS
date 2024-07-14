@@ -1,9 +1,12 @@
 package com.aos.floney.view.book.setting.edit
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -67,7 +70,7 @@ class BookSettingProfileChangeFragment :
     private fun setUpBackPressHandler() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (viewModel.getImageBitmap() != null) {
+                if (viewModel.getImageBitmap() != null || (!viewModel.getBookProfile().equals("") && viewModel.isDefaultProfile)) {
                     BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
                         if(it) {
                             findNavController().popBackStack()
@@ -83,7 +86,7 @@ class BookSettingProfileChangeFragment :
         repeatOnStarted {
             viewModel.back.collect() {
                 if(it){
-                    if (viewModel.getImageBitmap() != null) {
+                    if (viewModel.getImageBitmap() != null || (!viewModel.getBookProfile().equals("") && viewModel.isDefaultProfile)) {
                         BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
                             if(it) {
                                 findNavController().popBackStack()
@@ -105,8 +108,8 @@ class BookSettingProfileChangeFragment :
         repeatOnStarted {
             viewModel.onClickChange.collect {
                 if (it) {
-                    if (viewModel.getImageBitmap() != null) {
-                        viewModel.uploadImageFile(viewModel.getImageBitmap()!!)
+                    if (viewModel.getImageBitmap() != null || viewModel.isDefaultProfile) {
+                        viewModel.uploadImageFile(viewModel.getImageBitmap())
                     } else {
                         viewModel.baseEvent(BaseViewModel.Event.ShowToast("변경할 이미지가 선택되지 않았습니다."))
                     }
@@ -118,19 +121,15 @@ class BookSettingProfileChangeFragment :
                 if (it) {
                     BaseAlertDialog("프로필 변경", "기본 프로필로 변경하시겠습니까?", true) {
                         if(it) {
-                            // 랜덤 이미지
-                            val bitmap = BitmapFactory.decodeResource(
-                                requireContext().resources,
-                                R.drawable.btn_profile
-                            )
-
+                            // 기본 이미지 설정
                             Glide.with(requireContext())
-                                .load(bitmap)
+                                .load(R.drawable.btn_book_profile)
                                 .fitCenter()
                                 .centerCrop()
                                 .into(binding.ivProfileCardView)
 
-                            viewModel.setImageBitmap(bitmap)
+                            viewModel.setImageBitmap(null)
+                            viewModel.isDefaultProfile = true
                         }
                     }.show(parentFragmentManager, "baseAlertDialog")
                 }
@@ -220,5 +219,17 @@ class BookSettingProfileChangeFragment :
                 true
             }
         }
+    }
+    private fun getBitmapFromVectorDrawable(context: Context, drawableId: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, drawableId)
+        val bitmap = Bitmap.createBitmap(
+            drawable!!.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
     }
 }

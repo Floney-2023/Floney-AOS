@@ -65,8 +65,13 @@ class BookSettingProfileChangeViewModel @Inject constructor(
     private var takeCaptureUri: Uri? = null
     private var imageBitmap: Bitmap? = null
 
+
+    // 기본 이미지 설정 여부
+    var isDefaultProfile: Boolean = false
+
     init {
         Timber.e("profileImg ${profileImg.value}")
+        isDefaultProfile = getBookProfile() == "book_default"
     }
 
     private fun getChangeProfile(path: String) {
@@ -83,31 +88,38 @@ class BookSettingProfileChangeViewModel @Inject constructor(
     }
 
     // 파이어베이스 이미지 파일 업로드
-    fun uploadImageFile(bitmap: Bitmap) {
+    fun uploadImageFile(bitmap: Bitmap?) {
         baseEvent(Event.ShowLoading)
-        val storage = Firebase.storage
-        val storageRef = storage.reference
-        val imageRef = storageRef.child("dev/users/${getUserEmail()}/profile.jpg")
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
+        if (isDefaultProfile) {
+            CommonUtil.bookProfile = ""
+            getChangeProfile("")
+        }
+        else {
+            val storage = Firebase.storage
+            val storageRef = storage.reference
+            val imageRef = storageRef.child("dev/users/${getUserEmail()}/profile.jpg")
+            val baos = ByteArrayOutputStream()
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
 
-        val uploadTask = imageRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            baseEvent(Event.HideLoading)
-            baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
-        }.addOnSuccessListener {
-            // 다운로드 링크 가져오기
-            it.storage.downloadUrl.addOnSuccessListener {uri ->
-                // 성공
-                CommonUtil.bookProfile = uri.toString()
-                getChangeProfile(uri.toString())
-            }.addOnFailureListener {
-                // 실패
+            val uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnFailureListener {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
+            }.addOnSuccessListener {
+                // 다운로드 링크 가져오기
+                it.storage.downloadUrl.addOnSuccessListener {uri ->
+                    // 성공
+                    CommonUtil.bookProfile = uri.toString()
+                    getChangeProfile(uri.toString())
+                }.addOnFailureListener {
+                    // 실패
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
+                }
             }
         }
+
     }
 
     // 사진 촬영을 위해 임시 파일 생성
@@ -206,6 +218,7 @@ class BookSettingProfileChangeViewModel @Inject constructor(
     // 임시 촬영 파일 저장
     fun setImageBitmap(bitmap: Bitmap?) {
         imageBitmap = bitmap?.let { cropBitmapToSquare(it) }
+        isDefaultProfile = false
     }
 
     // 임시 촬영 파일 불러오기
@@ -219,8 +232,8 @@ class BookSettingProfileChangeViewModel @Inject constructor(
     }
 
     // 유저 프로필 이미지 불러오기
-    fun getUserProfile(): String {
-        return CommonUtil.userProfileImg
+    fun getBookProfile(): String {
+        return CommonUtil.bookProfile
     }
     fun cropBitmapToSquare(bitmap: Bitmap): Bitmap {
         val size = Math.min(bitmap.width, bitmap.height)

@@ -53,8 +53,9 @@
                 android:layout_width="124dp"
                 android:layout_height="124dp"
                 android:layout_gravity="center"
+                app:cardElevation="0dp"
                 android:onClick="@{() -> vm.onClickSettingImage()}"
-                app:cardCornerRadius="100dp">
+                app:cardCornerRadius="64dp">
 
                 <ImageView
                     android:id="@+id/profileImg"
@@ -84,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_regular"
             android:text="@string/mypage_main_inform_profile_change_basic"
             android:textAppearance="@style/first_onboard_passbtn"
             android:onClick="@{() -> vm.onClickBasicSettingImage()}"

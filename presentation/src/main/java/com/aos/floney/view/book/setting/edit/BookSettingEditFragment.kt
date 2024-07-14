@@ -35,11 +35,7 @@ class BookSettingEditFragment :
             viewModel.profileChangePage.collect() {
                 if(it) {
                     val profileChangeAction = BookSettingEditFragmentDirections.actionBookSettingEditFragmentToBookSettingProfileChangeFragment(
-                        if(CommonUtil.bookProfile == "") {
-                            viewModel.profileImg.value!!
-                        } else {
-                            CommonUtil.bookProfile
-                        },
+                        CommonUtil.bookProfile,
                         viewModel.profileCheck.value!!,
                         viewModel.roleCheck.value!!
                     )

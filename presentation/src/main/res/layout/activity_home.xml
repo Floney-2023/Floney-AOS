@@ -44,6 +44,7 @@
             android:onClick="@{() -> vm.onClickSettingPage()}"
             android:visibility="@{vm.onClickedShowDetail != null ? View.INVISIBLE : View.VISIBLE}"
             app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_logo">

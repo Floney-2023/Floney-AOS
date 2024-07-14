@@ -1,9 +1,12 @@
 package com.aos.floney.view.mypage.inform.profile.change
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -76,7 +79,7 @@ class MyPageInformProfileChangeFragment :
     private fun setUpBackPressHandler() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (viewModel.getImageBitmap() != null) {
+                if (viewModel.getImageBitmap() != null || (!viewModel.getUserProfile().equals("user_default") && viewModel.isDefaultProfile)) {
                     BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
                         if(it) {
                             findNavController().popBackStack()
@@ -91,7 +94,7 @@ class MyPageInformProfileChangeFragment :
     private fun setupUi() {
         if(viewModel.getUserProfile().equals("user_default")) {
             Glide.with(requireContext())
-                .load(R.drawable.icon_default_profile)
+                .load(R.drawable.btn_profile)
                 .fitCenter()
                 .centerCrop()
                 .into(binding.profileImg)
@@ -108,7 +111,7 @@ class MyPageInformProfileChangeFragment :
         repeatOnStarted {
             viewModel.back.collect() {
                 if(it){
-                    if (viewModel.getImageBitmap() != null) {
+                    if (viewModel.getImageBitmap() != null || (!viewModel.getUserProfile().equals("user_default") && viewModel.isDefaultProfile)) {
                         BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
                             if(it) {
                                 findNavController().popBackStack()
@@ -130,8 +133,8 @@ class MyPageInformProfileChangeFragment :
         repeatOnStarted {
             viewModel.onClickChange.collect {
                 if (it) {
-                    if (viewModel.getImageBitmap() != null) {
-                        viewModel.uploadImageFile(viewModel.getImageBitmap()!!)
+                    if (viewModel.getImageBitmap() != null || viewModel.isDefaultProfile) {
+                        viewModel.uploadImageFile(viewModel.getImageBitmap())
                     } else {
                         viewModel.baseEvent(BaseViewModel.Event.ShowToast("변경할 이미지가 선택되지 않았습니다."))
                     }
@@ -143,19 +146,15 @@ class MyPageInformProfileChangeFragment :
                 if (it) {
                     BaseAlertDialog("프로필 변경", "기본 프로필로 변경하시겠습니까?", true) {
                         if(it) {
-                            // 랜덤 이미지
-                            val bitmap = BitmapFactory.decodeResource(
-                                requireContext().resources,
-                                R.drawable.btn_profile
-                            )
-
+                            // 기본 이미지 설정
                             Glide.with(requireContext())
-                                .load(bitmap)
+                                .load(R.drawable.btn_profile)
                                 .fitCenter()
                                 .centerCrop()
                                 .into(binding.profileImg)
 
-                            viewModel.setImageBitmap(bitmap)
+                            viewModel.setImageBitmap(null)
+                            viewModel.isDefaultProfile = true
                         }
                     }.show(parentFragmentManager, "baseAlertDialog")
                 }
@@ -163,7 +162,7 @@ class MyPageInformProfileChangeFragment :
         }
         repeatOnStarted {
             viewModel.successProfileChange.collect {
-                activity.startMyPageActivity()
+                findNavController().popBackStack()
             }
         }
     }
