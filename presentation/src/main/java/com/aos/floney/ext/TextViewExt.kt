@@ -89,8 +89,20 @@ fun TextView.setTextWithEllipsis(text: String?) {
 
 @BindingAdapter("bind:adjustTotalMoneyText")
 fun TextView.adjustTotalMoneyText(amount: String?) {
-    amount?.let{
-        val amountValue = amount.replace(",", "").replace(CurrencyUtil.currency,"").toLongOrNull() ?: return
+    amount?.let {
+        val amountValue = amount.replace(",", "").replace(CurrencyUtil.currency, "").toLongOrNull() ?: return
+
+        val displayAmount = when {
+            checkDecimalPoint() && amount.length >= 15 -> {
+                "999,999,999.99"
+            }
+            !checkDecimalPoint() && amount.length >= 15 -> {
+                "99,999,999,999"
+            }
+            else -> {
+                amount
+            }
+        }
 
         when {
             amountValue < 1_000_000_000 -> {
@@ -99,10 +111,14 @@ fun TextView.adjustTotalMoneyText(amount: String?) {
             amountValue in 1_000_000_000..99_999_999_999 -> {
                 this.textSize = 16f
             }
+            else -> {
+                this.textSize = 16f
+            }
         }
+
+        this.text = "$displayAmount${CurrencyUtil.currency}"
     }
 }
-
 @BindingAdapter("bind:adjustDayMoneyText")
 fun TextView.adjustDayMoneyText(amount: String?) {
     amount?.let{
