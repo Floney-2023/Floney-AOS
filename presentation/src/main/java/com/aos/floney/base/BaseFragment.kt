@@ -69,6 +69,8 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
+    protected open val applyTransition: Boolean = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -162,14 +164,16 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
             setVariable(BR.vm, viewModel)
             lifecycleOwner = viewLifecycleOwner
 
-            enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
-                duration = 350L
-                interpolator = DecelerateInterpolator()
-            }
+            if (applyTransition) {
+                enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+                    duration = 350L
+                    interpolator = DecelerateInterpolator()
+                }
 
-            returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
-                duration = 350L
-                interpolator = DecelerateInterpolator()
+                returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false).apply {
+                    duration = 350L
+                    interpolator = DecelerateInterpolator()
+                }
             }
         }
     }
