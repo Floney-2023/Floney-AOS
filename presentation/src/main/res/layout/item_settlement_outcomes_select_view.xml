@@ -23,44 +23,43 @@
             android:id="@+id/iv_check"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@{item.isClick ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}"
             android:layout_marginStart="20dp"
+            android:src="@{item.isClick ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/cl_outcomes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_check"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="18dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_check"
-            app:layout_constraintTop_toTopOf="@+id/iv_check">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
-                bind:setTextWithEllipsis="@{item.content}"
+                android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/grayscale2"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                bind:setTextWithEllipsis="@{item.content}" />
 
             <TextView
                 android:id="@+id/tv_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@{item.category}"
                 android:textColor="@color/grayscale6"
-                android:textSize="12dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="12dp" />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_money"
             android:layout_width="wrap_content"

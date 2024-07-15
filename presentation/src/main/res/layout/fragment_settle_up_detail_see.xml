@@ -22,12 +22,11 @@
 
         <ImageView
             android:id="@+id/iv_icon_exit"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="22dp"
             android:onClick="@{() -> vm.onClickedExit()}"
-            android:padding="5dp"
             android:src="@drawable/icon_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -144,13 +143,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="@string/settle_up_complete_member_count"
             android:textColor="@color/grayscale6"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money"
             app:layout_constraintEnd_toStartOf="@+id/tv_settle_up_complete_settlement_money"
-            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
+            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money" />
 
         <TextView
             android:id="@+id/tv_settle_up_complete_settlement_money"
@@ -160,7 +159,7 @@
             android:fontFamily="@font/pretendard_bold"
             android:text="@{vm.settlementModel.outcome}"
             android:textColor="@color/primary2"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />

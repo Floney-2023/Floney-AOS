@@ -47,7 +47,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@{item.dateString}"
                 android:textColor="@color/grayscale2"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_term"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_term" />
@@ -71,7 +71,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@{item.totalOutcome}"
                 android:textColor="@color/grayscale2"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_total_money_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_total_money_text"
@@ -85,7 +85,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@string/settle_up_see_card_member"
                 android:textColor="@color/grayscale6"
-                android:textSize="13dp"
+                android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_total_money_text" />
 
@@ -96,7 +96,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@{item.userCount}"
                 android:textColor="@color/grayscale2"
-                android:textSize="13sp"
+                android:textSize="13dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_member_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_member_text"
@@ -106,9 +106,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="28dp"
-            android:background="@drawable/custom_radius_8_solid_primary10">
+            android:background="@drawable/custom_radius_12_solid_primary10">
 
             <TextView
                 android:id="@+id/tv_settlement_money"
@@ -117,7 +117,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="21dp"
                 android:layout_marginBottom="21dp"
-                android:fontFamily="@font/pretendard_medium"
+                android:fontFamily="@font/pretendard_semibold"
                 android:text="@string/settle_up_see_card_settlement_money"
                 android:textColor="@color/grayscale2"
                 android:textSize="13dp"
@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:fontFamily="@font/pretendard_medium"
+                android:fontFamily="@font/pretendard_semibold"
                 android:text="@string/settle_up_complete_member_count"
                 android:textColor="@color/grayscale6"
                 android:textSize="10dp"
@@ -146,15 +146,15 @@
                 android:fontFamily="@font/pretendard_bold"
                 android:text="@{item.outcome}"
                 android:textColor="@color/primary2"
-                android:textSize="14sp"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_money"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="@+id/tv_settlement_money" />
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/icon_chevron_unfold"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_money"
