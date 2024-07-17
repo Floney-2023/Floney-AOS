@@ -298,7 +298,7 @@
     </style>
 
     <style name="mypage_inform_text">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">17dp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>

@@ -39,7 +39,7 @@
             android:layout_marginTop="36dp"
             android:fontFamily="@font/pretendard_semibold"
             android:text="가계부 알림"
-            android:textAppearance="@style/mypage_inform_text"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

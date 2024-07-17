@@ -46,16 +46,16 @@
                 android:fontFamily="@font/pretendard_bold"
                 android:text="@{item.name}"
                 android:textColor="@color/grayscale2"
-                android:textSize="14dp"/>
+                android:textSize="15dp"/>
 
             <TextView
                 android:id="@+id/tv_role"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.role}"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/grayscale6"
-                android:textSize="12dp" />
+                android:textSize="13dp" />
         </LinearLayout>
     </LinearLayout>
 </layout>

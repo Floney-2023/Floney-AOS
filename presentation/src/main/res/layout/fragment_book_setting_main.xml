@@ -62,7 +62,7 @@
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_title"
                     android:textColor="@color/grayscale2"
-                    android:textSize="22dp"
+                    android:textSize="23dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,7 +73,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/custom_radius_8_solid_primary10"
+                    android:background="@drawable/custom_radius_12_solid_primary10"
                     android:onClick="@{() -> vm.onClickInformPage()}"
                     android:padding="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -107,10 +107,11 @@
                             android:id="@+id/tv_book_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
+                            android:layout_marginBottom="6dp"
                             android:fontFamily="@font/floney_pretendard_bold"
                             android:text="@{vm.bookSettingInfo.bookName}"
-                            android:textAppearance="@style/mypage_user_name" />
+                            android:textColor="@color/grayscale2"
+                            android:textSize="14dp"/>
 
                         <TextView
                             android:id="@+id/tv_start_day"
@@ -118,14 +119,14 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendard_medium"
                             android:text="@{vm.bookSettingInfo.startDay}"
-                            android:textAppearance="@style/mypage_user_email"
+                            android:textSize="12dp"
                             android:textColor="@color/grayscale3" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right"
+                        android:src="@drawable/icon_right_arrow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -141,7 +142,7 @@
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_user"
                     android:textColor="@color/grayscale2"
-                    android:textSize="16dp"
+                    android:textSize="17dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_user_inform_view" />
 
@@ -180,45 +181,56 @@
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_calendar"
                     android:textColor="@color/grayscale2"
-                    android:textSize="16dp"
+                    android:textSize="17dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/li_user_view" />
 
-
-                <TextView
-                    android:id="@+id/tv_book_setting_carryInfo"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/li_carryInfo_view"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:fontFamily="@font/pretendard_regular"
+                    android:layout_marginTop="16dp"
                     android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
-                    android:text="@string/book_setting_carryInfo"
-                    android:textColor="@color/grayscale2"
-                    android:textSize="14dp"
-                    app:layout_constraintStart_toStartOf="@+id/tv_calendar_title"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_calendar_title" />
-
-                <TextView
-                    android:id="@+id/tv_book_setting_carryInfo_check"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="25dp"
-                    android:background="@{vm.bookSettingInfo.carryOver ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
-                    android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
-                    android:padding="6dp"
-                    android:text="@{vm.bookSettingInfo.carryOver ? @string/book_setting_carryInfo_yes : @string/book_setting_carryInfo_no}"
-                    android:textColor="@{vm.bookSettingInfo.carryOver ? @color/primary2 : @color/grayscale2}"
-                    android:textSize="10dp"
-                    android:fontFamily="@font/pretendard_bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_book_setting_carryInfo"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="25dp"
+                    android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_book_setting_carryInfo" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_calendar_title">
+                    <TextView
+                        android:id="@+id/tv_book_setting_carryInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_regular"
+                        android:text="@string/book_setting_carryInfo"
+                        android:textColor="@color/grayscale2"
+                        android:textSize="14dp" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_book_setting_carryInfo_check"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@{vm.bookSettingInfo.carryOver ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_8_solid_grayscale_12}"
+                        android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
+                        android:padding="7dp"
+                        android:text="@{vm.bookSettingInfo.carryOver ? @string/book_setting_carryInfo_yes : @string/book_setting_carryInfo_no}"
+                        android:textColor="@{vm.bookSettingInfo.carryOver ? @color/primary2 : @color/grayscale2}"
+                        android:textSize="11dp"
+                        android:fontFamily="@font/pretendard_bold"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/li_repeat_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:onClick="@{() -> vm.onClickRepeat()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
@@ -226,7 +238,7 @@
                     android:paddingBottom="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_book_setting_carryInfo">
+                    app:layout_constraintTop_toBottomOf="@+id/li_carryInfo_view">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -293,7 +305,7 @@
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_asset_title"
                     android:textColor="@color/grayscale2"
-                    android:textSize="16dp"
+                    android:textSize="17dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/li_book_setting_init" />
 
@@ -347,7 +359,7 @@
                     android:id="@+id/li_book_setting_category"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="24dp"
                     android:onClick="@{() -> vm.onClickSettingCategory()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
@@ -364,7 +376,7 @@
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/book_setting_category"
                         android:textColor="@color/grayscale2"
-                        android:textSize="16dp" />
+                        android:textSize="17dp" />
 
                     <View
                         android:layout_width="0dp"
@@ -374,7 +386,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right" />
+                        android:src="@drawable/icon_right_arrow" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -399,7 +411,7 @@
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/book_setting_money"
                         android:textColor="@color/grayscale2"
-                        android:textSize="16dp" />
+                        android:textSize="17dp" />
 
                     <View
                         android:layout_width="0dp"
@@ -409,7 +421,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right" />
+                        android:src="@drawable/icon_right_arrow" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -433,7 +445,7 @@
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/book_setting_excel"
                         android:textColor="@color/grayscale2"
-                        android:textSize="16dp" />
+                        android:textSize="17dp" />
 
                     <View
                         android:layout_width="0dp"
@@ -443,7 +455,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right" />
+                        android:src="@drawable/icon_right_arrow" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -467,7 +479,7 @@
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/book_setting_invite_friend"
                         android:textColor="@color/grayscale2"
-                        android:textSize="16dp" />
+                        android:textSize="17dp" />
 
                     <View
                         android:layout_width="0dp"
@@ -477,7 +489,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/icon_chevron_right" />
+                        android:src="@drawable/icon_right_arrow" />
                 </LinearLayout>
 
                 <LinearLayout

@@ -33,7 +33,7 @@
                 android:onTextChanged="@{vm.onCostTextChanged}"
                 android:text="@string/book_setting_bottom_asset_title"
                 android:textColor="@color/grayscale1"
-                android:textSize="18sp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
                 android:text="@string/book_setting_bottom_asset_init"
                 android:fontFamily="@font/pretendard_regular"
                 android:textColor="@color/grayscale6"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 android:onClick="@{() -> vm.onClickedInitBtn()}"
                 app:layout_constraintBottom_toBottomOf="@+id/bottom_sheet_book_setting_title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,10 +55,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
-                android:fontFamily="@font/pretendard_regular"
+                android:fontFamily="@font/pretendard_medium"
+                android:lineSpacingExtra="3sp"
+                android:translationY="-1.34sp"
                 android:text="@string/book_setting_bottom_asset_info"
                 android:textColor="@color/grayscale6"
-                android:textSize="12sp"
+                android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="@+id/bottom_sheet_book_setting_title"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -88,7 +90,7 @@
                     android:text="@{vm.cost}"
                     android:onTextChanged="@{vm.onCostTextChanged}"
                     android:textColor="@color/grayscale2"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +111,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
-                android:layout_height="46dp"
+                android:layout_height="48dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/custom_radius_12_solid_primary1"
