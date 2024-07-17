@@ -18,24 +18,25 @@
 
         <ImageView
             android:id="@+id/iv_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
-            android:padding="20dp"
-            android:src="@drawable/icon_chevron_left"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
             android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_left_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_my_page_inform_email_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_my_page_inform_email_title" />
 
         <TextView
             android:id="@+id/tv_my_page_inform_email_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="@string/mypage_main_inform_title"
-            android:textAppearance="@style/mypage_inform_text"
+            android:lineSpacingExtra="-3sp"
+            android:textSize="16dp"
+            android:textColor="@color/grayscale2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,7 +49,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="38dp"
             android:text="@string/mypage_main_inform_nickname"
-            android:textAppearance="@style/mypage_user_email"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_my_page_inform_email_title" />
 
@@ -68,7 +71,7 @@
                 android:id="@+id/et_nickname_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="90"
+                android:layout_weight="93"
                 android:hint="@{vm.hintName}"
                 android:textColor="@color/grayscale2"
                 android:textSize="14dp"
@@ -86,20 +89,25 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/nickname_change_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:background="@drawable/onboard_area1"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:background="@drawable/custom_radius_12_solid_primary1"
                 android:text="@string/mypage_main_inform_change_button"
+                android:fontFamily="@font/pretendard_bold"
                 android:textColor="@color/white"
-                android:textSize="12sp"
+                android:textSize="13dp"
                 android:onClick="@{() -> vm.onClickNicknameChange()}"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/profile_image_change"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingEnd="20dp"
             android:orientation="horizontal"
             android:onClick="@{() -> vm.onClickProfileImgChange()}"
             app:layout_constraintEnd_toEndOf="@+id/li_my_page_inform_email_nickname_view"
@@ -110,7 +118,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_main_inform_profile_change"
-                android:textAppearance="@style/mypage_user_email" />
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp" />
 
             <View
                 android:layout_width="0dp"
@@ -120,14 +130,17 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/icon_chevron_right" />
+                android:src="@drawable/icon_right_arrow" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/pw_change"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingEnd="20dp"
             android:onClick="@{() -> vm.onClickPasswordChange()}"
             android:orientation="horizontal"
             android:visibility="@{vm.provider.equals(`EMAIL`) ? View.VISIBLE : View.GONE}"
@@ -139,7 +152,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_main_inform_change_passwd"
-                android:textAppearance="@style/mypage_user_email" />
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp" />
 
             <View
                 android:layout_width="0dp"
@@ -149,14 +164,17 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/icon_chevron_right" />
+                android:src="@drawable/icon_right_arrow" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/logout"
-            android:layout_width="0dp"
+            android:id="@+id/ll_logout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingEnd="20dp"
             android:onClick="@{() -> vm.onClickLogOut()}"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@+id/profile_image_change"
@@ -168,7 +186,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_main_inform_logout"
-                android:textAppearance="@style/mypage_user_email" />
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp" />
 
             <View
                 android:layout_width="0dp"
@@ -181,18 +201,23 @@
             android:id="@+id/exit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/logout"
-            app:layout_constraintStart_toStartOf="@+id/logout"
-            app:layout_constraintTop_toBottomOf="@+id/logout">
+            android:paddingStart="24dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="16dp"
+            android:paddingEnd="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/ll_logout"
+            app:layout_constraintStart_toStartOf="@+id/ll_logout"
+            app:layout_constraintTop_toBottomOf="@+id/ll_logout">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> vm.onClickWithdrawal()}"
                 android:text="@string/mypage_main_inform_exit"
-                android:textAppearance="@style/first_onboard_passbtn" />
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
 
             <View
                 android:layout_width="0dp"

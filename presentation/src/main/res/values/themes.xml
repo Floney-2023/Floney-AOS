@@ -291,7 +291,7 @@
 
     <!--MypageActivity-->
     <style name="mypage_header_text">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">23dp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
@@ -305,10 +305,10 @@
     </style>
 
     <style name="mypage_user_name">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/grayscale2</item>
-        <item name="android:fontFamily">@font/floney_pretendard_semibold</item>
-        <item name="fontFamily">@font/floney_pretendard_semibold</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="fontFamily">@font/pretendard_bold</item>
     </style>
 
     <style name="mypage_card_view_1">
@@ -319,31 +319,31 @@
     </style>
 
     <style name="mypage_card_view_2">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_card_view_1_write">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/grayscale3</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <style name="mypage_card_view_2_write">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="mypage_user_email">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/grayscale3</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/grayscale2</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="mypage_wallet_count">
@@ -368,8 +368,9 @@
     </style>
 
     <style name="mypage_inform_title_text">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/grayscale2</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
 
     <!--인증 코드 6자리 editText style-->

@@ -24,13 +24,12 @@
             android:id="@+id/iv_icon_exit"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="22dp"
             android:layout_marginEnd="22dp"
             android:onClick="@{() -> vm.onClickedExit()}"
             android:padding="5dp"
             android:src="@drawable/icon_exit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_settlement_see_title" />
 
         <TextView
             android:id="@+id/tv_settlement_see_title"

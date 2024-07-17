@@ -17,24 +17,24 @@
 
         <ImageView
             android:id="@+id/iv_back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
-            android:padding="20dp"
-            android:src="@drawable/icon_chevron_left"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
             android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_left_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_service_notice_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_service_notice_title" />
 
         <TextView
             android:id="@+id/tv_service_notice_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="공지사항"
-            android:textAppearance="@style/mypage_inform_text"
+            android:textSize="16dp"
+            android:textColor="@color/grayscale1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +46,7 @@
             android:layout_marginStart="28dp"
             android:layout_marginTop="51dp"
             android:text="플로니가 출시되었어요"
+            android:fontFamily="@font/pretendard_medium"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,9 +75,9 @@
             app:layout_constraintTop_toTopOf="@+id/tv_notice_title" />
 
         <TextView
-            android:id="@+id/rectangle_5"
+            android:id="@+id/tv_inform"
             android:layout_width="match_parent"
-            android:layout_height="158dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginTop="16dp"
             android:background="@color/grayscale12"
@@ -84,6 +85,7 @@
             android:paddingTop="16dp"
             android:paddingEnd="28dp"
             android:paddingBottom="16dp"
+            android:lineSpacingMultiplier="1.2"
             android:text="@string/mypage_service_mail_info"
             android:textColor="@color/grayscale3"
             android:textSize="13dp"

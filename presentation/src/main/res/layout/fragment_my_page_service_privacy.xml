@@ -19,19 +19,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
             android:padding="20dp"
             android:src="@drawable/icon_chevron_left"
-            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_service_notice_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="@+id/tv_service_notice_title" />
 
         <TextView
             android:id="@+id/tv_service_notice_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="개인정보 처리방침"
             android:textAppearance="@style/mypage_inform_text"
             app:layout_constraintEnd_toEndOf="parent"

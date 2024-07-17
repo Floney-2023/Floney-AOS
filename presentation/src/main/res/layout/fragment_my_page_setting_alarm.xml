@@ -20,12 +20,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
             android:padding="20dp"
             android:src="@drawable/icon_chevron_left"
-            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_setting_alarm_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_setting_alarm_title" />
 
         <TextView
             android:id="@+id/tv_setting_alarm_title"
@@ -72,7 +72,7 @@
                 android:checked="@{vm.marketingTerms}"
                 android:onClick="@{() -> vm.onClickMarketingTerms()}"
                 app:switchMinWidth="0dp"
-                app:thumbTextPadding="24dp"
+                app:thumbTextPadding="20dp"
                 app:thumbTint="@null"
                 app:track="@drawable/icon_style_toggle_btn"
                 app:trackTint="@null" />

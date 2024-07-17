@@ -36,7 +36,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="18dp"
             android:orientation="vertical">
 
             <TextView
@@ -45,7 +45,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="@{item.name}"
-                android:textAppearance="@style/mypage_user_name" />
+                android:textColor="@color/grayscale2"
+                android:fontFamily="@font/pretendard_bold"
+                android:textSize="14dp"/>
 
             <TextView
                 android:id="@+id/member_count"
@@ -55,7 +57,7 @@
                 android:textColor="@color/grayscale6"
                 android:lineSpacingExtra="-2sp"
                 android:textSize="12dp"
-                android:fontFamily="@font/pretendard_regular"/>
+                android:fontFamily="@font/pretendard_medium"/>
         </LinearLayout>
 
         <View
