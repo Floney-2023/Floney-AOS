@@ -69,12 +69,19 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <com.suke.widget.SwitchButton
-                android:id="@+id/sw_category_toggle"
-                android:layout_width="wrap_content"
+                android:id="@+id/switch_button"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:checked="@{vm.marketingTerms}"
-                android:onClick="@{() -> vm.onClickMarketingTerms()}"
-                bind:adjustDesign="@{() -> vm.onClickMarketingTerms()}"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:sb_background="@color/grayscale10"
+                app:sb_border_width="1.5dp"
+                app:sb_checked="@{vm.marketingTerms ?  true : false}"
+                app:sb_checked_color="@color/primary5"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/grayscale10" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

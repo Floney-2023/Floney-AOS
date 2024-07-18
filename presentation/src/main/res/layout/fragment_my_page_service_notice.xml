@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="51dp"
-            android:text="플로니가 출시되었어요"
+            android:text="@string/mypage_service_mail_title"
             android:fontFamily="@font/pretendard_medium"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"

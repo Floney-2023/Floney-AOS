@@ -141,7 +141,7 @@
     </style>
 
     <style name="first_onboard_passbtn">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">#8C8C8C</item>
     </style>
 
@@ -211,8 +211,8 @@
         <item name="android:textCursorDrawable">@color/grayscale6</item>
         <item name="android:textColorHint">@color/grayscale6</item>
         <item name="hintTextColor">@color/grayscale6</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <style name="login_underscore_text">

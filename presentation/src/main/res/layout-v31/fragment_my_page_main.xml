@@ -211,7 +211,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
-                                android:text="광고보기"
+                                android:text="광고 보기"
                                 android:textColor="@color/grayscale3"
                                 android:textSize="12dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -279,7 +279,7 @@
                         android:fontFamily="@font/floney_pretendard_bold"
                         android:text="@string/mypage_main_my_wallet"
                         android:textColor="@color/grayscale1"
-                        android:textSize="16dp"
+                        android:textSize="17dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/li_review_suppose_card_view" />
 
@@ -337,7 +337,7 @@
                         android:fontFamily="@font/floney_pretendard_bold"
                         android:text="@string/mypage_main_user_soppose_text1"
                         android:textColor="@color/grayscale1"
-                        android:textSize="16dp"
+                        android:textSize="17dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/wallet_view" />
 
@@ -352,9 +352,9 @@
                         android:onClick="@{() -> vm.onClickAnswerPage()}"
                         android:orientation="horizontal"
                         android:paddingStart="24dp"
-                        android:paddingTop="21dp"
+                        android:paddingTop="20dp"
                         android:paddingEnd="18dp"
-                        android:paddingBottom="21dp"
+                        android:paddingBottom="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_person_suppose_title">
@@ -386,9 +386,9 @@
                         android:onClick="@{() -> vm.onClickNoticePage()}"
                         android:orientation="horizontal"
                         android:paddingStart="24dp"
-                        android:paddingTop="21dp"
+                        android:paddingTop="20dp"
                         android:paddingEnd="18dp"
-                        android:paddingBottom="21dp"
+                        android:paddingBottom="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/li_answer_view">
@@ -420,9 +420,9 @@
                         android:onClick="@{() -> vm.onClickReviewPage()}"
                         android:orientation="horizontal"
                         android:paddingStart="24dp"
-                        android:paddingTop="21dp"
+                        android:paddingTop="20dp"
                         android:paddingEnd="16dp"
-                        android:paddingBottom="21dp"
+                        android:paddingBottom="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/li_notice_view">
@@ -454,9 +454,9 @@
                         android:onClick="@{() -> vm.onClickPrivateRolePage()}"
                         android:orientation="horizontal"
                         android:paddingStart="24dp"
-                        android:paddingTop="21dp"
+                        android:paddingTop="20dp"
                         android:paddingEnd="16dp"
-                        android:paddingBottom="21dp"
+                        android:paddingBottom="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/li_review_write">
@@ -488,7 +488,7 @@
                         android:onClick="@{() -> vm.onClickUsageRightPage()}"
                         android:orientation="horizontal"
                         android:paddingStart="24dp"
-                        android:paddingTop="21dp"
+                        android:paddingTop="20dp"
                         android:paddingEnd="16dp"
                         android:paddingBottom="40dp"
                         app:layout_constraintEnd_toEndOf="parent"

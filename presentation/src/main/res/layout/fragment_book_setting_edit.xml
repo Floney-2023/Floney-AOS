@@ -139,7 +139,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="24dp"
+            android:paddingTop="19dp"
+            android:paddingBottom="14dp"
+            android:paddingEnd="19dp"
             android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="@+id/li_book_setting_edit_edit_profile_change"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/li_book_setting_edit_edit_profile_change"
@@ -148,9 +152,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
                 android:text="@string/book_setting_edit_edit_see_profile"
                 android:textColor="@color/grayscale2"
-                android:fontFamily="@font/pretendard_medium"
                 android:textSize="14dp" />
 
             <View
@@ -158,24 +162,20 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/sw_category_toggle"
-                android:layout_width="wrap_content"
+            <com.suke.widget.SwitchButton
+                android:id="@+id/switch_button"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="19dp"
-                android:paddingBottom="20dp"
-                android:paddingEnd="20dp"
-                android:checked="@{vm.profileCheck}"
-                android:onClick="@{() -> vm.onClickMarketingTerms()}"
-                android:textOff=""
-                android:textOn=""
-                android:thumb="@drawable/icon_style_toggle_thumb"
-                app:switchMinWidth="0dp"
-                app:thumbTextPadding="24dp"
-                app:thumbTint="@null"
-                app:track="@drawable/icon_style_toggle_btn"
-                app:trackTint="@null" />
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:sb_background="@color/grayscale10"
+                app:sb_border_width="1.5dp"
+                app:sb_checked="@{vm.profileCheck ?  true : false}"
+                app:sb_checked_color="@color/primary5"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/grayscale10" />
         </LinearLayout>
 
         <LinearLayout
@@ -183,7 +183,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:paddingTop="15dp"
+            android:paddingTop="20dp"
             android:paddingStart="24dp"
             android:paddingBottom="20dp"
             android:orientation="horizontal"

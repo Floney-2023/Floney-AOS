@@ -35,7 +35,7 @@
             android:fontFamily="@font/pretendard_semibold"
             android:text="@string/mypage_main_inform_title"
             android:lineSpacingExtra="-3sp"
-            android:textSize="16dp"
+            android:textSize="17dp"
             android:textColor="@color/grayscale2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

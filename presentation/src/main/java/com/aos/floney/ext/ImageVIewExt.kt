@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
+import com.aos.floney.view.home.HomeActivity
 import com.aos.model.analyze.UiAnalyzePlanModel
 import com.bumptech.glide.Glide
 import timber.log.Timber

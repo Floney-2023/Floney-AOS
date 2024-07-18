@@ -2,6 +2,7 @@ package com.aos.floney.view.book.setting.edit
 
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,7 @@ class BookSettingEditFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpToggleListener()
         setUpViewModelObserver()
     }
     private fun setUpViewModelObserver() {
@@ -74,6 +76,14 @@ class BookSettingEditFragment :
                     activity.startBookAddActivity()
                 }
             }
+        }
+    }
+    private fun setUpToggleListener(){
+        binding.switchButton.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                viewModel.onClickMarketingTerms()
+                true
+            } else false
         }
     }
 }

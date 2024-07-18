@@ -8,6 +8,7 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.floney.view.common.SuccessToastDialog
 import com.aos.usecase.mypage.MarketingChangeUseCase
 import com.aos.usecase.mypage.MarketingCheckUseCase
 import com.aos.usecase.mypage.NicknameChangeUseCase
