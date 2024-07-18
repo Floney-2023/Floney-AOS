@@ -2,8 +2,10 @@ package com.aos.floney.view.home
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.lifecycleScope
 import com.aos.data.util.SharedPreferenceUtil
@@ -74,6 +76,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this)
+        setStatusBarColor(ContextCompat.getColor(this, R.color.background3))
+
+        if (isDarkMode()) {
+            binding.root.setBackgroundColor(ContextCompat.getColor(this, R.color.background3))  // 다크 모드 대응
+        }
     }
 
     private fun setUpViewModelObserver() {

@@ -6,8 +6,10 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,6 +22,7 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDialog
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelLazy
@@ -72,6 +75,10 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
             setVariable(BR.vm, viewModel)
             lifecycleOwner = this@BaseActivity
         }
+        if (isDarkMode()) {
+            binding.root.setBackgroundColor(Color.WHITE)  // 다크 모드일 때 흰색 배경
+        }
+        setStatusBarColor(ContextCompat.getColor(this, R.color.white))
     }
 
     private fun setupObserve() {
@@ -181,6 +188,17 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+    // 상태바 색상 설정 함수
+    protected fun setStatusBarColor(color: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = color
+        }
+    }
+    // 다크 모드인지 확인하는 함수
+    protected fun isDarkMode(): Boolean {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
 }
 
