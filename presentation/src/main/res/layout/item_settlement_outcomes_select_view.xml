@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="72dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}">
 
         <ImageView
@@ -24,6 +24,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
             android:src="@{item.isClick ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="18dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_check"
@@ -60,18 +62,19 @@
                 android:textColor="@color/grayscale6"
                 android:textSize="12dp" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:fontFamily="@font/pretendard_semibold"
-            android:text="@{item.moneyFormat}"
+            android:fontFamily="@font/pretendard_medium"
             android:textColor="@color/grayscale2"
-            android:textSize="16dp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_check"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_check" />
+            app:layout_constraintTop_toTopOf="@+id/iv_check"
+            bind:adjustOnlyMoneyText="@{item.moneyFormat}" />
 
         <View
             android:id="@+id/line"
