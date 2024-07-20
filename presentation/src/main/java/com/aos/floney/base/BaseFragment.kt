@@ -183,6 +183,11 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
         val circle2 = loadingDialog.findViewById<View>(R.id.circle2)
         val circle3 = loadingDialog.findViewById<View>(R.id.circle3)
 
+        // 다시 시작할 시, reset
+        circle1?.translationY = 0f
+        circle2?.translationY = 0f
+        circle3?.translationY = 0f
+
         val animationDelay = 200L // 애니메이션 시작 지연 시간 (0.2초)
         val animationDuration = 600L * 2 // 애니메이션 지속 시간 (0.6초)
 

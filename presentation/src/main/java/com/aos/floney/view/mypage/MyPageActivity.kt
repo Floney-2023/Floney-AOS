@@ -38,7 +38,6 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         setUpUi()
         setUpBottomNavigation()
         setUpViewModelObserver()
-        viewModel.searchMypageItems()
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
