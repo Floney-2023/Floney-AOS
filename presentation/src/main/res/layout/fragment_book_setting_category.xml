@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_regular"
             android:onClick="@{() -> vm.onClickEdit()}"
             android:text="@{vm.edit ? `완료` : `편집`}"
             android:textSize="14dp"
@@ -56,7 +56,7 @@
             android:layout_marginTop="52dp"
             android:fontFamily="@font/floney_pretendard_bold"
             android:text="@string/book_setting_category_title"
-            android:textSize="22dp"
+            android:textSize="24dp"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_back" />

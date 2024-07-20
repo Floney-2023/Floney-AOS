@@ -38,11 +38,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="36dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/floney_pretendard_bold"
                 android:text="@string/mypage_main_mypage_text"
                 android:textColor="@color/grayscale1"
-                android:textSize="22dp"
+                android:textSize="23dp"
                 app:layout_constraintBottom_toTopOf="@+id/nestedScrollView2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -148,7 +148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="17dp"
                         android:layout_marginEnd="20dp"
                         android:orientation="horizontal"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -177,7 +177,7 @@
                                 android:fontFamily="@font/floney_pretendard_bold"
                                 android:text="광고 제거하기"
                                 android:textAppearance="@style/mypage_card_view_1"
-                                android:textSize="14dp"
+                                android:textSize="15dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -202,7 +202,7 @@
                                 android:fontFamily="@font/pretendard_bold"
                                 android:text="@{vm.advertiseTime}"
                                 android:textColor="@color/grayscale3"
-                                android:textSize="24dp"
+                                android:textSize="26dp"
                                 app:layout_constraintStart_toStartOf="@+id/textView12"
                                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -223,7 +223,7 @@
 
                         <View
                             android:id="@+id/space_between_squares"
-                            android:layout_width="12dp"
+                            android:layout_width="13dp"
                             android:layout_height="0dp"
                             app:layout_constraintBottom_toBottomOf="@+id/li_review_suppose_card_view"
                             app:layout_constraintEnd_toEndOf="@+id/second_square"
@@ -274,8 +274,8 @@
                         android:id="@+id/my_wallet_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="34dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="36dp"
                         android:fontFamily="@font/floney_pretendard_bold"
                         android:text="@string/mypage_main_my_wallet"
                         android:textColor="@color/grayscale1"
@@ -311,7 +311,7 @@
                             android:id="@+id/wallet_empty_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="16dp"
                             android:background="@drawable/item_dashed_border"
                             android:gravity="center|center_vertical"
                             android:onClick="@{() -> vm.onClickBookAdd()}"
@@ -332,7 +332,7 @@
                         android:id="@+id/tv_person_suppose_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="22dp"
+                        android:layout_marginStart="24dp"
                         android:layout_marginTop="40dp"
                         android:fontFamily="@font/floney_pretendard_bold"
                         android:text="@string/mypage_main_user_soppose_text1"

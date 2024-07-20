@@ -46,7 +46,7 @@
                 android:fontFamily="@font/pretendard_bold"
                 android:text="@{item.name}"
                 android:textColor="@color/grayscale2"
-                android:textSize="15dp"/>
+                android:textSize="14dp"/>
 
             <TextView
                 android:id="@+id/tv_role"
@@ -55,7 +55,7 @@
                 android:text="@{item.role}"
                 android:fontFamily="@font/pretendard_medium"
                 android:textColor="@color/grayscale6"
-                android:textSize="13dp" />
+                android:textSize="12dp" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -59,7 +59,7 @@
                 android:fontFamily="@font/pretendard_bold"
                 android:text="@{item.moneyInfo.equals(`정산할 금액이 없어요.`) ? `` : item.money}"
                 android:textColor="@color/grayscale2"
-                android:textSize="16dp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -70,7 +70,7 @@
                 android:fontFamily="@font/pretendard_regular"
                 android:text="@{item.moneyInfo}"
                 android:textColor="@color/grayscale2"
-                android:textSize="16dp"
+                android:textSize="17dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money"
                 app:layout_constraintStart_toEndOf="@+id/tv_settle_up_complete_settlement_money"
                 app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money"

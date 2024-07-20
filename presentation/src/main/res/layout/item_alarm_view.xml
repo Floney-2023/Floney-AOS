@@ -19,6 +19,7 @@
         android:id="@+id/li_member_select_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}"
         android:background="@{item.received ? @drawable/custom_radius_12_solid_grayscale_12 : @drawable/custom_radius_8_solid_primary10}"
         android:gravity="center_vertical"

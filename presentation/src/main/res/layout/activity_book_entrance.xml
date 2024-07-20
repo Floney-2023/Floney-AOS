@@ -53,7 +53,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                setBookImageToUrl="@{vm.bookInfo.bookImg}"
+                setBookImageToUrl='@{vm.bookInfo.bookImg.equals("") ? "btn_book_default" : vm.bookInfo.bookImg}'
                 android:scaleType="centerCrop"
                 android:src="@drawable/btn_book_profile" />
 
@@ -102,12 +102,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/li_invite_code_view"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:onClick="@{() -> vm.onClickInviteCodeCopy()}"
-            android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+            android:background="@drawable/custom_radius_12_solid_grayscale_12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_invite_code_text">
@@ -141,7 +141,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/appCompatButton"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="70dp"

@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
-                    android:layout_marginTop="18dp"
+                    android:layout_marginTop="30dp"
                     android:fontFamily="@font/floney_pretendard_bold"
                     android:text="@string/book_setting_title"
                     android:textColor="@color/grayscale2"
@@ -189,7 +189,7 @@
                     android:id="@+id/li_carryInfo_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="13dp"
                     android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
                     android:orientation="horizontal"
                     android:paddingStart="24dp"
@@ -219,10 +219,10 @@
                         android:layout_height="wrap_content"
                         android:background="@{vm.bookSettingInfo.carryOver ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_8_solid_grayscale_12}"
                         android:onClick="@{() -> vm.onClickCarryInfoSetting()}"
-                        android:padding="7dp"
+                        android:padding="6dp"
                         android:text="@{vm.bookSettingInfo.carryOver ? @string/book_setting_carryInfo_yes : @string/book_setting_carryInfo_no}"
                         android:textColor="@{vm.bookSettingInfo.carryOver ? @color/primary2 : @color/grayscale2}"
-                        android:textSize="11dp"
+                        android:textSize="10dp"
                         android:fontFamily="@font/pretendard_bold"/>
 
                 </LinearLayout>

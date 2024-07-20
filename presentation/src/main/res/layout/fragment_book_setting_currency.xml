@@ -44,7 +44,7 @@
             android:layout_marginTop="52dp"
             android:fontFamily="@font/floney_pretendard_bold"
             android:text="@string/book_setting_currency_title"
-            android:textSize="23dp"
+            android:textSize="24dp"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_back" />
@@ -67,7 +67,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/book_setting_currency_info"
             android:textColor="@color/grayscale6"
-            android:textSize="14dp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_currency_title" />
 

@@ -99,7 +99,7 @@ class MyPageMainViewModel @Inject constructor(
 
             if (remainingMinutes <= 0) {
                 prefs.setString("advertiseTime", "")
-                _advertiseTime.postValue("06:00")
+                _advertiseTime.postValue("6:00")
             } else {
                 val hours = remainingMinutes / 60
                 val minutes = remainingMinutes % 60
@@ -108,7 +108,7 @@ class MyPageMainViewModel @Inject constructor(
 
         }
         else {
-            _advertiseTime.postValue("06:00")
+            _advertiseTime.postValue("6:00")
         }
     }
     // 광고 시청 시간 설정
