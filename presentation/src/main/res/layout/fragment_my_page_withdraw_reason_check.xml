@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:fontFamily="@font/pretendard_regular"
+            android:fontFamily="@font/pretendard_medium"
             android:lineSpacingExtra="3sp"
             android:text="@string/mypage_main_inform_exit_info"
             android:textColor="@color/grayscale6"

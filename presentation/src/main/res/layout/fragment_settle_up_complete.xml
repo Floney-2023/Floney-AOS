@@ -113,7 +113,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/settle_up_complete_total_expense"
             android:textColor="@color/grayscale2"
-            android:textSize="16dp"
+            android:textSize="17dp"
             app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_info"
             app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_info" />
 
@@ -126,7 +126,7 @@
             android:fontFamily="@font/pretendard_bold"
             bind:adjustOnlyMoneyText="@{vm.settlementModel.totalOutcome}"
             android:textColor="@color/grayscale2"
-            android:textSize="16dp"
+            android:textSize="17dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_info" />
 
@@ -182,7 +182,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/settle_up_complete_settlement_money"
             android:textColor="@color/grayscale2"
-            android:textSize="16dp"
+            android:textSize="17dp"
             app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_info"
             app:layout_constraintTop_toBottomOf="@+id/iv_bottom_dottedLine" />
 
@@ -207,7 +207,7 @@
             android:fontFamily="@font/pretendard_bold"
             bind:adjustOnlyMoneyText="@{vm.settlementModel.outcome}"
             android:textColor="@color/primary2"
-            android:textSize="16dp"
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
