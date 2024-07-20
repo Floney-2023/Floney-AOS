@@ -22,7 +22,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@{item.userNickname}"
             android:textColor="@color/grayscale6"
-            android:textSize="14dp"
+            android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,11 +32,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_medium"
-            bind:adjustOnlyMoneyText="@{item.money}"
             android:textColor="@color/grayscale2"
-            android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_name" />
+            app:layout_constraintTop_toTopOf="@+id/tv_name"
+            bind:adjustOnlyMoneyText="@{item.money}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
