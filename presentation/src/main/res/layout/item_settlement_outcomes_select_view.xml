@@ -19,17 +19,25 @@
         android:layout_height="72dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}">
 
-        <ImageView
-            android:id="@+id/iv_check"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_check"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
-            android:src="@{item.isClick ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@{item.isClick ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/cl_outcomes"
@@ -40,7 +48,7 @@
             android:layout_marginBottom="20dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_check"
+            app:layout_constraintStart_toEndOf="@+id/cv_check"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -71,17 +79,15 @@
             android:fontFamily="@font/pretendard_medium"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_check"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_check"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_check"
+            app:layout_constraintTop_toTopOf="@+id/cv_check"
             bind:adjustOnlyMoneyText="@{item.moneyFormat}" />
 
         <View
             android:id="@+id/line"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:background="@color/grayscale10"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_money"

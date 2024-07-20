@@ -38,7 +38,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <FrameLayout
             android:id="@+id/profile_view"
             android:layout_width="124dp"
@@ -55,7 +54,7 @@
                 android:layout_gravity="center"
                 app:cardElevation="0dp"
                 android:onClick="@{() -> vm.onClickSettingImage()}"
-                app:cardCornerRadius="64dp">
+                app:cardCornerRadius="62dp">
 
                 <ImageView
                     android:id="@+id/profileImg"
@@ -65,16 +64,15 @@
                     android:src="@drawable/btn_profile"
                     android:text="@string/mypage_main_inform_nickname"
                     android:textAppearance="@style/sign_up_input_text" />
-
             </androidx.cardview.widget.CardView>
 
             <ToggleButton
                 android:id="@+id/btn_photo_camera"
                 android:layout_width="32dp"
-                android:onClick="@{() -> vm.onClickSettingImage()}"
                 android:layout_height="32dp"
                 android:layout_gravity="bottom|end"
                 android:background="@drawable/btn_photo_camera"
+                android:onClick="@{() -> vm.onClickSettingImage()}"
                 android:textOff=""
                 android:textOn="" />
 

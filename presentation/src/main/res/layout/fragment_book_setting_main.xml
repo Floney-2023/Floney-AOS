@@ -81,17 +81,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_mypage_title">
 
 
-                    <ImageView
-                        android:id="@+id/iv_profile"
-                        setBookImageToUrl="@{vm.bookSettingInfo.bookImg}"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_profile"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:background="@drawable/background_circle_image"
-                        android:clipToOutline="true"
+                        app:cardCornerRadius="18dp"
+                        app:cardElevation="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
+                        app:layout_constraintTop_toTopOf="parent">
+                        <ImageView
+                            android:id="@+id/iv_profile"
+                            setBookImageToUrl="@{vm.bookSettingInfo.bookImg}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+                    </androidx.cardview.widget.CardView>
 
                     <LinearLayout
                         android:id="@+id/li_book_info_view"
@@ -100,7 +105,7 @@
                         android:layout_marginStart="16dp"
                         android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                        app:layout_constraintStart_toEndOf="@+id/cv_profile"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <TextView
