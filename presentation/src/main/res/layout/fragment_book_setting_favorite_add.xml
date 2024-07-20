@@ -22,7 +22,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="22dp"
-            android:onClick="@{() -> vm.onClickCloseBtn()}"
+            android:onClick="@{() -> vm.onFavoriteAddClickCloseBtn()}"
             android:padding="5dp"
             android:src="@drawable/icon_exit"
             app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_see_title"

@@ -91,6 +91,11 @@ class MyPageMainViewModel @Inject constructor(
     private var _supposePage = MutableEventFlow<Boolean>()
     val supposePage: EventFlow<Boolean> get() = _supposePage
 
+
+    // 마이페이지 정보 로드
+    private var _loadCheck = MutableEventFlow<Boolean>()
+    val loadCheck: EventFlow<Boolean> get() = _loadCheck
+
     init{
         settingAdvertiseTime()
         searchMypageItems()
@@ -141,7 +146,7 @@ class MyPageMainViewModel @Inject constructor(
                 CommonUtil.userProfileImg = it.profileImg
 
                 _mypageInfo.postValue(updatedResult)
-
+                _loadCheck.emit(true)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
             }

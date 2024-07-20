@@ -2,6 +2,7 @@ package com.aos.floney.view.book.setting.favorite
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -59,6 +60,21 @@ class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBind
 
         setUpUi()
         setUpViewModelObserver()
+        setUpBackButton()
+    }
+    fun setUpBackButton(){
+        // 뒤로 가기 콜백 등록
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+    }
+
+    override fun onBackPressed() {
+        viewModel.onClickPreviousPage()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@BookSettingFavoriteFragment)
