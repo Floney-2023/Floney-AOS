@@ -131,6 +131,8 @@ class MyPageInformMainViewModel @Inject constructor(
                 logoutUseCase(prefs.getString("accessToken","")).onSuccess {
                     prefs.setString("accessToken", "")
                     prefs.setString("refreshToken", "")
+                    prefs.setString("bookKey","")
+
                     _logOutPage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)

@@ -131,7 +131,7 @@ class MyPageMainViewModel @Inject constructor(
                         myBook.copy(recentCheck = false)
                     }
                 })
-
+                CommonUtil.userProfileImg = it.profileImg
                 _mypageInfo.postValue(updatedResult)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
