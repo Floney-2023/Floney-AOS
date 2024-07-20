@@ -229,6 +229,9 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel>(
             e.printStackTrace()
         }
     }
+    protected open fun onBackPressed() {
+        // 상속받는 클래스에서 필요에 따라 구현
+    }
 }
 
 fun Fragment.hideKeyboard() {
