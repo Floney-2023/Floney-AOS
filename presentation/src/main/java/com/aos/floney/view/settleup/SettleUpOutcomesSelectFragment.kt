@@ -84,7 +84,7 @@ class SettleUpOutcomesSelectFragment : BaseFragment<FragmentSettleUpOutcomesSele
                             }
                         }
                     } else {
-
+                        goToSettlementCompleteFragment()
                     }
 
                 } else {
