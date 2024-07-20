@@ -82,7 +82,13 @@ class BookSettingRepeatViewModel @Inject constructor(
 
     fun onClickPreviousPage() {
         viewModelScope.launch {
-            _back.emit(true)
+            if (edit.value!!)
+            {
+                _back.emit(false)
+            }
+            else{
+                _back.emit(true)
+            }
         }
     }
     // 자산/분류 카테고리 항목 가져오기

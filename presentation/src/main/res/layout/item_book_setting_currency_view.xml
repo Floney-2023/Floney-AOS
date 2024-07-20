@@ -21,10 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:background="@{item.isCheck ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
+        android:background="@{item.isCheck ? @drawable/custom_radius_12_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
         android:gravity="center_vertical"
         android:onClick="@{() -> eventHolder.onItemClick(item)}"
-        android:padding="21dp">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/iv_name"

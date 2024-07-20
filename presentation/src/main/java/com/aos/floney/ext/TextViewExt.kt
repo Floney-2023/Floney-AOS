@@ -9,6 +9,8 @@ import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.checkDecimalPoint
 import com.aos.model.analyze.Asset
 import com.aos.model.analyze.UiAnalyzePlanModel
+import com.suke.widget.SwitchButton
+import timber.log.Timber
 import java.text.DecimalFormat
 
 
@@ -89,8 +91,22 @@ fun TextView.setTextWithEllipsis(text: String?) {
 
 @BindingAdapter("bind:adjustTotalMoneyText")
 fun TextView.adjustTotalMoneyText(amount: String?) {
-    amount?.let{
-        val amountValue = amount.replace(",", "").replace(CurrencyUtil.currency,"").toLongOrNull() ?: return
+    amount?.let {
+        Timber.e("amount : ${amount}")
+        var amount = amount.replace(CurrencyUtil.currency, "")
+        val amountValue = amount.replace(",", "").toLongOrNull() ?: return
+
+        val displayAmount = when {
+            checkDecimalPoint() && amount.length >= 15 -> {
+                "999,999,999.99"
+            }
+            !checkDecimalPoint() && amount.length >= 15 -> {
+                "99,999,999,999"
+            }
+            else -> {
+                amount
+            }
+        }
 
         when {
             amountValue < 1_000_000_000 -> {
@@ -99,10 +115,37 @@ fun TextView.adjustTotalMoneyText(amount: String?) {
             amountValue in 1_000_000_000..99_999_999_999 -> {
                 this.textSize = 16f
             }
+            else -> {
+                this.textSize = 16f
+            }
         }
+
+        this.text = "$displayAmount${CurrencyUtil.currency}"
     }
 }
 
+@BindingAdapter("bind:adjustOnlyMoneyText")
+fun TextView.adjustOnlyMoneyText(amount: String?) {
+    amount?.let {
+        Timber.e("amount : ${amount}")
+        var amount = amount.replace(CurrencyUtil.currency, "")
+        val amountValue = amount.replace(",", "").toLongOrNull() ?: return
+
+        val displayAmount = when {
+            checkDecimalPoint() && amount.length >= 15 -> {
+                "999,999,999.99"
+            }
+            !checkDecimalPoint() && amount.length >= 15 -> {
+                "99,999,999,999"
+            }
+            else -> {
+                amount
+            }
+        }
+
+        this.text = "$displayAmount${CurrencyUtil.currency}"
+    }
+}
 @BindingAdapter("bind:adjustDayMoneyText")
 fun TextView.adjustDayMoneyText(amount: String?) {
     amount?.let{
@@ -126,5 +169,10 @@ fun TextView.setLayoutMargin(margin: Float) {
     val marginPx = (margin * this.context.resources.displayMetrics.density).toInt()
     layoutParams.setMargins(marginPx, marginPx, marginPx, marginPx)
     this.layoutParams = layoutParams
+}
+
+@BindingAdapter("bind:adjustDesign")
+fun SwitchButton.adjustDesign(isMarketingTerms: Boolean) {
+    
 }
 

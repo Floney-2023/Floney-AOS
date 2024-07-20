@@ -90,6 +90,9 @@ dependencies {
     // flexboxLayout
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
+    // toggle-botton
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+
     implementation("com.tbuonomo:dotsindicator:5.0")
 
     // deep-link

@@ -21,20 +21,20 @@
             android:id="@+id/iv_icon_exit"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="22dp"
             android:layout_marginEnd="22dp"
-            android:onClick="@{() -> vm.onClickCloseBtn()}"
+            android:onClick="@{() -> vm.onFavoriteAddClickCloseBtn()}"
             android:padding="5dp"
             android:src="@drawable/icon_exit"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_see_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_settlement_see_title" />
 
         <TextView
             android:id="@+id/tv_settlement_see_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="즐겨찾기 추가"
             android:textAppearance="@style/mypage_inform_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -217,6 +217,7 @@
             android:textColor="@color/grayscale2"
             android:textColorHint="@color/grayscale6"
             android:textSize="14dp"
+            android:maxLength="20"
             app:constraintSet="@id/tv_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_content"
             app:layout_constraintEnd_toEndOf="parent"

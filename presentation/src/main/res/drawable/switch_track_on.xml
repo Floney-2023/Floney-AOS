@@ -10,6 +10,6 @@
         android:height="24dp" />
 
     <solid
-        android:color="@color/primary1" />
+        android:color="@color/primary5" />
 
 </shape>

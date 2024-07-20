@@ -16,22 +16,22 @@
 
         <ImageView
             android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
-            android:padding="20dp"
-            android:src="@drawable/icon_chevron_left"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
             android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_left_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_mypage_title" />
 
         <TextView
             android:id="@+id/tv_mypage_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_semibold"
+            android:lineSpacingExtra="-3sp"
             android:text="@string/mypage_main_inform_profile_change"
             android:textAppearance="@style/mypage_inform_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +53,9 @@
                 android:layout_width="124dp"
                 android:layout_height="124dp"
                 android:layout_gravity="center"
+                app:cardElevation="0dp"
                 android:onClick="@{() -> vm.onClickSettingImage()}"
-                app:cardCornerRadius="100dp">
+                app:cardCornerRadius="64dp">
 
                 <ImageView
                     android:id="@+id/profileImg"
@@ -84,7 +85,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_regular"
             android:text="@string/mypage_main_inform_profile_change_basic"
             android:textAppearance="@style/first_onboard_passbtn"
             android:onClick="@{() -> vm.onClickBasicSettingImage()}"
@@ -99,7 +100,9 @@
             android:paddingTop="20dp"
             android:paddingBottom="32dp"
             android:text="변경하기"
-            android:textAppearance="@style/right_button"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_bold"
             app:layout_constraintBottom_toBottomOf="parent"
             android:onClick="@{() -> vm.onClickProfileChange()}" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.aos.floney.view.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
@@ -12,11 +13,13 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.floney.util.getAdvertiseCheck
 import com.aos.floney.util.getAdvertiseTenMinutesCheck
 import com.aos.floney.util.getCurrentDateTimeString
+import com.aos.model.book.getCurrencySymbolByCode
 import com.aos.model.home.DayMoney
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.model.user.UserModel.userNickname
+import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,6 +36,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val getMoneyHistoryDaysUseCase: GetMoneyHistoryDaysUseCase,
+    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase,
     private val getBookInfoUseCase: GetBookInfoUseCase,
 ) : BaseViewModel() {
 
@@ -111,7 +115,6 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             baseEvent(Event.ShowLoading)
             getBookInfoUseCase(code).onSuccess {
-                baseEvent(Event.HideLoading)
 
                 // 프로필 보기 여부 저장
                 prefs.setBoolean("seeProfileStatus", it.seeProfileStatus)
@@ -124,6 +127,30 @@ class HomeViewModel @Inject constructor(
                     }
                 }
                 _bookInfo.postValue(it)
+
+                // 화폐 단위 가져오기
+                searchCurrency()
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
+            }
+        }
+    }
+
+    // 화폐 설정 조회
+    fun searchCurrency(){
+        viewModelScope.launch {
+            booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
+                if(it.myBookCurrency != "") {
+                    baseEvent(Event.HideLoading)
+                    // 화폐 단위 저장
+                    prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
+                    CurrencyUtil.currency = getCurrencySymbolByCode(it.myBookCurrency)
+
+                } else {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToastRes(R.string.currency_error))
+                }
             }.onFailure {
                 _accessCheck.emit(true)
                 baseEvent(Event.HideLoading)

@@ -33,7 +33,6 @@ class LoginViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val loginUseCase: LoginUseCase,
     private val checkUserBookUseCase: CheckUserBookUseCase,
-    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase,
     private val authTokenCheckUseCase: AuthTokenCheckUseCase,
     private val socialLoginUseCase: SocialLoginUseCase,
 ): BaseViewModel() {
@@ -103,34 +102,12 @@ class LoginViewModel @Inject constructor(
             checkUserBookUseCase().onSuccess {
                 if(it.bookKey != "") {
                     prefs.setString("bookKey", it.bookKey)
-                    searchCurrency()
-                } else {
-                    baseEvent(Event.HideLoading)
-                    _existBook.emit(false)
-                }
-            }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
-            }
-        }
-    }
-
-    // 화폐 설정 조회
-    fun searchCurrency(){
-        viewModelScope.launch {
-            booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
-                if(it.myBookCurrency != "") {
-                    baseEvent(Event.HideLoading)
-                    // 화폐 단위 저장
-                    prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
-                    CurrencyUtil.currency = getCurrencySymbolByCode(it.myBookCurrency)
                     _existBook.emit(true)
                 } else {
-                    _existBook.emit(false)
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToastRes(R.string.currency_error))
+                    _existBook.emit(false)
                 }
             }.onFailure {
-                _existBook.emit(false)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@LoginViewModel)))
             }
         }

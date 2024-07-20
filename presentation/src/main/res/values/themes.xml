@@ -8,7 +8,7 @@
         <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="android:statusBarColor">#FAFAFA</item>
+        <item name="android:statusBarColor">@color/white</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
@@ -141,7 +141,7 @@
     </style>
 
     <style name="first_onboard_passbtn">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">#8C8C8C</item>
     </style>
 
@@ -211,8 +211,8 @@
         <item name="android:textCursorDrawable">@color/grayscale6</item>
         <item name="android:textColorHint">@color/grayscale6</item>
         <item name="hintTextColor">@color/grayscale6</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <style name="login_underscore_text">
@@ -291,24 +291,24 @@
 
     <!--MypageActivity-->
     <style name="mypage_header_text">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">23dp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_inform_text">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">17dp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_user_name">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/grayscale2</item>
-        <item name="android:fontFamily">@font/floney_pretendard_semibold</item>
-        <item name="fontFamily">@font/floney_pretendard_semibold</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="fontFamily">@font/pretendard_bold</item>
     </style>
 
     <style name="mypage_card_view_1">
@@ -319,31 +319,31 @@
     </style>
 
     <style name="mypage_card_view_2">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_card_view_1_write">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/grayscale3</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <style name="mypage_card_view_2_write">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="mypage_user_email">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/grayscale3</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/grayscale2</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <style name="mypage_wallet_count">
@@ -368,8 +368,9 @@
     </style>
 
     <style name="mypage_inform_title_text">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/grayscale2</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
 
     <!--인증 코드 6자리 editText style-->
@@ -417,7 +418,7 @@
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
         <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent
+        <item name="android:statusBarColor">@color/white
         </item> <!-- And then this will be needed -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>

@@ -17,25 +17,13 @@
         android:label="MyPageInformEmailSettingFragment" >
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformProfileChangeFragment"
-            app:destination="@id/myPageInformProfileChangeFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/myPageInformProfileChangeFragment" />
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformEmailPwChangeFragment"
-            app:destination="@id/myPageInformEmailPwChangeFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/myPageInformEmailPwChangeFragment" />
         <action
             android:id="@+id/action_myPageInformEmailSettingFragment_to_myPageInformWithdrawReasonCheckFragment"
-            app:destination="@id/myPageInformWithdrawReasonCheckFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:destination="@id/myPageInformWithdrawReasonCheckFragment"/>
     </fragment>
     <fragment
         android:id="@+id/myPageInformEmailPwChangeFragment"
@@ -54,11 +42,7 @@
         android:label="MyPageInformWithdrawReasonCheckFragment" >
         <action
             android:id="@+id/action_myPageInformWithdrawReasonCheckFragment_to_myPageInformWithdrawInputPasswordFragment"
-            app:destination="@id/myPageInformWithdrawInputPasswordFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim">
+            app:destination="@id/myPageInformWithdrawInputPasswordFragment">
         </action>
         <action
             android:id="@+id/action_myPageInformWithdrawReasonCheckFragment_to_myPageInformWithdrawCompleteFragment"
@@ -71,11 +55,7 @@
         android:label="MyPageInformWithdrawInputPasswordFragment" >
         <action
             android:id="@+id/action_myPageInformWithdrawInputPasswordFragment_to_myPageInformWithdrawCompleteFragment"
-            app:destination="@id/myPageInformWithdrawCompleteFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            app:destination="@id/myPageInformWithdrawCompleteFragment"/>
         <argument
             android:name="type"
             app:argType="string" />

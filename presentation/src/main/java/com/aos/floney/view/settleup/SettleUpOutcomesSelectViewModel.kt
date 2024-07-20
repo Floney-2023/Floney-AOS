@@ -81,13 +81,10 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
     fun getOutcomesItems(){
         val userEmails = memberArray.value!!.map { it }
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             booksOutComesUseCase(userEmails, startDate.value!!, endDate.value!!, prefs.getString("bookKey","")).onSuccess {
                 // 불러오기 성공
                 _outcomesList.postValue(it)
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpOutcomesSelectViewModel)))
             }
         }
