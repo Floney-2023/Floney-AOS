@@ -318,7 +318,7 @@ class HistoryViewModel @Inject constructor(
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
         createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" &&_repeatClickItem.value != null
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
@@ -446,14 +446,18 @@ class HistoryViewModel @Inject constructor(
 
     // 반복내역 서버로 보내기 위한 값으로 변경
     private fun getConvertSendRepeatValue(): String {
-        return when(_repeatClickItem.value!!.name) {
-            "없음" -> "NONE"
-            "매일" -> "EVERYDAY"
-            "매주" -> "WEEK"
-            "매달" -> "MONTH"
-            "주중" -> "WEEKDAY"
-            "주말" -> "WEEKEND"
-            else -> ""
+        return if(_repeatClickItem.value == null) {
+            "NONE"
+        } else {
+            when(_repeatClickItem.value!!.name) {
+                "없음" -> "NONE"
+                "매일" -> "EVERYDAY"
+                "매주" -> "WEEK"
+                "매달" -> "MONTH"
+                "주중" -> "WEEKDAY"
+                "주말" -> "WEEKEND"
+                else -> ""
+            }
         }
     }
 
