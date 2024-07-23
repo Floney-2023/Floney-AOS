@@ -299,7 +299,6 @@ class HistoryActivity :
             // 휴무일 || 이전 날짜
             return true
         }
-
         override fun decorate(view: DayViewFacade) {
             view.let {
                 if (drawable != null) {

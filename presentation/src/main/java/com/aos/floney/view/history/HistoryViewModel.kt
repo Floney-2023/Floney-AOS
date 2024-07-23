@@ -123,12 +123,7 @@ class HistoryViewModel @Inject constructor(
     // 반복 설정
     val _repeatItem = MutableLiveData<List<UiBookCategory>>()
     val repeatItem: LiveData<List<UiBookCategory>> get() = _repeatItem
-    private var _repeatClickItem = MutableLiveData<UiBookCategory?>(UiBookCategory(
-        idx = 1,
-        checked = true,
-        name = "없음",
-        default = true
-    ))
+    private var _repeatClickItem = MutableLiveData<UiBookCategory?>()
     val repeatClickItem: LiveData<UiBookCategory?> get() = _repeatClickItem
 
     // 자산, 지출, 수입, 이체 카테고리 조회에 사용
@@ -144,7 +139,7 @@ class HistoryViewModel @Inject constructor(
 
     init {
         val array = arrayListOf<UiBookCategory>(
-            UiBookCategory(0, true, "없음", true),
+            UiBookCategory(0, false, "없음", false),
             UiBookCategory(1, false, "매일", false),
             UiBookCategory(2, false, "매주", false),
             UiBookCategory(3, false, "매달", false),
