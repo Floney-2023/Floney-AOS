@@ -26,7 +26,6 @@ fun String?.parseErrorMsg(event: BaseViewModel? = null): String {
             } else {
                 "$msg."
             }
-
         }
     }
 }

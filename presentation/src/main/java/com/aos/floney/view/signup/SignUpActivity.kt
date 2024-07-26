@@ -19,7 +19,6 @@ class SignUpActivity() :
 
     override fun onStart() {
         super.onStart()
-
         viewModel.setSocialUserModel(
             intent.getStringExtra("provider") ?: "",
             intent.getStringExtra("token") ?: "",

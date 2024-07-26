@@ -123,12 +123,7 @@ class HistoryViewModel @Inject constructor(
     // 반복 설정
     val _repeatItem = MutableLiveData<List<UiBookCategory>>()
     val repeatItem: LiveData<List<UiBookCategory>> get() = _repeatItem
-    private var _repeatClickItem = MutableLiveData<UiBookCategory?>(UiBookCategory(
-        idx = 1,
-        checked = true,
-        name = "없음",
-        default = true
-    ))
+    private var _repeatClickItem = MutableLiveData<UiBookCategory?>()
     val repeatClickItem: LiveData<UiBookCategory?> get() = _repeatClickItem
 
     // 자산, 지출, 수입, 이체 카테고리 조회에 사용
@@ -144,7 +139,7 @@ class HistoryViewModel @Inject constructor(
 
     init {
         val array = arrayListOf<UiBookCategory>(
-            UiBookCategory(0, true, "없음", true),
+            UiBookCategory(0, false, "없음", false),
             UiBookCategory(1, false, "매일", false),
             UiBookCategory(2, false, "매주", false),
             UiBookCategory(3, false, "매달", false),
@@ -323,7 +318,7 @@ class HistoryViewModel @Inject constructor(
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
         createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" &&_repeatClickItem.value != null
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
@@ -459,14 +454,18 @@ class HistoryViewModel @Inject constructor(
 
     // 반복내역 서버로 보내기 위한 값으로 변경
     private fun getConvertSendRepeatValue(): String {
-        return when(_repeatClickItem.value!!.name) {
-            "없음" -> "NONE"
-            "매일" -> "EVERYDAY"
-            "매주" -> "WEEK"
-            "매달" -> "MONTH"
-            "주중" -> "WEEKDAY"
-            "주말" -> "WEEKEND"
-            else -> ""
+        return if(_repeatClickItem.value == null) {
+            "NONE"
+        } else {
+            when(_repeatClickItem.value!!.name) {
+                "없음" -> "NONE"
+                "매일" -> "EVERYDAY"
+                "매주" -> "WEEK"
+                "매달" -> "MONTH"
+                "주중" -> "WEEKDAY"
+                "주말" -> "WEEKEND"
+                else -> ""
+            }
         }
     }
 

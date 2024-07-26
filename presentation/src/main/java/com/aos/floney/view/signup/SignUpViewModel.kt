@@ -20,5 +20,4 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
     fun getSocialUserModel(): SocialUserModel? {
         return socialUserModel
     }
-
 }

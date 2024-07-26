@@ -1,11 +1,14 @@
 package com.aos.floney.view.signup
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
@@ -19,7 +22,16 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgreeViewModel>(R.layout.fragment_sign_up_agree) {
+    private val activityViewModel: SignUpViewModel by activityViewModels()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        if(activityViewModel.getSocialUserModel()?.email != "") {
+            val action = SignUpAgreeFragmentDirections.actionSignUpAgreeFragmentToSignUpInputInfoFragment(activityViewModel.getSocialUserModel()?.email ?: "", true)
+            findNavController().navigate(action)
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
