@@ -13,30 +13,38 @@
             name="eventHolder"
             type="com.aos.model.user.UiMypageSearchModel.OnItemClickListener" />
         <import type="android.view.View" />
-
     </data>
+
     <LinearLayout
         android:id="@+id/wallet_detail_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="16dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}"
         android:background="@drawable/custom_radius_12_solid_grayscale_12"
         android:gravity="center_vertical"
         android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/book_img"
+        <androidx.cardview.widget.CardView
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:background="@drawable/background_circle_image"
-            android:clipToOutline="true"
-            setBookImageToUrl="@{item.bookImg}" />
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/book_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                setBookImageToUrl="@{item.bookImg}"
+                android:background="@drawable/background_circle_image"
+                android:clipToOutline="true" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="18dp"
             android:orientation="vertical">
 
             <TextView
@@ -45,7 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="@{item.name}"
-                android:textAppearance="@style/mypage_user_name" />
+                android:textColor="@color/grayscale2"
+                android:fontFamily="@font/pretendard_bold"
+                android:textSize="14dp"/>
 
             <TextView
                 android:id="@+id/member_count"
@@ -55,7 +65,7 @@
                 android:textColor="@color/grayscale6"
                 android:lineSpacingExtra="-2sp"
                 android:textSize="12dp"
-                android:fontFamily="@font/pretendard_regular"/>
+                android:fontFamily="@font/pretendard_medium"/>
         </LinearLayout>
 
         <View
@@ -70,4 +80,3 @@
             android:src="@{item.recentCheck ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}" />
     </LinearLayout>
 </layout>
-

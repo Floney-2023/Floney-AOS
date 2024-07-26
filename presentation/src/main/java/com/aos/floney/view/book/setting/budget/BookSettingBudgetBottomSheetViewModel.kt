@@ -52,30 +52,36 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
             cost.postValue("")
     }
 
-    // 초기 자산 설정
+    // 예산 저장
     fun onClickSaveButton(){
         viewModelScope.launch {
+
+            baseEvent(Event.ShowLoading)
             booksInfoBudgetUseCase(
                 prefs.getString("bookKey",""),
                 settingCost(),
                 date.value!! ).onSuccess {
-                // 변경 완료 토스트 메세지
+
+                baseEvent(Event.HideLoading)
+
                 if (cost.value!! == "")
                     _budgetSheet.emit("0${CurrencyUtil.currency}")
                 else
                     _budgetSheet.emit(cost.value!!)
+
             }.onFailure {
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingBudgetBottomSheetViewModel)))
             }
         }
     }
-    fun settingCost(): Int {
+    fun settingCost(): Long {
         if (cost.value=="")
             return 0
         else if (cost.value!!.length<=4)
-            return cost.value!!.substring(0, cost.value!!.length-1).toInt()
+            return cost.value!!.substring(0, cost.value!!.length-1).toLong()
         else if (cost.value!="")
-            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toInt()
+            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toLong()
         else
             return 0
     }

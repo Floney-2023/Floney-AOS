@@ -38,6 +38,30 @@ class MyPageAlarmActivity : BaseActivity<ActivityMyPageAlarmBinding, MyPageAlarm
         setUpUi()
         setUpViewModelObserver()
     }
+
+    override fun finish() {
+        super.finish()
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(
+                Activity.OVERRIDE_TRANSITION_CLOSE,
+                R.anim.anim_slide_in_from_left_fade_in,
+                android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, android.R.anim.fade_out)
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(
+                Activity.OVERRIDE_TRANSITION_CLOSE,
+                R.anim.anim_slide_in_from_left_fade_in,
+                android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, android.R.anim.fade_out)
+        }
+    }
     private fun setUpUi() {
         binding.setVariable(BR.vm, viewModel)
         binding.setVariable(BR.eventHolder, this@MyPageAlarmActivity)

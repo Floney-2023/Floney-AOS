@@ -20,6 +20,9 @@ import com.aos.data.util.SharedPreferenceUtil
 import com.aos.model.user.MyBooks
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
@@ -64,126 +67,22 @@ class MyPageViewModel @Inject constructor(
     private var _bookAddBottomSheet = MutableEventFlow<Boolean>()
     val bookAddBottomSheet: EventFlow<Boolean> get() = _bookAddBottomSheet
 
-    // 마이페이지 정보 읽어오기
-    fun searchMypageItems()
-    {
-        viewModelScope.launch(Dispatchers.IO) {
-            mypageSearchUseCase().onSuccess {
-                var sortedBooks= it.myBooks.sortedByDescending { it.bookKey == prefs.getString("bookKey","") }
+    // 내역추가
+    private var _clickedAddHistory = MutableEventFlow<String>()
+    val clickedAddHistory: EventFlow<String> get() = _clickedAddHistory
 
-                val updatedResult = it.copy(myBooks = sortedBooks.map { myBook ->
-                    if (myBook.bookKey == prefs.getString("bookKey", "")) {
-                        myBook.copy(recentCheck = true)
-                    } else {
-                        myBook.copy(recentCheck = false)
-                    }
-                })
 
-                if(CommonUtil.userProfileImg != "" && CommonUtil.userProfileImg != it.profileImg) {
-                    baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
-                }
-
-                CommonUtil.userEmail = it.email
-                CommonUtil.userProfileImg = it.profileImg
-
-                _mypageInfo.postValue(updatedResult)
-            }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageViewModel)))
-            }
-        }
-    }
-    // 알람 페이지 이동
-    fun onClickAlarmPage()
-    {
-
-    }
-
-    // 설정 페이지 이동
-    fun onClickSettingPage()
-    {
+    // 탭바로 추가할 경우
+    fun onClickTabAddHistory() {
         viewModelScope.launch {
-            _settingPage.emit(true)
+            _clickedAddHistory.emit(setTodayDate())
         }
     }
 
-    // 회원 정보 페이지 이동
-    fun onClickInformPage()
-    {
-        viewModelScope.launch {
-            _informPage.emit(true)
-        }
-    }
-
-    // 메일 문의 하기 페이지 이동
-    fun onClickAnswerPage()
-    {
-        viewModelScope.launch {
-            _mailPage.emit(true)
-        }
-    }
-
-    // 공지 사항 페이지 이동
-    fun onClickNoticePage()
-    {
-        viewModelScope.launch {
-            _noticePage.emit(true)
-        }
-    }
-
-    // 리뷰 작성하기 페이지 이동
-    fun onClickReviewPage()
-    {
-
-    }
-
-    // 개인 정보 처리방침 페이지 이동
-    fun onClickPrivateRolePage()
-    {
-        viewModelScope.launch {
-            _privatePage.emit(true)
-        }
-    }
-
-    // 이용 약관 페이지 이동
-    fun onClickUsageRightPage()
-    {
-        viewModelScope.launch {
-            _usageRightPage.emit(true)
-        }
-    }
-
-    // 최근 저장 가계부 저장
-    fun settingBookKey(bookKey: String){
-        viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
-            recentBookKeySaveUseCase(bookKey).onSuccess {
-                prefs.setString("bookKey",bookKey)
-
-                val sortedBooks= _mypageInfo.value!!.myBooks.sortedByDescending { it.bookKey == bookKey}
-
-                val updatedResult = _mypageInfo.value!!.copy(myBooks = sortedBooks.map { myBook ->
-                    if (myBook.bookKey == bookKey) {
-                        myBook.copy(recentCheck = true)
-                    } else {
-                        myBook.copy(recentCheck = false)
-                    }
-                })
-
-                _mypageInfo.postValue(updatedResult)
-                baseEvent(Event.HideLoading)
-            }.onFailure {
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageViewModel)))
-            }
-        }
-    }
-
-    // 가계부 추가
-    fun onClickBookAdd()
-    {
-        viewModelScope.launch {
-            _bookAddBottomSheet.emit(true)
-        }
+    // 오늘 날짜로 calendar 설정하기
+    private fun setTodayDate(): String {
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return date
     }
 
 }

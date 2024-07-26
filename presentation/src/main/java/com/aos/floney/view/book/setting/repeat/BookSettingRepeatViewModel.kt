@@ -82,7 +82,13 @@ class BookSettingRepeatViewModel @Inject constructor(
 
     fun onClickPreviousPage() {
         viewModelScope.launch {
-            _back.emit(true)
+            if (edit.value!!)
+            {
+                _back.emit(false)
+            }
+            else{
+                _back.emit(true)
+            }
         }
     }
     // 자산/분류 카테고리 항목 가져오기
@@ -118,6 +124,7 @@ class BookSettingRepeatViewModel @Inject constructor(
                 val updatedList = _repeatList.value!!.filter { it.id != item.id }
                 _repeatList.postValue(updatedList)
 
+                baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
                 baseEvent(Event.HideLoading)
             }.onFailure {
                 baseEvent(Event.HideLoading)

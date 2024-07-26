@@ -21,6 +21,8 @@ import kotlinx.coroutines.launch
 class AnalyzeIncomeFragment : BaseFragment<FragmentAnalyzeIncomeBinding, AnalyzeIncomeViewModel>(R.layout.fragment_analyze_income) {
 
     private val activityViewModel: AnalyzeViewModel by activityViewModels()
+    override val applyTransition: Boolean = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

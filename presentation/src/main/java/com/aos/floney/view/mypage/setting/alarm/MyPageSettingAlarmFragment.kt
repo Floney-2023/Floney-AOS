@@ -1,12 +1,14 @@
 package com.aos.floney.view.mypage.setting.alarm
 
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentMyPageSettingAlarmBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.suke.widget.SwitchButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +19,7 @@ class MyPageSettingAlarmFragment :
         super.onViewCreated(view, savedInstanceState)
 
         setUpViewModelObserver()
+        setUpToggleListener()
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
@@ -25,6 +28,14 @@ class MyPageSettingAlarmFragment :
                     findNavController().popBackStack()
                 }
             }
+        }
+    }
+    private fun setUpToggleListener(){
+        binding.switchButton.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                viewModel.onClickMarketingTerms()
+                true
+            } else false
         }
     }
 }

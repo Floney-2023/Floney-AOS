@@ -44,6 +44,7 @@
             android:onClick="@{() -> vm.onClickSettingPage()}"
             android:visibility="@{vm.onClickedShowDetail != null ? View.INVISIBLE : View.VISIBLE}"
             app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_logo">
@@ -289,7 +290,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:background="@drawable/icon_add_circle"
-            android:onClick="@{() -> vm.onClickAddHistory()}"
+            android:onClick="@{() -> vm.onClickTabAddHistory()}"
             app:layout_constraintBottom_toBottomOf="@id/ll_bottom_navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

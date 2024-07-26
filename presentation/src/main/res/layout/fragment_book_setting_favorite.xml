@@ -30,7 +30,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="26dp"
             android:src="@drawable/icon_back"
             android:onClick="@{() -> vm.onClickPreviousPage()}"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,15 +39,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="27dp"
             android:layout_marginEnd="20dp"
-            android:visibility="@{vm.favoriteList.size() == 0 ? View.GONE : View.VISIBLE}"
+            android:fontFamily="@font/pretendard_regular"
+            android:onClick="@{() -> vm.onClickEdit()}"
             android:text="@{vm.edit ? `완료` : `편집`}"
             android:textSize="14dp"
-            android:fontFamily="@font/pretendard_medium"
-            android:onClick="@{() -> vm.onClickEdit()}"
+            android:visibility="@{vm.favoriteList.size() > 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_back"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/iv_back" />
         <TextView
             android:id="@+id/tv_currency_title"
             android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
             android:layout_marginTop="52dp"
             android:fontFamily="@font/floney_pretendard_bold"
             android:text="즐겨찾기"
-            android:textSize="22dp"
+            android:textSize="24dp"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_back" />
@@ -67,6 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
             android:fontFamily="@font/pretendard_medium"
             android:text="자주 사용하는 내역을\n즐겨찾기로 편하게 기록해 보세요"
             android:textColor="@color/grayscale6"
@@ -86,7 +88,7 @@
         <LinearLayout
             android:id="@+id/ll_category"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="20dp"
@@ -99,7 +101,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_currency_info">
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`지출`) ? @drawable/custom_radius_8_solid_white : null}"
@@ -112,7 +114,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="32dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`수입`) ? @drawable/custom_radius_8_solid_white : null}"
                 android:fontFamily="@font/pretendard_semibold"
@@ -124,7 +126,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="32dp"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`이체`) ? @drawable/custom_radius_8_solid_white : null}"

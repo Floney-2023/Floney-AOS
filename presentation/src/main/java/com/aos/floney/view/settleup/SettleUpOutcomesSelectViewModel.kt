@@ -81,13 +81,10 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
     fun getOutcomesItems(){
         val userEmails = memberArray.value!!.map { it }
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             booksOutComesUseCase(userEmails, startDate.value!!, endDate.value!!, prefs.getString("bookKey","")).onSuccess {
                 // 불러오기 성공
                 _outcomesList.postValue(it)
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpOutcomesSelectViewModel)))
             }
         }
@@ -132,7 +129,7 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 if (selectedEmails.isNotEmpty()) {
                     val advertiseTime = prefs.getString("advertiseTime", "")
-                    val advertiseTenMinutes = prefs.getString("advertiseTenMinutes", "")
+                    val advertiseTenMinutes = prefs.getString("advertiseSettleUpTenMinutes", "")
                     val showNextPage =
                         getAdvertiseCheck(advertiseTime) > 0 || getAdvertiseTenMinutesCheck(
                             advertiseTenMinutes
@@ -142,14 +139,15 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
                         prefs.setString("advertiseTime", "")
                     }
                     if (getAdvertiseTenMinutesCheck(advertiseTenMinutes) <= 0) {
-                        prefs.setString("advertiseTenMinutes", "")
+                        prefs.setString("advertiseSettleUpTenMinutes", "")
                     }
                     // 최소 한 싸이클이 완료될 때까지 지연
                     delay(minimumCycleDuration)
                     baseEvent(Event.HideLoading)
                     _nextPage.emit(!showNextPage)
                 } else {
-                    baseEvent(Event.ShowToastRes(R.string.settle_up_outcomes_select_title))
+                    baseEvent(Event.ShowToast("정산할 내역을 선택해주세요."))
+                    baseEvent(Event.HideLoading)
                 }
             }
         }
@@ -189,6 +187,6 @@ class SettleUpOutcomesSelectViewModel @Inject constructor(
 
     // 10분 광고 시간 기록
     fun updateAdvertiseTenMinutes(){
-        prefs.setString("advertiseTenMinutes", getCurrentDateTimeString())
+        prefs.setString("advertiseSettleUpTenMinutes", getCurrentDateTimeString())
     }
 }

@@ -4,18 +4,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.aos.data.util.CommonUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
+import com.aos.floney.util.UtilToken
 import com.aos.usecase.booksetting.BooksDeleteUseCase
 import com.aos.usecase.booksetting.BooksInfoSeeProfileUseCase
 import com.aos.usecase.booksetting.BooksNameChangeUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,8 +32,10 @@ class BookSettingEditViewModel @Inject constructor(
     private val checkUserBookUseCase: CheckUserBookUseCase
 ): BaseViewModel() {
 
-    // 프로필 보여지기 ON/OFF
-    var profileCheck: LiveData<Boolean> = stateHandle.getLiveData("profileCheck")
+    // 내역 프로필 보여지기 ON/OFF
+    private val _profileCheck = stateHandle.getLiveData("profileCheck", false)
+    val profileCheck: LiveData<Boolean> get() = _profileCheck
+
 
     // 방장이면 True, 팀원이면 False
     var roleCheck: LiveData<Boolean> = stateHandle.getLiveData("roleCheck")
@@ -106,6 +111,9 @@ class BookSettingEditViewModel @Inject constructor(
         viewModelScope.launch {
             if(prefs.getString("bookKey","").isNotEmpty()) {
                 booksInfoSeeProfileUseCase(prefs.getString("bookKey",""),!(profileCheck.value!!)).onSuccess {
+                    _profileCheck.value = !profileCheck.value!!
+                    prefs.setBoolean("seeProfileStatus",profileCheck.value!!) // 내역 프로필 여부 변경
+
                 }.onFailure {
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingEditViewModel)))
                 }
@@ -126,6 +134,7 @@ class BookSettingEditViewModel @Inject constructor(
                 if(prefs.getString("bookKey","").isNotEmpty()) {
                     baseEvent(Event.ShowLoading)
                     booksDeleteUseCase(prefs.getString("bookKey","")).onSuccess {
+                        delay(1)
                         baseEvent(Event.HideLoading)
                         settingBookKey()
                     }.onFailure {

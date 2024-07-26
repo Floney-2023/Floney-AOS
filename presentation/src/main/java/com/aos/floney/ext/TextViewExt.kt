@@ -1,19 +1,18 @@
 package com.aos.floney.ext
 
-import android.util.Log
-import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.checkDecimalPoint
 import com.aos.model.analyze.Asset
-import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzePlanModel
+import com.suke.widget.SwitchButton
 import timber.log.Timber
 import java.text.DecimalFormat
-import java.text.NumberFormat
+
 
 fun String.formatNumber(): String {
      return if(this != "") {
@@ -46,9 +45,9 @@ fun TextView.setPlanText(item: UiAnalyzePlanModel?) {
             this.text = "예산을 설정하고\n체계적인 소비 습관을 만들어 보세요!"
         } else {
             when(item.percent.toInt()) {
-                in 0..49 -> this.text = "쓸 수 있는 예산이\n충분해요!"
-                in 50..79 -> this.text = "조금씩 지출을\n줄여볼까요?"
-                in 80..99 -> this.text = "예산을 넘기지 않게\n주의하세요!"
+                in 0..30 -> this.text = "쓸 수 있는 예산이\n충분해요!"
+                in 31..60 -> this.text = "조금씩 지출을\n줄여볼까요?"
+                in 61..100 -> this.text = "예산을 넘기지 않게\n주의하세요!"
             }
         }
     } else {
@@ -92,8 +91,22 @@ fun TextView.setTextWithEllipsis(text: String?) {
 
 @BindingAdapter("bind:adjustTotalMoneyText")
 fun TextView.adjustTotalMoneyText(amount: String?) {
-    amount?.let{
-        val amountValue = amount.replace(",", "").replace(CurrencyUtil.currency,"").toLongOrNull() ?: return
+    amount?.let {
+        Timber.e("amount : ${amount}")
+        var amount = amount.replace(CurrencyUtil.currency, "")
+        val amountValue = amount.replace(",", "").toLongOrNull() ?: return
+
+        val displayAmount = when {
+            checkDecimalPoint() && amount.length >= 15 -> {
+                "999,999,999.99"
+            }
+            !checkDecimalPoint() && amount.length >= 15 -> {
+                "99,999,999,999"
+            }
+            else -> {
+                amount
+            }
+        }
 
         when {
             amountValue < 1_000_000_000 -> {
@@ -102,10 +115,37 @@ fun TextView.adjustTotalMoneyText(amount: String?) {
             amountValue in 1_000_000_000..99_999_999_999 -> {
                 this.textSize = 16f
             }
+            else -> {
+                this.textSize = 16f
+            }
         }
+
+        this.text = "$displayAmount${CurrencyUtil.currency}"
     }
 }
 
+@BindingAdapter("bind:adjustOnlyMoneyText")
+fun TextView.adjustOnlyMoneyText(amount: String?) {
+    amount?.let {
+        Timber.e("amount : ${amount}")
+        var amount = amount.replace(CurrencyUtil.currency, "")
+        val amountValue = amount.replace(",", "").toLongOrNull() ?: return
+
+        val displayAmount = when {
+            checkDecimalPoint() && amount.length >= 15 -> {
+                "999,999,999.99"
+            }
+            !checkDecimalPoint() && amount.length >= 15 -> {
+                "99,999,999,999"
+            }
+            else -> {
+                amount
+            }
+        }
+
+        this.text = "$displayAmount${CurrencyUtil.currency}"
+    }
+}
 @BindingAdapter("bind:adjustDayMoneyText")
 fun TextView.adjustDayMoneyText(amount: String?) {
     amount?.let{
@@ -115,10 +155,24 @@ fun TextView.adjustDayMoneyText(amount: String?) {
                 this.textSize = 9f
                 this.text = amount
             }
-            amountValue in 1_000_000_000f..9.9999998E10f -> {
+            amountValue >= 1_000_000_000f -> {
                 this.textSize = 8f
                 this.text = "$amount.."
             }
         }
     }
 }
+
+@BindingAdapter("bind:setLayoutMargin")
+fun TextView.setLayoutMargin(margin: Float) {
+    val layoutParams = this.layoutParams as MarginLayoutParams
+    val marginPx = (margin * this.context.resources.displayMetrics.density).toInt()
+    layoutParams.setMargins(marginPx, marginPx, marginPx, marginPx)
+    this.layoutParams = layoutParams
+}
+
+@BindingAdapter("bind:adjustDesign")
+fun SwitchButton.adjustDesign(isMarketingTerms: Boolean) {
+    
+}
+

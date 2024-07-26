@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PostBooksInfoAssetBody (
     val bookKey : String,
-    val asset : Int
+    val asset : Long
 )

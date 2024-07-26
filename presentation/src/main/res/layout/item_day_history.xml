@@ -11,7 +11,6 @@
         <variable
             name="eventHolder"
             type="com.aos.model.home.UiBookDayModel.OnItemClickListener" />
-
         <import type="android.view.View" />
     </data>
 
@@ -27,13 +26,14 @@
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             app:cardCornerRadius="100dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_profile"
-                setImageToUrl="@{item.writerProfileImg}"
+                setUserImageToUrl='@{item.writerProfileImg}'
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="@{item.lineSubCategory + ` ‧ ` +item.assetSubCategory}"
+                android:lineSpacingExtra="0dp"
+                android:text="@{item.assetSubCategory + ` ‧ ` +item.lineSubCategory}"
                 android:textColor="@color/grayscale6"
                 android:textSize="12dp" />
         </LinearLayout>

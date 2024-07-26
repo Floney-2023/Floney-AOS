@@ -73,6 +73,7 @@
             android:text="@string/settle_up_period_select_title"
             android:textColor="@color/grayscale1"
             android:textSize="24dp"
+            android:lineSpacingMultiplier="1.2"
             app:layout_constraintStart_toStartOf="@id/ll_page"
             app:layout_constraintTop_toBottomOf="@id/ll_page" />
 
@@ -83,15 +84,17 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="20dp"
             android:orientation="horizontal"
+            android:padding="20dp"
             android:onClick="@{() -> vm.onClickedPeriodSelect()}"
+            android:background="@drawable/custom_radius_8_solid_grayscale_12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_period_select_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_period_select_title">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/icon_calendar" />
 
             <TextView
@@ -100,10 +103,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="12dp"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:text="@{vm.selectDay}"
 
-                android:textSize="16sp" />
+                android:textSize="17dp" />
         </LinearLayout>
 
 

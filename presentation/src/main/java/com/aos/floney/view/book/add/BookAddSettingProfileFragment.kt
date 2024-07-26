@@ -38,13 +38,15 @@ class BookAddSettingProfileFragment : BaseFragment<FragmentBookAddSettingProfile
 
     // 사진 찍기 결과
     private val takePhoto = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-        viewModel.createBitmapFile(viewModel.getTakeCaptureUri())
+        if(it) {
+            viewModel.createBitmapFile(viewModel.getTakeCaptureUri())
 
-        Glide.with(requireContext())
-            .load(viewModel.getImageBitmap())
-            .fitCenter()
-            .centerCrop()
-            .into(binding.ivProfileCardView)
+            Glide.with(requireContext())
+                .load(viewModel.getImageBitmap())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfileCardView)
+        }
     }
 
     private val imageResult = registerForActivityResult(

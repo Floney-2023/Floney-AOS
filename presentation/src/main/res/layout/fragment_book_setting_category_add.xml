@@ -19,22 +19,23 @@
             android:id="@+id/iv_icon_exit"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="22dp"
             android:layout_marginEnd="22dp"
             android:onClick="@{() -> vm.onClickedExit()}"
             android:padding="5dp"
             android:src="@drawable/icon_exit"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_see_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_settlement_see_title" />
 
         <TextView
             android:id="@+id/tv_settlement_see_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="항목 추가"
-            android:textAppearance="@style/mypage_inform_text"
+            android:textSize="17dp"
+            android:textColor="@color/grayscale1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +48,8 @@
             android:layout_marginTop="50dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="카테고리"
-            android:textSize="14dp"
+            android:textSize="15dp"
+            android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_settlement_see_title" />
 
@@ -72,7 +74,7 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="@{vm.flow == `자산` ? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
                     app:fontFamily="@{vm.flow == `자산`}"
@@ -80,13 +82,13 @@
                     android:onClick="@{() -> vm.onClickFlow(`자산`)}"
                     android:text="자산"
                     android:textColor="@{vm.flow == `자산` ? @color/white : @color/grayscale7}"
-                    android:textSize="14dp" />
+                    android:textSize="15dp" />
                 <View
                     android:layout_width="8dp"
                     android:layout_height="0dp"/>
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="@{vm.flow == `지출`  ? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
                     app:fontFamily="@{vm.flow == `지출`}"
@@ -94,7 +96,7 @@
                     android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                     android:text="지출"
                     android:textColor="@{vm.flow == `지출` ? @color/white : @color/grayscale7}"
-                    android:textSize="14dp" />
+                    android:textSize="15dp" />
             </LinearLayout>
             <View
                 android:layout_width="0dp"
@@ -108,7 +110,7 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="@{vm.flow == `수입`? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
                     app:fontFamily="@{vm.flow == `수입`}"
@@ -116,13 +118,13 @@
                     android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                     android:text="수입"
                     android:textColor="@{vm.flow == `수입` ? @color/white : @color/grayscale7}"
-                    android:textSize="14dp" />
+                    android:textSize="15dp" />
                 <View
                     android:layout_width="8dp"
                     android:layout_height="0dp"/>
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="@{vm.flow == `이체`  ? @drawable/custom_radius_12_solid_grayscale_2 : @drawable/custom_radius_12_solid_white_stroke_grayscale_9}"
                     app:fontFamily="@{vm.flow == `이체`}"
@@ -130,7 +132,7 @@
                     android:onClick="@{() -> vm.onClickFlow(`이체`)}"
                     android:text="이체"
                     android:textColor="@{vm.flow == `이체`? @color/white : @color/grayscale7}"
-                    android:textSize="14dp" />
+                    android:textSize="15dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -142,7 +144,8 @@
             android:layout_marginTop="41dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="항목 이름"
-            android:textSize="14dp"
+            android:textSize="15dp"
+            android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_category" />
 
@@ -154,7 +157,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_regular"
             android:hint="이름을 입력하세요."
             android:maxLength="6"
             android:paddingStart="20dp"
@@ -172,7 +175,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:text="* 최대 6자까지 쓸 수 있어요."
             android:textColor="@color/grayscale6"
-            android:textSize="12sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/et_nickname"
             app:layout_constraintTop_toBottomOf="@id/et_nickname" />
         <androidx.appcompat.widget.AppCompatButton

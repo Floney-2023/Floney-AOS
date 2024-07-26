@@ -22,12 +22,11 @@
 
         <ImageView
             android:id="@+id/iv_icon_exit"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="22dp"
             android:onClick="@{() -> vm.onClickedExit()}"
-            android:padding="5dp"
             android:src="@drawable/icon_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@{vm.settlementModel.dateString}"
             android:textColor="@color/grayscale7"
@@ -53,7 +52,7 @@
             android:fontFamily="@font/pretendard_bold"
             android:text="@string/settle_up_detail_see_title"
             android:textColor="@color/grayscale1"
-            android:textSize="24dp"
+            android:textSize="23dp"
             app:layout_constraintStart_toStartOf="@+id/tv_settle_up_see_period"
             app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_see_period" />
 
@@ -66,7 +65,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/settle_up_complete_total_expense"
             android:textColor="@color/grayscale2"
-            android:textSize="16dp"
+            android:textSize="17dp"
             app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_settle_up_complete_title" />
 
@@ -76,9 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="28dp"
             android:fontFamily="@font/pretendard_bold"
-            android:text="@{vm.settlementModel.totalOutcome}"
+            bind:adjustOnlyMoneyText="@{vm.settlementModel.totalOutcome}"
             android:textColor="@color/grayscale2"
-            android:textSize="16dp"
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_total_expense"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_total_expense" />
@@ -109,9 +108,8 @@
             app:layout_constraintStart_toStartOf="@+id/tv_settle_up_complete_total_expense"
             app:layout_constraintTop_toBottomOf="@+id/iv_top_dottedLine"
             bind:diffCallback="@{(Object)UiSettlementAddModel.Companion}"
-            bind:eventHolder="@{eventHolder}"
             bind:itemLayout="@{@layout/item_settlement_complete_user_view}"
-            bind:items="@{vm.settlementModel.details}"
+            bind:items="@{vm.settlementModel.expenses}"
             bind:viewModel="@{vm}" />
 
         <ImageView
@@ -136,7 +134,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/settle_up_complete_settlement_money"
             android:textColor="@color/grayscale2"
-            android:textSize="16dp"
+            android:textSize="17dp"
             app:layout_constraintStart_toStartOf="@+id/iv_bottom_dottedLine"
             app:layout_constraintTop_toBottomOf="@+id/iv_bottom_dottedLine" />
 
@@ -145,13 +143,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="@string/settle_up_complete_member_count"
             android:textColor="@color/grayscale6"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money"
             app:layout_constraintEnd_toStartOf="@+id/tv_settle_up_complete_settlement_money"
-            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
+            app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money" />
 
         <TextView
             android:id="@+id/tv_settle_up_complete_settlement_money"
@@ -159,9 +157,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/pretendard_bold"
-            android:text="@{vm.settlementModel.outcome}"
+            bind:adjustOnlyMoneyText="@{vm.settlementModel.outcome}"
             android:textColor="@color/primary2"
-            android:textSize="16sp"
+            android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money_text" />
@@ -180,11 +178,12 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:fillViewport="true"
+            app:layout_constraintBottom_toTopOf="@+id/appCompatButton4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,6 +203,7 @@
         </androidx.core.widget.NestedScrollView>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton4"
             android:layout_width="0dp"
             android:layout_height="66dp"
             android:background="@color/primary1"

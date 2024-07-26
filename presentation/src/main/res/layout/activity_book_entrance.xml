@@ -15,8 +15,8 @@
         tools:context=".view.book.entrance.BookEntranceActivity">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_marginTop="22dp"
             android:layout_marginEnd="20dp"
             android:src="@drawable/icon_close"
@@ -31,23 +31,33 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="78dp"
             android:fontFamily="@font/pretendard_bold"
+            android:lineSpacingExtra="5sp"
+            android:translationY="-2.48sp"
             android:text="@string/book_entrance_title"
             android:textColor="@color/grayscale1"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_profile_card_view"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile_card_view"
             android:layout_width="124dp"
             android:layout_height="124dp"
             android:layout_marginTop="48dp"
-            setBookImageToUrl="@{vm.bookInfo.bookImg}"
-            android:clipToOutline="true"
-            android:src="@drawable/btn_book_profile"
+            app:cardCornerRadius="62dp"
+            app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_entrance_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_entrance_title">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                setBookImageToUrl='@{vm.bookInfo.bookImg.equals("") ? "btn_book_default" : vm.bookInfo.bookImg}'
+                android:scaleType="centerCrop"
+                android:src="@drawable/btn_book_profile" />
+
+        </androidx.cardview.widget.CardView>
 
 
         <TextView
@@ -58,20 +68,20 @@
             android:fontFamily="@font/pretendard_bold"
             android:text="@{vm.bookInfo.bookName}"
             android:textColor="@color/grayscale2"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/iv_profile_card_view"
-            app:layout_constraintStart_toStartOf="@+id/iv_profile_card_view"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profile_card_view" />
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="@+id/cv_profile_card_view"
+            app:layout_constraintStart_toStartOf="@+id/cv_profile_card_view"
+            app:layout_constraintTop_toBottomOf="@+id/cv_profile_card_view" />
 
         <TextView
             android:id="@+id/tv_team_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@{vm.bookInfo.bookInfo}"
             android:textColor="@color/grayscale3"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="@+id/tv_team_name"
             app:layout_constraintStart_toStartOf="@+id/tv_team_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_team_name" />
@@ -92,12 +102,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/li_invite_code_view"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
             android:onClick="@{() -> vm.onClickInviteCodeCopy()}"
-            android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
+            android:background="@drawable/custom_radius_12_solid_grayscale_12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_invite_code_text">
@@ -111,7 +121,7 @@
                 android:gravity="center"
                 android:text="@{vm.inviteCode}"
                 android:textColor="@color/grayscale2"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +141,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/appCompatButton"
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="70dp"
@@ -152,7 +162,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:text="@string/book_entrance_code_button"
             android:textColor="@color/grayscale6"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:onClick="@{() -> vm.onClickCodeInput()}"
             app:layout_constraintEnd_toEndOf="@+id/appCompatButton"
             app:layout_constraintStart_toStartOf="@+id/appCompatButton"

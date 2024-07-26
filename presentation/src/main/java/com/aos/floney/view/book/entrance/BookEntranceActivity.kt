@@ -54,40 +54,42 @@ class BookEntranceActivity : BaseActivity<ActivityBookEntranceBinding, BookEntra
             // 나중에 하기 -> Bottomsheet 닫기
             viewModel.inviteCodeExit.collect {
                 Timber.e("nextPage $it")
-                if(it) {
-                    // 로그인 여부 확인
-                    if(sharedPreferenceUtil.getString("accessToken", "") != "") {
-                        // 가계부 존재하는 경우, 홈으로. 존재하지 않는 경우, 가계부 추가 화면으로
-                        if (sharedPreferenceUtil.getString("bookKey", "") != ""){
-                            val intent = Intent(this@BookEntranceActivity, HomeActivity::class.java)
-                            startActivity(intent)
-                            if (Build.VERSION.SDK_INT >= 34) {
-                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                            } else {
-                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                            }
-                            finishAffinity()
-                        }
-                        else{
-                            val intent = Intent(this@BookEntranceActivity, SignUpCompleteActivity::class.java)
-                            startActivity(intent)
-                            if (Build.VERSION.SDK_INT >= 34) {
-                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
-                            } else {
-                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                            }
-
-                        }
-
+                if(it) { // 가계부 존재(bookKey 유효 O, 로그인 유효 O)
+                    val intent = Intent(this@BookEntranceActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    if (Build.VERSION.SDK_INT >= 34) {
+                        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
                     } else {
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    }
+                    finishAffinity()
+                }else{
+                    if(sharedPreferenceUtil.getString("accessToken", "") == "") { // accessToken 유효 X
                         val intent = Intent(this@BookEntranceActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        if (Build.VERSION.SDK_INT >= 34) {
+                            overrideActivityTransition(
+                                Activity.OVERRIDE_TRANSITION_OPEN,
+                                android.R.anim.fade_in,
+                                android.R.anim.fade_out
+                            )
+                        } else {
+                            overridePendingTransition(
+                                android.R.anim.fade_in,
+                                android.R.anim.fade_out
+                            )
+                        }
+                        finishAffinity()
+                    }
+                    else{
+                        val intent = Intent(this@BookEntranceActivity, SignUpCompleteActivity::class.java)
                         startActivity(intent)
                         if (Build.VERSION.SDK_INT >= 34) {
                             overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
                         } else {
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                         }
-                        finishAffinity()
+
                     }
                 }
             }
@@ -165,8 +167,21 @@ class BookEntranceActivity : BaseActivity<ActivityBookEntranceBinding, BookEntra
                     DeepLinkResult.Status.FOUND -> {
                         val deepLinkObj = deepLinkResult.deepLink
                         val inviteCode = deepLinkObj.values["inviteCode"]
+                        if(sharedPreferenceUtil.getString("accessToken", "") == "") { // 로그인 상태 X
 
-                        setInviteCode(inviteCode)
+                            val intent = Intent(this@BookEntranceActivity, LoginActivity::class.java)
+
+                            startActivity(intent)
+                            if (Build.VERSION.SDK_INT >= 34) {
+                                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+                            } else {
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                            }
+                            finishAffinity()
+                        }
+                        else{
+                            setInviteCode(inviteCode)
+                        }
                     }
                     DeepLinkResult.Status.NOT_FOUND -> {
                         Timber.d("Deep link not found")

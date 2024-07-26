@@ -12,6 +12,8 @@ import com.aos.floney.BuildConfig
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.base.BaseFragment
+import com.aos.floney.base.BaseViewModel
+import com.aos.floney.base.setupUI
 import com.aos.floney.databinding.ActivityMyPageBinding
 import com.aos.floney.databinding.FragmentMyPageMainBinding
 import com.aos.floney.ext.repeatOnStarted
@@ -55,27 +57,13 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
     }
     override fun onResume() {
         super.onResume()
-        viewModel.searchMypageItems()
 
-        if(viewModel.getUserProfile().equals("user_default")) {
-            Glide.with(requireContext())
-                .load(R.drawable.icon_default_profile)
-                .fitCenter()
-                .centerCrop()
-                .into(binding.ivProfile)
-        } else {
-            Glide.with(requireContext())
-                .load(viewModel.getUserProfile())
-                .fitCenter()
-                .centerCrop()
-                .into(binding.ivProfile)
-        }
+        viewModel.searchMypageItems()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpAdMob()
         setUpUi()
         setUpViewModelObserver()
     }
@@ -153,26 +141,7 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
         repeatOnStarted {
             viewModel.adMobPage.collect {
                 if (it){
-                    if (mRewardAd != null) {
-                        mRewardAd?.show(requireActivity(), OnUserEarnedRewardListener {
-                            fun onUserEarnedReward(rewardItem: RewardItem) {
-                                val rewardAmount = rewardItem.amount
-                                var rewardType = rewardItem.type
-
-                            }
-                        })
-                        mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-                            override fun onAdDismissedFullScreenContent() {
-                                settingAdvertiseTime()
-                                mRewardAd = null
-                                setUpAdMob()
-                            }
-
-                            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                                mRewardAd = null
-                            }
-                        }
-                    }
+                    setUpAdMob()
                 }
             }
         }
@@ -190,24 +159,79 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.loadCheck.collect {
+                if(it) {
+                    loadProfileImage()
+                }
+            }
+        }
     }
     private fun settingAdvertiseTime(){
         viewModel.updateAdvertiseTime()
     }
     private fun setUpAdMob(){
-        MobileAds.initialize(requireContext())
+        showLoadingDialog()
 
+        MobileAds.initialize(requireContext())
         val adRequest = AdRequest.Builder().build()
 
         RewardedAd.load(requireContext(),
             BuildConfig.google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
+                    dismissLoadingDialog()
                     mRewardAd = null
+                    Timber.e("광고가 아직 로드되지 않음 4")
                 }
 
                 override fun onAdLoaded(ad: RewardedAd) {
+                    dismissLoadingDialog()
                     mRewardAd = ad
+                    showAdMob()
+                    Timber.e("광고가 아직 로드되지 않음 5")
                 }
             })
+    }
+    fun showAdMob(){
+        if (mRewardAd != null) {
+            mRewardAd?.show(requireActivity(), OnUserEarnedRewardListener {
+                fun onUserEarnedReward(rewardItem: RewardItem) {
+                    val rewardAmount = rewardItem.amount
+                    var rewardType = rewardItem.type
+
+                }
+            })
+            mRewardAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    settingAdvertiseTime()
+                    mRewardAd = null
+
+                }
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    mRewardAd = null
+                    Timber.e("광고가 아직 로드되지 않음 2")
+                }
+            }
+
+        }else{
+            showLoadingDialog()
+            Timber.e("광고가 아직 로드되지 않음 3")
+            setUpAdMob()
+        }
+    }
+    fun loadProfileImage(){
+        if(viewModel.getUserProfile().equals("user_default")) {
+            Glide.with(requireContext())
+                .load(R.drawable.icon_default_profile)
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
+        } else {
+            Glide.with(requireContext())
+                .load(viewModel.getUserProfile())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
+        }
     }
 }

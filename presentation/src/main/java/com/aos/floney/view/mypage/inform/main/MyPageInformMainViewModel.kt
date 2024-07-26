@@ -88,7 +88,7 @@ class MyPageInformMainViewModel @Inject constructor(
                 baseEvent(Event.ShowLoading)
                 nicknameChangeUseCase(nickname = nickName.value ?: "").onSuccess {
                     // 닉네임 변경 성공
-                    baseEvent(Event.ShowToastRes(R.string.mypage_main_inform_nickname_request_success))
+                    baseEvent(Event.ShowSuccessToastRes(R.string.mypage_main_inform_nickname_request_success))
                     baseEvent(Event.HideLoading)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
@@ -131,6 +131,8 @@ class MyPageInformMainViewModel @Inject constructor(
                 logoutUseCase(prefs.getString("accessToken","")).onSuccess {
                     prefs.setString("accessToken", "")
                     prefs.setString("refreshToken", "")
+                    prefs.setString("bookKey","")
+
                     _logOutPage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)

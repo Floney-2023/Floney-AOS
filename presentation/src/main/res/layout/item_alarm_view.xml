@@ -19,7 +19,7 @@
         android:id="@+id/li_member_select_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="12dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}"
         android:background="@{item.received ? @drawable/custom_radius_12_solid_grayscale_12 : @drawable/custom_radius_8_solid_primary10}"
         android:gravity="center_vertical"
@@ -30,10 +30,8 @@
             setAlarmImage="@{item.imgUrl}"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="0dp"
             android:background="@drawable/background_circle_image"
             android:clipToOutline="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,21 +40,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="0dp"
-            android:text="@{item.body}"
-            android:textSize="14sp"
-            android:textColor="@color/grayscale2"
             android:fontFamily="@font/pretendard_regular"
+            android:text="@{item.body}"
+            android:textColor="@color/grayscale2"
+            android:textSize="14dp"
             app:layout_constraintStart_toEndOf="@+id/iv_alarm_img"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/iv_alarm_img" />
 
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="@{item.date}"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:textColor="@color/grayscale6"
             android:fontFamily="@font/pretendard_regular"
             app:layout_constraintStart_toStartOf="@+id/tv_title"

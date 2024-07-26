@@ -20,19 +20,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="24dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
             android:padding="20dp"
             android:src="@drawable/icon_chevron_left"
-            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_setting_main_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_setting_main_title" />
 
         <TextView
             android:id="@+id/tv_setting_main_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:fontFamily="@font/floney_pretendard_bold"
+            android:fontFamily="@font/pretendard_semibold"
             android:text="@string/mypage_main_setting_text"
             android:textAppearance="@style/mypage_inform_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:orientation="horizontal"
-            android:padding="20dp"
+            android:paddingStart="24dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="20dp"
             android:onClick="@{() -> vm.onClickAlarmSettingPage()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +59,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_main_setting_text1"
-                android:textAppearance="@style/mypage_user_email" />
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp" />
 
             <View
                 android:layout_width="0dp"
@@ -66,7 +71,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/icon_chevron_right" />
+                android:src="@drawable/icon_right_arrow" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +79,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="20dp"
+            android:paddingStart="24dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="20dp"
             android:onClick="@{() -> vm.onClickLanguageSettingPage()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_main_setting_text2"
-                android:textAppearance="@style/mypage_user_email" />
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp" />
 
             <View
                 android:layout_width="0dp"
@@ -94,7 +104,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/icon_chevron_right" />
+                android:src="@drawable/icon_right_arrow" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,7 +112,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="20dp"
+            android:paddingStart="24dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="18dp"
+            android:paddingBottom="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/li_setting_language_view">
 
@@ -110,7 +123,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mypage_main_setting_text3"
-                android:textAppearance="@style/mypage_user_email" />
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp" />
 
             <View
                 android:layout_width="0dp"

@@ -3,7 +3,9 @@ package com.aos.floney.ext
 import android.graphics.Color
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
+import com.aos.floney.view.home.HomeActivity
 import com.aos.model.analyze.UiAnalyzePlanModel
 import com.bumptech.glide.Glide
 import timber.log.Timber
@@ -38,18 +40,37 @@ fun ImageView.setImageToUrl(url: String?) {
 
 @BindingAdapter("setBookImageToUrl")
 fun ImageView.setBookImageToUrl(url: String?) {
+    if (url.isNullOrEmpty() || url == "btn_book_default" || url == "book_default") {
+        // 기본 이미지 설정
+        val drawable = if (url == "btn_book_default") R.drawable.btn_book_profile else R.drawable.icon_book_profile
+        Glide.with(this)
+            .load(drawable)
+            .into(this)
+    } else {
+        // URL로부터 이미지 로드
+        Glide.with(this)
+            .load(url)
+            .error(R.drawable.icon_book_profile)
+            .into(this)
+    }
+}
+@BindingAdapter("setUserImageToUrl")
+fun ImageView.setUserImageToUrl(url: String?) {
     url?.let {
-        if(it.equals("") || it == null) {
+        val prefs = SharedPreferenceUtil(context)
+
+        if(!prefs.getBoolean("seeProfileStatus",true) || it.equals("user_default")) {
             Glide.with(this)
-                .load(R.drawable.icon_book_profile)
+                .load(R.drawable.icon_default_profile)
                 .into(this)
-        } else if(it.equals("btn_book_default")) {
+        } else if(it.equals("user_btn_default")) {
             Glide.with(this)
-                .load(R.drawable.btn_book_profile)
+                .load(R.drawable.btn_profile)
                 .into(this)
         } else {
             Glide.with(this)
                 .load(url)
+                .error(R.drawable.icon_default_profile)
                 .into(this)
         }
     }
@@ -96,17 +117,17 @@ fun ImageView.setAnalyzeImage(item: UiAnalyzePlanModel?) {
                 .into(this)
         } else {
             when(item.percent.toInt()) {
-                in 0..49 ->{
+                in 0..30 ->{
                     Glide.with(this)
                         .load(R.drawable.analyze_plan_0_49_icon)
                         .into(this)
                 }
-                in 50..79 -> {
+                in 31..60 -> {
                     Glide.with(this)
                         .load(R.drawable.analyze_plan_50_79_icon)
                         .into(this)
                 }
-                in 80..99 -> {
+                in 61..100 -> {
                     Glide.with(this)
                         .load(R.drawable.analyze_plan_80_99_icon)
                         .into(this)

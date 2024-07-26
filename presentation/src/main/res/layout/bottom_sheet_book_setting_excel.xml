@@ -32,7 +32,7 @@
                 android:fontFamily="@font/pretendard_bold"
                 android:text="엑셀 내보내기"
                 android:textColor="@color/grayscale1"
-                android:textSize="18sp"
+                android:textSize="19dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,9 +41,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="19dp"
                 android:background="@{vm.flow == `이번달` ? @drawable/custom_solid_white_radius_49_stroke_primary_2 : @drawable/custom_solid_background2_radius_49}"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`이번달`)}"
                 android:paddingStart="16dp"
@@ -52,7 +52,7 @@
                 android:paddingBottom="12dp"
                 android:text="이번달"
                 android:textColor="@{vm.flow == `이번달` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="14dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -63,7 +63,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="18dp"
                 android:background="@{vm.flow == `저번달` ? @drawable/custom_solid_white_radius_49_stroke_primary_2 : @drawable/custom_solid_background2_radius_49}"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`저번달`)}"
                 android:paddingStart="16dp"
@@ -72,7 +72,7 @@
                 android:paddingBottom="12dp"
                 android:text="저번달"
                 android:textColor="@{vm.flow == `저번달` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="14dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -83,7 +83,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="18dp"
                 android:background="@{vm.flow == `올해` ? @drawable/custom_solid_white_radius_49_stroke_primary_2 : @drawable/custom_solid_background2_radius_49}"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`올해`)}"
                 android:paddingStart="16dp"
@@ -92,7 +92,7 @@
                 android:paddingBottom="12dp"
                 android:text="올해"
                 android:textColor="@{vm.flow == `올해` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="14dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -103,7 +103,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="18dp"
                 android:background="@{vm.flow == `작년` ? @drawable/custom_solid_white_radius_49_stroke_primary_2 : @drawable/custom_solid_background2_radius_49}"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`작년`)}"
                 android:paddingStart="16dp"
@@ -112,7 +112,7 @@
                 android:paddingBottom="12dp"
                 android:text="작년"
                 android:textColor="@{vm.flow == `작년` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="14dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:background="@{vm.flow == `전체` ? @drawable/custom_solid_white_radius_49_stroke_primary_2 : @drawable/custom_solid_background2_radius_49}"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`전체`)}"
                 android:paddingStart="16dp"
@@ -131,14 +131,14 @@
                 android:paddingBottom="12dp"
                 android:text="전체"
                 android:textColor="@{vm.flow == `전체` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="14dp"
+                android:textSize="15dp"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toTopOf="@+id/textView9" />
 
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="0dp"
-                android:layout_height="46dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="156dp"
                 android:layout_marginEnd="20dp"

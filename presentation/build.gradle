@@ -22,7 +22,7 @@ android {
         minSdk 24
         targetSdk 33
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -89,6 +89,9 @@ dependencies {
 
     // flexboxLayout
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    // toggle-botton
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
 
     implementation("com.tbuonomo:dotsindicator:5.0")
 

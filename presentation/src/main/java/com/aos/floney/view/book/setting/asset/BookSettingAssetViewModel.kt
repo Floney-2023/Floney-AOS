@@ -54,10 +54,12 @@ class BookSettingAssetViewModel @Inject constructor(
             val month = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH는 0부터 시작하므로 +1 해줌
             // "YYYY-MM" 형식으로 포맷
             val currentYearMonth = String.format("%d-%02d", year, month)
-
             postAnalyzeAssetUseCase(
                 prefs.getString("bookKey",""), currentYearMonth).onSuccess {
-                cost.postValue(it.initAsset)
+                    if (it.initAsset.equals("0${CurrencyUtil.currency}"))
+                        cost.postValue("")
+                    else
+                        cost.postValue(it.initAsset)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
             }
@@ -67,24 +69,29 @@ class BookSettingAssetViewModel @Inject constructor(
     // 초기 자산 설정
     fun onClickSaveButton(){
         viewModelScope.launch {
+
+            baseEvent(Event.ShowLoading)
             booksInfoAssetUseCase(
                 prefs.getString("bookKey",""),
                 settingCost()).onSuccess {
 
-                baseEvent(Event.ShowToastRes(R.string.book_setting_bottom_asset_succcess))
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
                 _initAssetSheet.emit(true)
             }.onFailure {
+
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
             }
         }
     }
-    fun settingCost(): Int {
+    fun settingCost(): Long {
         if (cost.value=="")
             return 0
         else if (cost.value!!.length<=4)
-            return cost.value!!.substring(0, cost.value!!.length-1).toInt()
+            return cost.value!!.substring(0, cost.value!!.length-1).toLong()
         else if (cost.value!="")
-            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toInt()
+            return cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"").toLong()
         else
             return 0
     }

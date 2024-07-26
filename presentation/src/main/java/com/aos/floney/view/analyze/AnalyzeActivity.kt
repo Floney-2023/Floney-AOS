@@ -19,10 +19,12 @@ import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityAnalyzeBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.setting.budget.BookSettingBudgetFragment
+import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.home.HomeDayTypeFragment
 import com.aos.floney.view.mypage.MyPageActivity
 import com.aos.floney.view.settleup.SettleUpActivity
+import com.aos.model.user.UserModel.userNickname
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -139,6 +141,24 @@ class AnalyzeActivity : BaseActivity<ActivityAnalyzeBinding, AnalyzeViewModel>(R
                     val item = it.split("-")
                     viewModel.updateCalendarClickedItem(item[0].toInt(), item[1].toInt())
                 }.show()
+            }
+        }
+
+        repeatOnStarted {
+            // 내역추가
+            viewModel.clickedAddHistory.collect {
+                startActivity(
+                    Intent(
+                        this@AnalyzeActivity,
+                        HistoryActivity::class.java
+                    ).putExtra("date", it)
+                        .putExtra("nickname", userNickname)
+                )
+                if (Build.VERSION.SDK_INT >= 34) {
+                    overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, R.anim.slide_in, R.anim.slide_out_down)
+                } else {
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out_down)
+                }
             }
         }
     }

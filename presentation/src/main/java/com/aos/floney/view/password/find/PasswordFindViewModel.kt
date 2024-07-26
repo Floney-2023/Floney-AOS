@@ -23,6 +23,10 @@ class PasswordFindViewModel @Inject constructor(
     var email = MutableLiveData<String>("")
     private var _nextPage = MutableEventFlow<Boolean>()
     val nextPage: EventFlow<Boolean> get() = _nextPage
+    var _previousPage = MutableEventFlow<Boolean>()
+    val previousPage: EventFlow<Boolean> get() = _previousPage
+    var _showSendDialog = MutableEventFlow<Boolean>()
+    val showSendDialog: EventFlow<Boolean> get() = _showSendDialog
 
     // 임시 비밀번호 보내기
     fun onClickSendTempPassword() {
@@ -35,10 +39,14 @@ class PasswordFindViewModel @Inject constructor(
                     sendTempPasswordUseCase(email.value!!).onSuccess {
                         // 전송 성공
                         baseEvent(Event.HideLoading)
-//                        _nextPage.emit(true)
+                        _showSendDialog.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)
-                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@PasswordFindViewModel)))
+                        if(it.message.parseErrorMsg(this@PasswordFindViewModel).equals("해당 이메일로 가입된 유저가 없습니다.")) {
+                            baseEvent(Event.ShowToast("일치하는 회원이 없습니다."))
+                        } else {
+                            baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@PasswordFindViewModel)))
+                        }
                     }
                 }
             } else {
@@ -48,6 +56,12 @@ class PasswordFindViewModel @Inject constructor(
         } else {
             // 이메일이 비어 있을 경우
             baseEvent(Event.ShowToastRes(R.string.sign_up_request_email))
+        }
+    }
+
+    fun onClickedPreviousBtn() {
+        viewModelScope.launch {
+            _previousPage.emit(true)
         }
     }
 

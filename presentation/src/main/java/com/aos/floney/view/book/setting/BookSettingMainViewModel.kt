@@ -28,6 +28,7 @@ import com.aos.usecase.booksetting.BooksSettingGetUseCase
 import com.aos.usecase.home.CheckUserBookUseCase
 import com.aos.usecase.mypage.AlarmSaveGetUseCase
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -116,6 +117,7 @@ class BookSettingMainViewModel @Inject constructor(
                 // me가 true인 항목이 맨 앞에 오도록 정렬
                 val sortedList = it.ourBookUsers.sortedByDescending { it.me }
 
+                CommonUtil.bookProfile = it.bookImg
                 _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))
@@ -129,6 +131,7 @@ class BookSettingMainViewModel @Inject constructor(
             if(prefs.getString("bookKey","").isNotEmpty()) {
                 baseEvent(Event.ShowLoading)
                 booksInitUseCase(prefs.getString("bookKey","")).onSuccess {
+                    delay(1)
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowSuccessToast("가계부가 초기화 되었습니다."))
                     alarmInitSave()

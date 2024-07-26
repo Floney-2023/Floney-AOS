@@ -2,6 +2,7 @@ package com.aos.floney.view.book.setting.favorite
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.library.baseAdapters.BR
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -10,6 +11,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentBookSettingFavoriteBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.book.setting.category.BookCategoryActivity
 import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.home.HomeViewModel
 import com.aos.model.book.UiBookFavoriteModel
@@ -58,6 +60,21 @@ class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBind
 
         setUpUi()
         setUpViewModelObserver()
+        setUpBackButton()
+    }
+    fun setUpBackButton(){
+        // 뒤로 가기 콜백 등록
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+    }
+
+    override fun onBackPressed() {
+        viewModel.onClickPreviousPage()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@BookSettingFavoriteFragment)
@@ -71,10 +88,19 @@ class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBind
                     val activity = requireActivity() as BookFavoriteActivity
                     activity.startBookSettingActivity()
                 }
+                else{ // 편집 모드일 경우
+                    BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
+                        if(it) {
+                            val activity = requireActivity() as BookFavoriteActivity
+                            activity.startBookSettingActivity()
+                        }
+                    }.show(parentFragmentManager, "baseAlertDialog")
+                }
             }
         }
         repeatOnStarted {
-            // 즐겨찾기 추가 페이지로
+            // 즐겨찾기 추가 페이지로 (초과 아닌 경우에만)
+
             viewModel.addPage.collect {
                 if(it) {
                     val addAction = BookSettingFavoriteFragmentDirections.actionBookSettingFavoriteFragmentToBookSettingFavoriteAddFragment()
@@ -83,5 +109,4 @@ class BookSettingFavoriteFragment : BaseFragment<FragmentBookSettingFavoriteBind
             }
         }
     }
-
 }

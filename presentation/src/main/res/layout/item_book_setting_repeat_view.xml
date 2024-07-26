@@ -73,7 +73,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_bold"
                 android:text="@{item.money}"
                 android:textColor="@color/grayscale2"
                 android:textSize="16dp"

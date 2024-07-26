@@ -82,6 +82,7 @@ class SignUpInputInfoViewModel @Inject constructor(
                                         // 엑세스 토큰 저장
                                         prefs.setString("accessToken", it.accessToken)
                                         prefs.setString("refreshToken", it.refreshToken)
+                                        prefs.setString("bookKey", "")
 
                                         baseEvent(Event.HideLoading)
                                         _nextPage.emit(true)

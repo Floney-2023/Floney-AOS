@@ -18,6 +18,7 @@ import com.aos.model.home.DayMoneyModifyItem
 import com.aos.usecase.history.DeleteBookLineUseCase
 import com.aos.usecase.history.DeleteBooksLinesAllUseCase
 import com.aos.usecase.history.GetBookCategoryUseCase
+import com.aos.usecase.history.GetBookFavoriteUseCase
 import com.aos.usecase.history.PostBooksFavoritesUseCase
 import com.aos.usecase.history.PostBooksLinesChangeUseCase
 import com.aos.usecase.history.PostBooksLinesUseCase
@@ -38,7 +39,8 @@ class HistoryViewModel @Inject constructor(
     private val postBooksLinesChangeUseCase: PostBooksLinesChangeUseCase,
     private val deleteBookLineUseCase: DeleteBookLineUseCase,
     private val deleteBooksLinesAllUseCase: DeleteBooksLinesAllUseCase,
-    private val postBooksFavoritesUseCase : PostBooksFavoritesUseCase
+    private val postBooksFavoritesUseCase : PostBooksFavoritesUseCase,
+    private val getBookFavoriteUseCase: GetBookFavoriteUseCase
 ) : BaseViewModel() {
 
     // 내역 추가 결과
@@ -121,12 +123,7 @@ class HistoryViewModel @Inject constructor(
     // 반복 설정
     val _repeatItem = MutableLiveData<List<UiBookCategory>>()
     val repeatItem: LiveData<List<UiBookCategory>> get() = _repeatItem
-    private var _repeatClickItem = MutableLiveData<UiBookCategory?>(UiBookCategory(
-        idx = 1,
-        checked = true,
-        name = "없음",
-        default = true
-    ))
+    private var _repeatClickItem = MutableLiveData<UiBookCategory?>()
     val repeatClickItem: LiveData<UiBookCategory?> get() = _repeatClickItem
 
     // 자산, 지출, 수입, 이체 카테고리 조회에 사용
@@ -142,7 +139,7 @@ class HistoryViewModel @Inject constructor(
 
     init {
         val array = arrayListOf<UiBookCategory>(
-            UiBookCategory(0, true, "없음", true),
+            UiBookCategory(0, false, "없음", false),
             UiBookCategory(1, false, "매일", false),
             UiBookCategory(2, false, "매주", false),
             UiBookCategory(3, false, "매달", false),
@@ -169,7 +166,7 @@ class HistoryViewModel @Inject constructor(
         content.value = item.description
         _nickname.value = item.writerNickName
         deleteChecked.value = item.exceptStatus
-        Timber.e("item.repeatDuration ${item.repeatDuration}")
+
         _repeatClickItem.value = UiBookCategory(
             idx = 1,
             checked = true,
@@ -248,13 +245,16 @@ class HistoryViewModel @Inject constructor(
                 asset = asset.value!!,
                 line = line.value!!,
                 lineDate = date.value!!.replace(".", "-"),
-                description = content.value!!,
+                description = if(content.value!! == ""){
+                    line.value!!.toString()
+                } else {
+                    content.value!!
+                },
                 except = deleteChecked.value!!,
                 nickname = nickname.value!!,
                 repeatDuration = getConvertSendRepeatValue()
             ).onSuccess {
                 _postBooksLines.emit(true)
-                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
@@ -279,7 +279,6 @@ class HistoryViewModel @Inject constructor(
                 nickname = nickname.value!!,
             ).onSuccess {
                 _postModifyBooksLines.emit(true)
-                baseEvent(Event.ShowSuccessToast("저장이 완료되었습니다."))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
@@ -319,15 +318,16 @@ class HistoryViewModel @Inject constructor(
     // 모든 데이터 입력 되었는지 체크
     private fun isAllInputData(): Boolean {
         createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != "" && _repeatClickItem.value != null
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
-    private fun isFavoriteInputData(): Boolean {
-        createErrorMsg()
-        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요" && content.value != ""
+    fun isFavoriteInputData(): Boolean {
+        return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
-
+    fun isFavoriteAllData(): Boolean {
+        return cost.value != "" || asset.value != "자산을 선택하세요" || line.value != "분류를 선택하세요"
+    }
     // 에러 메세지 생성
     private fun createErrorMsg() {
         if(cost.value == "") {
@@ -336,14 +336,27 @@ class HistoryViewModel @Inject constructor(
             baseEvent(Event.ShowToast("자산을 선택해주세요"))
         } else if (line.value == "분류를 선택하세요") {
             baseEvent(Event.ShowToast("분류를 선택해주세요"))
-        } else if (content.value == "") {
-            baseEvent(Event.ShowToast("내용을 입력해주세요"))
+        }
+    }
+
+    private fun createFavoriteErrorMsg() {
+        if(cost.value == "") {
+            baseEvent(Event.ShowToast("금액을 입력해주세요"))
+        } else if (asset.value == "자산을 선택하세요") {
+            baseEvent(Event.ShowToast("자산을 선택해주세요"))
+        } else if (line.value == "분류를 선택하세요") {
+            baseEvent(Event.ShowToast("분류를 선택해주세요"))
         }
     }
 
     // 수정된 내용이 있는지 체크
     private fun isExistEdit(): Boolean {
-        return cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
+        return date.value != modifyItem!!.lineDate || cost.value != modifyItem!!.money || asset.value != modifyItem!!.assetSubCategory || line.value != modifyItem!!.lineSubCategory || content.value != modifyItem!!.description
+    }
+
+    // 추가한 내용이 있는지 체크
+    private fun isExistAdd(): Boolean {
+        return date.value != "날짜를 선택하세요" || cost.value != "" || asset.value != "자산을 선택하세요" || line.value != "분류를 선택하세요" || content.value != ""
     }
 
     // 닫기 버튼 클릭
@@ -352,8 +365,15 @@ class HistoryViewModel @Inject constructor(
             if (modifyItem != null) {
                 _onClickCloseBtn.emit(isExistEdit())
             } else {
-                _onClickCloseBtn.emit(false)
+                _onClickCloseBtn.emit(isExistAdd())
             }
+        }
+    }
+
+    // 즐겨찾기 추가 닫기 버튼 클릭
+    fun onFavoriteAddClickCloseBtn() {
+        viewModelScope.launch {
+            _onClickCloseBtn.emit(isFavoriteAllData())
         }
     }
 
@@ -434,14 +454,18 @@ class HistoryViewModel @Inject constructor(
 
     // 반복내역 서버로 보내기 위한 값으로 변경
     private fun getConvertSendRepeatValue(): String {
-        return when(_repeatClickItem.value!!.name) {
-            "없음" -> "NONE"
-            "매일" -> "EVERYDAY"
-            "매주" -> "WEEK"
-            "매달" -> "MONTH"
-            "주중" -> "WEEKDAY"
-            "주말" -> "WEEKEND"
-            else -> ""
+        return if(_repeatClickItem.value == null) {
+            "NONE"
+        } else {
+            when(_repeatClickItem.value!!.name) {
+                "없음" -> "NONE"
+                "매일" -> "EVERYDAY"
+                "매주" -> "WEEK"
+                "매달" -> "MONTH"
+                "주중" -> "WEEKDAY"
+                "주말" -> "WEEKEND"
+                else -> ""
+            }
         }
     }
 
@@ -556,22 +580,58 @@ class HistoryViewModel @Inject constructor(
     // 즐겨찾기 추가
     fun postAddFavorite() {
         if (isFavoriteInputData()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                postBooksFavoritesUseCase(
-                    bookKey = prefs.getString("bookKey", ""),
-                    money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
-                        .toDouble(),
-                    description = if (content.value=="") "분류" else content.value!!,
-                    lineCategoryName = flow.value!!,
-                    lineSubcategoryName = line.value!!,
-                    assetSubcategoryName = asset.value!!,
-                    exceptStatus = deleteChecked.value!!
-                ).onSuccess {
-                    _postBooksFavorites.emit(true)
-                    baseEvent(Event.ShowSuccessToast("즐겨찾기에 추가되었습니다."))
+            isFavoriteMaxData { isMax ->
+                if (isMax) {
+                    viewModelScope.launch(Dispatchers.IO) {
+                        postBooksFavoritesUseCase(
+                            bookKey = prefs.getString("bookKey", ""),
+                            money = cost.value!!.replace(",", "").replace(CurrencyUtil.currency,"")
+                                .toDouble(),
+                            description = if (content.value=="") line.value!! else content.value!!,
+                            lineCategoryName = flow.value!!,
+                            lineSubcategoryName = line.value!!,
+                            assetSubcategoryName = asset.value!!,
+                            exceptStatus = deleteChecked.value!!
+                        ).onSuccess {
+                            _postBooksFavorites.emit(true)
+                            baseEvent(Event.ShowSuccessToast("즐겨찾기에 추가되었습니다."))
+                        }.onFailure {
+                            baseEvent(Event.ShowToast("${flow.value!!} ${it.message.parseErrorMsg(this@HistoryViewModel)}"))
+                        }
+                    }
+                } else {
+                    baseEvent(Event.ShowToast("즐겨찾기 개수가 초과 되었습니다."))
+                }
+            }
+        } else {
+            createFavoriteErrorMsg()
+        }
+    }
+    fun isFavoriteMaxData(onResult: (Boolean) -> Unit) {
+        var sum = 0
+        viewModelScope.launch {
+            getBookFavoriteUseCase(prefs.getString("bookKey", ""),"INCOME").onSuccess { it ->
+                sum+=it.size
+                getBookFavoriteUseCase(prefs.getString("bookKey", ""), "OUTCOME").onSuccess { it ->
+                    sum+=it.size
+                    getBookFavoriteUseCase(prefs.getString("bookKey", ""), "TRANSFER").onSuccess { it ->
+                        sum+=it.size
+
+                        if (sum==15){
+                            onResult(false)
+                        }
+                        else {
+                            onResult(true)
+                        }
+
+                    }.onFailure {
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
+                    }
                 }.onFailure {
                     baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
                 }
+            }.onFailure {
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HistoryViewModel)))
             }
         }
     }

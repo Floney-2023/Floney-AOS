@@ -4,18 +4,25 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDialog
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelLazy
@@ -59,6 +66,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
 
         setupUi()
         setupObserve()
+        setupUI(findViewById(android.R.id.content))
     }
 
     private fun setupUi() {
@@ -67,6 +75,10 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
             setVariable(BR.vm, viewModel)
             lifecycleOwner = this@BaseActivity
         }
+        if (isDarkMode()) {
+            binding.root.setBackgroundColor(Color.WHITE)  // 다크 모드일 때 흰색 배경
+        }
+        setStatusBarColor(ContextCompat.getColor(this, R.color.white))
     }
 
     private fun setupObserve() {
@@ -130,7 +142,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         }
     }
 
-    private fun showLoadingDialog() {
+    fun showLoadingDialog() {
         val circle1 = loadingDialog.findViewById<View>(R.id.circle1)
         val circle2 = loadingDialog.findViewById<View>(R.id.circle2)
         val circle3 = loadingDialog.findViewById<View>(R.id.circle3)
@@ -170,11 +182,47 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
         loadingDialog.show()
     }
 
-    private fun dismissLoadingDialog() {
+    fun dismissLoadingDialog() {
         try {
             loadingDialog.dismiss()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+    // 상태바 색상 설정 함수
+    protected fun setStatusBarColor(color: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = color
+        }
+    }
+    // 다크 모드인지 확인하는 함수
+    protected fun isDarkMode(): Boolean {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+}
+
+fun AppCompatActivity.hideKeyboard() {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    currentFocus?.let {
+        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+    }
+}
+
+fun AppCompatActivity.setupUI(view: View) {
+    // Set up touch listener for non-text box views to hide keyboard.
+    if (view !is EditText) {
+        view.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
+    }
+
+    // If a layout container, iterate over children and set up touch listeners.
+    if (view is ViewGroup) {
+        for (i in 0 until view.childCount) {
+            val innerView = view.getChildAt(i)
+            setupUI(innerView)
         }
     }
 }

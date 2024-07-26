@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,10 +15,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelLazy
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.aos.floney.R
@@ -76,6 +80,7 @@ abstract class BaseBottomSheetFragment<B : ViewDataBinding, VM : BaseViewModel>(
         super.onViewCreated(view, savedInstanceState)
         setupUi()
         setupObserve()
+        setupUI(view)
     }
 
     private fun setupObserve() {
@@ -182,6 +187,29 @@ abstract class BaseBottomSheetFragment<B : ViewDataBinding, VM : BaseViewModel>(
             loadingDialog.dismiss()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+}
+
+fun BottomSheetDialogFragment.hideKeyboard() {
+    val inputMethodManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    requireActivity().currentFocus?.let {
+        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+    }
+}
+
+fun BottomSheetDialogFragment.setupUI(view: View) {
+    if (view !is EditText) {
+        view.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
+    }
+
+    if (view is ViewGroup) {
+        for (i in 0 until view.childCount) {
+            val innerView = view.getChildAt(i)
+            setupUI(innerView)
         }
     }
 }

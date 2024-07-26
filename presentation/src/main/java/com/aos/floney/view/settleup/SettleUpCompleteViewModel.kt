@@ -84,14 +84,11 @@ class SettleUpCompleteViewModel @Inject constructor(
         }
         Timber.e("yeah : ${outcomes}")
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             settlementAddUseCase(prefs.getString("bookKey",""), startDate.value!!, endDate.value!!,userEmails, outcomes).onSuccess {
                 // 불러오기 성공
                 _settlementModel.postValue(it)
-                baseEvent(Event.HideLoading)
                 searchBookSettingItems()
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpCompleteViewModel)))
             }
         }

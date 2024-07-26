@@ -11,7 +11,8 @@ data class UiSettlementAddModel(
     val userCount : Int,
     val totalOutcome : String,
     val outcome : String,
-    val details : List<Details>
+    val details : List<Details>,
+    val expenses: List<Expenses>
 ){
     interface OnItemClickListener {
         fun onItemClick(item: Details)
@@ -32,4 +33,9 @@ data class Details(
     val userNickname: String,
     val useruserProfileImg : String,
     val moneyInfo : String
+)
+
+data class Expenses(
+    val money: String,
+    val userNickname: String
 )

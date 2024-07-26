@@ -11,7 +11,7 @@ class BooksInfoAssetUseCase @Inject constructor(
 ){
     suspend operator fun invoke(
         bookKey : String,
-        asset : Int
+        asset : Long
     ): Result<Void?> {
         return bookRepository.postBooksInfoAsset(bookKey, asset)
     }

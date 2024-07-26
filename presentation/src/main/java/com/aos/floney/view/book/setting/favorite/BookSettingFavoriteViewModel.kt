@@ -57,7 +57,13 @@ class BookSettingFavoriteViewModel @Inject constructor(
 
     fun onClickPreviousPage() {
         viewModelScope.launch {
-            _back.emit(true)
+            if (edit.value!!)
+            {
+                _back.emit(false)
+            }
+            else{
+                _back.emit(true)
+            }
         }
     }
     // 자산/분류 카테고리 항목 가져오기
@@ -79,8 +85,36 @@ class BookSettingFavoriteViewModel @Inject constructor(
 
     // 추가하기 버튼 클릭
     fun onClickAddBtn() {
+        var sum = 0
         viewModelScope.launch {
-            _addPage.emit(true)
+            baseEvent(Event.ShowLoading)
+            getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("수입")).onSuccess { it ->
+                sum+=it.size
+                getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("이체")).onSuccess { it ->
+                    sum+=it.size
+                    getBookFavoriteUseCase(prefs.getString("bookKey", ""), getCategory("지출")).onSuccess { it ->
+                        sum+=it.size
+                        baseEvent(Event.HideLoading)
+                        if (sum==15){
+                            baseEvent(Event.ShowToast("즐겨찾기 개수가 초과 되었습니다."))
+                        }
+                        else {
+                            _addPage.emit(true)
+                        }
+
+                    }.onFailure {
+                        baseEvent(Event.HideLoading)
+                        baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
+                    }
+                }.onFailure {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
+                }
+            }.onFailure {
+
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
+            }
         }
     }
     // 편집버튼 클릭
@@ -92,14 +126,18 @@ class BookSettingFavoriteViewModel @Inject constructor(
     // 내역 삭제
     fun deleteFavorite(item : UiBookFavoriteModel) {
         viewModelScope.launch(Dispatchers.IO) {
+            baseEvent(Event.ShowLoading)
             booksFavoriteDeleteUseCase(
                 bookKey = prefs.getString("bookKey", ""),
                 item.idx
             ).onSuccess {
                 val updatedList = _favoriteList.value!!.filter { it.idx != item.idx }
                 _favoriteList.postValue(updatedList)
+
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowSuccessToast("삭제가 완료되었습니다."))
             }.onFailure {
+                baseEvent(Event.ShowLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingFavoriteViewModel)))
             }
         }

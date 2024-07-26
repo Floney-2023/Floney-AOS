@@ -8,6 +8,7 @@ import com.aos.data.util.CommonUtil
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.ext.parseErrorCode
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
@@ -15,9 +16,11 @@ import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.home.UiBookInfoModel
 import com.aos.usecase.bookadd.BooksEntranceUseCase
 import com.aos.usecase.bookadd.BooksJoinUseCase
+import com.aos.usecase.home.GetBookInfoUseCase
 import com.aos.usecase.mypage.MypageSearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,7 +29,8 @@ class BookEntranceViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val booksJoinUseCase: BooksJoinUseCase,
     private val mypageSearchUseCase: MypageSearchUseCase,
-    private val booksEntranceUseCase : BooksEntranceUseCase
+    private val booksEntranceUseCase : BooksEntranceUseCase,
+    private val getBookInfoUseCase: GetBookInfoUseCase
 ): BaseViewModel() {
 
     // 가계부 이름
@@ -78,7 +82,7 @@ class BookEntranceViewModel @Inject constructor(
                     _newBookCreatePage.emit(false)
                 }
             }.onFailure {
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookEntranceViewModel)))
+                baseEvent(Event.ShowToast("이미 가계부 2개를 사용하고 있습니다."))
             }
         }
     }
@@ -92,12 +96,23 @@ class BookEntranceViewModel @Inject constructor(
                 booksJoinUseCase(inviteCode.value!!).onSuccess {
                     // 참여 완료, 참여 가계부 키 설정
                     prefs.setString("bookKey", it.bookKey)
+                    delay(1)
                     baseEvent(Event.HideLoading)
 
                     _newBookCreatePage.emit(true)
                 }.onFailure {
                     baseEvent(Event.HideLoading)
-                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookEntranceViewModel)))
+
+                    val errorCode = it.message.parseErrorCode()
+
+                    val message = when (errorCode) {
+                        "B008" -> "이미 참여한 가계부 입니다."
+                        "B002" -> "이미 사용자가 가득 찬 가계부 입니다."
+                        "B001" -> "존재하지 않는 가계부 입니다."
+                        else -> "알 수 없는 오류입니다. 다시 시도해 주세요."
+                    }
+                    baseEvent(Event.ShowToast(message))
+
                 }
             }
         } else {
@@ -107,7 +122,11 @@ class BookEntranceViewModel @Inject constructor(
     }
     fun onClickedSkipBtn(){
         viewModelScope.launch {
-            _inviteCodeExit.emit(true)
+            getBookInfoUseCase(prefs.getString("bookKey","")).onSuccess {
+                _inviteCodeExit.emit(true)
+            }.onFailure {
+                _inviteCodeExit.emit(false)
+            }
         }
     }
 

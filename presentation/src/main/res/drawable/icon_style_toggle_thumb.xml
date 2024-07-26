@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true">
-        <layer-list>
-            <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
-                <shape android:shape="oval">
-                    <size android:width="20dp" android:height="20dp" />
-                    <corners android:radius="10dp" />
-                    <solid android:color="@color/white" />
-                </shape>
-            </item>
-        </layer-list>
-    </item>
-
-
     <item>
         <layer-list>
-            <item android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp">
+            <item android:bottom="2dp" android:left="2dp" android:right="2dp" android:top="2dp">
                 <shape android:shape="oval">
-                    <size android:width="20dp" android:height="20dp" />
-                    <corners android:radius="10dp" />
-                    <solid android:color="@color/white" />
+                    <size android:width="23dp" android:height="23dp"/>
+                    <solid android:color="@color/white"/>
                 </shape>
             </item>
         </layer-list>
-
     </item>
 </selector>
