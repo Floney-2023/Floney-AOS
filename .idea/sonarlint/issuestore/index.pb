@@ -23,3 +23,5 @@ g
 7data/src/main/java/com/aos/data/mapper/AnalyzeMapper.kt,5\2\5286bc033cc0b250e4f8df6065570177edac0784
 ~
 Npresentation/src/main/java/com/aos/floney/view/common/BaseChoiceAlertDialog.kt,b\d\bda752c501e6946216eb6b17578e9ba7419fc718
+S
+#domain/src/main/AndroidManifest.xml,4\6\46c5973a8a062650780ae254450fba029a8b5598
