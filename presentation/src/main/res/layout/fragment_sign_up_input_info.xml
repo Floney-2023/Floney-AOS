@@ -100,7 +100,7 @@
                 <TextView
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="20dp"
@@ -131,15 +131,15 @@
                     android:id="@+id/et_password"
                     style="@style/login_edit_text"
                     android:layout_width="0dp"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_marginTop="12dp"
                     app:hintEnabled="false"
                     app:layout_constraintEnd_toEndOf="@id/et_email"
                     app:layout_constraintStart_toStartOf="@id/et_email"
                     app:layout_constraintTop_toBottomOf="@+id/tv_password"
+                    app:passwordToggleDrawable="@drawable/toogle_icon_status"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@null"
-                    app:passwordToggleDrawable="@drawable/toogle_icon_status">
+                    app:passwordToggleTint="@null">
 
                     <EditText
                         android:layout_width="match_parent"
@@ -151,6 +151,7 @@
                         android:paddingStart="20dp"
                         android:text="@={vm.password}"
                         android:textAppearance="@style/login_edit_text"
+                        android:textColor="@color/grayscale2"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -170,15 +171,15 @@
                     android:id="@+id/et_re_password"
                     style="@style/login_edit_text"
                     android:layout_width="0dp"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_marginTop="12dp"
                     app:hintEnabled="false"
                     app:layout_constraintEnd_toEndOf="@id/et_email"
                     app:layout_constraintStart_toStartOf="@id/et_email"
                     app:layout_constraintTop_toBottomOf="@+id/tv_re_password"
+                    app:passwordToggleDrawable="@drawable/toogle_icon_status"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@null"
-                    app:passwordToggleDrawable="@drawable/toogle_icon_status">
+                    app:passwordToggleTint="@null">
 
                     <EditText
                         android:layout_width="match_parent"
@@ -190,6 +191,7 @@
                         android:paddingStart="20dp"
                         android:text="@={vm.rePassword}"
                         android:textAppearance="@style/login_edit_text"
+                        android:textColor="@color/grayscale2"
                         android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -219,15 +221,15 @@
 
                 <EditText
                     android:id="@+id/et_nickname"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                     android:layout_width="match_parent"
+                    android:layout_height="48dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="20dp"
-                    android:inputType="text"
                     android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
                     android:fontFamily="@font/pretendard_medium"
                     android:hint="@string/request_nickname"
+                    android:inputType="text"
                     android:maxLength="8"
                     android:paddingStart="20dp"
                     android:text="@={vm.nickname}"
@@ -250,7 +252,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="0dp"
-                    android:layout_height="46dp"
+                    android:layout_height="48dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="38dp"
