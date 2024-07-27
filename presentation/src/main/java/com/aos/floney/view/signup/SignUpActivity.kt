@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
@@ -54,7 +55,6 @@ class SignUpActivity() :
         val navInflater = navController.navInflater
         val navGraph = navInflater.inflate(R.navigation.sign_up_nav)
 
-        Timber.e("intent.getStringExtra ${intent.getStringExtra("email")}")
         val destination = if(intent.getStringExtra("email")  != null) {
             R.id.signUpInputInfoFragment
         } else {
@@ -93,5 +93,4 @@ class SignUpActivity() :
         }
         finishAffinity()
     }
-
 }

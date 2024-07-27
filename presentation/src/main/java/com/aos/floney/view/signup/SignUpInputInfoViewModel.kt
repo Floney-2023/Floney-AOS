@@ -35,6 +35,9 @@ class SignUpInputInfoViewModel @Inject constructor(
     private var _nextPage = MutableEventFlow<Boolean>()
     val nextPage: EventFlow<Boolean> get() = _nextPage
 
+    private var tempEmail = ""
+    private var _socialEmail = MutableEventFlow<String>()
+    val socialEmail: EventFlow<String> get() = _socialEmail
     var email: LiveData<String> = stateHandle.getLiveData("email")
     var marketing: LiveData<Boolean> = stateHandle.getLiveData("marketing")
 
@@ -60,11 +63,9 @@ class SignUpInputInfoViewModel @Inject constructor(
                             viewModelScope.launch(Dispatchers.IO) {
                                 baseEvent(Event.ShowLoading)
                                 // 일반 회원가입인지 소셜 회원가입인지 구분
-                                Timber.e("socialProvider $socialProvider")
-                                Timber.e("social Token $socialToken")
                                 if(socialToken.equals("")) {
                                     // 일반 회원가입
-                                    signUpUseCase(email = email.value ?: "", nickname = nickname.value ?: "", password = password.value ?: "", receiveMarketing = marketing.value ?: false).onSuccess {
+                                    signUpUseCase(email.value ?: "", nickname = nickname.value ?: "", password = password.value ?: "", receiveMarketing = marketing.value ?: false).onSuccess {
                                         // 엑세스 토큰 저장
                                         prefs.setString("accessToken", it.accessToken)
                                         prefs.setString("refreshToken", it.refreshToken)
@@ -76,9 +77,13 @@ class SignUpInputInfoViewModel @Inject constructor(
                                         baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SignUpInputInfoViewModel)))
                                     }
                                 } else {
+                                    val email = if(email.value == "") {
+                                        tempEmail
+                                    } else {
+                                        email.value ?: tempEmail
+                                    }
                                     // 소셜 회원가입
-                                    signUpSocialUseCase(socialProvider ?: "", socialToken ?: "", email.value ?: "", nickname.value ?: "", marketing.value ?: false).onSuccess {
-                                        Timber.e("asdasdadsas")
+                                    signUpSocialUseCase(socialProvider ?: "", socialToken ?: "", email, nickname.value ?: "", marketing.value ?: false).onSuccess {
                                         // 엑세스 토큰 저장
                                         prefs.setString("accessToken", it.accessToken)
                                         prefs.setString("refreshToken", it.refreshToken)
@@ -91,7 +96,6 @@ class SignUpInputInfoViewModel @Inject constructor(
                                         baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SignUpInputInfoViewModel)))
                                     }
                                 }
-
                             }
                         } else {
                             // 닉네임 비어있을 경우
@@ -130,10 +134,14 @@ class SignUpInputInfoViewModel @Inject constructor(
     }
 
     // 소셜 회원가입 정보 저장
-    fun setSocialInfo(socialNickname: String, token: String?, provider: String) {
+    fun setSocialInfo(socialNickname: String, token: String?, provider: String, email: String) {
         nickname.value = socialNickname
         socialToken = token
         socialProvider = provider
+        tempEmail = email
+        viewModelScope.launch {
+            _socialEmail.emit(email)
+        }
     }
 
 }

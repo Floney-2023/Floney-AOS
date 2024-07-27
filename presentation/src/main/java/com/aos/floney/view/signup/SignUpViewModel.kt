@@ -6,6 +6,7 @@ import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.user.SocialUserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +19,10 @@ class SignUpViewModel @Inject constructor() : BaseViewModel() {
 
     // 소셜 회원가입 데이터 저장
     fun setSocialUserModel(provider: String, token: String, email: String, nickname: String) {
+        Timber.e("provider $provider")
+        Timber.e("token $token")
+        Timber.e("email $email")
+        Timber.e("nickname $nickname")
         socialUserModel = SocialUserModel(
             provider, token, email, nickname
         )
