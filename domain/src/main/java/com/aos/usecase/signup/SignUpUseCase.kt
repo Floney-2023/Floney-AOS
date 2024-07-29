@@ -2,6 +2,7 @@ package com.aos.usecase.signup
 
 import com.aos.model.user.PostSignUpUserModel
 import com.aos.repository.UserRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class SignUpUseCase @Inject constructor(private val userRepository: UserRepository) {

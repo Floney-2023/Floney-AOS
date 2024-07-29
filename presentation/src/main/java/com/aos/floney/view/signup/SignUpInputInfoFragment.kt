@@ -1,6 +1,8 @@
 package com.aos.floney.view.signup
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +22,9 @@ class SignUpInputInfoFragment : BaseFragment<FragmentSignUpInputInfoBinding, Sig
     override fun onStart() {
         super.onStart()
 
-        viewModel.setSocialInfo(activityViewModel.getSocialUserModel()?.nickname ?: "", activityViewModel.getSocialUserModel()?.token ?: "", activityViewModel.getSocialUserModel()?.provider ?: "")
+        Handler(Looper.getMainLooper()).postDelayed({
+            viewModel.setSocialInfo(activityViewModel.getSocialUserModel()?.nickname ?: "", activityViewModel.getSocialUserModel()?.token ?: "", activityViewModel.getSocialUserModel()?.provider ?: "", activityViewModel.getSocialUserModel()?.email ?: "")
+        }, 100)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +48,15 @@ class SignUpInputInfoFragment : BaseFragment<FragmentSignUpInputInfoBinding, Sig
             viewModel.back.collect {
                 if(it) {
                     findNavController().popBackStack()
+                }
+            }
+        }
+
+        repeatOnStarted {
+            // 이전 페이지 이동
+            viewModel.socialEmail.collect {
+                if(it.isNotEmpty()) {
+                    binding.etEmail.text = it
                 }
             }
         }
