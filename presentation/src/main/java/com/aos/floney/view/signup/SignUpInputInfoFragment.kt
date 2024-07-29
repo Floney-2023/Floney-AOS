@@ -47,7 +47,11 @@ class SignUpInputInfoFragment : BaseFragment<FragmentSignUpInputInfoBinding, Sig
             // 이전 페이지 이동
             viewModel.back.collect {
                 if(it) {
-                    findNavController().popBackStack()
+                    if(activityViewModel.getSocialUserModel()?.email != "") {
+                        activityViewModel.onClickedBack()
+                    } else {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySignUpBinding
+import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -33,6 +34,16 @@ class SignUpActivity() :
         super.onCreate(savedInstanceState)
 
         setupJetpackNavigation()
+        setupViewModelObserver()
+    }
+
+    private fun setupViewModelObserver() {
+        repeatOnStarted {
+            viewModel.onCLickBack.collect {
+                startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                finish()
+            }
+        }
     }
 
     private fun setupJetpackNavigation() {
