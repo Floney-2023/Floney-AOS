@@ -42,7 +42,6 @@ class SplashActivity :
         CurrencyUtil.currency = sharedPreferenceUtil.getString("symbol", "원")
     }
 
-
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         handleIntent(intent)
