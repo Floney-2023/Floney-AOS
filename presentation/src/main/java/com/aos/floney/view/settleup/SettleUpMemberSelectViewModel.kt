@@ -48,13 +48,10 @@ class SettleUpMemberSelectViewModel @Inject constructor(
     // 가계부 인원 불러오기
     fun getSettlementInform(){
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             booksUsersUseCase(prefs.getString("bookKey","")).onSuccess {
                 // 불러오기 성공
                 _booksUsersList.postValue(it)
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpMemberSelectViewModel)))
             }
         }

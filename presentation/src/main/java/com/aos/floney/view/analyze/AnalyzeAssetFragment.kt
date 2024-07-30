@@ -15,7 +15,7 @@ import timber.log.Timber
 class AnalyzeAssetFragment :
     BaseFragment<FragmentAnalyzeAssetBinding, AnalyzeAssetViewModel>(R.layout.fragment_analyze_asset) {
     private val activityViewModel: AnalyzeViewModel by activityViewModels()
-
+    override val applyTransition: Boolean = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

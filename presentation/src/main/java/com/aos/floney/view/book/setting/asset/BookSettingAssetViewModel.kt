@@ -69,13 +69,18 @@ class BookSettingAssetViewModel @Inject constructor(
     // 초기 자산 설정
     fun onClickSaveButton(){
         viewModelScope.launch {
+
+            baseEvent(Event.ShowLoading)
             booksInfoAssetUseCase(
                 prefs.getString("bookKey",""),
                 settingCost()).onSuccess {
 
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
                 _initAssetSheet.emit(true)
             }.onFailure {
+
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
             }
         }

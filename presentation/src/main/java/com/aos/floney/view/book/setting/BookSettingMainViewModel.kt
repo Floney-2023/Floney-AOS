@@ -117,6 +117,7 @@ class BookSettingMainViewModel @Inject constructor(
                 // me가 true인 항목이 맨 앞에 오도록 정렬
                 val sortedList = it.ourBookUsers.sortedByDescending { it.me }
 
+                CommonUtil.bookProfile = it.bookImg
                 _bookSettingInfo.postValue(it.copy(ourBookUsers = sortedList))
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingMainViewModel)))

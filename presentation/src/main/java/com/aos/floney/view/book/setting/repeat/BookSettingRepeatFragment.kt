@@ -2,6 +2,7 @@ package com.aos.floney.view.book.setting.repeat
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
@@ -13,6 +14,8 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.setting.BookSettingActivity
 import com.aos.floney.view.book.setting.BookSettingMainFragmentDirections
 import com.aos.floney.view.book.setting.currency.BookSettingCurrencyViewModel
+import com.aos.floney.view.book.setting.favorite.BookFavoriteActivity
+import com.aos.floney.view.common.BaseAlertDialog
 import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.model.book.Currency
 import com.aos.model.book.UiBookCategory
@@ -41,11 +44,27 @@ class BookSettingRepeatFragment : BaseFragment<FragmentBookSettingRepeatBinding,
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpUi()
         setUpViewModelObserver()
+        setUpBackButton()
+    }
+    fun setUpBackButton(){
+        // 뒤로 가기 콜백 등록
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+    }
+
+    override fun onBackPressed() {
+        viewModel.onClickPreviousPage()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this@BookSettingRepeatFragment)
@@ -57,6 +76,12 @@ class BookSettingRepeatFragment : BaseFragment<FragmentBookSettingRepeatBinding,
             viewModel.back.collect {
                 if(it) {
                     findNavController().popBackStack()
+                }else{ // 편집 모드일 경우
+                    BaseAlertDialog(title = "잠깐", info = "수정한 내용이 저장되지 않았습니다.\n그대로 나가시겠습니까?", false) {
+                        if(it) {
+                            findNavController().popBackStack()
+                        }
+                    }.show(parentFragmentManager, "baseAlertDialog")
                 }
             }
         }

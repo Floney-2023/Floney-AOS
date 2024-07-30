@@ -5,12 +5,15 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySignUpBinding
+import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SignUpActivity() :
@@ -31,6 +34,16 @@ class SignUpActivity() :
         super.onCreate(savedInstanceState)
 
         setupJetpackNavigation()
+        setupViewModelObserver()
+    }
+
+    private fun setupViewModelObserver() {
+        repeatOnStarted {
+            viewModel.onCLickBack.collect {
+                startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                finish()
+            }
+        }
     }
 
     private fun setupJetpackNavigation() {
@@ -38,6 +51,18 @@ class SignUpActivity() :
         val host =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = host.navController
+
+        val navInflater = navController.navInflater
+        val navGraph = navInflater.inflate(R.navigation.sign_up_nav)
+
+        val destination = if(intent.getStringExtra("email")  != null) {
+            R.id.signUpInputInfoFragment
+        } else {
+            R.id.signUpAgreeFragment
+        }
+
+        navGraph.setStartDestination(destination)
+        navController.graph = navGraph
     }
 
     // 회원가입 완료 후 로그인 페이지로 이동
@@ -68,5 +93,4 @@ class SignUpActivity() :
         }
         finishAffinity()
     }
-
 }

@@ -55,15 +55,22 @@ class BookSettingBudgetBottomSheetViewModel @Inject constructor(
     // 예산 저장
     fun onClickSaveButton(){
         viewModelScope.launch {
+
+            baseEvent(Event.ShowLoading)
             booksInfoBudgetUseCase(
                 prefs.getString("bookKey",""),
                 settingCost(),
                 date.value!! ).onSuccess {
+
+                baseEvent(Event.HideLoading)
+
                 if (cost.value!! == "")
                     _budgetSheet.emit("0${CurrencyUtil.currency}")
                 else
                     _budgetSheet.emit(cost.value!!)
+
             }.onFailure {
+                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingBudgetBottomSheetViewModel)))
             }
         }

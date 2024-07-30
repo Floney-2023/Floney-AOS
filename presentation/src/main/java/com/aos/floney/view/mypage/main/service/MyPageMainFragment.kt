@@ -59,20 +59,6 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
         super.onResume()
 
         viewModel.searchMypageItems()
-
-        if(viewModel.getUserProfile().equals("user_default")) {
-            Glide.with(requireContext())
-                .load(R.drawable.icon_default_profile)
-                .fitCenter()
-                .centerCrop()
-                .into(binding.ivProfile)
-        } else {
-            Glide.with(requireContext())
-                .load(viewModel.getUserProfile())
-                .fitCenter()
-                .centerCrop()
-                .into(binding.ivProfile)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -173,6 +159,13 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
                 }
             }
         }
+        repeatOnStarted {
+            viewModel.loadCheck.collect {
+                if(it) {
+                    loadProfileImage()
+                }
+            }
+        }
     }
     private fun settingAdvertiseTime(){
         viewModel.updateAdvertiseTime()
@@ -224,6 +217,21 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
             showLoadingDialog()
             Timber.e("광고가 아직 로드되지 않음 3")
             setUpAdMob()
+        }
+    }
+    fun loadProfileImage(){
+        if(viewModel.getUserProfile().equals("user_default")) {
+            Glide.with(requireContext())
+                .load(R.drawable.icon_default_profile)
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
+        } else {
+            Glide.with(requireContext())
+                .load(viewModel.getUserProfile())
+                .fitCenter()
+                .centerCrop()
+                .into(binding.ivProfile)
         }
     }
 }

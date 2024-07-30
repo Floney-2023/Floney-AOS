@@ -21,7 +21,7 @@ import timber.log.Timber
 class HomeDayTypeFragment : BaseFragment<FragmentHomeDayTypeBinding, HomeDayTypeViewModel>(R.layout.fragment_home_day_type), UiBookDayModel.OnItemClickListener {
 
     private val activityViewModel: HomeViewModel by activityViewModels()
-
+    override val applyTransition: Boolean = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)

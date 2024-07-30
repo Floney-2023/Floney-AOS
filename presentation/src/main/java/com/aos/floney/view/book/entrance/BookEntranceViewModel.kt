@@ -126,12 +126,7 @@ class BookEntranceViewModel @Inject constructor(
                 _inviteCodeExit.emit(true)
             }.onFailure {
                 _inviteCodeExit.emit(false)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookEntranceViewModel)))
             }
-        }
-
-        viewModelScope.launch {
-            _inviteCodeExit.emit(true)
         }
     }
 

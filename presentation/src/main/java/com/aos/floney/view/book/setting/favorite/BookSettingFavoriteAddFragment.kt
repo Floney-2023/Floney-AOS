@@ -2,6 +2,7 @@ package com.aos.floney.view.book.setting.favorite
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
@@ -23,6 +24,21 @@ class BookSettingFavoriteAddFragment :
         super.onViewCreated(view, savedInstanceState)
 
         setUpViewModelObserver()
+        setUpBackButton()
+    }
+    fun setUpBackButton(){
+        // 뒤로 가기 콜백 등록
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+    }
+
+    override fun onBackPressed() {
+        viewModel.onFavoriteAddClickCloseBtn()
     }
 
 

@@ -17,10 +17,10 @@
         tools:layout="@layout/fragment_my_page_main">
         <action
             android:id="@+id/action_myPageMainFragment_to_myPageServiceAskFragment"
-            app:destination="@id/myPageServiceAskFragment" />
+            app:destination="@id/myPageServiceAskFragment"/>
         <action
             android:id="@+id/action_myPageMainFragment_to_myPageServiceNoticeFragment"
-            app:destination="@id/myPageServiceNoticeFragment" />
+            app:destination="@id/myPageServiceNoticeFragment"/>
         <action
             android:id="@+id/action_myPageMainFragment_to_myPageServicePrivacyFragment"
             app:destination="@id/myPageServicePrivacyFragment" />

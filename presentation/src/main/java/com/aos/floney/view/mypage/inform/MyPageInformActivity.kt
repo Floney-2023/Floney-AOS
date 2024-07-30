@@ -23,7 +23,29 @@ class MyPageInformActivity :
 
         setupJetpackNavigation()
     }
+    override fun finish() {
+        super.finish()
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(
+                Activity.OVERRIDE_TRANSITION_CLOSE,
+                R.anim.anim_slide_in_from_left_fade_in,
+                android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, android.R.anim.fade_out)
+        }
+    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(
+                Activity.OVERRIDE_TRANSITION_CLOSE,
+                R.anim.anim_slide_in_from_left_fade_in,
+                android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(R.anim.anim_slide_in_from_left_fade_in, android.R.anim.fade_out)
+        }
+    }
     private fun setupJetpackNavigation() {
         val host = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_mypage_email_container) as NavHostFragment
         navController = host.navController

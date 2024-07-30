@@ -48,59 +48,60 @@
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title">
 
                 <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="92dp"
-                    android:layout_height="34dp"
-                    android:background="@drawable/custom_radius_12_solid_background_2"
+                    android:id="@+id/tv_last_month_income"
+                    android:layout_width="96dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/custom_radius_10_solid_background_2"
                     android:gravity="center"
                     android:text="@string/book_setting_bottom_carryinfo_total_income"
                     android:textColor="@color/grayscale2"
                     android:textSize="11dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_last_month_expense" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/iv_minus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_minus"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_last_month_expense"
+                    app:layout_constraintStart_toEndOf="@+id/tv_last_month_income"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="92dp"
-                    android:layout_height="34dp"
-                    android:background="@drawable/custom_radius_12_solid_background_2"
+                    android:id="@+id/tv_last_month_expense"
+                    android:layout_width="96dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/custom_radius_10_solid_background_2"
                     android:gravity="center"
                     android:text="@string/book_setting_bottom_carryinfo_total_outcome"
                     android:textColor="@color/grayscale2"
                     android:textSize="11dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView3"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_next_month_start"
+                    app:layout_constraintStart_toEndOf="@+id/tv_last_month_income"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/iv_equal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_equal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView3"
-                    app:layout_constraintStart_toEndOf="@+id/textView"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_next_month_start"
+                    app:layout_constraintStart_toEndOf="@+id/tv_last_month_expense"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="92dp"
-                    android:layout_height="34dp"
-                    android:background="@drawable/custom_radius_12_solid_primary5"
+                    android:id="@+id/tv_next_month_start"
+                    android:layout_width="96dp"
+                    android:layout_height="36dp"
+                    android:background="@drawable/custom_radius_10_solid_primary5"
                     android:gravity="center"
                     android:text="@string/book_setting_bottom_carryinfo_next_start_money"
+                    android:fontFamily="@font/pretendard_semibold"
                     android:textColor="@color/white"
                     android:textSize="11dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -114,15 +115,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/pretendard_regular"
+                android:lineSpacingExtra="4sp"
+                android:translationY="-1.84sp"
                 android:text="@string/book_setting_bottom_carryinfo_info"
                 android:textColor="@color/grayscale2"
-                android:textSize="12dp"
+                android:textSize="13dp"
                 app:layout_constraintStart_toStartOf="@+id/bottom_sheet_book_setting_title"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="46dp"
+                android:layout_height="48dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginBottom="30dp"
                 android:orientation="horizontal"
@@ -135,12 +138,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@{vm.carryInfo ? @drawable/custom_radius_12_solid_white_stroke_primary_2 : @drawable/custom_radius_12_solid_white_stroke_greyscale_8}"
+                    android:onClick="@{()-> vm.onClickedCarryInfoNo()}"
+                    android:background="@{!vm.carryInfo ? @drawable/custom_radius_12_solid_white_stroke_primary_2 : @drawable/custom_radius_12_solid_white_stroke_greyscale_8}"
                     android:gravity="center"
-                    android:text="@string/book_setting_bottom_carryinfo_on"
-                    android:onClick="@{()-> vm.onClickedCarryInfoYes()}"
-                    android:textColor="@{vm.carryInfo ? @color/primary2 : @color/grayscale8}"
+                    android:text="@string/book_setting_bottom_carryinfo_off"
+                    android:textColor="@{!vm.carryInfo ? @color/primary2 : @color/grayscale8}"
                     android:textSize="14dp" />
+
 
                 <View
                     android:layout_width="8dp"
@@ -150,12 +154,13 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{()-> vm.onClickedCarryInfoNo()}"
-                    android:background="@{!vm.carryInfo ? @drawable/custom_radius_12_solid_white_stroke_primary_2 : @drawable/custom_radius_12_solid_white_stroke_greyscale_8}"
+                    android:background="@{vm.carryInfo ? @drawable/custom_radius_12_solid_white_stroke_primary_2 : @drawable/custom_radius_12_solid_white_stroke_greyscale_8}"
                     android:gravity="center"
-                    android:text="@string/book_setting_bottom_carryinfo_off"
-                    android:textColor="@{!vm.carryInfo ? @color/primary2 : @color/grayscale8}"
+                    android:text="@string/book_setting_bottom_carryinfo_on"
+                    android:onClick="@{()-> vm.onClickedCarryInfoYes()}"
+                    android:textColor="@{vm.carryInfo ? @color/primary2 : @color/grayscale8}"
                     android:textSize="14dp" />
+
             </LinearLayout>
 
 

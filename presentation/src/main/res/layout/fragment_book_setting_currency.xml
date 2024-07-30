@@ -44,21 +44,30 @@
             android:layout_marginTop="52dp"
             android:fontFamily="@font/floney_pretendard_bold"
             android:text="@string/book_setting_currency_title"
-            android:textSize="22dp"
+            android:textSize="24dp"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_back" />
 
+        <ImageView
+            android:layout_width="88dp"
+            android:layout_height="78dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/icon_currency"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_currency_info"
+            app:layout_constraintEnd_toEndOf="parent" />
         <TextView
             android:id="@+id/tv_currency_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/book_setting_currency_info"
             android:textColor="@color/grayscale6"
-            android:textSize="13dp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_currency_title" />
 

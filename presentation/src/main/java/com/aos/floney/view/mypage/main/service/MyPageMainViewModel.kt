@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.CommonUtil
+import com.aos.data.util.CurrencyUtil
 import com.aos.floney.R
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.ext.parseErrorMsg
@@ -21,7 +22,9 @@ import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.util.convertStringToDate
 import com.aos.floney.util.getAdvertiseCheck
 import com.aos.floney.util.getCurrentDateTimeString
+import com.aos.model.book.getCurrencySymbolByCode
 import com.aos.model.user.MyBooks
+import com.aos.usecase.booksetting.BooksCurrencySearchUseCase
 import com.aos.usecase.mypage.RecentBookkeySaveUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -33,6 +36,7 @@ import kotlin.math.abs
 class MyPageMainViewModel @Inject constructor(
     private val prefs: SharedPreferenceUtil,
     private val mypageSearchUseCase : MypageSearchUseCase,
+    private val booksCurrencySearchUseCase : BooksCurrencySearchUseCase,
     private val recentBookKeySaveUseCase : RecentBookkeySaveUseCase
 ): BaseViewModel() {
 
@@ -87,6 +91,11 @@ class MyPageMainViewModel @Inject constructor(
     private var _supposePage = MutableEventFlow<Boolean>()
     val supposePage: EventFlow<Boolean> get() = _supposePage
 
+
+    // 마이페이지 정보 로드
+    private var _loadCheck = MutableEventFlow<Boolean>()
+    val loadCheck: EventFlow<Boolean> get() = _loadCheck
+
     init{
         settingAdvertiseTime()
         searchMypageItems()
@@ -99,7 +108,7 @@ class MyPageMainViewModel @Inject constructor(
 
             if (remainingMinutes <= 0) {
                 prefs.setString("advertiseTime", "")
-                _advertiseTime.postValue("06:00")
+                _advertiseTime.postValue("6:00")
             } else {
                 val hours = remainingMinutes / 60
                 val minutes = remainingMinutes % 60
@@ -108,7 +117,7 @@ class MyPageMainViewModel @Inject constructor(
 
         }
         else {
-            _advertiseTime.postValue("06:00")
+            _advertiseTime.postValue("6:00")
         }
     }
     // 광고 시청 시간 설정
@@ -132,9 +141,34 @@ class MyPageMainViewModel @Inject constructor(
                     }
                 })
 
+                CommonUtil.provider = it.provider
+                CommonUtil.userEmail = it.email
+                CommonUtil.userProfileImg = it.profileImg
+
                 _mypageInfo.postValue(updatedResult)
+                _loadCheck.emit(true)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
+            }
+        }
+    }
+    // 화폐 설정 조회
+    fun searchCurrency(){
+        viewModelScope.launch {
+            booksCurrencySearchUseCase(prefs.getString("bookKey", "")).onSuccess {
+                if(it.myBookCurrency != "") {
+                    baseEvent(Event.HideLoading)
+                    // 화폐 단위 저장
+                    prefs.setString("symbol", getCurrencySymbolByCode(it.myBookCurrency))
+                    CurrencyUtil.currency = getCurrencySymbolByCode(it.myBookCurrency)
+
+                } else {
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToastRes(R.string.currency_error))
+                }
+            }.onFailure {
+                baseEvent(Event.HideLoading)
+                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@MyPageMainViewModel)))
             }
         }
     }
@@ -200,15 +234,9 @@ class MyPageMainViewModel @Inject constructor(
         }
     }
 
-    // 최근 저장 가계부 저장
+    // 최근 저장 가계부 저장 (가계부 전환)
     fun settingBookKey(bookKey: String){
         viewModelScope.launch(Dispatchers.Main) {
-
-            // 애니메이션 사이클 지속 시간 계산
-            val animationDelay = 200L
-            val animationDuration = 600L
-            val minimumCycleDuration = animationDuration + animationDelay * 2
-
             withContext(Dispatchers.IO) {
                 if (mypageInfo.value!!.myBooks.size != 1 && bookKey != prefs.getString("bookKey","")) {// 가계부가 2개 이상일 때만 로딩 싸이클
                     recentBookKeySaveUseCase(bookKey).onSuccess {
@@ -229,12 +257,14 @@ class MyPageMainViewModel @Inject constructor(
                                 }
                             })
 
-                        delay(minimumCycleDuration)
-                        baseEvent(Event.HideLoading)
-
+                        delay(1000)
                         _mypageInfo.postValue(updatedResult)
 
+                        // 화폐 단위 가져오기
+                        searchCurrency()
+
                     }.onFailure {
+                        baseEvent(Event.HideLoading)
                         baseEvent(Event.ShowToast(it.message.parseErrorMsg()))
                     }
                 }

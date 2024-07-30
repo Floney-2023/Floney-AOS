@@ -322,11 +322,12 @@ class HistoryViewModel @Inject constructor(
     }
 
     // 즐겨찾기 데이터 입력 되었는지 체크
-    private fun isFavoriteInputData(): Boolean {
-        createFavoriteErrorMsg()
+    fun isFavoriteInputData(): Boolean {
         return cost.value != "" && asset.value != "자산을 선택하세요" && line.value != "분류를 선택하세요"
     }
-
+    fun isFavoriteAllData(): Boolean {
+        return cost.value != "" || asset.value != "자산을 선택하세요" || line.value != "분류를 선택하세요"
+    }
     // 에러 메세지 생성
     private fun createErrorMsg() {
         if(cost.value == "") {
@@ -366,6 +367,13 @@ class HistoryViewModel @Inject constructor(
             } else {
                 _onClickCloseBtn.emit(isExistAdd())
             }
+        }
+    }
+
+    // 즐겨찾기 추가 닫기 버튼 클릭
+    fun onFavoriteAddClickCloseBtn() {
+        viewModelScope.launch {
+            _onClickCloseBtn.emit(isFavoriteAllData())
         }
     }
 
@@ -595,8 +603,8 @@ class HistoryViewModel @Inject constructor(
                     baseEvent(Event.ShowToast("즐겨찾기 개수가 초과 되었습니다."))
                 }
             }
-
-
+        } else {
+            createFavoriteErrorMsg()
         }
     }
     fun isFavoriteMaxData(onResult: (Boolean) -> Unit) {

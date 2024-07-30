@@ -64,9 +64,17 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
     private var takeCaptureUri: Uri? = null
     private var imageBitmap: Bitmap? = null
 
+    // 기본 이미지 설정 여부
+    var isDefaultProfile: Boolean = false
+
+    init {
+        isDefaultProfile = getUserProfile() == "user_default"
+    }
     private fun getChangeProfile(path: String) {
         viewModelScope.launch(Dispatchers.IO) {
             changeProfileUseCase(path).onSuccess {
+                CommonUtil.userProfileImg = path
+                baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
                 baseEvent(Event.HideLoading)
                 _successProfileChange.emit(true)
             }.onFailure {
@@ -77,30 +85,36 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
     }
 
     // 파이어베이스 이미지 파일 업로드
-    fun uploadImageFile(bitmap: Bitmap) {
+    fun uploadImageFile(bitmap: Bitmap?) {
         baseEvent(Event.ShowLoading)
-        val storage = Firebase.storage
-        val storageRef = storage.reference
-        val imageRef = storageRef.child("dev/users/${getUserEmail()}/profile.jpg")
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
+        if (isDefaultProfile) {
+            getChangeProfile("user_default")
+        }
+        else {
+            val storage = Firebase.storage
+            val storageRef = storage.reference
+            val imageRef = storageRef.child("dev/users/${getUserEmail()}/profile.jpg")
+            val baos = ByteArrayOutputStream()
+            bitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
 
-        val uploadTask = imageRef.putBytes(data)
-        uploadTask.addOnFailureListener {
-            baseEvent(Event.HideLoading)
-            baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
-        }.addOnSuccessListener {
-            // 다운로드 링크 가져오기
-            it.storage.downloadUrl.addOnSuccessListener {uri ->
-                // 성공
-                getChangeProfile(uri.toString())
-            }.addOnFailureListener {
-                // 실패
+            val uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnFailureListener {
                 baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
+            }.addOnSuccessListener {
+                // 다운로드 링크 가져오기
+                it.storage.downloadUrl.addOnSuccessListener {uri ->
+                    // 성공
+                    getChangeProfile(uri.toString())
+                }.addOnFailureListener {
+                    // 실패
+                    baseEvent(Event.HideLoading)
+                    baseEvent(Event.ShowToast("프로필 변경이 실패하였습니다."))
+                }
             }
         }
+
     }
 
     // 사진 촬영을 위해 임시 파일 생성
@@ -199,6 +213,7 @@ class MyPageInformProfileChangeViewModel @Inject constructor(
     // 임시 촬영 파일 저장
     fun setImageBitmap(bitmap: Bitmap?) {
         imageBitmap = bitmap?.let { cropBitmapToSquare(it) }
+        isDefaultProfile = false
     }
 
     // 정사각형 크롭 이미지

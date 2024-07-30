@@ -12,6 +12,7 @@
         <variable
             name="eventHolder"
             type="com.aos.model.settlement.UiSettlementAddModel.OnItemClickListener" />
+
         <import type="android.view.View" />
     </data>
 
@@ -19,32 +20,40 @@
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
-        <ImageView
-            android:id="@+id/iv_check"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_check"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            setImageToUrl="@{item.useruserProfileImg}"
-            android:background="@drawable/background_circle_image"
-            android:clipToOutline="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
             android:layout_marginStart="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_check"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_circle_image"
+                android:scaleType="centerCrop"
+                setImageToUrl="@{item.useruserProfileImg}" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_outcomes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_check"
-            app:layout_constraintStart_toEndOf="@+id/iv_check"
-            app:layout_constraintTop_toTopOf="@+id/iv_check">
+            android:layout_marginStart="11dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_check"
+            app:layout_constraintStart_toEndOf="@+id/cv_check"
+            app:layout_constraintTop_toTopOf="@+id/cv_check">
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
+                android:fontFamily="@font/pretendard_medium"
                 android:text="@{item.userNickname}"
                 android:textColor="@color/grayscale2"
                 android:textSize="12dp"
@@ -55,11 +64,11 @@
                 android:id="@+id/tv_settle_up_complete_settlement_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/pretendard_medium"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/pretendard_bold"
                 android:text="@{item.moneyInfo.equals(`정산할 금액이 없어요.`) ? `` : item.money}"
                 android:textColor="@color/grayscale2"
-                android:textSize="16dp"
+                android:textSize="17dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -70,7 +79,7 @@
                 android:fontFamily="@font/pretendard_regular"
                 android:text="@{item.moneyInfo}"
                 android:textColor="@color/grayscale2"
-                android:textSize="16dp"
+                android:textSize="17dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_settle_up_complete_settlement_money"
                 app:layout_constraintStart_toEndOf="@+id/tv_settle_up_complete_settlement_money"
                 app:layout_constraintTop_toTopOf="@+id/tv_settle_up_complete_settlement_money"

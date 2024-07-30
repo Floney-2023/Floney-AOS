@@ -17,7 +17,7 @@ import timber.log.Timber
 class HomeMonthTypeFragment : BaseFragment<FragmentHomeMonthTypeBinding, HomeMonthTypeViewModel>(R.layout.fragment_home_month_type), UiBookMonthModel.OnItemClickListener{
 
     private val activityViewModel: HomeViewModel by activityViewModels()
-
+    override val applyTransition: Boolean = false
     override fun onItemClick(item: MonthMoney) {
         Timber.e("item $item")
         if(item.day != "") {

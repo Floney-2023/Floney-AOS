@@ -55,14 +55,11 @@ class BookSettingBudgetViewModel @Inject constructor(
 
     fun getBudgetInform(currentYear: String, yearStringFormat: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             booksBudgetCheckUseCase(prefs.getString("bookKey",""),yearStringFormat).onSuccess {
                 // 불러오기 성공
                 _budgetList.postValue(it)
                 _year.postValue(currentYear)
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingBudgetViewModel)))
             }
         }

@@ -37,8 +37,7 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
 
         setUpUi()
         setUpBottomNavigation()
-
-        viewModel.searchMypageItems()
+        setUpViewModelObserver()
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
@@ -69,28 +68,28 @@ class MyPageActivity : BaseActivity<ActivityMyPageBinding, MyPageViewModel>(R.la
         if (Build.VERSION.SDK_INT >= 34) {
             overrideActivityTransition(
                 Activity.OVERRIDE_TRANSITION_OPEN,
-                android.R.anim.fade_in,
+                R.anim.anim_slide_in_from_right_fade_in,
                 android.R.anim.fade_out
             )
         } else {
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, android.R.anim.fade_out)
         }
     }
     fun startInformActivity(){
         startActivity(Intent(this, MyPageInformActivity::class.java))
         if (Build.VERSION.SDK_INT >= 34) {
-            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, R.anim.anim_slide_in_from_right_fade_in, android.R.anim.fade_out)
         } else {
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, android.R.anim.fade_out)
         }
     }
 
     fun startSettingActivity() {
         startActivity(Intent(this, MyPageSettingActivity::class.java))
         if (Build.VERSION.SDK_INT >= 34) {
-            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, android.R.anim.fade_in, android.R.anim.fade_out)
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, R.anim.anim_slide_in_from_right_fade_in, android.R.anim.fade_out)
         } else {
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, android.R.anim.fade_out)
         }
     }
 

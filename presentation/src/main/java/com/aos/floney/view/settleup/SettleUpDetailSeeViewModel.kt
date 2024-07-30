@@ -57,14 +57,11 @@ class SettleUpDetailSeeViewModel @Inject constructor(
     fun getOutcomesItems(){
         Timber.e("yeah : ${id.value}")
         viewModelScope.launch(Dispatchers.IO) {
-            baseEvent(Event.ShowLoading)
             settlementDetailSeeUseCase(id.value!!).onSuccess {
                 // 불러오기 성공
                 _settlementModel.postValue(it)
 
-                baseEvent(Event.HideLoading)
             }.onFailure {
-                baseEvent(Event.HideLoading)
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@SettleUpDetailSeeViewModel)))
             }
         }

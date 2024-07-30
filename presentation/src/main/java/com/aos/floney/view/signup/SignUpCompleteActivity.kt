@@ -7,12 +7,13 @@ import android.os.Bundle
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySignUpBinding
+import com.aos.floney.databinding.ActivitySignUpCompleteBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.book.add.BookAddActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpCompleteActivity : BaseActivity<ActivitySignUpBinding, SignUpCompleteViewModel>(R.layout.activity_sign_up_complete) {
+class SignUpCompleteActivity : BaseActivity<ActivitySignUpCompleteBinding, SignUpCompleteViewModel>(R.layout.activity_sign_up_complete) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
