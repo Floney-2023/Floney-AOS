@@ -11,3 +11,17 @@ import com.suke.widget.SwitchButton
 fun SwitchButton.setChecked(isChecked: Boolean) {
     this.isChecked = isChecked
 }
+
+@BindingAdapter("app:onCheckedChanged")
+fun setOnCheckedChangeListener(
+    switchButton: SwitchButton,
+    listener: ((Boolean) -> Unit)?
+) {
+    if (listener != null) {
+        switchButton.setOnCheckedChangeListener { _, isChecked ->
+            listener(isChecked)
+        }
+    } else {
+        switchButton.setOnCheckedChangeListener(null)
+    }
+}

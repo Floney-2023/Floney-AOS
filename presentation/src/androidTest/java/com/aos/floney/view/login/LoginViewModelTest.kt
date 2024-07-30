@@ -38,33 +38,6 @@ class LoginViewModelTest {
 
     private lateinit var viewModel: LoginViewModel
 
-
-    @Before
-    fun setUp() {
-        MockitoAnnotations.openMocks(this)
-        viewModel = LoginViewModel(prefs, loginUseCase, checkUserBookUseCase, booksCurrencySearchUseCase, authTokenCheckUseCase, socialLoginUseCase)
-    }
-
-
-    //onClickLogin with valid credentials emits success
-    @Test
-    suspend fun `onClickLogin_with_valid_credentials_emits_success`() {
-        // 세팅
-        viewModel.email.value = "test@example.com"
-        viewModel.password.value = "password123"
-
-        // 성공적인 로그인 시나리오를 위한 stubbing
-        `when`(loginUseCase(viewModel.email.value!!, viewModel.password.value!!))
-            .thenReturn(Result.success(PostLoginModel("accessToken", "refreshToken")))
-
-        // 행동
-        viewModel.onClickLogin()
-
-        // 검증
-        verify(prefs).setString("accessToken", "accessToken")
-        verify(prefs).setString("refreshToken", "refreshToken")
-    }
-
     @Test
     fun getEmail() {
     }

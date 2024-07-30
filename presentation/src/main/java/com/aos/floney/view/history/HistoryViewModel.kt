@@ -43,6 +43,10 @@ class HistoryViewModel @Inject constructor(
     private val getBookFavoriteUseCase: GetBookFavoriteUseCase
 ) : BaseViewModel() {
 
+    val onCheckedChangeListener: (Boolean) -> Unit = { isChecked ->
+        onDeleteCheckedChange(isChecked)
+    }
+
     // 내역 추가 결과
     private var _postBooksLines = MutableEventFlow<Boolean>()
     val postBooksLines: EventFlow<Boolean> get() = _postBooksLines
