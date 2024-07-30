@@ -11,7 +11,11 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Base64
 import android.util.Log
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySplashBinding
@@ -39,6 +43,7 @@ class SplashActivity :
         super.onCreate(savedInstanceState)
         getAppKeyHash()
         setupSplashAnimation()
+        setStatusBarTransparent()
         CurrencyUtil.currency = sharedPreferenceUtil.getString("symbol", "원")
     }
 
@@ -184,6 +189,25 @@ class SplashActivity :
         } catch (e: Exception) {
             // TODO Auto-generated catch block
             Log.e("name not found", e.toString())
+        }
+    }
+    private fun AppCompatActivity.setStatusBarTransparent() {
+
+        window.apply {
+            setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                )
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= 30) {    // API 30 에 적용
+            WindowCompat.setDecorFitsSystemWindows(window, false)
         }
     }
 }
