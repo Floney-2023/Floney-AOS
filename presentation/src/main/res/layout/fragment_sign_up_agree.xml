@@ -71,7 +71,7 @@
             android:fontFamily="@font/pretendard_bold"
             android:text="@string/sign_up_agree_of_terms"
             android:textColor="@color/grayscale1"
-            android:textSize="24dp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@id/ll_page"
             app:layout_constraintTop_toBottomOf="@id/ll_page" />
 
@@ -95,7 +95,7 @@
             android:paddingBottom="4dp"
             android:text="@string/sign_up_all_agree_of_terms"
             android:textColor="@color/grayscale2"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_all_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_all_terms"
             app:layout_constraintTop_toTopOf="@id/iv_all_terms" />
@@ -132,7 +132,7 @@
             android:paddingBottom="4dp"
             android:text="@string/sign_up_terms_text_1"
             android:textColor="@color/grayscale2"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_service_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_service_terms"
             app:layout_constraintTop_toTopOf="@id/iv_service_terms" />
@@ -165,7 +165,7 @@
             android:paddingBottom="4dp"
             android:text="@string/sign_up_terms_text_2"
             android:textColor="@color/grayscale2"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_use_info_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_use_info_terms"
             app:layout_constraintTop_toTopOf="@id/iv_use_info_terms" />
@@ -198,7 +198,7 @@
             android:paddingBottom="4dp"
             android:text="@string/sign_up_terms_text_3"
             android:textColor="@color/grayscale2"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_marketing_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_marketing_terms"
             app:layout_constraintTop_toTopOf="@id/iv_marketing_terms" />
@@ -231,7 +231,7 @@
             android:paddingBottom="4dp"
             android:text="@string/sign_up_terms_text_4"
             android:textColor="@color/grayscale2"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_age_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_age_terms"
             app:layout_constraintTop_toTopOf="@id/iv_age_terms" />
@@ -246,14 +246,14 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="0dp"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginBottom="38dp"
             android:background="@drawable/custom_radius_12_solid_primary1"
             android:fontFamily="@font/pretendard_bold"
             android:onClick="@{() -> vm.onClickNextPage()}"
             android:text="@string/sign_up_next"
             android:textColor="@color/white"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/v_terms"
             app:layout_constraintStart_toStartOf="@id/v_terms" />

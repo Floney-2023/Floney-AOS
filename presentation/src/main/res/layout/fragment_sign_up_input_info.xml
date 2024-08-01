@@ -52,7 +52,7 @@
                         android:fontFamily="@font/pretendard_medium"
                         android:text="4"
                         android:textColor="@color/grayscale2"
-                        android:textSize="12dp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                         android:fontFamily="@font/pretendard_medium"
                         android:text="4"
                         android:textColor="@color/grayscale6"
-                        android:textSize="12dp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -81,7 +81,7 @@
                     android:fontFamily="@font/pretendard_bold"
                     android:text="@string/sign_up_input_sign_up_info"
                     android:textColor="@color/grayscale1"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="@id/ll_page"
                     app:layout_constraintTop_toBottomOf="@id/ll_page" />
 
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:fontFamily="@font/pretendard_semibold"
                     android:text="@string/email_address"
                     android:textColor="@color/grayscale6"
                     android:textSize="14sp"
@@ -105,7 +105,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:fontFamily="@font/pretendard_regular"
                     android:gravity="left|center_vertical"
                     android:paddingStart="20dp"
                     android:text="@{vm.email}"
@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:fontFamily="@font/pretendard_semibold"
                     android:text="@string/password"
                     android:textColor="@color/grayscale6"
                     android:textSize="14sp"
@@ -145,7 +145,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
-                        android:fontFamily="@font/pretendard_medium"
+                        android:fontFamily="@font/pretendard_regular"
                         android:hint="비밀번호"
                         android:inputType="textPassword"
                         android:paddingStart="20dp"
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:fontFamily="@font/pretendard_semibold"
                     android:text="@string/re_password"
                     android:textColor="@color/grayscale6"
                     android:textSize="14sp"
@@ -185,7 +185,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
-                        android:fontFamily="@font/pretendard_medium"
+                        android:fontFamily="@font/pretendard_regular"
                         android:hint="비밀번호"
                         android:inputType="textPassword"
                         android:paddingStart="20dp"
@@ -199,9 +199,10 @@
                     android:id="@+id/tv_password_rule"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:layout_marginTop="14dp"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:text="@string/password_rule"
+                    android:fontFamily="@font/pretendard_regular"
+                    android:text="@string/signup_rule"
                     android:textColor="@color/grayscale6"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@id/et_re_password"
@@ -212,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:fontFamily="@font/pretendard_semibold"
                     android:text="@string/nickname"
                     android:textColor="@color/grayscale6"
                     android:textSize="14sp"
@@ -221,13 +222,13 @@
 
                 <EditText
                     android:id="@+id/et_nickname"
-                     android:layout_width="match_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:fontFamily="@font/pretendard_regular"
                     android:hint="@string/request_nickname"
                     android:inputType="text"
                     android:maxLength="8"
@@ -242,8 +243,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:layout_marginTop="14dp"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:fontFamily="@font/pretendard_regular"
                     android:text="@string/nickname_rule"
                     android:textColor="@color/grayscale6"
                     android:textSize="12sp"
