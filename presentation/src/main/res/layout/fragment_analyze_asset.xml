@@ -26,6 +26,8 @@
             android:text="@{vm.postAssetResult.totalDifference}"
             android:textColor="@color/grayscale1"
             android:textSize="22sp"
+            android:lineSpacingExtra="7sp"
+            android:translationY="-3.37sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +40,8 @@
             android:text="@{vm.postAssetResult.difference}"
             android:textColor="@color/grayscale6"
             android:textSize="13sp"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
             app:layout_constraintStart_toStartOf="@id/tv_top_text"
             app:layout_constraintTop_toBottomOf="@id/tv_top_text" />
 

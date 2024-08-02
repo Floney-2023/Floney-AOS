@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
         <import type="android.view.View"/>
@@ -85,19 +86,21 @@
                 android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                 android:text="지출"
                 android:textColor="@{vm.flow == `지출` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14dp" />
+                android:textSize="14sp"
+                bind:adjustCategoryFont="@{vm.flow == `지출`}"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow == `수입` ? @drawable/custom_radius_8_solid_white : null}"
-                android:fontFamily="@font/pretendard_medium"
+                app:fontFamily="@font/pretendard_medium"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                 android:text="수입"
                 android:textColor="@{vm.flow == `수입` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14dp" />
+                android:textSize="14sp"
+                bind:adjustCategoryFont="@{vm.flow == `수입`}" />
 
 
             <TextView
@@ -110,7 +113,8 @@
                 android:onClick="@{() -> vm.onClickFlow(`예산`)}"
                 android:text="예산"
                 android:textColor="@{vm.flow == `예산` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14dp" />
+                android:textSize="14sp"
+                app:adjustCategoryFont="@{vm.flow == `예산`}" />
 
             <TextView
                 android:layout_width="0dp"
@@ -123,7 +127,8 @@
                 android:onClick="@{() -> vm.onClickFlow(`자산`)}"
                 android:text="자산"
                 android:textColor="@{vm.flow == `자산` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14dp" />
+                android:textSize="14sp"
+                app:adjustCategoryFont="@{vm.flow == `자산`}" />
 
         </LinearLayout>
 

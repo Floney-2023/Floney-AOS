@@ -1,12 +1,16 @@
 package com.aos.floney.ext
 
+import android.graphics.Typeface
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.checkDecimalPoint
+import com.aos.floney.R
 import com.aos.model.analyze.Asset
 import com.aos.model.analyze.UiAnalyzePlanModel
 import com.suke.widget.SwitchButton
@@ -176,3 +180,12 @@ fun SwitchButton.adjustDesign(isMarketingTerms: Boolean) {
     
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:adjustCategoryFont")
+fun TextView.adjustCategoryFont(isBold: Boolean) {
+    if (isBold) {
+        this.setTypeface(resources.getFont(R.font.pretendard_semibold), Typeface.NORMAL)
+    } else {
+        this.setTypeface(resources.getFont(R.font.pretendard_medium), Typeface.NORMAL)
+    }
+}
