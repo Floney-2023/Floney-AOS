@@ -161,7 +161,19 @@ fun TextView.adjustDayMoneyText(amount: String?) {
             }
             amountValue >= 1_000_000_000f -> {
                 this.textSize = 8f
-                this.text = "$amount.."
+                val adjustAmount = when {
+                    checkDecimalPoint() -> {
+                        "999,999,999.99"
+                    }
+
+                    !checkDecimalPoint() -> {
+                        "99,999,999,999"
+                    }
+                    else -> {
+                        amount
+                    }
+                }
+                this.text = "$adjustAmount.."
             }
         }
     }
