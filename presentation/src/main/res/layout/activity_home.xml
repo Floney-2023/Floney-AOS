@@ -144,7 +144,7 @@
                 android:layout_height="24dp"
                 android:layout_marginEnd="4dp"
                 android:background="@{vm.clickedShowType.equals(`day`) ? @drawable/custom_radius_5_solid_white : null}"
-                bind:adjustCategoryFont="@{vm.clickedShowType.equals(`month`)}"
+                bind:adjustCategoryFont="@{vm.clickedShowType.equals(`day`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickShowType(`day`)}"
                 android:text="일별"
