@@ -53,6 +53,7 @@
                 android:layout_height="64dp"
                 android:background="#FFFFFF"
                 app:itemPaddingTop="7dp"
+                app:itemTextAppearanceActiveBoldEnabled="false"
                 app:itemPaddingBottom="20dp"
                 app:itemActiveIndicatorStyle="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_setting"

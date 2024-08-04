@@ -55,6 +55,7 @@
                 android:background="#FFFFFF"
                 app:itemPaddingTop="7dp"
                 app:itemPaddingBottom="20dp"
+                app:itemTextAppearanceActiveBoldEnabled="false"
                 app:itemActiveIndicatorStyle="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_setting"
                 app:itemRippleColor="@android:color/transparent"
