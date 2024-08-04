@@ -437,9 +437,9 @@
 
     <!-- 달력에 사용하는 스타일 -->
     <style name="CustomTextAppearance" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/mcv_text_date_light</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
@@ -450,7 +450,6 @@
         <item name="colorAccent">@android:color/holo_red_light</item>
         <item name="colorPrimary">@android:color/holo_blue_light</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- 달력 안의 숫자들에 적용되는 스타일 -->
@@ -458,7 +457,7 @@
         <item name="android:textColor">@drawable/calendar_inner_text_color</item>
         <item name="android:weekNumberColor">@android:color/holo_red_light</item>
         <item name="android:textSize">14sp</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <!-- 달력 안의 요일들에 적용되는 스타일 -->
@@ -466,14 +465,14 @@
         <item name="android:textColor">@color/grayscale6</item>
         <item name="android:weekNumberColor">@android:color/holo_red_light</item>
         <item name="android:textSize">14sp</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <!-- 연, 월을 표시하는 헤더에 적용되는 스타일 -->
     <style name="CalendarWidgetHeader">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/grayscale2</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
 
 </resources>
