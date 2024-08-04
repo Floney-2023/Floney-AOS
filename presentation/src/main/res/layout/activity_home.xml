@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="82dp"
-            android:layout_height="20dp"
+            android:layout_width="84dp"
+            android:layout_height="22dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/logo_floney_horizontal_gray"
@@ -281,10 +281,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="#FFFFFF"
+                app:itemPaddingTop="7dp"
+                app:itemPaddingBottom="20dp"
                 app:itemActiveIndicatorStyle="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_setting"
                 app:itemRippleColor="@android:color/transparent"
-                app:itemTextColor="@color/bottom_gray"
+                app:itemTextColor="@drawable/bottom_navigation_setting"
+                app:itemTextAppearanceActive="@style/BottomNavigationTextAppearance"
+                app:itemTextAppearanceInactive="@style/BottomNavigationTextAppearance"
                 app:labelVisibilityMode="labeled"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:menu="@menu/nav_menu" />

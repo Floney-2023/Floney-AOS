@@ -107,7 +107,7 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="0.7dp"
             android:background="@color/grayscale7"
             app:layout_constraintBottom_toBottomOf="@id/tv_find_password"
             app:layout_constraintEnd_toEndOf="@id/tv_find_password"
@@ -130,7 +130,7 @@
 
         <View
             android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_height="0.7dp"
             android:background="@color/grayscale7"
             app:layout_constraintBottom_toBottomOf="@id/tv_sign_up"
             app:layout_constraintEnd_toEndOf="@id/tv_sign_up"
