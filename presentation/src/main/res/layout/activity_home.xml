@@ -205,7 +205,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@{vm.onClickedShowDetail.year + `년`}"
                 android:textColor="@color/grayscale6"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -217,7 +217,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@{vm.onClickedShowDetail.month + `월 `+ vm.onClickedShowDetail.day + `일`}"
                 android:textColor="@color/grayscale1"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_year"
                 app:layout_constraintTop_toBottomOf="@id/tv_year" />
 
@@ -230,8 +230,10 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="4dp"
                 android:paddingBottom="10dp"
+                android:fontFamily="@font/pretendard_semibold"
                 android:text="내역 추가"
                 android:textColor="@color/primary2"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_month_day"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_year" />
