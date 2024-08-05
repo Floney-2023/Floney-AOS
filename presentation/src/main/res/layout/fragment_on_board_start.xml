@@ -17,41 +17,44 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="30dp"
             android:text="@string/on_board_start_text"
             android:fontFamily="@font/pretendard_bold"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.28sp"
             android:textSize="24dp"
             android:id="@+id/tv_top"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/grayscale1"/>
-        
+
         <ImageView
-            android:layout_width="320dp"
-            android:layout_marginTop="32dp"
-            android:layout_height="426dp"
             android:id="@+id/iv_background"
-            android:src="@drawable/background_on_board_start"
+            android:layout_width="320dp"
+            android:layout_height="426dp"
+            android:layout_marginTop="10dp"
             android:scaleType="centerCrop"
-            app:layout_constraintTop_toBottomOf="@id/tv_top"
+            android:src="@drawable/background_on_board_start"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_top" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/appCompatButton6"
             android:layout_width="0dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="28dp"
-            android:background="@drawable/custom_radius_12_solid_primary1"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/on_board_start_button_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> vm.onClickStartBtn()}"
-            android:fontFamily="@font/pretendard_bold"
-            android:textSize="14dp"
-            android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/iv_background"
+            android:layout_height="48dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickStartBtn()}"
+            android:text="@string/on_board_start_button_text"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_background" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
