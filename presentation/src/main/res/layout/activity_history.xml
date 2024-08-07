@@ -33,10 +33,11 @@
             android:id="@+id/iv_favorite"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:padding="5dp"
+            android:layout_marginEnd="3dp"
+            android:onClick="@{() -> vm.onClickFavorite()}"
+            android:padding="4dp"
             android:src="@drawable/icon_favorite"
             android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
-            android:onClick="@{() -> vm.onClickFavorite()}"
             app:layout_constraintBottom_toBottomOf="@id/iv_close"
             app:layout_constraintEnd_toStartOf="@id/iv_repeat"
             app:layout_constraintTop_toTopOf="@id/iv_close" />
@@ -44,10 +45,11 @@
         <ImageView
             android:id="@+id/iv_repeat"
             android:layout_width="34dp"
-            android:layout_height="34dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="20dp"
             android:onClick="@{() -> vm.onClickRepeat()}"
-            android:padding="5dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
             android:src="@{vm.repeatClickItem != null ? @drawable/icon_repeat_enable : @drawable/icon_repeat}"
             android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_close"
@@ -57,23 +59,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="34dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:layout_marginTop="0dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
             android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
             android:textColor="@{vm.mode.equals(`add`) ? @color/primary1 : @color/grayscale6}"
-            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
             android:textSize="12sp"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="@+id/iv_repeat"
-            app:layout_constraintBottom_toBottomOf="@id/iv_repeat"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="@+id/iv_repeat"
+            app:layout_constraintStart_toStartOf="@+id/iv_repeat"
             app:layout_constraintTop_toBottomOf="@id/iv_repeat" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="34dp"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_regular"
             android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
             android:textColor="@color/grayscale6"
             android:visibility="@{vm.mode.equals(`add`) ? View.GONE: View.VISIBLE}"
@@ -93,7 +94,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="금액"
             android:textColor="@color/grayscale6"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_close" />
 
@@ -101,7 +102,7 @@
             android:id="@+id/et_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="24dp"
             android:background="@null"
             android:fontFamily="@font/pretendard_bold"
@@ -112,7 +113,7 @@
             android:text="@{vm.cost}"
             android:textColor="@color/primary2"
             android:textColorHint="@color/grayscale9"
-            android:textSize="36dp"
+            android:textSize="38sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_money"
             app:layout_constraintTop_toBottomOf="@id/tv_money"
@@ -140,24 +141,24 @@
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`지출`) ? @drawable/custom_radius_8_solid_white : null}"
-                android:fontFamily="@font/pretendard_medium"
+                bind:adjustCategoryFont="@{vm.flow.equals(`지출`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                 android:text="지출"
                 android:textColor="@{vm.flow.equals(`지출`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`수입`) ? @drawable/custom_radius_8_solid_white : null}"
-                android:fontFamily="@font/pretendard_medium"
+                bind:adjustCategoryFont="@{vm.flow.equals(`수입`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                 android:text="수입"
                 android:textColor="@{vm.flow.equals(`수입`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -165,12 +166,12 @@
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`이체`) ? @drawable/custom_radius_8_solid_white : null}"
-                android:fontFamily="@font/pretendard_medium"
+                bind:adjustCategoryFont="@{vm.flow.equals(`이체`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`이체`)}"
                 android:text="이체"
                 android:textColor="@{vm.flow.equals(`이체`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -183,7 +184,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="날짜"
             android:textColor="@color/grayscale4"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_category" />
 
@@ -198,7 +199,7 @@
             android:paddingBottom="10dp"
             android:text="@{vm.date}"
             android:textColor="@{vm.date.equals(`날짜를 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_date" />
@@ -211,7 +212,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="자산"
             android:textColor="@color/grayscale4"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_date"
             app:layout_constraintTop_toBottomOf="@id/tv_date" />
 
@@ -226,7 +227,7 @@
             android:paddingBottom="10dp"
             android:text="@{vm.asset}"
             android:textColor="@{vm.asset.equals(`자산을 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_asset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_asset" />
@@ -239,7 +240,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="분류"
             android:textColor="@color/grayscale4"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_asset"
             app:layout_constraintTop_toBottomOf="@id/tv_asset" />
 
@@ -254,7 +255,7 @@
             android:paddingBottom="10dp"
             android:text="@{vm.line}"
             android:textColor="@{vm.line.equals(`분류를 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_category"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_category" />
@@ -267,7 +268,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="내용"
             android:textColor="@color/grayscale4"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_category"
             app:layout_constraintTop_toBottomOf="@id/tv_category" />
 
@@ -288,7 +289,7 @@
             android:text="@={vm.content}"
             android:textColor="@color/grayscale2"
             android:textColorHint="@color/grayscale6"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:constraintSet="@id/tv_content"
             app:layout_constraintBottom_toBottomOf="@id/tv_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -304,7 +305,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@{vm.flow.equals(`지출`) ? `예산에서 제외` : `자산에서 제외`}"
             android:textColor="@color/grayscale4"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:visibility="@{vm.flow.equals(`이체`) ? View.GONE : View.VISIBLE}"
             app:layout_constraintStart_toStartOf="@id/tv_category"
             app:layout_constraintTop_toBottomOf="@id/tv_content" />
@@ -330,12 +331,12 @@
             android:layout_width="118dp"
             android:layout_height="66dp"
             android:background="@color/grayscale2"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_bold"
             android:gravity="center"
             android:onClick="@{() -> vm.onClickDeleteBtn()}"
             android:text="삭제"
             android:textColor="@color/white"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:visibility="@{vm.mode.equals(`modify`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -345,7 +346,7 @@
             android:layout_width="0dp"
             android:layout_height="66dp"
             android:background="@color/primary1"
-            android:fontFamily="@font/pretendard_medium"
+            android:fontFamily="@font/pretendard_bold"
             android:gravity="center"
             android:onClick="@{() -> vm.onClickSaveBtn()}"
             android:text="저장하기"
@@ -362,6 +363,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@{`작성자 : ` + vm.nickname}"
             android:textColor="@color/grayscale8"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/btn_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

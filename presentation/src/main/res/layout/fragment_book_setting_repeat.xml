@@ -56,7 +56,7 @@
             android:layout_marginTop="52dp"
             android:fontFamily="@font/floney_pretendard_bold"
             android:text="반복 내역"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_back" />
@@ -72,7 +72,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="반복 기능을 통해\n편하게 기록해 보세요"
             android:textColor="@color/grayscale6"
-            android:textSize="13dp"
+            android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_currency_title" />
 
@@ -105,10 +105,10 @@
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`지출`) ? @drawable/custom_radius_8_solid_white : null}"
-                android:fontFamily="@font/pretendard_semibold"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                 android:text="지출"
+                bind:adjustCategoryFont="@{vm.flow.equals(`지출`)}"
                 android:textColor="@{vm.flow.equals(`지출`) ? @color/grayscale2 : @color/grayscale8}"
                 android:textSize="14dp" />
 
@@ -117,7 +117,7 @@
                 android:layout_height="32dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`수입`) ? @drawable/custom_radius_8_solid_white : null}"
-                android:fontFamily="@font/pretendard_semibold"
+                bind:adjustCategoryFont="@{vm.flow.equals(`수입`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                 android:text="수입"
@@ -130,7 +130,7 @@
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:background="@{vm.flow.equals(`이체`) ? @drawable/custom_radius_8_solid_white : null}"
-                android:fontFamily="@font/pretendard_semibold"
+                bind:adjustCategoryFont="@{vm.flow.equals(`이체`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickFlow(`이체`)}"
                 android:text="이체"

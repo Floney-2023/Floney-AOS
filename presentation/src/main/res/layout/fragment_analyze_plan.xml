@@ -28,6 +28,8 @@
             android:lineHeight="33dp"
             android:text="@{`현재 예산의\n` + vm.postAnalyzePlan.percent + `%를 사용했어요`}"
             android:textColor="@color/grayscale1"
+            android:lineSpacingExtra="7sp"
+            android:translationY="-3.37sp"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,6 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
             android:fontFamily="@font/pretendard_medium"
             android:lineHeight="18dp"
             android:text="@{`남은 기간동안 하루에\n` + vm.postAnalyzePlan.divMoney + `을 사용할 수 있어요`}"
@@ -83,7 +87,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="남은 금액"
             android:textColor="@color/grayscale6"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/tv_total_money"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
             app:layout_constraintTop_toBottomOf="@id/tv_score" />
@@ -91,13 +95,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="11dp"
             android:ellipsize="end"
             android:fontFamily="@font/pretendard_bold"
             android:maxLines="1"
             android:text="@{vm.postAnalyzePlan.leftMoney}"
             android:textColor="@color/grayscale2"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/tv_remainder_money"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
             app:layout_constraintTop_toBottomOf="@id/tv_remainder_money" />
@@ -112,7 +116,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="총예산"
             android:textColor="@color/grayscale6"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_remainder_money"
             app:layout_constraintTop_toBottomOf="@id/tv_score" />
@@ -120,13 +124,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="11dp"
             android:ellipsize="end"
             android:fontFamily="@font/pretendard_bold"
             android:maxLines="1"
             android:text="@{vm.postAnalyzePlan.initBudget}"
             android:textColor="@color/grayscale2"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/tv_total_money"
             app:layout_constraintStart_toStartOf="@id/tv_total_money"
             app:layout_constraintTop_toBottomOf="@id/tv_total_money" />
@@ -158,7 +162,9 @@
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
             android:textColor="@color/grayscale7"
-            android:textSize="12dp"
+            android:textSize="12sp"
+            android:lineSpacingExtra="2sp"
+            android:translationY="-1.24sp"
             app:layout_constraintEnd_toEndOf="@id/iv_score"
             app:layout_constraintStart_toStartOf="@id/iv_score"
             app:layout_constraintTop_toBottomOf="@id/iv_score"
@@ -166,7 +172,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="62dp"
             android:layout_marginEnd="20dp"

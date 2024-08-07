@@ -48,6 +48,7 @@
             android:text="@{item.uiPercent}"
             android:fontFamily="@font/pretendard_regular"
             android:textColor="@color/grayscale5"
+            android:textSize="14sp"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +64,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:textSize="16dp"/>
+            android:textSize="16sp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

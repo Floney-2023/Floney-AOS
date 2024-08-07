@@ -18,7 +18,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="54dp"
+        android:layout_width="match_parent"
         android:layout_height="66dp"
         android:onClick="@{() -> eventHolder.onItemClick(item)}">
 
@@ -29,6 +29,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
             android:text="@{item.day}"
+            android:layout_marginBottom="4dp"
             android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,10 +52,11 @@
             android:id="@+id/tv_cost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginBottom="3dp"
             android:ellipsize="end"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
+            android:letterSpacing="-0.02"
             android:maxLines="1"
             bind:adjustDayMoneyText="@{item.expenses.income}"
             android:textColor="@color/blue1"
@@ -65,10 +67,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginBottom="3dp"
             android:ellipsize="end"
             android:fontFamily="@font/pretendard_regular"
             android:gravity="center"
+            android:letterSpacing="-0.02"
             android:maxLines="1"
             bind:adjustDayMoneyText="@{item.expenses.outcome}"
             android:textColor="@color/red"

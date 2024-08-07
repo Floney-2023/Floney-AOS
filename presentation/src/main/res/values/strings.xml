@@ -45,6 +45,7 @@
     <string name="sign_up">회원가입 하기</string>
     <string name="simple_login">간편 로그인</string>
     <string name="currency_error">화폐 단위를 불러오지 못했습니다.</string>
+    <string name="signup_rule">* 영문(대소문자 구분 없음), 숫자, 특수문자 포함 8자 이상</string>
 
     <!--PasswordFindActivity-->
     <string name="find_password_text">가입한 이메일 주소를 입력하세요.\n로그인 가능한 임시 비밀번호를 보내드립니다.</string>

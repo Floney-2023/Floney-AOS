@@ -18,14 +18,15 @@
             android:id="@+id/worm_dots_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="80dp"
             app:dampingRatio="0.8"
             app:dotsColor="@color/primary5"
-            app:dotsCornerRadius="10dp"
-            app:dotsSize="12dp"
-            app:dotsSpacing="10dp"
+            app:dotsCornerRadius="8dp"
+            app:dotsWidthFactor="2.5"
+            app:dotsSize="10dp"
+            app:dotsSpacing="9dp"
             app:dotsStrokeColor="@color/grayscale8"
-            app:dotsStrokeWidth="6dp"
+            app:dotsStrokeWidth="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:stiffness="300" />
@@ -34,12 +35,12 @@
             android:id="@+id/viewpaper2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/worm_dots_indicator"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/worm_dots_indicator" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

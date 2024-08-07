@@ -28,8 +28,8 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="82dp"
-            android:layout_height="20dp"
+            android:layout_width="84dp"
+            android:layout_height="22dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/logo_floney_horizontal_gray"
@@ -87,7 +87,7 @@
             android:layout_width="24dp"
             android:layout_height="28dp"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="37dp"
+            android:layout_marginTop="35dp"
             android:onClick="@{() -> vm.onClickPreviousMonth()}"
             android:src="@drawable/icon_previous_month"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,7 @@
             android:text="@{vm.showDate}"
             android:onClick="@{() -> vm.onClickChoiceDate()}"
             android:textColor="@color/grayscale1"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"
             app:layout_constraintStart_toEndOf="@id/iv_previous_month"
             app:layout_constraintTop_toTopOf="@id/iv_previous_month" />
@@ -132,24 +132,24 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="4dp"
                 android:background="@{vm.clickedShowType.equals(`month`) ? @drawable/custom_radius_5_solid_white : null}"
-                android:fontFamily="@font/pretendard_medium"
+                bind:adjustCategoryFont="@{vm.clickedShowType.equals(`month`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickShowType(`month`)}"
                 android:text="캘린더"
                 android:textColor="@{vm.clickedShowType.equals(`month`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="11dp" />
+                android:textSize="11sp" />
 
             <TextView
                 android:layout_width="54dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="4dp"
                 android:background="@{vm.clickedShowType.equals(`day`) ? @drawable/custom_radius_5_solid_white : null}"
-                android:fontFamily="@font/pretendard_medium"
+                bind:adjustCategoryFont="@{vm.clickedShowType.equals(`day`)}"
                 android:gravity="center"
                 android:onClick="@{() -> vm.onClickShowType(`day`)}"
                 android:text="일별"
                 android:textColor="@{vm.clickedShowType.equals(`day`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="11dp" />
+                android:textSize="11sp" />
 
         </LinearLayout>
 
@@ -205,7 +205,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@{vm.onClickedShowDetail.year + `년`}"
                 android:textColor="@color/grayscale6"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -217,7 +217,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="@{vm.onClickedShowDetail.month + `월 `+ vm.onClickedShowDetail.day + `일`}"
                 android:textColor="@color/grayscale1"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@id/tv_year"
                 app:layout_constraintTop_toBottomOf="@id/tv_year" />
 
@@ -230,8 +230,10 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="4dp"
                 android:paddingBottom="10dp"
+                android:fontFamily="@font/pretendard_semibold"
                 android:text="내역 추가"
                 android:textColor="@color/primary2"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_month_day"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_year" />
@@ -281,10 +283,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="#FFFFFF"
+                app:itemPaddingTop="7dp"
+                app:itemPaddingBottom="20dp"
+                app:itemTextAppearanceActiveBoldEnabled="false"
                 app:itemActiveIndicatorStyle="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_setting"
                 app:itemRippleColor="@android:color/transparent"
-                app:itemTextColor="@color/bottom_gray"
+                app:itemTextColor="@drawable/bottom_navigation_setting"
+                app:itemTextAppearanceActive="@style/BottomNavigationTextAppearance"
+                app:itemTextAppearanceInactive="@style/BottomNavigationTextAppearance"
                 app:labelVisibilityMode="labeled"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:menu="@menu/nav_menu" />
