@@ -1,26 +1,16 @@
 package com.aos.floney.view.signup
 
-import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.aos.floney.R
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.databinding.FragmentSignUpAgreeBinding
 import com.aos.floney.ext.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import timber.log.Timber
+
 
 @AndroidEntryPoint
 class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgreeViewModel>(R.layout.fragment_sign_up_agree) {
@@ -59,6 +49,11 @@ class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgree
                 }
             }
         }
-    }
 
+        // 약관 페이지 이동
+        viewModel.clickedTerms.observe(viewLifecycleOwner) { url ->
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        }
+    }
 }

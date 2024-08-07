@@ -49,6 +49,10 @@ class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
     private var _ageTerms = MutableLiveData<Boolean>(false)
     val ageTerms: LiveData<Boolean> get() = _ageTerms
 
+    // 약관 페이지 이동
+    private var _clickedTerms = MutableLiveData<String>()
+    val clickedTerms: LiveData<String> get() = _clickedTerms
+
     // 전체 동의 클릭
     fun onClickAllTerms() {
         val flag = !_allTerms.value!!
@@ -58,6 +62,10 @@ class SignUpAgreeViewModel @Inject constructor(): BaseViewModel() {
         _useInfoTerms.postValue(flag)
         _marketingTerms.postValue(flag)
         _ageTerms.postValue(flag)
+    }
+
+    fun onClickMoveTermsUrl(url: String) {
+        _clickedTerms.postValue(url)
     }
 
     // 서비스 이용 약관 클릭

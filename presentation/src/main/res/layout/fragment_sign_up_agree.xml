@@ -123,7 +123,7 @@
             app:layout_constraintTop_toBottomOf="@id/v_terms" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
             android:onClick="@{() -> vm.onClickServiceTerms()}"
@@ -133,13 +133,16 @@
             android:text="@string/sign_up_terms_text_1"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@id/iv_service"
             app:layout_constraintBottom_toBottomOf="@id/iv_service_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_service_terms"
             app:layout_constraintTop_toTopOf="@id/iv_service_terms" />
 
         <ImageView
+            android:id="@+id/iv_service"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:onClick="@{() -> vm.onClickMoveTermsUrl(`https://naver.me/GedVYW84`)}"
             android:src="@drawable/icon_chevron_right"
             app:layout_constraintBottom_toBottomOf="@id/iv_service_terms"
             app:layout_constraintEnd_toEndOf="@id/v_terms"
@@ -156,7 +159,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_service_terms" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
             android:onClick="@{() -> vm.onClickUseInfoTerms()}"
@@ -166,13 +169,16 @@
             android:text="@string/sign_up_terms_text_2"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@id/iv_marketing"
             app:layout_constraintBottom_toBottomOf="@id/iv_use_info_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_use_info_terms"
             app:layout_constraintTop_toTopOf="@id/iv_use_info_terms" />
 
         <ImageView
+            android:id="@+id/iv_marketing"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:onClick="@{() -> vm.onClickMoveTermsUrl(`https://naver.me/GqN3MfZE`)}"
             android:src="@drawable/icon_chevron_right"
             app:layout_constraintBottom_toBottomOf="@id/iv_use_info_terms"
             app:layout_constraintEnd_toEndOf="@id/v_terms"
@@ -189,7 +195,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_use_info_terms" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
             android:onClick="@{() -> vm.onClickMarketingTerms()}"
@@ -199,14 +205,17 @@
             android:text="@string/sign_up_terms_text_3"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_chevron"
             app:layout_constraintBottom_toBottomOf="@id/iv_marketing_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_marketing_terms"
             app:layout_constraintTop_toTopOf="@id/iv_marketing_terms" />
 
         <ImageView
+            android:id="@+id/iv_chevron"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/icon_chevron_right"
+            android:onClick="@{() -> vm.onClickMoveTermsUrl(`https://naver.me/Fep6TgSi`)}"
             app:layout_constraintBottom_toBottomOf="@id/iv_marketing_terms"
             app:layout_constraintEnd_toEndOf="@id/v_terms"
             app:layout_constraintTop_toTopOf="@id/iv_marketing_terms" />
@@ -222,7 +231,7 @@
             app:layout_constraintTop_toBottomOf="@id/iv_marketing_terms" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_regular"
             android:onClick="@{() -> vm.onClickAgeTerms()}"
@@ -232,11 +241,13 @@
             android:text="@string/sign_up_terms_text_4"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/iv_chevron_right"
             app:layout_constraintBottom_toBottomOf="@id/iv_age_terms"
             app:layout_constraintStart_toEndOf="@+id/iv_age_terms"
             app:layout_constraintTop_toTopOf="@id/iv_age_terms" />
 
         <ImageView
+            android:id="@+id/iv_chevron_right"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/icon_chevron_right"
