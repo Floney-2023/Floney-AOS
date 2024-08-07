@@ -76,6 +76,7 @@
                 android:textColor="@color/grayscale2"
                 android:textSize="14dp"
                 android:maxLength="10"
+                android:textColorHint="@color/grayscale6"
                 android:fontFamily="@font/pretendard_regular"
                 android:background="@drawable/custom_radius_12_solid_greyscale_12_stroke_greyscale_10"
                 android:padding="16dp"

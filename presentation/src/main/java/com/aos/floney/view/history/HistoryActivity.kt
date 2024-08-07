@@ -213,7 +213,7 @@ class HistoryActivity :
                     } else {
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                     }
-                    finish()
+                    finishAffinity()
                 }
             }
         }

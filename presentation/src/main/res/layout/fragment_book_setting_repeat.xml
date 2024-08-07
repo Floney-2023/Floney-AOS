@@ -44,6 +44,7 @@
             android:onClick="@{() -> vm.onClickEdit()}"
             android:text="@{vm.edit ? `완료` : `편집`}"
             android:textSize="14dp"
+            android:textColor="@color/grayscale2"
             android:visibility="@{vm.repeatList.size() == 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/iv_back"
             app:layout_constraintEnd_toEndOf="parent"

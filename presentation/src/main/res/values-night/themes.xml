@@ -207,12 +207,12 @@
     <!--LoginActivity-->
     <style name="login_edit_text" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/grayscale6</item>
-        <item name="android:textCursorDrawable">@color/grayscale6</item>
+        <item name="android:textColor">@color/grayscale2</item>
+        <item name="android:textCursorDrawable">@color/grayscale2</item>
         <item name="android:textColorHint">@color/grayscale6</item>
         <item name="hintTextColor">@color/grayscale6</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
     </style>
 
     <style name="login_underscore_text">

@@ -57,7 +57,7 @@ class BookSettingFavoriteViewModel @Inject constructor(
 
     fun onClickPreviousPage() {
         viewModelScope.launch {
-            if (edit.value!!)
+            if (edit.value!!&& favoriteList.value!!.isNotEmpty())
             {
                 _back.emit(false)
             }

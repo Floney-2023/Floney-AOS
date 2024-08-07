@@ -79,7 +79,7 @@ class BookSettingCategoryViewModel @Inject constructor(
 
     fun onClickPreviousPage() {
         viewModelScope.launch {
-            if (edit.value!!)
+            if (edit.value!! && categoryList.value!!.isNotEmpty())
             {
                 _back.emit(false)
             }

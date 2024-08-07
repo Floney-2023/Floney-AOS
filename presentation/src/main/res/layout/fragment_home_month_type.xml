@@ -158,7 +158,7 @@
                     android:fontFamily="@font/pretendard_medium"
                     android:text="총지출"
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     app:layout_constraintEnd_toStartOf="@id/tv_total_income"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -171,11 +171,12 @@
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="@{vm.getExtData.totalOutcome}"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/tv_total_outcome"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@id/tv_total_outcome"
                     app:layout_constraintTop_toBottomOf="@id/tv_total_outcome"
+                    app:layout_constraintVertical_bias="1.0"
                     bind:adjustTotalMoneyText="@{vm.getExtData.totalOutcome}" />
 
                 <TextView
@@ -185,7 +186,7 @@
                     android:fontFamily="@font/pretendard_medium"
                     android:text="총수입"
                     android:textColor="@color/white"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tv_total_outcome"
                     app:layout_constraintTop_toTopOf="@id/tv_total_outcome" />
@@ -198,7 +199,6 @@
                     android:fontFamily="@font/pretendard_semibold"
                     android:text="@{vm.getExtData.totalIncome}"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/tv_total_income"
                     app:layout_constraintTop_toBottomOf="@id/tv_total_income"

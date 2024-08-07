@@ -64,7 +64,7 @@
             android:gravity="center"
             android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
             android:textColor="@{vm.mode.equals(`add`) ? @color/primary1 : @color/grayscale6}"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="@+id/iv_repeat"
             app:layout_constraintStart_toStartOf="@+id/iv_repeat"
@@ -94,7 +94,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="금액"
             android:textColor="@color/grayscale6"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_close" />
 
@@ -108,12 +108,13 @@
             android:fontFamily="@font/pretendard_bold"
             android:gravity="left|center_vertical"
             android:hint="금액을 입력하세요"
+            android:textCursorDrawable="@drawable/custom_cursor_primary2"
             android:maxLength="18"
             android:onTextChanged="@{vm.onCostTextChanged}"
             android:text="@{vm.cost}"
             android:textColor="@color/primary2"
             android:textColorHint="@color/grayscale9"
-            android:textSize="38sp"
+            android:textSize="38dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_money"
             app:layout_constraintTop_toBottomOf="@id/tv_money"
@@ -146,7 +147,7 @@
                 android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                 android:text="지출"
                 android:textColor="@{vm.flow.equals(`지출`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -158,7 +159,7 @@
                 android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                 android:text="수입"
                 android:textColor="@{vm.flow.equals(`수입`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -171,7 +172,7 @@
                 android:onClick="@{() -> vm.onClickFlow(`이체`)}"
                 android:text="이체"
                 android:textColor="@{vm.flow.equals(`이체`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -336,7 +337,7 @@
             android:onClick="@{() -> vm.onClickDeleteBtn()}"
             android:text="삭제"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:visibility="@{vm.mode.equals(`modify`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -363,7 +364,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@{`작성자 : ` + vm.nickname}"
             android:textColor="@color/grayscale8"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintBottom_toTopOf="@id/btn_save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

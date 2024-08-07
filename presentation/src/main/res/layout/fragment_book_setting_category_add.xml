@@ -160,6 +160,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:hint="이름을 입력하세요."
             android:maxLength="6"
+            android:textColorHint="@color/grayscale6"
             android:paddingStart="20dp"
             android:text="@={vm.name}"
             android:textColor="@color/grayscale2"

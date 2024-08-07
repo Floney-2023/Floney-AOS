@@ -82,7 +82,7 @@ class BookSettingRepeatViewModel @Inject constructor(
 
     fun onClickPreviousPage() {
         viewModelScope.launch {
-            if (edit.value!!)
+            if (edit.value!! && repeatList.value!!.isNotEmpty())
             {
                 _back.emit(false)
             }

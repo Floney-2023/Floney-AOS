@@ -23,6 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/li_member_select_view"
             android:layout_width="match_parent"
+            android:onClick="@{() -> eventHolder.onItemClick(item)}"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="23dp"
@@ -36,7 +37,6 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="7dp"
-                android:onClick="@{() -> eventHolder.onItemClick(item)}"
                 android:src="@drawable/icon_delete"
                 android:visibility="@{item.checked ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"

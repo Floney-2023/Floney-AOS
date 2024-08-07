@@ -30,7 +30,7 @@
             android:textColor="@color/grayscale1"
             android:lineSpacingExtra="7sp"
             android:translationY="-3.37sp"
-            android:textSize="22sp"
+            android:textSize="22dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,7 @@
             android:lineHeight="18dp"
             android:text="@{`남은 기간동안 하루에\n` + vm.postAnalyzePlan.divMoney + `을 사용할 수 있어요`}"
             android:textColor="@color/grayscale6"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
             app:layout_constraintTop_toBottomOf="@id/tv_out_come_cash" />
 
@@ -87,7 +87,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="남은 금액"
             android:textColor="@color/grayscale6"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toStartOf="@id/tv_total_money"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
             app:layout_constraintTop_toBottomOf="@id/tv_score" />
@@ -101,7 +101,7 @@
             android:maxLines="1"
             android:text="@{vm.postAnalyzePlan.leftMoney}"
             android:textColor="@color/grayscale2"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="@id/tv_remainder_money"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
             app:layout_constraintTop_toBottomOf="@id/tv_remainder_money" />
@@ -116,7 +116,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="총예산"
             android:textColor="@color/grayscale6"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_remainder_money"
             app:layout_constraintTop_toBottomOf="@id/tv_score" />
@@ -130,7 +130,7 @@
             android:maxLines="1"
             android:text="@{vm.postAnalyzePlan.initBudget}"
             android:textColor="@color/grayscale2"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="@id/tv_total_money"
             app:layout_constraintStart_toStartOf="@id/tv_total_money"
             app:layout_constraintTop_toBottomOf="@id/tv_total_money" />
@@ -162,7 +162,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
             android:textColor="@color/grayscale7"
-            android:textSize="12sp"
+            android:textSize="12dp"
             android:lineSpacingExtra="2sp"
             android:translationY="-1.24sp"
             app:layout_constraintEnd_toEndOf="@id/iv_score"
@@ -182,7 +182,7 @@
             android:visibility="@{vm.postAnalyzePlan.initBudget.equals(`0원`) ? View.VISIBLE : View.GONE}"
             android:onClick="@{() -> vm.onClickSetBudget()}"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_score" />
 

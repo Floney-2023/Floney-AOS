@@ -19,6 +19,8 @@
         <variable
             name="eventHolder"
             type="com.aos.model.book.UiBookCategory.OnItemClickListener" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,6 +49,7 @@
             android:paddingStart="8dp"
             android:textColor="@color/grayscale4"
             android:textSize="14sp"
+            android:visibility="@{vm.mode.equals(`favorite`) ? View.GONE : View.VISIBLE}"
             android:onClick="@{() -> dialog.onClickEditBtn()}"
             android:fontFamily="@font/pretendard_regular"
             android:paddingTop="8dp"

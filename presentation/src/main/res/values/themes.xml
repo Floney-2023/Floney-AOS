@@ -141,7 +141,7 @@
     </style>
 
     <style name="first_onboard_passbtn">
-        <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">#8C8C8C</item>
     </style>
 
@@ -207,8 +207,8 @@
     <!--LoginActivity-->
     <style name="login_edit_text" parent="Widget.Design.TextInputLayout">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/grayscale6</item>
-        <item name="android:textCursorDrawable">@color/grayscale6</item>
+        <item name="android:textColor">@color/grayscale2</item>
+        <item name="android:textCursorDrawable">@color/grayscale2</item>
         <item name="android:textColorHint">@color/grayscale6</item>
         <item name="hintTextColor">@color/grayscale6</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>

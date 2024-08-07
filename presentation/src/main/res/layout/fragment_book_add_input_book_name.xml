@@ -100,6 +100,7 @@
             android:fontFamily="@font/pretendard_regular"
             android:hint="@string/book_add_new_book_name_input_hint"
             android:paddingStart="20dp"
+            android:textColorHint="@color/grayscale6"
             android:text="@={vm.bookName}"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"

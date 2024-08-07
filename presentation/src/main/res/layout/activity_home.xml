@@ -77,7 +77,7 @@
             android:paddingEnd="8dp"
             android:text="@{vm.bookInfo.bookName}"
             android:textColor="@color/white"
-            android:textSize="11sp"
+            android:textSize="11dp"
             app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"
             app:layout_constraintEnd_toStartOf="@id/cv_book_profile"
             app:layout_constraintTop_toTopOf="@id/cv_book_profile" />
@@ -102,7 +102,7 @@
             android:text="@{vm.showDate}"
             android:onClick="@{() -> vm.onClickChoiceDate()}"
             android:textColor="@color/grayscale1"
-            android:textSize="20sp"
+            android:textSize="21dp"
             app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"
             app:layout_constraintStart_toEndOf="@id/iv_previous_month"
             app:layout_constraintTop_toTopOf="@id/iv_previous_month" />
@@ -137,7 +137,7 @@
                 android:onClick="@{() -> vm.onClickShowType(`month`)}"
                 android:text="캘린더"
                 android:textColor="@{vm.clickedShowType.equals(`month`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="11sp" />
+                android:textSize="11dp" />
 
             <TextView
                 android:layout_width="54dp"
@@ -149,7 +149,7 @@
                 android:onClick="@{() -> vm.onClickShowType(`day`)}"
                 android:text="일별"
                 android:textColor="@{vm.clickedShowType.equals(`day`) ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="11sp" />
+                android:textSize="11dp" />
 
         </LinearLayout>
 
@@ -233,7 +233,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="내역 추가"
                 android:textColor="@color/primary2"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_month_day"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_year" />

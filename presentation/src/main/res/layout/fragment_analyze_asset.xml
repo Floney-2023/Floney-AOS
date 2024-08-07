@@ -25,7 +25,7 @@
             android:lineHeight="33dp"
             android:text="@{vm.postAssetResult.totalDifference}"
             android:textColor="@color/grayscale1"
-            android:textSize="22sp"
+            android:textSize="22dp"
             android:lineSpacingExtra="7sp"
             android:translationY="-3.37sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,12 +34,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/pretendard_medium"
             android:lineHeight="18.2dp"
             android:text="@{vm.postAssetResult.difference}"
             android:textColor="@color/grayscale6"
-            android:textSize="13sp"
+            android:textSize="13dp"
             android:lineSpacingExtra="3sp"
             android:translationY="-1.34sp"
             app:layout_constraintStart_toStartOf="@id/tv_top_text"
@@ -58,7 +58,7 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_one"
             android:layout_width="20dp"
-            android:layout_height="160dp"
+            android:layout_height="146dp"
             android:layout_marginStart="48dp"
             app:layout_constraintEnd_toStartOf="@id/barchart_one"
             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_two"
             android:layout_width="20dp"
-            android:layout_height="160dp"
+            android:layout_height="146dp"
             app:layout_constraintEnd_toStartOf="@id/barchart_three"
             app:layout_constraintStart_toEndOf="@id/barchart_one"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -75,7 +75,7 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_three"
             android:layout_width="20dp"
-            android:layout_height="160dp"
+            android:layout_height="146dp"
             app:layout_constraintEnd_toStartOf="@id/barchart_four"
             app:layout_constraintStart_toEndOf="@id/barchart_two"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -83,7 +83,7 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_four"
             android:layout_width="20dp"
-            android:layout_height="160dp"
+            android:layout_height="146dp"
             app:layout_constraintEnd_toStartOf="@id/barchart_five"
             app:layout_constraintStart_toEndOf="@id/barchart_three"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -91,7 +91,7 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_five"
             android:layout_width="20dp"
-            android:layout_height="160dp"
+            android:layout_height="146dp"
             app:layout_constraintEnd_toStartOf="@id/barchart_this_month"
             app:layout_constraintStart_toEndOf="@id/barchart_four"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -99,7 +99,7 @@
         <com.aos.floney.view.analyze.AnalyzeAssetThisMonthBarChart
             android:id="@+id/barchart_this_month"
             android:layout_width="20dp"
-            android:layout_height="160dp"
+            android:layout_height="146dp"
             android:layout_marginTop="28dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barchart_five"
@@ -114,7 +114,7 @@
             android:gravity="center"
             android:textColor="@color/grayscale6"
             bind:setAssetMonthText="@{vm.postAssetResult.analyzeResult[0]}"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="@id/barchart_one"
             app:layout_constraintStart_toStartOf="@id/barchart_one"
             app:layout_constraintTop_toBottomOf="@id/barchart_one" />
@@ -189,7 +189,7 @@
             android:layout_height="wrap_content"
             android:text="현재자산"
             android:textColor="@color/grayscale6"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:fontFamily="@font/pretendard_medium"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp"
@@ -203,7 +203,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_bold"
             android:layout_marginTop="12dp"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:text="@{vm.postAssetResult.currentAsset}"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="@id/tv_now_asset"
@@ -214,7 +214,7 @@
             android:layout_height="wrap_content"
             android:text="초기자산"
             android:textColor="@color/grayscale6"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:fontFamily="@font/pretendard_medium"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp"
@@ -227,7 +227,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_bold"
             android:layout_marginTop="12dp"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textColor="@color/grayscale2"
             android:text="@{vm.postAssetResult.initAsset}"
             app:layout_constraintStart_toStartOf="@id/tv_init_asset"

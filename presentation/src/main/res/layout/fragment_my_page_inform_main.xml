@@ -74,6 +74,7 @@
                 android:layout_weight="95"
                 android:hint="@{vm.hintName}"
                 android:textColor="@color/grayscale2"
+                android:textColorHint="@color/grayscale6"
                 android:textSize="14dp"
                 android:maxLength="8"
                 android:fontFamily="@font/pretendard_regular"

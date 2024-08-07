@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@{item.category}"
             android:textColor="@color/grayscale2"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:fontFamily="@font/pretendard_medium"
             app:layout_constraintStart_toEndOf="@id/cv_stick"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +48,7 @@
             android:text="@{item.uiPercent}"
             android:fontFamily="@font/pretendard_regular"
             android:textColor="@color/grayscale5"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -64,7 +64,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:textSize="16sp"/>
+            android:textSize="16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

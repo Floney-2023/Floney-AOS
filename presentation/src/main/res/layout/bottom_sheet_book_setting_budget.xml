@@ -72,6 +72,7 @@
                     android:inputType="number"
                     android:maxLength="15"
                     android:hint="@string/book_setting_budget_hint"
+                    android:textColorHint="@color/grayscale6"
                     android:fontFamily="@font/pretendard_regular"
                     android:text="@{vm.cost}"
                     android:onTextChanged="@{vm.onCostTextChanged}"

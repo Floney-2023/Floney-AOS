@@ -36,7 +36,7 @@
             android:translationY="-3.37sp"
             android:text="@{vm.postAnalyzeInComeCategoryResult.total}"
             android:textColor="@color/grayscale1"
-            android:textSize="22sp"
+            android:textSize="22dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,7 @@
             android:translationY="-1.34sp"
             android:text="@{vm.postAnalyzeInComeCategoryResult.differance}"
             android:textColor="@color/grayscale6"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
             app:layout_constraintTop_toBottomOf="@id/tv_out_come_cash" />
 

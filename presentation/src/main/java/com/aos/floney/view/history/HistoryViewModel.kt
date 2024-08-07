@@ -193,6 +193,10 @@ class HistoryViewModel @Inject constructor(
         flow.value = item.lineCategoryName
         deleteChecked.value = item.exceptStatus
     }
+    // 즐겨찾기 추가 모드 설정
+    fun setFavoriteMode(){
+        mode.value = "favorite"
+    }
     // 자산/분류 카테고리 항목 가져오기
     private fun getBookCategory() {
         viewModelScope.launch(Dispatchers.IO) {
