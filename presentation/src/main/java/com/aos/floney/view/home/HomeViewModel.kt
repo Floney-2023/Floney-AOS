@@ -287,7 +287,7 @@ class HomeViewModel @Inject constructor(
     private fun setTodayDate() {
         val dateArr = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date()).split("-")
         _calendar.value.set(Calendar.YEAR, dateArr[0].toInt())
-        _calendar.value.set(Calendar.MONTH, dateArr[1].toInt())
+        _calendar.value.set(Calendar.MONTH, dateArr[1].toInt() - 1)
         _calendar.value.set(Calendar.DATE, dateArr[2].toInt())
     }
 

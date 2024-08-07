@@ -15,8 +15,6 @@ z
 Jpresentation/src/main/java/com/aos/floney/view/home/HomeDayTypeFragment.kt,3\1\31d1f716bd5f43c48096625eb8b60a5dae0828c6
 i
 9domain/src/main/java/com/aos/model/home/UiBookDayModel.kt,0\d\0da57c918a5909c50067d99faf0cb6d944d6af76
-s
-Cpresentation/src/main/java/com/aos/floney/view/home/HomeActivity.kt,e\d\ed1922070df2016b792aba2dddc774187240fecf
 x
 Hpresentation/src/main/java/com/aos/floney/view/common/BaseAlertDialog.kt,2\2\22804d0f3dd795a7c6961425c4b9871a713e1c43
 g
