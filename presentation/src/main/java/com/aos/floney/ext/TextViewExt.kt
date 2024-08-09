@@ -2,6 +2,7 @@ package com.aos.floney.ext
 
 import android.graphics.Typeface
 import android.os.Build
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
@@ -127,13 +128,13 @@ fun TextView.adjustTotalMoneyText(amount: String?) {
 
         when {
             amountValue < 1_000_000_000 -> {
-                this.textSize = 18f
+                this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18f)
             }
             amountValue in 1_000_000_000..99_999_999_999 -> {
-                this.textSize = 16f
+                this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16f)
             }
             else -> {
-                this.textSize = 16f
+                this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16f)
             }
         }
 
@@ -169,11 +170,11 @@ fun TextView.adjustDayMoneyText(amount: String?) {
         val amountValue = kotlin.math.abs(amount.replace(",", "").toDoubleOrNull() ?: return)
         when {
             amountValue < 1_000_000_000 -> {
-                this.textSize = 9f
+                this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9f)
                 this.text = amount
             }
             amountValue >= 1_000_000_000f -> {
-                this.textSize = 8f
+                this.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 8f)
                 val adjustAmount = when {
                     checkDecimalPoint() -> {
                         "999,999,999.99"

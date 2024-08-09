@@ -210,10 +210,14 @@ class HistoryViewModel @Inject constructor(
                     line.value
                 }
 
-                val item = it.map { innerItem ->
-                    if (innerItem.name == tempValue) {
-                        categoryClickItem = innerItem
+                val item = it.mapIndexed { index, innerItem ->
 
+                    if ((asset.value == "자산을 선택하세요" || line.value == "분류를 선택하세요") && index == 0) {
+                        UiBookCategory(
+                            innerItem.idx, true, innerItem.name, innerItem.default
+                        )
+                    } else if (innerItem.name == tempValue) {
+                        categoryClickItem = innerItem
                         UiBookCategory(
                             innerItem.idx, true, innerItem.name, innerItem.default
                         )
