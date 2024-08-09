@@ -285,6 +285,8 @@
                 android:background="#FFFFFF"
                 app:itemPaddingTop="7dp"
                 app:itemPaddingBottom="20dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 app:itemTextAppearanceActiveBoldEnabled="false"
                 app:itemActiveIndicatorStyle="@android:color/transparent"
                 app:itemIconTint="@drawable/bottom_navigation_setting"

@@ -35,7 +35,7 @@
             android:paddingBottom="12dp"
             android:text="@{item.name}"
             android:textColor="@{item.checked == true ? @color/primary2 : @color/grayscale6}"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

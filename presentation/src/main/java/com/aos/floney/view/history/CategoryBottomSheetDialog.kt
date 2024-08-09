@@ -2,6 +2,7 @@ package com.aos.floney.view.history
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
@@ -14,6 +15,7 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.internal.notifyAll
 import timber.log.Timber
@@ -36,6 +38,7 @@ class CategoryBottomSheetDialog(
 
         setUpUi()
         setUpGridLayoutManger()
+        setBottomSheetHeight()
     }
 
     private fun setUpUi() {
@@ -59,6 +62,14 @@ class CategoryBottomSheetDialog(
         binding.rvCategory.itemAnimator = null
     }
 
+    private fun setBottomSheetHeight() {
+        val bottomSheet = findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        bottomSheet?.let {
+            val behavior = BottomSheetBehavior.from(it)
+            it.layoutParams.height = (context.resources.displayMetrics.heightPixels * 0.65).toInt()
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+    }
     fun onClickChoiceBtn() {
         if(viewModel.isClickedCategoryItem()) {
             // 선택 버튼 클릭 리스너

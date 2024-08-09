@@ -53,6 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="#FFFFFF"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 app:itemPaddingTop="7dp"
                 app:itemPaddingBottom="20dp"
                 app:itemTextAppearanceActiveBoldEnabled="false"

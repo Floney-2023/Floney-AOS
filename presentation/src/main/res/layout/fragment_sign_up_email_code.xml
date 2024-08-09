@@ -208,15 +208,19 @@
 
         <TextView
             android:id="@+id/tv_time"
-            android:layout_width="55dp"
-            android:layout_height="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/custom_radius_8_solid_primary10"
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:text="@{vm.timerText}"
             android:textColor="@color/primary2"
-            android:textSize="20sp"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_email_code" />

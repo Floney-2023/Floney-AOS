@@ -51,6 +51,8 @@
                 android:id="@+id/bottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:background="#FFFFFF"
                 app:itemPaddingTop="7dp"
                 app:itemTextAppearanceActiveBoldEnabled="false"

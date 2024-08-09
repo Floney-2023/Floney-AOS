@@ -30,17 +30,30 @@
 
         <ImageView
             android:id="@+id/iv_background"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="30dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/item_on_board_show_flow"
+            android:src="@drawable/icon_onboard_show_flow"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_top" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_top"
+            app:layout_constraintVertical_bias="0.0" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1" />
         <TextView
             android:id="@+id/tv_skip"
             android:layout_width="wrap_content"

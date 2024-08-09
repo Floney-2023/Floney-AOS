@@ -25,6 +25,7 @@
             android:layout_height="34dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
+            bind:setProfileStatus="@{true}"
             app:cardCornerRadius="100dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,12 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/pretendard_semibold"
-            bind:setTextWithEllipsis="@{item.description}"
             android:textColor="@color/grayscale2"
             android:textSize="14dp"
             app:layout_constraintStart_toEndOf="@id/cv_profile_card_view"
-            app:layout_constraintTop_toTopOf="@id/cv_profile_card_view" />
+            app:layout_constraintTop_toTopOf="parent"
+            bind:setTextWithEllipsis="@{item.description}" />
 
         <LinearLayout
             android:layout_width="wrap_content"

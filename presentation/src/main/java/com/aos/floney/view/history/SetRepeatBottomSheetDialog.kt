@@ -11,6 +11,10 @@ import com.aos.floney.base.BaseViewModel
 import com.aos.floney.databinding.BottomSheetCategoryBinding
 import com.aos.floney.databinding.BottomSheetSetRepeatBinding
 import com.aos.model.book.UiBookCategory
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.internal.notifyAll
 import timber.log.Timber
@@ -46,9 +50,11 @@ class SetRepeatBottomSheetDialog(
     }
 
     private fun setUpGridLayoutManger() {
-        val layoutManager = GridLayoutManager(context, 5)
-        binding.rvCategory.layoutManager = layoutManager
-        binding.rvCategory.setHasFixedSize(true)
+        val flexboxLayoutManager = FlexboxLayoutManager(context)
+        flexboxLayoutManager.flexWrap = FlexWrap.WRAP
+        flexboxLayoutManager.flexDirection = FlexDirection.ROW
+        flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
+        binding.rvCategory.layoutManager = flexboxLayoutManager
         binding.rvCategory.itemAnimator = null
     }
 

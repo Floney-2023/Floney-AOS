@@ -1,7 +1,9 @@
 package com.aos.floney.ext
 
 import android.graphics.Color
+import android.view.View
 import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
@@ -54,11 +56,21 @@ fun ImageView.setBookImageToUrl(url: String?) {
             .into(this)
     }
 }
+
+@BindingAdapter("setProfileStatus")
+fun CardView.setProfileStatus(status: Boolean) {
+    val prefs = SharedPreferenceUtil(context)
+    if (!prefs.getBoolean("seeProfileStatus", status)) {
+        this.visibility = View.GONE
+    } else {
+        this.visibility = View.VISIBLE
+    }
+}
 @BindingAdapter("setUserImageToUrl")
 fun ImageView.setUserImageToUrl(url: String?) {
-    url?.let {
-        val prefs = SharedPreferenceUtil(context)
 
+    val prefs = SharedPreferenceUtil(context)
+    url?.let {
         if(!prefs.getBoolean("seeProfileStatus",true) || it.equals("user_default")) {
             Glide.with(this)
                 .load(R.drawable.icon_default_profile)
