@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="23dp"
             android:fontFamily="@font/pretendard_bold"
             android:lineHeight="33dp"
             android:text="@{`현재 예산의\n` + vm.postAnalyzePlan.percent + `%를 사용했어요`}"
@@ -43,7 +43,7 @@
             android:translationY="-1.34sp"
             android:fontFamily="@font/pretendard_medium"
             android:lineHeight="18dp"
-            android:text="@{`남은 기간동안 하루에\n` + vm.postAnalyzePlan.divMoney + `을 사용할 수 있어요`}"
+            android:text="@{`남은 기간 동안 하루에\n` + vm.postAnalyzePlan.divMoney + `을 사용할 수 있어요`}"
             android:textColor="@color/grayscale6"
             android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/tv_out_come_cash"
@@ -52,32 +52,26 @@
         <ImageView
             android:layout_width="76dp"
             android:layout_height="80dp"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="24dp"
             android:src="@drawable/analyze_plan_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_out_come_cash" />
 
-        <com.aos.floney.view.analyze.CustomCircleBarView
+        <me.bastanfar.semicirclearcprogressbar.SemiCircleArcProgressBar
             android:id="@+id/circle_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="130dp"
-            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginTop="162dp"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="@id/circle_view"
-            app:layout_constraintStart_toStartOf="@id/circle_view"
-            app:layout_constraintTop_toTopOf="@id/circle_view" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_different_cash"
+            app:progressBarColor="@color/primary1"
+            app:progressBarWidth="52"
+            app:progressPlaceHolderColor="@color/grayscale10"
+            app:progressPlaceHolderWidth="52" />
 
         <TextView
             android:id="@+id/tv_remainder_money"
@@ -114,7 +108,7 @@
             android:layout_marginTop="42dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/pretendard_medium"
-            android:text="총예산"
+            android:text="총 예산"
             android:textColor="@color/grayscale6"
             android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -136,6 +130,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_total_money" />
 
         <View
+            android:id="@+id/view4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#d9FFFFFF"
@@ -147,18 +142,18 @@
             android:id="@+id/iv_score"
             android:layout_width="50dp"
             android:layout_height="84dp"
-            android:layout_marginTop="96dp"
-            bind:setAnalyzeImage="@{vm.postAnalyzePlan}"
+            android:layout_marginBottom="-10dp"
             android:src="@drawable/analyze_plan_0_49_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/circle_view"
             app:layout_constraintEnd_toEndOf="@id/circle_view"
             app:layout_constraintStart_toStartOf="@id/circle_view"
-            app:layout_constraintTop_toTopOf="@id/circle_view" />
+            bind:setAnalyzeImage="@{vm.postAnalyzePlan}" />
 
         <TextView
             android:id="@+id/tv_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            bind:setDynamicMarginTop="@{vm.postAnalyzePlan.initBudget.equals(`0원`)}"
             android:fontFamily="@font/pretendard_medium"
             android:gravity="center"
             android:textColor="@color/grayscale7"

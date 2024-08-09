@@ -3,10 +3,12 @@ package com.aos.floney.ext
 import android.graphics.Typeface
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
 import com.aos.data.util.checkDecimalPoint
@@ -56,6 +58,17 @@ fun TextView.setPlanText(item: UiAnalyzePlanModel?) {
         }
     } else {
         this.text = ""
+    }
+}
+
+@BindingAdapter("setDynamicMarginTop")
+fun TextView.setDynamicMarginTop(isZeroWon: Boolean) {
+    val marginInDp = if (isZeroWon) 26 else 10
+    val density = this.context.resources.displayMetrics.density
+    val marginInPx = (marginInDp * density).toInt()
+
+    this.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+        topMargin = marginInPx
     }
 }
 

@@ -50,7 +50,7 @@
                 android:text="@{vm.showDate}"
                 android:onClick="@{() -> vm.onClickChoiceDate()}"
                 android:textColor="@color/grayscale1"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="2dp"/>
 
@@ -87,7 +87,7 @@
                 android:onClick="@{() -> vm.onClickFlow(`지출`)}"
                 android:text="지출"
                 android:textColor="@{vm.flow == `지출` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 bind:adjustCategoryFont="@{vm.flow == `지출`}"/>
 
             <TextView
@@ -99,7 +99,7 @@
                 android:onClick="@{() -> vm.onClickFlow(`수입`)}"
                 android:text="수입"
                 android:textColor="@{vm.flow == `수입` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 bind:adjustCategoryFont="@{vm.flow == `수입`}" />
 
 
@@ -112,7 +112,7 @@
                 android:onClick="@{() -> vm.onClickFlow(`예산`)}"
                 android:text="예산"
                 android:textColor="@{vm.flow == `예산` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:adjustCategoryFont="@{vm.flow == `예산`}" />
 
             <TextView
@@ -125,7 +125,7 @@
                 android:onClick="@{() -> vm.onClickFlow(`자산`)}"
                 android:text="자산"
                 android:textColor="@{vm.flow == `자산` ? @color/grayscale2 : @color/grayscale8}"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:adjustCategoryFont="@{vm.flow == `자산`}" />
 
         </LinearLayout>
@@ -158,6 +158,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:background="#FFFFFF"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 app:itemPaddingTop="7dp"
                 app:itemPaddingBottom="20dp"
                 app:itemTextAppearanceActiveBoldEnabled="false"

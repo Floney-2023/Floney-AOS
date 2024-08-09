@@ -8,4 +8,9 @@
         <item name="android:textSize">10dp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
+    <declare-styleable name="CustomArcProgressBar">
+        <attr name="cornerRadius" format="dimension"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="angles" format="reference"/>
+    </declare-styleable>
 </resources>

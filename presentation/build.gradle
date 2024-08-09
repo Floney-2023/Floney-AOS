@@ -146,6 +146,9 @@ dependencies {
     // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
+    //semiCircleProgressBar
+    implementation 'com.github.hadibtf:SemiCircleArcProgressBar:1.1.1'
+
     // test
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

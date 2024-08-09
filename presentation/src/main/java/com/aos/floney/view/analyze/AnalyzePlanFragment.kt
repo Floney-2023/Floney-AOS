@@ -30,13 +30,14 @@ class AnalyzePlanFragment : BaseFragment<FragmentAnalyzePlanBinding, AnalyzePlan
 
     // 최대는 194
     // 1% = 1.94
-    private fun setUpCircleBarChart(value: Float) {
-        binding.circleView.setProgress(1.94f * value)
+    private fun setUpCircleBarChart(value: Int) {
+        binding.circleView.setPercent(value)
+        //binding.circleView.setPercentWithAnimation(10)
     }
 
     private fun setUpViewModelObserver() {
         viewModel.postAnalyzePlan.observe(viewLifecycleOwner) {
-            setUpCircleBarChart(it.percent.toFloat())
+            setUpCircleBarChart(it.percent.toInt())
         }
 
         repeatOnStarted {
