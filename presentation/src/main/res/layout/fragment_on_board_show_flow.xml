@@ -15,6 +15,7 @@
         tools:context=".view.onboard.OnBoardRecordFragment">
 
         <TextView
+            android:id="@+id/tv_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/on_board_show_flow_text"
@@ -23,37 +24,44 @@
             android:lineSpacingExtra="3sp"
             android:translationY="-1.28sp"
             android:layout_marginStart="30dp"
-            android:id="@+id/tv_top"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/grayscale1"/>
 
         <ImageView
             android:id="@+id/iv_background"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="32dp"
-            android:src="@drawable/icon_onboard_show_flow"
+            android:foregroundGravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/item_on_board_record"
             app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_top"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/tv_top"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.7" />
+            app:layout_constraintGuide_percent="0.85" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_top"
+            android:id="@+id/guideline_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="1.0" />
         <TextView
             android:id="@+id/tv_skip"
             android:layout_width="wrap_content"
