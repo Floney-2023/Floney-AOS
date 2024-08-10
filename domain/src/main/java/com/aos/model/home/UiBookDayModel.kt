@@ -8,6 +8,7 @@ import java.io.Serializable
 data class UiBookDayModel(
     val data: List<DayMoney>,
     val extData: ExtData,
+    val carryOverData : CarryOverInfo
 ) {
     interface OnItemClickListener {
         fun onItemClick(item: DayMoney)

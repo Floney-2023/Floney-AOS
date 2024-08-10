@@ -17,6 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:clickable="@{item.id != -1}"
         android:onClick="@{() -> eventHolder.onItemClick(item)}">
 
         <androidx.cardview.widget.CardView
@@ -87,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_medium"
                 android:lineSpacingExtra="0dp"
-                android:text="@{item.assetSubCategory + ` ‧ ` +item.lineSubCategory}"
+                android:text="@{item.id== -1 ? `-` : item.assetSubCategory + ` ‧ ` +item.lineSubCategory}"
                 android:textColor="@color/grayscale6"
                 android:textSize="12dp" />
         </LinearLayout>

@@ -164,7 +164,35 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getMoneyHistoryDaysUseCase(prefs.getString("bookKey", ""), date).onSuccess {
                 _getMoneyDayData.emit(it)
-                _getMoneyDayList.postValue(it.data)
+
+                val carryInfoData = if(it.carryOverData.carryOverStatus && !it.carryOverData.carryOverMoney.equals("0") && date.split("-")[2].toInt() == 1) {
+                    DayMoney(
+                        id = -1,
+                        money = it.carryOverData.carryOverMoney,
+                        description = "이월",
+                        lineCategory = "",
+                        lineSubCategory = "",
+                        assetSubCategory = "",
+                        exceptStatus = false,
+                        writerEmail = "",
+                        writerNickName = "",
+                        writerProfileImg = "user_default",
+                        repeatDuration = "없음"
+                    )
+                } else {
+                    null
+                }
+
+                // `repeatDuration`이 "없음"이 아닌 항목과 "없음"인 항목을 분리
+                val repeatDurationList = it.data.filter { dayMoney -> dayMoney.repeatDuration != "없음" }
+                val noRepeatDurationList = it.data.filter { dayMoney -> dayMoney.repeatDuration == "없음" }
+
+                // 만약 carryInfoData가 존재한다면, 리스트의 첫 번째로 추가
+                val sortedList = carryInfoData?.let {
+                    listOf(it) + repeatDurationList + noRepeatDurationList
+                } ?: (repeatDurationList + noRepeatDurationList)
+
+                _getMoneyDayList.postValue(sortedList)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
 

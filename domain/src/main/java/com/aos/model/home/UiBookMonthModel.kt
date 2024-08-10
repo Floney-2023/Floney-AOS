@@ -7,6 +7,7 @@ import timber.log.Timber
 data class UiBookMonthModel(
     val data: List<MonthMoney>,
     val extData: ExtData,
+    val carryOverData : CarryOverInfo
 ) {
     interface OnItemClickListener {
         fun onItemClick(item: MonthMoney)
@@ -42,3 +43,7 @@ data class Expenses(
     val income: String = "",
 )
 
+data class CarryOverInfo(
+    val carryOverStatus: Boolean,
+    val carryOverMoney: String,
+)
