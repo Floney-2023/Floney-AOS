@@ -20,7 +20,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeDayTypeViewModel @Inject constructor(): BaseViewModel() {
+class HomeDayTypeViewModel @Inject constructor(
+    private val prefs: SharedPreferenceUtil
+): BaseViewModel() {
 
     private var _getDayList = MutableLiveData<List<DayMoney>>()
     val getDayList: LiveData<List<DayMoney>> get() = _getDayList
@@ -33,7 +35,16 @@ class HomeDayTypeViewModel @Inject constructor(): BaseViewModel() {
 
     fun updateMoneyDay(item: UiBookDayModel) {
         Timber.e("item ${item.data}")
-        _getDayList.value = item.data
+
+        val updatedData = item.data.map { dayMoney ->
+            dayMoney.copy(seeProfileStatus = prefs.getBoolean("seeProfileStatus", false))
+        }
+
+        val sortedData = updatedData.sortedWith(compareBy(
+            { it.id == -1 },
+            { it.repeatDuration == "없음" }
+        ))
+        _getDayList.value = sortedData
         _getExtData.value = item.extData
     }
 

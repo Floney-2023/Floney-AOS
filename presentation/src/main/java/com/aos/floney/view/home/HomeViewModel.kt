@@ -165,7 +165,7 @@ class HomeViewModel @Inject constructor(
             getMoneyHistoryDaysUseCase(prefs.getString("bookKey", ""), date).onSuccess {
                 _getMoneyDayData.emit(it)
 
-                val carryInfoData = if(it.carryOverData.carryOverStatus && !it.carryOverData.carryOverMoney.equals("0") && date.split("-")[2].toInt() == 1) {
+                val carryInfoData = if(it.carryOverData.carryOverStatus && date.split("-")[2].toInt() == 1) {
                     DayMoney(
                         id = -1,
                         money = it.carryOverData.carryOverMoney,
@@ -177,22 +177,25 @@ class HomeViewModel @Inject constructor(
                         writerEmail = "",
                         writerNickName = "",
                         writerProfileImg = "user_default",
-                        repeatDuration = "없음"
+                        repeatDuration = "없음",
+                        seeProfileStatus = bookInfo.value!!.seeProfileStatus
                     )
                 } else {
                     null
                 }
 
-                // `repeatDuration`이 "없음"이 아닌 항목과 "없음"인 항목을 분리
-                val repeatDurationList = it.data.filter { dayMoney -> dayMoney.repeatDuration != "없음" }
-                val noRepeatDurationList = it.data.filter { dayMoney -> dayMoney.repeatDuration == "없음" }
+                // 모든 데이터에 대해 seeProfileStatus를 bookInfo.value!!.seeProfileStatus로 설정
+                val updatedData = it.data.map { dayMoney ->
+                    dayMoney.copy(seeProfileStatus = bookInfo.value!!.seeProfileStatus)
+                }
 
-                // 만약 carryInfoData가 존재한다면, 리스트의 첫 번째로 추가
-                val sortedList = carryInfoData?.let {
-                    listOf(it) + repeatDurationList + noRepeatDurationList
-                } ?: (repeatDurationList + noRepeatDurationList)
 
-                _getMoneyDayList.postValue(sortedList)
+                val sortedData = updatedData.sortedWith(compareBy(
+                    { it.id == -1 },
+                    { it.repeatDuration == "없음" }
+                ))
+
+                _getMoneyDayList.postValue(sortedData)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
 

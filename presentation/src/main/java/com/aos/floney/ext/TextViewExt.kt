@@ -9,9 +9,11 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import com.aos.data.util.CurrencyUtil
+import com.aos.data.util.SharedPreferenceUtil
 import com.aos.data.util.checkDecimalPoint
 import com.aos.floney.R
 import com.aos.model.analyze.Asset
@@ -214,4 +216,18 @@ fun TextView.adjustCategoryFont(isBold: Boolean) {
     } else {
         this.setTypeface(resources.getFont(R.font.pretendard_medium), Typeface.NORMAL)
     }
+}
+
+@BindingAdapter("setProfileMargin")
+fun TextView.setProfileMargin(status: Boolean) {
+
+    val marginStartValue = if (status) {
+        20 // seeProfileStatus가 false인 경우 marginStart는 20
+    } else {
+        16 // seeProfileStatus가 true인 경우 marginStart는 16
+    }
+
+    val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+    layoutParams.marginStart = (marginStartValue * context.resources.displayMetrics.density).toInt()
+    this.layoutParams = layoutParams
 }

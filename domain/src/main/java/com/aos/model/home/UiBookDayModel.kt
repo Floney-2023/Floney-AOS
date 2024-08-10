@@ -36,7 +36,8 @@ data class DayMoney(
     val writerEmail: String,
     val writerNickName: String,
     val writerProfileImg: String,
-    val repeatDuration: String
+    val repeatDuration: String,
+    val seeProfileStatus: Boolean
 )
 
 // 내역 수정 전달 아이템

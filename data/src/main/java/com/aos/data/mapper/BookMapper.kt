@@ -237,7 +237,8 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
             writerEmail = it.writerEmail,
             writerNickName = it.writerNickname,
             writerProfileImg = it.writerProfileImg,
-            repeatDuration = getConvertReceiveRepeatValue(it.repeatDuration)
+            repeatDuration = getConvertReceiveRepeatValue(it.repeatDuration),
+            seeProfileStatus = false
         )
     }
 
