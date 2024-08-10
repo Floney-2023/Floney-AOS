@@ -27,7 +27,7 @@
             android:onClick="@{() -> dialog.onClickChoiceBtn()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
             android:paddingTop="8dp"

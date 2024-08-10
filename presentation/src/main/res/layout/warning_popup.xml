@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
             android:fontFamily="@font/floney_pretendard_bold"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textColor="@color/grayscale1" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:lineSpacingExtra="3sp"
             android:translationY="-1.34sp"
             android:layout_marginBottom="24dp"
-            android:textSize="13sp"
+            android:textSize="13dp"
             android:textColor="@color/grayscale1"/>
 
         <LinearLayout
@@ -58,7 +58,8 @@
                 android:background="@drawable/custom_radius_10_solid_background_2"
                 android:fontFamily="@font/pretendard_medium"
                 android:textAllCaps="false"
-                android:textAppearance="@style/left_button" />
+                android:textSize="12dp"
+                android:textColor="@color/white" />
 
             <View
                 android:id="@+id/view_padding"
@@ -72,7 +73,8 @@
                 android:background="@drawable/onboard_area1"
                 android:fontFamily="@font/pretendard_semibold"
                 android:textAllCaps="false"
-                android:textAppearance="@style/right_button" />
+                android:textSize="12dp"
+                android:textColor="@color/white"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

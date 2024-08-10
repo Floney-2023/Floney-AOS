@@ -78,7 +78,7 @@
             android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
             android:textColor="@color/grayscale6"
             android:visibility="@{vm.mode.equals(`add`) ? View.GONE: View.VISIBLE}"
-            android:textSize="14sp"
+            android:textSize="14dp"
             android:gravity="center"
             android:layout_marginEnd="20dp"
             app:layout_constraintTop_toTopOf="@id/iv_close"

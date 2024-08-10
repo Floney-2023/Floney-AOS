@@ -57,7 +57,7 @@
             android:layout_marginTop="52dp"
             android:fontFamily="@font/floney_pretendard_bold"
             android:text="반복 내역"
-            android:textSize="24sp"
+            android:textSize="24dp"
             android:textColor="@color/grayscale2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_back" />
@@ -73,7 +73,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="반복 기능을 통해\n편하게 기록해 보세요"
             android:textColor="@color/grayscale6"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_currency_title" />
 
@@ -141,6 +141,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/imageView4"
             android:layout_width="80dp"
             android:layout_height="86dp"
             android:src="@drawable/icon_empty_category"
@@ -157,6 +158,7 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_repeat"

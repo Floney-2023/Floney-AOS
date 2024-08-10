@@ -36,7 +36,8 @@
             android:layout_marginTop="27dp"
             android:fontFamily="@font/pretendard_semibold"
             android:text="즐겨찾기 추가"
-            android:textAppearance="@style/mypage_inform_text"
+            android:textColor="@color/grayscale1"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

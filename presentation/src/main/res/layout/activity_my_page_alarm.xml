@@ -40,6 +40,7 @@
             android:fontFamily="@font/pretendard_semibold"
             android:text="가계부 알림"
             android:textSize="17dp"
+            android:textColor="@color/grayscale1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -55,6 +55,7 @@
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="/"
+                android:textSize="12dp"
                 android:textColor="@color/grayscale6" />
 
             <TextView
@@ -95,6 +96,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_member_select_title" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_member_select_view"
             android:layout_width="match_parent"
@@ -106,14 +108,15 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_member_select_all_check"
+            app:layout_constraintVertical_bias="0.0"
             bind:diffCallback="@{(Object)UiOutcomesSelectModel.Companion}"
             bind:eventHolder="@{eventHolder}"
             bind:itemLayout="@{@layout/item_settlement_outcomes_select_view}"
             bind:items="@{vm.outcomesList.outcomes}"
             bind:viewModel="@{vm}" />
-
 
         <LinearLayout
             android:id="@+id/linearLayout"

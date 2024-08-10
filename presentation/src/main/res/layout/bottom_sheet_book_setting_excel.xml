@@ -52,7 +52,7 @@
                 android:paddingBottom="12dp"
                 android:text="이번달"
                 android:textColor="@{vm.flow == `이번달` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="15dp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -72,7 +72,7 @@
                 android:paddingBottom="12dp"
                 android:text="저번달"
                 android:textColor="@{vm.flow == `저번달` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="15dp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -92,7 +92,7 @@
                 android:paddingBottom="12dp"
                 android:text="올해"
                 android:textColor="@{vm.flow == `올해` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="15dp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -112,7 +112,7 @@
                 android:paddingBottom="12dp"
                 android:text="작년"
                 android:textColor="@{vm.flow == `작년` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="15dp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_book_setting_title" />
 
@@ -131,7 +131,7 @@
                 android:paddingBottom="12dp"
                 android:text="전체"
                 android:textColor="@{vm.flow == `전체` ? @color/primary2 : @color/grayscale6}"
-                android:textSize="15dp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toTopOf="@+id/textView9" />
 
