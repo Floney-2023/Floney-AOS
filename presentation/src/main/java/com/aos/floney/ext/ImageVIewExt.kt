@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.R
 import com.aos.floney.view.home.HomeActivity
+import com.aos.model.analyze.UiAnalyzeAssetModel
 import com.aos.model.analyze.UiAnalyzePlanModel
 import com.bumptech.glide.Glide
 import timber.log.Timber
@@ -149,6 +150,35 @@ fun ImageView.setAnalyzeImage(item: UiAnalyzePlanModel?) {
     } else {
         Glide.with(this)
             .load(R.drawable.analyze_plan_0_49_icon)
+            .into(this)
+    }
+}
+
+@BindingAdapter("setAnalyzeAssetImage")
+fun ImageView.setAnalyzeAssetImage(item: UiAnalyzeAssetModel?) {
+    if (item != null) {
+        val isNegative = item.difference.takeLast(5) == "감소했어요"
+
+        when {
+            isNegative -> {
+                Glide.with(this)
+                    .load(R.drawable.asset_down_icon)
+                    .into(this)
+            }
+            !isNegative -> {
+                Glide.with(this)
+                    .load(R.drawable.asset_up_icon)
+                    .into(this)
+            }
+            else -> {
+                Glide.with(this)
+                    .load(R.drawable.asset_up_icon)
+                    .into(this)
+            }
+        }
+    } else {
+        Glide.with(this)
+            .load(R.drawable.asset_up_icon)
             .into(this)
     }
 }
