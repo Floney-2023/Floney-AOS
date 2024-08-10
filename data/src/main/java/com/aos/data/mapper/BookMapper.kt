@@ -70,6 +70,7 @@ import com.aos.model.book.PostBooksCategoryAddModel
 import com.aos.model.book.UiBookEntranceModel
 import com.aos.model.book.UiBookFavoriteModel
 import com.aos.model.book.UiBookRepeatModel
+import com.aos.model.home.CarryOverInfo
 import com.aos.model.settlement.NaverShortenUrlModel
 
 // 유저 가계부 유효 확인
@@ -89,6 +90,7 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
     val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
 
     this.expenses.forEach {
+
         if (it.date == tempDate) {
             tempExpenses?.outcome = tempOutcome
             listData.add(
@@ -97,11 +99,34 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
                     "${it.date.split("-")[1].toInt()}",
                     "${it.date.split("-")[2].toInt()}",
                     Expenses(
-                        date = it.date, outcome = if (!it.money.toString().equals("0.0")) {
-                            "-${NumberFormat.getNumberInstance().format(it.money)}"
-                        } else {
-                            ""
-                        }, income = tempExpenses!!.income
+                        date = it.date,
+                        outcome = when {
+                            // 첫 번째 조건: money가 0.0이고 날짜가 1일이 아닌 경우
+                            it.money.toString() == "0.0" && it.date.split("-")[2].toInt() != 1 -> ""
+
+                            // 두 번째 조건: 날짜가 1일인 경우
+                            it.date.split("-")[2].toInt() == 1 -> {
+                                when {
+                                    // 이월 상태가 없는 경우
+                                    !carryOverInfo.carryOverStatus -> {
+                                        if (it.money.toString() == "0.0") ""
+                                        else "-${NumberFormat.getNumberInstance().format(it.money)}"
+                                    }
+                                    // 이월 상태가 있는 경우
+                                    else -> {
+                                        val totalMoney = it.money + kotlin.math.abs(carryOverInfo.carryOverMoney)
+                                        if (kotlin.math.abs(totalMoney) >= 1e-9 && carryOverInfo.carryOverMoney < 0) {
+                                            "-${NumberFormat.getNumberInstance().format(totalMoney)}"
+                                        } else {
+                                            ""
+                                        }
+                                    }
+                                }
+                            }
+                            // 기본 조건: 위 조건에 해당하지 않는 경우
+                            else -> "-${NumberFormat.getNumberInstance().format(it.money)}"
+                        },
+                        income = tempExpenses!!.income
                     ),
                     todayDate == it.date
                 )
@@ -113,10 +138,31 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
             tempExpenses = Expenses(
                 date = it.date,
                 outcome = tempOutcome,
-                income = if (!it.money.toString().equals("0.0")) {
-                    "+${NumberFormat.getNumberInstance().format(it.money)}"
-                } else {
-                    ""
+                income = when {
+                    // 첫 번째 조건: money가 0.0이고 날짜가 1일이 아닌 경우
+                    it.money.toString() == "0.0" && it.date.split("-")[2].toInt() != 1 -> ""
+
+                    // 두 번째 조건: 날짜가 1일인 경우
+                    it.date.split("-")[2].toInt() == 1 -> {
+                        when {
+                            // 이월 상태가 없는 경우
+                            !carryOverInfo.carryOverStatus -> {
+                                if (it.money.toString() == "0.0") ""
+                                else "+${NumberFormat.getNumberInstance().format(it.money)}"
+                            }
+                            // 이월 상태가 있는 경우
+                            else -> {
+                                val totalMoney = it.money + kotlin.math.abs(carryOverInfo.carryOverMoney)
+                                if (kotlin.math.abs(totalMoney) >= 1e-9 && carryOverInfo.carryOverMoney > 0) {
+                                    "+${NumberFormat.getNumberInstance().format(totalMoney)}"
+                                } else {
+                                    ""
+                                }
+                            }
+                        }
+                    }
+                    // 기본 조건: 위 조건에 해당하지 않는 경우
+                    else -> "+${NumberFormat.getNumberInstance().format(it.money)}"
                 }
             )
         }
@@ -146,7 +192,8 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
                         NumberFormat.getNumberInstance()
                             .format(totalIncome + carryOverInfo.carryOverMoney)
                     }${CurrencyUtil.currency}", "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
-                )
+                ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
+                    .format(carryOverInfo.carryOverMoney))
             )
         } else {
             // 총 지출에 포함
@@ -154,9 +201,10 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
                 list, ExtData(
                     "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}", "${
                         NumberFormat.getNumberInstance()
-                            .format(totalOutcome + carryOverInfo.carryOverMoney)
+                            .format(totalOutcome + kotlin.math.abs(carryOverInfo.carryOverMoney))
                     }${CurrencyUtil.currency}"
-                )
+                ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
+                    .format(carryOverInfo.carryOverMoney))
             )
         }
     } else {
@@ -165,7 +213,8 @@ fun GetBookMonthEntity.toUiBookMonthModel(): UiBookMonthModel {
             list, ExtData(
                 "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}",
                 "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
-            )
+            ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
+                .format(carryOverInfo.carryOverMoney))
         )
     }
 }
@@ -216,7 +265,8 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
                         NumberFormat.getNumberInstance()
                             .format(totalIncome + carryOverInfo.carryOverMoney)
                     }${CurrencyUtil.currency}", "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
-                )
+                ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
+                    .format(carryOverInfo.carryOverMoney))
             )
         } else {
             // 총 지출에 포함
@@ -224,9 +274,10 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
                 dayMoneyList, ExtData(
                     "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}", "${
                         NumberFormat.getNumberInstance()
-                            .format(totalOutcome + carryOverInfo.carryOverMoney)
+                            .format(totalOutcome + kotlin.math.abs(carryOverInfo.carryOverMoney))
                     }${CurrencyUtil.currency}"
-                )
+                ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
+                    .format(carryOverInfo.carryOverMoney))
             )
         }
     } else {
@@ -235,7 +286,8 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
             dayMoneyList, ExtData(
                 "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}",
                 "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
-            )
+            ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
+                .format(carryOverInfo.carryOverMoney))
         )
     }
 }
