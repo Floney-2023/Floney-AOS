@@ -32,6 +32,7 @@ import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.common.ErrorToastDialog
 import com.aos.floney.view.common.SuccessToastDialog
 import com.aos.floney.view.login.LoginActivity
+import com.aos.floney.view.splash.SplashActivity
 import timber.log.Timber
 import java.lang.reflect.ParameterizedType
 
@@ -75,8 +76,8 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
             setVariable(BR.vm, viewModel)
             lifecycleOwner = this@BaseActivity
         }
-        if (isDarkMode()) {
-            binding.root.setBackgroundColor(Color.WHITE)  // 다크 모드일 때 흰색 배경
+        if (isDarkMode() && this !is SplashActivity) {
+            binding.root.setBackgroundColor(Color.WHITE)  // 다크 모드일 때 흰색 배경 (스플래시일 때는 X)
         }
         setStatusBarColor(ContextCompat.getColor(this, R.color.white))
     }

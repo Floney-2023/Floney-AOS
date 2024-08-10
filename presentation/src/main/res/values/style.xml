@@ -8,6 +8,10 @@
         <item name="android:textSize">10dp</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <declare-styleable name="CustomArcProgressBar">
         <attr name="cornerRadius" format="dimension"/>
         <attr name="radius" format="dimension"/>
