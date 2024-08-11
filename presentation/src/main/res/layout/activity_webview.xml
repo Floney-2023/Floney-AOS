@@ -6,13 +6,12 @@
     <data>
         <variable
             name="vm"
-            type="com.aos.floney.view.mypage.main.service.MyPageServicePrivacyViewModel" />
+            type="com.aos.floney.view.web.WebViewViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.aos.floney.view.mypage.main.service.MyPageServicePrivacyFragment">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_back_button"
@@ -32,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="개인정보 처리방침"
+            android:text="이용약관"
             android:textSize="16dp"
             android:textColor="@color/grayscale1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <WebView
-            android:id="@+id/wv_privacy"
+            android:id="@+id/wv_terms"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="18dp"

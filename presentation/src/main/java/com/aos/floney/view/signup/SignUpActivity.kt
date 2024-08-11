@@ -11,7 +11,10 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivitySignUpBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.floney.view.history.HistoryActivity
 import com.aos.floney.view.login.LoginActivity
+import com.aos.floney.view.web.WebViewActivity
+import com.aos.model.user.UserModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -92,5 +95,20 @@ class SignUpActivity() :
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
         finishAffinity()
+    }
+
+    fun startWebViewActivity(url : String, title:String){
+        startActivity(
+            Intent(
+                this@SignUpActivity,
+                WebViewActivity::class.java
+            ).putExtra("url", url)
+                .putExtra("title", title)
+        )
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, R.anim.anim_slide_in_from_right_fade_in, android.R.anim.fade_out)
+        } else {
+            overridePendingTransition(R.anim.anim_slide_in_from_right_fade_in, android.R.anim.fade_out)
+        }
     }
 }

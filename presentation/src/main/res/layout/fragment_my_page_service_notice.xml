@@ -78,21 +78,22 @@
             android:id="@+id/tv_inform"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:background="@color/grayscale12"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center_vertical"
+            android:lineSpacingMultiplier="1.2"
             android:paddingStart="28dp"
             android:paddingTop="16dp"
             android:paddingEnd="28dp"
             android:paddingBottom="16dp"
-            android:lineSpacingMultiplier="1.2"
             android:text="@string/mypage_service_mail_info"
             android:textColor="@color/grayscale3"
             android:textSize="13dp"
-            android:fontFamily="@font/pretendard_regular"
             android:visibility="@{vm.terms? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

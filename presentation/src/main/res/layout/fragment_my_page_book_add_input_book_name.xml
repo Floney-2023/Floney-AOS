@@ -50,6 +50,7 @@
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="/"
+                android:textSize="12dp"
                 android:textColor="@color/grayscale6" />
 
             <TextView

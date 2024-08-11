@@ -51,9 +51,11 @@ class SignUpAgreeFragment : BaseFragment<FragmentSignUpAgreeBinding, SignUpAgree
         }
 
         // 약관 페이지 이동
-        viewModel.clickedTerms.observe(viewLifecycleOwner) { url ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+        viewModel.clickedTerms.observe(viewLifecycleOwner) {
+            if(it) {
+                val activity = requireActivity() as SignUpActivity
+                activity.startWebViewActivity(viewModel.link.value!!, viewModel.subtitle.value!!)
+            }
         }
     }
 }

@@ -24,7 +24,7 @@
             android:fontFamily="@font/pretendard_bold"
             android:text="@{vm.nickname}"
             android:textColor="@color/grayscale1"
-            android:textSize="24sp"
+            android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +38,7 @@
             android:textColor="@color/grayscale6"
             android:lineSpacingExtra="3sp"
             android:translationY="-1.34sp"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/tv_valid_email"
             app:layout_constraintTop_toBottomOf="@id/tv_valid_email" />
 
@@ -62,7 +62,7 @@
             android:onClick="@{() -> vm.onClickStartFloney()}"
             android:text="@string/sign_up_start_floney"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

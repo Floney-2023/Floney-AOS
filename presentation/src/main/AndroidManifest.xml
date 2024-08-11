@@ -40,6 +40,9 @@
             android:name=".view.password.find.PasswordFindActivity"
             android:exported="false" />
         <activity
+            android:name=".view.web.WebViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.signup.SignUpActivity"
             android:exported="false" />
         <activity
