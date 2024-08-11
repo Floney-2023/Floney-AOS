@@ -41,7 +41,7 @@
             android:paddingStart="20dp"
             android:text="@={vm.email}"
             android:textColor="@color/grayscale2"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo" />
@@ -74,7 +74,7 @@
                 android:inputType="textPassword"
                 android:paddingStart="20dp"
                 android:text="@={vm.password}"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
@@ -87,7 +87,7 @@
             android:onClick="@{() -> vm.onClickLogin()}"
             android:text="@string/login"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="@id/et_email"
             app:layout_constraintStart_toStartOf="@id/et_email"
             app:layout_constraintTop_toBottomOf="@id/et_password" />
@@ -102,7 +102,7 @@
             android:paddingTop="8dp"
             android:text="@string/find_pw"
             android:textColor="@color/grayscale6"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintEnd_toStartOf="@id/tv_sign_up"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_login" />
@@ -125,7 +125,7 @@
             android:paddingTop="8dp"
             android:text="@string/sign_up"
             android:textColor="@color/grayscale6"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_find_password"
             app:layout_constraintTop_toBottomOf="@id/btn_login" />
@@ -146,7 +146,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:text="@string/simple_login"
             android:textColor="@color/grayscale2"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_sign_up" />

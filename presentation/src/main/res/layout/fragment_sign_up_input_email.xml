@@ -43,7 +43,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="2"
                 android:textColor="@color/grayscale2"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,6 +51,7 @@
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="/"
+                android:textSize="12dp"
                 android:textColor="@color/grayscale6" />
 
             <TextView
@@ -60,7 +61,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="4"
                 android:textColor="@color/grayscale6"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
         </LinearLayout>
 
@@ -72,7 +73,7 @@
             android:fontFamily="@font/pretendard_bold"
             android:text="@string/sign_up_valid_email"
             android:textColor="@color/grayscale1"
-            android:textSize="24sp"
+            android:textSize="24dp"
             app:layout_constraintStart_toStartOf="@id/ll_page"
             app:layout_constraintTop_toBottomOf="@id/ll_page" />
 
@@ -86,7 +87,7 @@
             android:translationY="-1.34sp"
             android:text="@string/sign_up_valid_email_text"
             android:textColor="@color/grayscale6"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/tv_valid_email"
             app:layout_constraintTop_toBottomOf="@id/tv_valid_email" />
 
@@ -104,7 +105,7 @@
             android:paddingStart="20dp"
             android:text="@={vm.email}"
             android:textColor="@color/grayscale2"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_valid_email_text" />
@@ -120,7 +121,7 @@
             android:onClick="@{() -> vm.onClickSendEmail()}"
             android:text="@string/sign_up_send_mail"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

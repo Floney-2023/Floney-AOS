@@ -42,7 +42,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="3"
                 android:textColor="@color/grayscale2"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,6 +50,7 @@
                 android:layout_marginStart="4dp"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="/"
+                android:textSize="12dp"
                 android:textColor="@color/grayscale6" />
 
             <TextView
@@ -59,7 +60,7 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="4"
                 android:textColor="@color/grayscale6"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
         </LinearLayout>
 
@@ -71,7 +72,7 @@
             android:fontFamily="@font/pretendard_bold"
             android:text="@string/sign_up_input_code"
             android:textColor="@color/grayscale1"
-            android:textSize="24sp"
+            android:textSize="24dp"
             app:layout_constraintStart_toStartOf="@id/ll_page"
             app:layout_constraintTop_toBottomOf="@id/ll_page" />
 
@@ -85,7 +86,7 @@
             android:translationY="-1.34sp"
             android:text="@string/sign_up_input_code_text"
             android:textColor="@color/grayscale6"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintStart_toStartOf="@id/tv_valid_email"
             app:layout_constraintTop_toBottomOf="@id/tv_valid_email" />
 
@@ -117,7 +118,7 @@
                 android:paddingBottom="8dp"
                 android:text="@={vm.codeFirst}"
                 android:textColor="@color/grayscale2"
-                android:textSize="28sp" />
+                android:textSize="28dp" />
 
             <EditText
                 android:id="@+id/et_code_second"
@@ -134,7 +135,7 @@
                 android:paddingBottom="8dp"
                 android:text="@={vm.codeSecond}"
                 android:textColor="@color/grayscale2"
-                android:textSize="28sp" />
+                android:textSize="28dp" />
 
             <EditText
                 android:id="@+id/et_code_third"
@@ -151,7 +152,7 @@
                 android:paddingBottom="8dp"
                 android:text="@={vm.codeThird}"
                 android:textColor="@color/grayscale2"
-                android:textSize="28sp" />
+                android:textSize="28dp" />
 
             <EditText
                 android:id="@+id/et_code_four"
@@ -168,7 +169,7 @@
                 android:paddingBottom="8dp"
                 android:text="@={vm.codeFour}"
                 android:textColor="@color/grayscale2"
-                android:textSize="28sp" />
+                android:textSize="28dp" />
 
             <EditText
                 android:id="@+id/et_code_fifth"
@@ -185,7 +186,7 @@
                 android:paddingBottom="8dp"
                 android:text="@={vm.codeFifth}"
                 android:textColor="@color/grayscale2"
-                android:textSize="28sp" />
+                android:textSize="28dp" />
 
             <EditText
                 android:id="@+id/et_code_six"
@@ -202,7 +203,7 @@
                 android:paddingBottom="8dp"
                 android:text="@={vm.codeSix}"
                 android:textColor="@color/grayscale2"
-                android:textSize="28sp" />
+                android:textSize="28dp" />
 
         </LinearLayout>
 
@@ -237,7 +238,7 @@
             android:translationY="-1.24sp"
             android:text="@string/sign_up_input_code_info_text"
             android:textColor="@color/grayscale6"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_time" />
@@ -253,7 +254,7 @@
             android:onClick="@{() -> vm.checkEmailCode()}"
             android:text="@string/sign_up_next"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

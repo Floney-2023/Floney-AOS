@@ -58,16 +58,24 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_one"
             android:layout_width="20dp"
-            android:layout_height="146dp"
+            android:layout_height="0dp"
             android:layout_marginStart="48dp"
             app:layout_constraintEnd_toStartOf="@id/barchart_one"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.54"/>
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_two"
             android:layout_width="20dp"
-            android:layout_height="146dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toStartOf="@id/barchart_three"
             app:layout_constraintStart_toEndOf="@id/barchart_one"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -75,7 +83,8 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_three"
             android:layout_width="20dp"
-            android:layout_height="146dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toStartOf="@id/barchart_four"
             app:layout_constraintStart_toEndOf="@id/barchart_two"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -83,7 +92,8 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_four"
             android:layout_width="20dp"
-            android:layout_height="146dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toStartOf="@id/barchart_five"
             app:layout_constraintStart_toEndOf="@id/barchart_three"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -91,7 +101,8 @@
         <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
             android:id="@+id/barchart_five"
             android:layout_width="20dp"
-            android:layout_height="146dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toStartOf="@id/barchart_this_month"
             app:layout_constraintStart_toEndOf="@id/barchart_four"
             app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
@@ -99,8 +110,9 @@
         <com.aos.floney.view.analyze.AnalyzeAssetThisMonthBarChart
             android:id="@+id/barchart_this_month"
             android:layout_width="20dp"
-            android:layout_height="146dp"
+            android:layout_height="0dp"
             android:layout_marginTop="28dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/barchart_five"
             app:layout_constraintTop_toBottomOf="@id/iv_icon" />
