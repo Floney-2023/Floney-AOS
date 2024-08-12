@@ -215,7 +215,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="132dp"
             android:fontFamily="@font/pretendard_bold"
-            android:text="@{vm.postAssetResult.currentAsset}"
+            bind:adjustOnlyMoneyText="@{vm.postAssetResult.currentAsset}"
             android:textColor="@color/grayscale2"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="@id/tv_now_asset"
@@ -241,7 +241,7 @@
             android:layout_marginBottom="44dp"
             android:textSize="20dp"
             android:textColor="@color/grayscale2"
-            android:text="@{vm.postAssetResult.initAsset}"
+            bind:adjustOnlyMoneyText="@{vm.postAssetResult.initAsset}"
             app:layout_constraintStart_toStartOf="@id/tv_init_asset"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
