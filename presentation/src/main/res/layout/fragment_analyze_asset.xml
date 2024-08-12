@@ -205,21 +205,21 @@
             android:fontFamily="@font/pretendard_medium"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="42dp"
+            android:layout_marginBottom="164dp"
             android:id="@+id/tv_now_asset"
-            app:layout_constraintTop_toBottomOf="@id/tv_one_month"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/tv_now_asset_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginBottom="132dp"
             android:fontFamily="@font/pretendard_bold"
             android:text="@{vm.postAssetResult.currentAsset}"
             android:textColor="@color/grayscale2"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="@id/tv_now_asset"
-            app:layout_constraintTop_toBottomOf="@id/tv_now_asset" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -230,20 +230,20 @@
             android:fontFamily="@font/pretendard_medium"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="38dp"
             android:id="@+id/tv_init_asset"
-            app:layout_constraintTop_toBottomOf="@id/tv_now_asset_value"/>
+            android:layout_marginBottom="76dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_bold"
-            android:layout_marginTop="12dp"
+            android:layout_marginBottom="44dp"
             android:textSize="20dp"
             android:textColor="@color/grayscale2"
             android:text="@{vm.postAssetResult.initAsset}"
             app:layout_constraintStart_toStartOf="@id/tv_init_asset"
-            app:layout_constraintTop_toBottomOf="@id/tv_init_asset"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

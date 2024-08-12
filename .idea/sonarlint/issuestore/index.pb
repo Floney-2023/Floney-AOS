@@ -11,10 +11,6 @@ l
 Spresentation/src/main/java/com/aos/floney/view/history/CalendarBottomSheetDialog.kt,1\c\1cf2725a9e7e2c02cfcf0feb98602cc807897446
 ƒ
 Spresentation/src/main/java/com/aos/floney/view/history/CategoryBottomSheetDialog.kt,c\7\c7eb05c7d88fffc381daf92624c85011583e82a3
-z
-Jpresentation/src/main/java/com/aos/floney/view/home/HomeDayTypeFragment.kt,3\1\31d1f716bd5f43c48096625eb8b60a5dae0828c6
-i
-9domain/src/main/java/com/aos/model/home/UiBookDayModel.kt,0\d\0da57c918a5909c50067d99faf0cb6d944d6af76
 x
 Hpresentation/src/main/java/com/aos/floney/view/common/BaseAlertDialog.kt,2\2\22804d0f3dd795a7c6961425c4b9871a713e1c43
 g
