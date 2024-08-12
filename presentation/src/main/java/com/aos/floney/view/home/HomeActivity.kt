@@ -275,7 +275,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 mRewardAd = null
                 // 광고 로드 실패 시 로그 출력
-                Timber.e("광고가 아직 로드되지 않음")
+                Timber.e("광고가 아직 로드되지 않음 setup")
+                dismissLoadingDialog()
             }
 
             override fun onAdLoaded(ad: RewardedAd) {
@@ -294,8 +295,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         RewardedAd.load(this, google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 mRewardAd = null
-                // 광고 로드 실패 시 로그 출력
-                Timber.e("광고가 아직 로드되지 않음")
+                // 광고 로드 실패하더라도 페이지 이동
+                Timber.e("광고가 아직 로드되지 않음 reset")
+                dismissLoadingDialog()
+                goToBookSettingActivity()
             }
 
             override fun onAdLoaded(ad: RewardedAd) {
@@ -327,6 +330,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
                 dismissLoadingDialog()
                 mRewardAd = null
                 Timber.e("광고가 아직 로드되지 않음 1-2")
+                goToBookSettingActivity()
             }
         }
     }
