@@ -164,7 +164,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getMoneyHistoryDaysUseCase(prefs.getString("bookKey", ""), date).onSuccess {
 
-                val carryInfoData = if(it.carryOverData.carryOverStatus && date.split("-")[2].toInt() == 1) {
+                val carryInfoData = if(it.carryOverData.carryOverStatus && !it.carryOverData.carryOverMoney.equals("0") && date.split("-")[2].toInt() == 1) {
                     DayMoney(
                         id = -1,
                         money = it.carryOverData.carryOverMoney,
