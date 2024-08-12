@@ -40,11 +40,7 @@ class HomeDayTypeViewModel @Inject constructor(
             dayMoney.copy(seeProfileStatus = prefs.getBoolean("seeProfileStatus", false))
         }
 
-        val sortedData = updatedData.sortedWith(compareBy(
-            { it.id == -1 },
-            { it.repeatDuration == "없음" }
-        ))
-        _getDayList.value = sortedData
+        _getDayList.value = updatedData
         _getExtData.value = item.extData
     }
 

@@ -163,7 +163,6 @@ class HomeViewModel @Inject constructor(
     fun getBookDays(date: String) {
         viewModelScope.launch {
             getMoneyHistoryDaysUseCase(prefs.getString("bookKey", ""), date).onSuccess {
-                _getMoneyDayData.emit(it)
 
                 val carryInfoData = if(it.carryOverData.carryOverStatus && date.split("-")[2].toInt() == 1) {
                     DayMoney(
@@ -191,11 +190,16 @@ class HomeViewModel @Inject constructor(
 
 
                 val sortedData = updatedData.sortedWith(compareBy(
-                    { it.id == -1 },
                     { it.repeatDuration == "없음" }
                 ))
 
-                _getMoneyDayList.postValue(sortedData)
+                val updatedList = carryInfoData?.let { carryInfoData->
+                    listOf(carryInfoData) + sortedData
+                } ?: sortedData
+
+
+                _getMoneyDayData.emit(UiBookDayModel(updatedList, it.extData, it.carryOverData))
+                _getMoneyDayList.postValue(updatedList)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
 

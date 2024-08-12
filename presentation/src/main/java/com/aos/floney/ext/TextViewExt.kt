@@ -218,13 +218,13 @@ fun TextView.adjustCategoryFont(isBold: Boolean) {
     }
 }
 
-@BindingAdapter("setProfileMargin")
+@BindingAdapter("bind:setProfileMargin")
 fun TextView.setProfileMargin(status: Boolean) {
 
     val marginStartValue = if (status) {
-        20 // seeProfileStatus가 false인 경우 marginStart는 20
-    } else {
         16 // seeProfileStatus가 true인 경우 marginStart는 16
+    } else {
+        20 // seeProfileStatus가 false인 경우 marginStart는 20
     }
 
     val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams

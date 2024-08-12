@@ -22,12 +22,16 @@ class HomeDayTypeFragment : BaseFragment<FragmentHomeDayTypeBinding, HomeDayType
 
     private val activityViewModel: HomeViewModel by activityViewModels()
     override val applyTransition: Boolean = false
+
+    override fun onResume() {
+        super.onResume()
+        activityViewModel.getBookDays(activityViewModel.getFormatDateDay())
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
         setUpUi()
         setUpViewModelObserver()
-        activityViewModel.getBookDays(activityViewModel.getFormatDateDay())
     }
 
     private fun setUpUi() {
