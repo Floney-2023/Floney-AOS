@@ -15,6 +15,7 @@ import com.aos.floney.util.getAdvertiseTenMinutesCheck
 import com.aos.floney.util.getCurrentDateTimeString
 import com.aos.model.book.getCurrencySymbolByCode
 import com.aos.model.home.DayMoney
+import com.aos.model.home.ExtData
 import com.aos.model.home.MonthMoney
 import com.aos.model.home.UiBookDayModel
 import com.aos.model.home.UiBookInfoModel
@@ -25,7 +26,6 @@ import com.aos.usecase.home.GetMoneyHistoryDaysUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -162,49 +162,86 @@ class HomeViewModel @Inject constructor(
     // 유저 가계부 유효 확인
     fun getBookDays(date: String) {
         viewModelScope.launch {
-            getMoneyHistoryDaysUseCase(prefs.getString("bookKey", ""), date).onSuccess {
+            getMoneyHistoryDaysUseCase(prefs.getString("bookKey", ""), date).onSuccess { data ->
+                // 이월 설정 데이터 생성
+                val carryInfoData = createCarryInfoData(data, date, bookInfo.value!!.seeProfileStatus)
 
-                val carryInfoData = if(it.carryOverData.carryOverStatus && !it.carryOverData.carryOverMoney.equals("0") && date.split("-")[2].toInt() == 1) {
-                    DayMoney(
-                        id = -1,
-                        money = it.carryOverData.carryOverMoney,
-                        description = "이월",
-                        lineCategory = "",
-                        lineSubCategory = "",
-                        assetSubCategory = "",
-                        exceptStatus = false,
-                        writerEmail = "",
-                        writerNickName = "",
-                        writerProfileImg = "user_default",
-                        repeatDuration = "없음",
-                        seeProfileStatus = bookInfo.value!!.seeProfileStatus
-                    )
-                } else {
-                    null
-                }
+                // seeProfileStatus 업데이트 목록 생성
+                val updatedData = updateSeeProfileStatus(data.data, bookInfo.value!!.seeProfileStatus)
 
-                // 모든 데이터에 대해 seeProfileStatus를 bookInfo.value!!.seeProfileStatus로 설정
-                val updatedData = it.data.map { dayMoney ->
-                    dayMoney.copy(seeProfileStatus = bookInfo.value!!.seeProfileStatus)
-                }
+                // 반복 내역 유무에 따른 정렬된 데이터 목록 생성
+                val sortedData = sortData(updatedData)
 
+                // 수입/지출 조정된 ExtData 생성
+                val updatedExtData = adjustIncomeOrOutcome(data.extData, carryInfoData)
 
-                val sortedData = updatedData.sortedWith(compareBy(
-                    { it.repeatDuration == "없음" }
-                ))
+                // 최종 데이터 : 이월 설정, 반복 내역 O, 반복 내역 X 순서
+                val updatedList = buildUpdatedList(carryInfoData, sortedData)
 
-                val updatedList = carryInfoData?.let { carryInfoData->
-                    listOf(carryInfoData) + sortedData
-                } ?: sortedData
-
-
-                _getMoneyDayData.emit(UiBookDayModel(updatedList, it.extData, it.carryOverData))
+                _getMoneyDayData.emit(UiBookDayModel(updatedList, updatedExtData, data.carryOverData))
                 _getMoneyDayList.postValue(updatedList)
             }.onFailure {
                 baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@HomeViewModel)))
-
             }
         }
+    }
+
+    private fun createCarryInfoData(data: UiBookDayModel, date: String, seeProfileStatus: Boolean): DayMoney? {
+        return if (data.carryOverData.carryOverStatus &&
+            data.carryOverData.carryOverMoney != "0" &&
+            date.split("-")[2].toInt() == 1) {
+            DayMoney(
+                id = -1,
+                money = data.carryOverData.carryOverMoney,
+                description = "이월",
+                lineCategory = "",
+                lineSubCategory = "",
+                assetSubCategory = "",
+                exceptStatus = false,
+                writerEmail = "",
+                writerNickName = "",
+                writerProfileImg = "user_default",
+                repeatDuration = "없음",
+                seeProfileStatus = seeProfileStatus
+            )
+        } else {
+            null
+        }
+    }
+
+    private fun updateSeeProfileStatus(data: List<DayMoney>, seeProfileStatus: Boolean): List<DayMoney> {
+        return data.map { dayMoney ->
+            dayMoney.copy(seeProfileStatus = seeProfileStatus)
+        }
+    }
+
+    private fun sortData(data: List<DayMoney>): List<DayMoney> {
+        return data.sortedBy { it.repeatDuration != "없음" }
+    }
+
+    private fun adjustIncomeOrOutcome(extData: ExtData, carryInfoData: DayMoney?): ExtData {
+        val carryOverMoney = carryInfoData?.money?.replace(",", "")?.toDoubleOrNull() ?: 0.0
+
+        val newTotalIncome = if (carryOverMoney > 0) {
+            extData.totalIncome + carryOverMoney
+        } else {
+            extData.totalIncome
+        }
+
+        val newTotalOutcome = if (carryOverMoney < 0) {
+            extData.totalOutcome + kotlin.math.abs(carryOverMoney)
+        } else {
+            extData.totalOutcome
+        }
+
+        return extData.copy(
+            totalIncome = newTotalIncome,
+            totalOutcome = newTotalOutcome
+        )
+    }
+
+    private fun buildUpdatedList(carryInfoData: DayMoney?, sortedData: List<DayMoney>): List<DayMoney> {
+        return carryInfoData?.let { listOf(it) + sortedData } ?: sortedData
     }
 
     // 이전 월 클릭

@@ -256,41 +256,13 @@ fun GetBookDaysEntity.toUiBookMonthModel(): UiBookDayModel {
             totalOutcome = it.money
         }
     }
-
-    return if (carryOverInfo.carryOverStatus) {
-        if (carryOverInfo.carryOverMoney >= 0) {
-            // 총 수입에 포함
-            UiBookDayModel(
-                dayMoneyList, ExtData(
-                    "${
-                        NumberFormat.getNumberInstance()
-                            .format(totalIncome + carryOverInfo.carryOverMoney)
-                    }${CurrencyUtil.currency}", "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
-                ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
-                    .format(carryOverInfo.carryOverMoney))
-            )
-        } else {
-            // 총 지출에 포함
-            UiBookDayModel(
-                dayMoneyList, ExtData(
-                    "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}", "${
-                        NumberFormat.getNumberInstance()
-                            .format(totalOutcome + kotlin.math.abs(carryOverInfo.carryOverMoney))
-                    }${CurrencyUtil.currency}"
-                ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
-                    .format(carryOverInfo.carryOverMoney))
-            )
-        }
-    } else {
-        // 이월 내역 없을 경우
-        UiBookDayModel(
-            dayMoneyList, ExtData(
-                "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}",
-                "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
-            ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
-                .format(carryOverInfo.carryOverMoney))
-        )
-    }
+    return UiBookDayModel(
+        dayMoneyList, ExtData(
+            "${NumberFormat.getNumberInstance().format(totalIncome)}${CurrencyUtil.currency}",
+            "${NumberFormat.getNumberInstance().format(totalOutcome)}${CurrencyUtil.currency}"
+        ), CarryOverInfo(carryOverInfo.carryOverStatus, NumberFormat.getNumberInstance()
+            .format(carryOverInfo.carryOverMoney))
+    )
 }
 
 fun GetBookInfoEntity.toUiBookInfoModel(): UiBookInfoModel {
