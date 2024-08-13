@@ -33,7 +33,7 @@ class AnalyzePlanFragment : BaseFragment<FragmentAnalyzePlanBinding, AnalyzePlan
     private fun setUpCircleBarChart(value: Int) {
         binding.circleView.setPercent(value)
 
-        val progressBarWidthInDp = 20 // dp 단위의 값 설정
+        val progressBarWidthInDp = 19 // dp 단위의 값 설정
         val scale = resources.displayMetrics.density
         val progressBarWidthInPx = (progressBarWidthInDp * scale + 0.5f).toInt() // dp를 px로 변환
 
