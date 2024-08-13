@@ -20,9 +20,9 @@ android {
     defaultConfig {
         applicationId "com.aos.floney"
         minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0.4"
+        targetSdk 34
+        versionCode 3
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
