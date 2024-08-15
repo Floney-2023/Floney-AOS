@@ -17,9 +17,20 @@ class SuccessToastDialog(context: Context, private val text: String): Dialog(con
         super.onCreate(savedInstanceState)
         binding = DialogToastSuccessBinding.inflate(layoutInflater)
 
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        window?.setGravity(Gravity.BOTTOM)
+        // 다이얼로그 크기 및 위치 조정
+        window?.apply {
+            val params = attributes
+            params.width = WindowManager.LayoutParams.MATCH_PARENT // 화면 전체 너비로 설정
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT
+            attributes = params
+
+            // 여백 효과를 위해 크기를 줄여줌
+            setLayout((context.resources.displayMetrics.widthPixels * 0.9).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+            setGravity(Gravity.BOTTOM or Gravity.CENTER) // 중앙 아래쪽에 위치시킴
+            clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
+
         binding.tvError.text = text
 
         setContentView(binding.root)
