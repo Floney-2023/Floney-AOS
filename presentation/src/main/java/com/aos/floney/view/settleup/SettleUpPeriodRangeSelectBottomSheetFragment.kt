@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import androidx.databinding.library.baseAdapters.BR
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -27,6 +28,13 @@ class SettleUpPeriodRangeSelectBottomSheetFragment(private val onSelect: (String
     BaseBottomSheetFragment<BottomSheetSettleUpPeriodSelectBinding, SettleUpPeriodRangeSelectViewModel>(R.layout.bottom_sheet_settle_up_period_select), UiPeriodSelectModel.OnItemClickListener {
     override fun onItemClick(item: PeriodCalendar) {
         viewModel.updateAdjustPeriod(item)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val behavior = BottomSheetBehavior.from(requireView().parent as View)
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

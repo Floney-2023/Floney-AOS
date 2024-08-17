@@ -67,7 +67,11 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel>(
 
         setupUi()
         setupObserve()
-        setupUI(findViewById(android.R.id.content))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupUI(binding.root)
     }
 
     private fun setupUi() {
@@ -211,7 +215,6 @@ fun AppCompatActivity.hideKeyboard() {
 }
 
 fun AppCompatActivity.setupUI(view: View) {
-    // Set up touch listener for non-text box views to hide keyboard.
     if (view !is EditText) {
         view.setOnTouchListener { _, _ ->
             hideKeyboard()
@@ -219,11 +222,10 @@ fun AppCompatActivity.setupUI(view: View) {
         }
     }
 
-    // If a layout container, iterate over children and set up touch listeners.
     if (view is ViewGroup) {
         for (i in 0 until view.childCount) {
             val innerView = view.getChildAt(i)
-            setupUI(innerView)
+            innerView.setupTouchEffect()
         }
     }
 }

@@ -94,12 +94,14 @@
             android:onClick="@{() -> vm.onClickedSettleUpSee()}"
             android:paddingStart="8dp"
             android:paddingTop="8dp"
+            android:clickable="true"
             android:paddingEnd="8dp"
             android:text="@string/settle_up_start_see_button"
             android:textColor="@color/grayscale6"
             android:textSize="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            android:focusable="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

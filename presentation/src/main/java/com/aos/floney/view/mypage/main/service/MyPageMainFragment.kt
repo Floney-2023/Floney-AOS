@@ -13,6 +13,7 @@ import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.base.BaseFragment
 import com.aos.floney.base.BaseViewModel
+import com.aos.floney.base.setupTouchEffect
 import com.aos.floney.base.setupUI
 import com.aos.floney.databinding.ActivityMyPageBinding
 import com.aos.floney.databinding.FragmentMyPageMainBinding
@@ -68,6 +69,7 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
         setUpViewModelObserver()
     }
     private fun setUpUi() {
+        binding.liUserInformView.setupTouchEffect()
         binding.setVariable(BR.eventHolder, this@MyPageMainFragment)
     }
 
