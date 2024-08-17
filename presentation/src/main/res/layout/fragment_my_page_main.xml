@@ -179,60 +179,99 @@
                             <TextView
                                 android:id="@+id/textView5"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
+                                android:autoSizeMaxTextSize="15sp"
+                                android:autoSizeMinTextSize="8sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:autoSizeTextType="uniform"
                                 android:fontFamily="@font/floney_pretendard_bold"
                                 android:text="광고 제거하기"
                                 android:textAppearance="@style/mypage_card_view_1"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
+                                app:layout_constraintBottom_toBottomOf="@id/guideline_start"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/guideline_start"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintGuide_percent="0.17"/>
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/guideline_top"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintGuide_percent="0.27"/>
 
                             <TextView
                                 android:id="@+id/textView12"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="18dp"
+                                android:autoSizeMaxTextSize="12sp"
+                                android:autoSizeMinTextSize="8sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:autoSizeTextType="uniform"
                                 android:fontFamily="@font/pretendard_medium"
                                 android:text="남은 시간"
                                 android:textColor="@color/grayscale7"
-                                android:textSize="12dp"
-                                app:layout_constraintStart_toStartOf="@+id/textView5"
-                                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toTopOf="@+id/guideline_middle"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/guideline_top" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/guideline_middle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintGuide_percent="0.44"/>
 
                             <TextView
-                                android:id="@+id/textView"
+                                android:id="@+id/tv_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="5dp"
+                                android:layout_gravity="top"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginBottom="5dp"
+                                android:autoSizeMaxTextSize="30sp"
+                                android:autoSizeMinTextSize="16sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:textSize="24sp"
+                                android:autoSizeTextType="uniform"
                                 android:fontFamily="@font/pretendard_bold"
                                 android:text="@{vm.advertiseTime}"
                                 android:textColor="@color/grayscale3"
-                                app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
-                                app:layout_constraintStart_toStartOf="@+id/textView12"
-                                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                                app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/guideline_middle" />
 
                             <androidx.constraintlayout.widget.Guideline
                                 android:id="@+id/guideline_bottom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                app:layout_constraintGuide_percent="0.75"/>
+                                app:layout_constraintGuide_percent="0.85"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="24dp"
+                                android:layout_height="0dp"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:gravity="center"
+                                android:layout_marginTop="0dp"
                                 android:text="광고 보기"
                                 android:textColor="@color/grayscale3"
-                                android:textSize="12dp"
+                                android:autoSizeMaxTextSize="12sp"
+                                android:autoSizeMinTextSize="8sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                                app:layout_constraintTop_toBottomOf="@+id/guideline_bottom" />
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -261,35 +300,52 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:autoSizeMaxTextSize="15sp"
+                                android:autoSizeMinTextSize="8sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:autoSizeTextType="uniform"
                                 android:fontFamily="@font/floney_pretendard_bold"
                                 android:lineSpacingMultiplier="1.3"
+                                android:maxLines="3"
                                 android:text="@string/mypage_main_suppose_text"
                                 android:textColor="@color/white"
-                                android:textSize="15dp"
+                                android:textSize="15sp"
+                                app:layout_constraintBottom_toTopOf="@+id/guideline_suppose_bottom"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
                             <androidx.constraintlayout.widget.Guideline
                                 android:id="@+id/guideline_suppose_bottom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                app:layout_constraintGuide_percent="0.75"/>
+                                app:layout_constraintGuide_percent="0.55"/>
 
-                            <TextView
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/guideline_suppose_end"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintGuide_percent="0.85"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_gravity="center"
-                                android:layout_marginTop="24dp"
+                                android:layout_marginTop="0dp"
                                 android:fontFamily="@font/pretendard_regular"
                                 android:text="@string/mypage_main_suppose_write_text"
                                 android:textColor="@color/white"
-                                android:textSize="12dp"
+                                android:autoSizeMaxTextSize="12sp"
+                                android:autoSizeMinTextSize="8sp"
+                                android:autoSizeStepGranularity="1sp"
+                                android:textSize="12sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="@+id/guideline_suppose_bottom" />
+                                app:layout_constraintTop_toTopOf="@id/guideline_suppose_end" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
