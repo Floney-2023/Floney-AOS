@@ -92,6 +92,7 @@
                         android:background="@drawable/custom_radius_12_solid_primary10"
                         android:gravity="center_vertical"
                         android:onClick="@{() -> vm.onClickInformPage()}"
+                        android:clickable="true"
                         android:orientation="horizontal"
                         android:padding="20dp"
                         app:layout_constraintEnd_toEndOf="parent"

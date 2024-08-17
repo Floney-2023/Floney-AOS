@@ -17,6 +17,7 @@ import android.transition.Slide
 import android.transition.TransitionSet
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -26,6 +27,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -242,6 +244,7 @@ fun Fragment.hideKeyboard() {
 }
 
 fun Fragment.setupUI(view: View) {
+
     if (view !is EditText) {
         view.setOnTouchListener { _, _ ->
             hideKeyboard()
@@ -252,7 +255,24 @@ fun Fragment.setupUI(view: View) {
     if (view is ViewGroup) {
         for (i in 0 until view.childCount) {
             val innerView = view.getChildAt(i)
-            setupUI(innerView)
+            innerView.setupTouchEffect()
+        }
+    }
+
+}
+
+fun View.setupTouchEffect() {
+    if (this.isClickable || this.isLongClickable){
+        this.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.alpha = 0.7f
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    v.alpha = 1.0f
+                }
+            }
+            false
         }
     }
 }
