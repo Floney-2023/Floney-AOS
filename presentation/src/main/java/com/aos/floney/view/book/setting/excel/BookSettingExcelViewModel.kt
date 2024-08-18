@@ -2,25 +2,18 @@ package com.aos.floney.view.book.setting.excel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.aos.data.util.SharedPreferenceUtil
 import com.aos.floney.base.BaseViewModel
-import com.aos.floney.ext.formatNumber
 import com.aos.floney.ext.parseErrorMsg
 import com.aos.floney.util.EventFlow
 import com.aos.floney.util.MutableEventFlow
 import com.aos.model.book.UiBookCategory
-import com.aos.model.home.DayMoneyModifyItem
-import com.aos.usecase.booksetting.BooksCategoryAddUseCase
-import com.aos.usecase.booksetting.BooksCategoryDeleteUseCase
 import com.aos.usecase.booksetting.BooksExcelUseCase
-import com.aos.usecase.history.GetBookCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
-import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -35,13 +28,34 @@ class BookSettingExcelViewModel @Inject constructor(
     private var _back = MutableEventFlow<Boolean>()
     val back: EventFlow<Boolean> get() = _back
 
+    // 엑셀 선택
+    val _excelItem = MutableLiveData<List<UiBookCategory>>()
+    val excelItem: LiveData<List<UiBookCategory>> get() = _excelItem
+
+    private var _excelClickItem = MutableLiveData<UiBookCategory?>()
+    val excelClickItem: LiveData<UiBookCategory?> get() = _excelClickItem
+
+
 
     // 내보내기 엑셀
     private var _completePage = MutableEventFlow<ResponseBody>()
     val completePage: EventFlow<ResponseBody> get() = _completePage
 
-    // 자산, 지출, 수입, 이체
+    // 이번달, 저번달, 올해, 작년, 전체
     var flow = MutableLiveData<String>("이번달")
+
+
+    init {
+        val array = arrayListOf<UiBookCategory>(
+            UiBookCategory(0, true, "이번달", false),
+            UiBookCategory(1, false, "저번달", false),
+            UiBookCategory(2, false, "올해", false),
+            UiBookCategory(3, false, "작년", false),
+            UiBookCategory(4, false, "전체", false),
+        )
+        _excelClickItem.value = array[0]
+        _excelItem.postValue(array)
+    }
 
     fun onClickedExit() {
         viewModelScope.launch {
@@ -51,12 +65,12 @@ class BookSettingExcelViewModel @Inject constructor(
 
     // 엑셀 내보내기
     fun onClickAddComplete() {
-        if (flow.value!="") {
+        if (_excelClickItem.value!!.name.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
                 booksExcelUseCase(
                     bookKey = prefs.getString("bookKey", ""),
-                    getExcelDuration(flow.value!!),
-                    getCurrentDate(flow.value!!)
+                    getExcelDuration(_excelClickItem.value!!.name),
+                    getCurrentDate(_excelClickItem.value!!.name)
                 ).onSuccess {
                     _completePage.emit(it)
                 }.onFailure {
@@ -67,6 +81,18 @@ class BookSettingExcelViewModel @Inject constructor(
             baseEvent(Event.ShowToast("항목 이름을 입력해주세요."))
         }
 
+    }
+
+
+    fun onClickRepeatItem(_item: UiBookCategory) {
+        val item = _excelItem.value?.map {
+            UiBookCategory(
+                it.idx, false, it.name, it.default
+            )
+        } ?: listOf()
+        item[_item.idx].checked = !item[_item.idx].checked
+        _excelItem.postValue(item)
+        _excelClickItem.value = _item
     }
 
     // 이번달, 저번달, 올해, 작년, 전체 클릭

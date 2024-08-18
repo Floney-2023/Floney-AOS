@@ -6,11 +6,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.FileProvider
+import com.aos.floney.BR
 import com.aos.floney.R
 import com.aos.floney.base.BaseBottomSheetFragment
 import com.aos.floney.databinding.BottomSheetBookSettingAssetBinding
 import com.aos.floney.databinding.BottomSheetBookSettingExcelBinding
 import com.aos.floney.ext.repeatOnStarted
+import com.aos.model.book.UiBookCategory
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -24,11 +30,28 @@ import java.io.OutputStream
 @AndroidEntryPoint
 class BookSettingExcelBottomSheetFragment :
     BaseBottomSheetFragment<BottomSheetBookSettingExcelBinding, BookSettingExcelViewModel>
-        (R.layout.bottom_sheet_book_setting_excel) {
+        (R.layout.bottom_sheet_book_setting_excel), UiBookCategory.OnItemClickListener {
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViewModelObserver()
+        setUpUi()
+        setUpGridLayoutManger()
+    }
 
+    private fun setUpUi() {
+        with(binding) {setVariable(BR.vm, viewModel)
+            setVariable(BR.eventHolder, this@BookSettingExcelBottomSheetFragment)
+        }
+    }
+
+    private fun setUpGridLayoutManger() {
+        val flexboxLayoutManager = FlexboxLayoutManager(context)
+        flexboxLayoutManager.flexWrap = FlexWrap.WRAP
+        flexboxLayoutManager.flexDirection = FlexDirection.ROW
+        flexboxLayoutManager.justifyContent = JustifyContent.FLEX_START
+        binding.rvCategory.layoutManager = flexboxLayoutManager
+        binding.rvCategory.itemAnimator = null
     }
     private fun setUpViewModelObserver() {
         repeatOnStarted {
@@ -84,5 +107,8 @@ class BookSettingExcelBottomSheetFragment :
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         context.startActivity(Intent.createChooser(shareIntent, null))
+    }
+    override fun onItemClick(item: UiBookCategory) {
+        viewModel.onClickRepeatItem(item)
     }
 }
