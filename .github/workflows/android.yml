@@ -36,9 +36,6 @@ jobs:
     - name: Clean Build
       run: ./gradlew clean
        
-    - name: Assemble
-      run: ./gradlew assemble
-      
     - name: Upload Debug APK
       uses: actions/upload-artifact@v3
       with:
