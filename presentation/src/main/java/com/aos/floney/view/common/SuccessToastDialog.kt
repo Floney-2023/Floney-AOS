@@ -16,6 +16,7 @@ class SuccessToastDialog(context: Context, private val text: String): Dialog(con
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DialogToastSuccessBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // 다이얼로그 크기 및 위치 조정
         window?.apply {
@@ -33,7 +34,6 @@ class SuccessToastDialog(context: Context, private val text: String): Dialog(con
 
         binding.tvError.text = text
 
-        setContentView(binding.root)
     }
 
 }
