@@ -9,6 +9,7 @@ plugins {
 android {
     namespace 'com.aos.domain'
     compileSdk 34
+    compileSdkVersion 34
 
     defaultConfig {
         minSdk 24
