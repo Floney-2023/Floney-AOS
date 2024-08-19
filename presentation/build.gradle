@@ -16,6 +16,7 @@ android {
     packagingOptions { resources.excludes.add("META-INF/*")}
         namespace 'com.aos.floney'
     compileSdk 34
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.aos.floney"
