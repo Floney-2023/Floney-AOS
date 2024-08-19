@@ -11,6 +11,7 @@ import com.aos.floney.util.MutableEventFlow
 import com.aos.usecase.bookadd.BooksJoinUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,7 +42,7 @@ class BookAddInviteCheckViewModel @Inject constructor(
                         // 참여 완료, 참여 가계부 키 설정
                         prefs.setString("bookKey", it.bookKey)
                         baseEvent(Event.HideLoading)
-
+                        delay(1000)
                         _codeInputCompletePage.emit(true)
                     }.onFailure {
                         baseEvent(Event.HideLoading)

@@ -142,6 +142,7 @@ class BookSettingCurrencyViewModel @Inject constructor(
             if(prefs.getString("bookKey","").isNotEmpty()) {
                 baseEvent(Event.ShowLoading)
                 booksCurrencyChangeUseCase(item.code, prefs.getString("bookKey","")).onSuccess {
+                    delay(1000)
                     baseEvent(Event.HideLoading)
                     prefs.setString("symbol",item.symbol) // 화폐 단위 변경
                     CurrencyUtil.currency = item.symbol

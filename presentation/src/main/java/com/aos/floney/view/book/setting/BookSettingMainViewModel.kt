@@ -131,7 +131,7 @@ class BookSettingMainViewModel @Inject constructor(
             if(prefs.getString("bookKey","").isNotEmpty()) {
                 baseEvent(Event.ShowLoading)
                 booksInitUseCase(prefs.getString("bookKey","")).onSuccess {
-                    delay(1)
+                    delay(1000)
                     baseEvent(Event.HideLoading)
                     baseEvent(Event.ShowSuccessToast("가계부가 초기화 되었습니다."))
                     alarmInitSave()
@@ -185,6 +185,7 @@ class BookSettingMainViewModel @Inject constructor(
                             _bookSettingInfo.value!!.ourBookUsers[index].email,
                             getCurrentDateTimeString()
                         ).onSuccess {
+                            delay(1000)
                             baseEvent(Event.HideLoading)
                             settingBookKey()
                             Timber.e("save gg ")

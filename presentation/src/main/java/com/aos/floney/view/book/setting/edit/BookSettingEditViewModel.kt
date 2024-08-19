@@ -134,7 +134,7 @@ class BookSettingEditViewModel @Inject constructor(
                 if(prefs.getString("bookKey","").isNotEmpty()) {
                     baseEvent(Event.ShowLoading)
                     booksDeleteUseCase(prefs.getString("bookKey","")).onSuccess {
-                        delay(1)
+                        delay(1000)
                         baseEvent(Event.HideLoading)
                         settingBookKey()
                     }.onFailure {
