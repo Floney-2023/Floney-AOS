@@ -23,10 +23,13 @@ jobs:
         
     - name: Create local.properties file
       run: |
-        echo "KAKAO_NATIVE_APP_KEY=${{ secrets.KAKAO_NATIVE_APP_KEY }}" > ./local.properties
-        echo "BASE_URL=${{ secrets.BASE_URL }}" >> ./local.properties
-        echo "GOOGLE_OAUTH_KEY=${{ secrets.GOOGLE_OAUTH_KEY }}" >> ./local.properties
-          
+        echo "base.url=${{ secrets.BASE_URL }}" > ./local.properties
+        echo "kakao.native.key=${{ secrets.KAKAO_NATIVE_APP_KEY }}" >> ./local.properties
+        echo "google.oauth.key=${{ secrets.GOOGLE_OAUTH_KEY }}" >> ./local.properties
+
+    - name: Verify local.properties content
+      run: cat ./local.properties
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
