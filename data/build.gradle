@@ -4,22 +4,26 @@ plugins {
     id 'kotlin-kapt'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.7.20'
 }
-
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
+def localPropertiesFile = project.rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    properties.load(localPropertiesFile.newDataInputStream())
+} else {
+    throw new GradleException("local.properties file not found.")
+}
 android {
     namespace 'com.aos.data'
     compileSdk 34
 
     defaultConfig {
         minSdk 24
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField "String", "BASE_URL", properties['base.url']
-        buildConfigField "String", "KAKAO_NATIVE_KEY", properties['kakao.native.key']
-        buildConfigField "String", "GOOGLE_OAUTH_KEY", properties['google.oauth.key']
+        buildConfigField "String", "BASE_URL", "${properties['base.url']}"
+        buildConfigField "String", "KAKAO_NATIVE_KEY", "${properties['kakao.native.key']}"
+        buildConfigField "String", "GOOGLE_OAUTH_KEY", "${properties['google.oauth.key']}"
     }
 
     buildTypes {
