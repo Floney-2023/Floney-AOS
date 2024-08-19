@@ -40,10 +40,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
        name: debug
-       path: presentation/build/outputs/apk/debug/app-debug.apk
+       path: ./presentation/app-debug.apk
 
     - name: Upload Release APK
       uses: actions/upload-artifact@v3
       with:
        name: release
-       path: presentation/build/outputs/apk/release/app-release-unsigned.apk
+       path: ./presentation/app-release-unsigned.apk
