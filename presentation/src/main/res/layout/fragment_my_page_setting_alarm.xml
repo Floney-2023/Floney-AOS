@@ -72,7 +72,7 @@
             <com.suke.widget.SwitchButton
                 android:id="@+id/switch_button"
                 android:layout_width="56dp"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
