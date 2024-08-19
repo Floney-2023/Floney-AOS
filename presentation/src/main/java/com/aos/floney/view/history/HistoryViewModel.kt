@@ -143,7 +143,7 @@ class HistoryViewModel @Inject constructor(
 
     init {
         val array = arrayListOf<UiBookCategory>(
-            UiBookCategory(0, false, "없음", false),
+            UiBookCategory(0, true, "없음", false),
             UiBookCategory(1, false, "매일", false),
             UiBookCategory(2, false, "매주", false),
             UiBookCategory(3, false, "매달", false),
