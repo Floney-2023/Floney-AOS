@@ -36,14 +36,3 @@ jobs:
     - name: Clean Build
       run: ./gradlew clean
        
-    - name: Upload Debug APK
-      uses: actions/upload-artifact@v3
-      with:
-       name: debug
-       path: ./presentation/app-debug.apk
-
-    - name: Upload Release APK
-      uses: actions/upload-artifact@v3
-      with:
-       name: release
-       path: ./presentation/app-release-unsigned.apk
