@@ -21,7 +21,6 @@ android {
         applicationId "com.aos.floney"
         minSdk 24
         targetSdk 34
-        compileSdk 34
         versionCode 4
         versionName "1.0.7"
 
