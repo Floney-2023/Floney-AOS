@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="dialog"
+            type="com.aos.floney.view.history.CalendarBottomSheetDialog" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_radius_top_left_right_12_solid_white">
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="12dp"
+            android:theme="@style/CalenderViewCustom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+            app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
+            app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_choice"
+            android:layout_width="match_parent"
+            android:onClick="@{() -> dialog.onClickBtnChoice()}"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:text="선택"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/calendar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -3,12 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
     <application
         android:name=".di.AppApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
+        android:fullBackupContent="@xml/appsflyer_backup_rules"
+        tools:replace="android:fullBackupContent"
         android:icon="@mipmap/ic_main"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_main_round"
@@ -17,20 +23,127 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.analyze.AnalyzeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_analyze"
+            android:theme="@style/Theme.Floney" />
+        <activity
+            android:name=".view.history.HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.book.add.BookAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.password.find.PasswordFindActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.web.WebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.signup.SignUpCompleteActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".view.onboard.OnBoardActivity"
             android:exported="false" />
         <activity
+            android:name=".view.mypage.MyPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.setting.MyPageSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.alarm.MyPageAlarmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.inform.MyPageInformActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.bookadd.create.MyPageBookCreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.mypage.bookadd.codeinput.MyPageBookCodeInputActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.settleup.SettleUpActivity"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="floney.onelink.me" android:pathPrefix="${appsflyer_settlement_url}" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.book.setting.BookSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.book.setting.category.BookCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.book.setting.favorite.BookFavoriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.book.entrance.BookEntranceActivity"
+            android:exported="true">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="floney.onelink.me" android:pathPrefix="${appsflyer_invite_url}" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".view.splash.SplashActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="floney"/>
+            </intent-filter>
         </activity>
+         <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakao568bf0b356479da518498ee7ed8f9c5c" />
+            </intent-filter>
+        </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.aos.floney.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${google_app_id_key}"/>
+        <meta-data
+            android:name="af_dev_key"
+            android:value="${appsflyer_dev_key}" />
     </application>
 
 </manifest>

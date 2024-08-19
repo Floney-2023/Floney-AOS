@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.settlement.PeriodCalendar" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.settlement.UiPeriodSelectModel.OnItemClickListener" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}">
+
+        <View
+            android:id="@+id/tv_range_left"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:background="@{item.leftRange ? @color/grayscale12 : @color/white}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_range_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/tv_range_right"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:background="@{item.rightRange ? @color/grayscale12 : @color/white}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_range_left"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_base_text"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:text="@{@string/settle_up_period_select_day_placeholder(item.day)}"
+            android:textSize="14dp"
+            android:textColor="@{item.isMonth ? @color/grayscale2 : @color/grayscale6 }"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_click_text"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/custom_oval_solid_primary5"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:text="@{@string/settle_up_period_select_day_placeholder(item.day)}"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            android:visibility="@{item.isClick ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

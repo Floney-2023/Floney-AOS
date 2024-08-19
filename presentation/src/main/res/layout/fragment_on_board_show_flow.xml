@@ -15,42 +15,67 @@
         tools:context=".view.onboard.OnBoardRecordFragment">
 
         <TextView
+            android:id="@+id/tv_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/on_board_show_flow_text"
             android:fontFamily="@font/pretendard_bold"
             android:textSize="24dp"
-            android:layout_marginStart="24dp"
-            android:id="@+id/tv_top"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.28sp"
+            android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/grayscale1"/>
-        
+
         <ImageView
             android:id="@+id/iv_background"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="32dp"
-            android:layout_height="426dp"
-            android:src="@drawable/background_on_board_show_flow"
-            app:layout_constraintTop_toBottomOf="@id/tv_top"
+            android:foregroundGravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/item_on_board_record"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
             app:layout_constraintStart_toStartOf="parent"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/tv_top"/>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.0" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="1.0" />
         <TextView
             android:id="@+id/tv_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginBottom="56dp"
             android:fontFamily="@font/pretendard_regular"
+            android:paddingTop="8dp"
             android:text="@string/on_board_skip_text"
             android:onClick="@{() -> vm.onClickedSkipBtn()}"
             android:textColor="@color/grayscale6"
             android:textSize="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_background" />
-
+            app:layout_constraintBottom_toBottomOf="parent" />
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"

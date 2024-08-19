@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.bookadd.create.MyPageBookAddCreateSuccessViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.mypage.bookadd.create.MyPageBookAddCreateSuccessFragment">
+
+        <LinearLayout
+            android:id="@+id/ll_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="78dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="3"
+                android:textColor="@color/grayscale2"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="/"
+                android:textSize="12dp"
+                android:textColor="@color/grayscale6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="3"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_create_success_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/book_add_new_book_success_title"
+            android:lineSpacingExtra="-5sp"
+            android:textColor="@color/grayscale1"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_page" />
+
+        <TextView
+            android:id="@+id/tv_create_success_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/book_add_new_book_success_info"
+            android:textColor="@color/grayscale6"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@id/tv_create_success_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_create_success_title" />
+
+        <ImageView
+            android:id="@+id/iv_create_book_success"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:src="@drawable/item_book_add_invite_success"
+            app:layout_constraintBottom_toTopOf="@+id/btn_create_book_complete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_create_success_info" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_create_book_complete"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickGoHomeActivity()}"
+            android:text="@string/book_add_new_book_success_go_home_button_text"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_invite_friend"
+            app:layout_constraintEnd_toEndOf="@id/iv_create_book_success"
+            app:layout_constraintStart_toStartOf="@id/iv_create_book_success" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_invite_friend"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/custom_radius_12_solid_primary9"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickInviteFriend()}"
+            android:text="@string/book_add_new_book_success_invite_friend_button_text"
+            android:textColor="@color/primary1"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_create_book_complete"
+            app:layout_constraintStart_toStartOf="@id/btn_create_book_complete" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

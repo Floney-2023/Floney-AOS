@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.aos.floney.view.history.HistoryViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.signup.SignUpAgreeFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_exit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="22dp"
+            android:onClick="@{() -> vm.onFavoriteAddClickCloseBtn()}"
+            android:padding="5dp"
+            android:src="@drawable/icon_exit"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_settlement_see_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_settlement_see_title" />
+
+        <TextView
+            android:id="@+id/tv_settlement_see_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="즐겨찾기 추가"
+            android:textColor="@color/grayscale1"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="64dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="금액"
+            android:textColor="@color/grayscale6"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_settlement_see_title" />
+
+        <EditText
+            android:id="@+id/et_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="left|center_vertical"
+            android:hint="금액을 입력하세요"
+            android:maxLength="18"
+            android:onTextChanged="@{vm.onCostTextChanged}"
+            android:text="@{vm.cost}"
+            android:textColor="@color/primary2"
+            android:textColorHint="@color/grayscale9"
+            android:textCursorDrawable="@drawable/custom_cursor_primary2"
+            android:textSize="38dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_money"
+            app:layout_constraintTop_toBottomOf="@id/tv_money"
+            bind:inputTypeBasedOnDecimal="@{true}"
+            bind:setSelection="@{vm.cost}" />
+
+        <LinearLayout
+            android:id="@+id/ll_category"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_radius_10_solid_grayscale_12"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_money">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow == `지출` ? @drawable/custom_radius_8_solid_white : null}"
+                bind:adjustCategoryFont="@{vm.flow.equals(`지출`)}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`지출`)}"
+                android:text="지출"
+                android:textColor="@{vm.flow == `지출` ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow == `수입` ? @drawable/custom_radius_8_solid_white : null}"
+                bind:adjustCategoryFont="@{vm.flow.equals(`수입`)}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`수입`)}"
+                android:text="수입"
+                android:textColor="@{vm.flow == `수입` ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow == `이체` ? @drawable/custom_radius_8_solid_white : null}"
+                bind:adjustCategoryFont="@{vm.flow.equals(`이체`)}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`이체`)}"
+                android:text="이체"
+                android:textColor="@{vm.flow == `이체` ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_asset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="자산"
+            android:textColor="@color/grayscale4"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@id/ll_category"
+            app:layout_constraintTop_toBottomOf="@id/ll_category" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:onClick="@{() -> vm.onClickCategory()}"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@{vm.asset}"
+            android:textColor="@{vm.asset.equals(`자산을 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_asset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_asset" />
+
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="분류"
+            android:textColor="@color/grayscale4"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@id/tv_asset"
+            app:layout_constraintTop_toBottomOf="@id/tv_asset" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:onClick="@{() -> vm.onClickCategoryDiv()}"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@{vm.line}"
+            android:textColor="@{vm.line.equals(`분류를 선택하세요`) ? @color/grayscale6 : @color/grayscale2}"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_category" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="내용"
+            android:textColor="@color/grayscale4"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="@id/tv_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:background="@null"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="right|center_vertical"
+            android:hint="내용을 입력하세요"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@={vm.content}"
+            android:textColor="@color/grayscale2"
+            android:textColorHint="@color/grayscale6"
+            android:textSize="14dp"
+            android:maxLength="20"
+            app:constraintSet="@id/tv_content"
+            app:layout_constraintBottom_toBottomOf="@id/tv_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/tv_content"
+            app:layout_constraintTop_toTopOf="@id/tv_content" />
+
+
+        <TextView
+            android:id="@+id/tv_delete_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@{vm.flow.equals(`지출`) ? `예산에서 제외` : `자산에서 제외`}"
+            android:textColor="@color/grayscale4"
+            android:textSize="14dp"
+            android:visibility="@{vm.flow.equals(`이체`) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="@id/tv_category"
+            app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginEnd="18dp"
+            android:background="@null"
+            android:onCheckedChanged="@{(switch, checked) -> vm.onDeleteCheckedChange(checked)}"
+            android:thumb="@drawable/switch_thumb"
+            android:track="@drawable/switch_track_selector"
+            android:visibility="@{vm.flow.equals(`이체`) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/tv_delete_plan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_delete_plan" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grayscale2"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp"
+            android:text="저장하기"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> vm.postAddFavorite()}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

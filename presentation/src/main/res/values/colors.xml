@@ -29,6 +29,8 @@
     <color name="grayscale8">#BFBFBF</color>
     <color name="grayscale9">#D9D9D9</color>
     <color name="grayscale10">#F1F1F1</color>
+    <color name="grayscale11">#F4F4F4</color>
+    <color name="grayscale12">#FAFAFA</color>
 
     <!--blue color-->
     <color name="blue1">#0060E5</color>
@@ -49,6 +51,7 @@
     <color name="red1">#AD1F25</color>
     <color name="red2">#E56E73</color>
     <color name="red3">#EFA9AB</color>
+    <color name="red">#F14F4F</color>
 
     <!--yellow color-->
     <color name="yellow1">#E4BF00</color>

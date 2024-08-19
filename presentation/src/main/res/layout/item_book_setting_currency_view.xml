@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.book.Currency" />
+        <variable
+            name="eventHolder"
+            type="com.aos.model.book.UiBookCurrencyModel.OnItemClickListener" />
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/li_member_select_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@{item.isCheck ? @drawable/custom_radius_12_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
+        android:gravity="center_vertical"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/iv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:text="@{item.code + `(` + item.symbol + `)`}"
+            android:textSize="14dp"
+            android:textColor="@{item.isCheck ? @color/primary2 : @color/grayscale6}"
+            app:fontFamily="@{item.isCheck}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_bool_activated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@{item.isCheck ? @drawable/icon_check_circle_activated : @drawable/icon_check_circle_inactivated}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.aos.model.book.UiBookCurrencyModel" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.book.setting.currency.BookSettingCurrencyViewModel" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.book.UiBookCurrencyModel.OnItemClickListener" />
+
+        <import type="android.view.View" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:src="@drawable/icon_back"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_currency_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="52dp"
+            android:fontFamily="@font/floney_pretendard_bold"
+            android:text="@string/book_setting_currency_title"
+            android:textSize="24dp"
+            android:textColor="@color/grayscale2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_back" />
+
+        <ImageView
+            android:layout_width="88dp"
+            android:layout_height="78dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/icon_currency"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_currency_info"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <TextView
+            android:id="@+id/tv_currency_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/book_setting_currency_info"
+            android:textColor="@color/grayscale6"
+            android:textSize="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_currency_title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_wallet_item_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_currency_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            bind:diffCallback="@{(Object)UiBookCurrencyModel.Companion}"
+            bind:eventHolder="@{eventHolder}"
+            bind:itemLayout="@{@layout/item_book_setting_currency_view}"
+            bind:items="@{vm.currencyItems.currencyList}"
+            bind:viewModel="@{vm}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

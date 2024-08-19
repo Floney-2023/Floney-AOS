@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.bookadd.create.MyPageBookAddSettingProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.mypage.bookadd.create.MyPageBookAddSettingProfileFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon_back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="2"
+                android:textColor="@color/grayscale2"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="/"
+                android:textSize="12dp"
+                android:textColor="@color/grayscale6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="3"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_setting_profile_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/book_add_new_book_profile_title"
+            android:textColor="@color/grayscale1"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/ll_page"
+            app:layout_constraintTop_toBottomOf="@id/ll_page" />
+
+        <TextView
+            android:id="@+id/tv_setting_profile_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="@string/book_add_new_book_profile_info"
+            android:textColor="@color/grayscale6"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_setting_profile_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_setting_profile_title" />
+
+        <FrameLayout
+            android:id="@+id/profile_view"
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            android:layout_marginTop="48dp"
+            android:onClick="@{() -> vm.onClickSettingImage()}"
+            app:layout_constraintStart_toStartOf="@+id/tv_setting_profile_info"
+            app:layout_constraintTop_toBottomOf="@+id/tv_setting_profile_info">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                app:cardCornerRadius="62dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/iv_profile_card_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/btn_book_profile"
+                    android:scaleType="centerCrop"/>
+            </androidx.cardview.widget.CardView>
+
+
+            <ToggleButton
+                android:id="@+id/btn_photo_camera"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/btn_photo_camera"
+                android:textOff=""
+                android:textOn="" />
+
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.onClickNextPage()}"
+            android:text="@string/sign_up_next"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

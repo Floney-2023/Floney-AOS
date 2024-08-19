@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.book.UiBookFavoriteModel" />
+        <variable
+            name="eventHolder"
+            type="com.aos.model.book.UiBookFavoriteModel.OnItemClickListener" />
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/li_member_select_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="28dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="34dp"
+            android:paddingBottom="16dp"
+            android:onClick="@{() -> eventHolder.onItemClick(item)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_bool_activated"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/icon_delete"
+                android:visibility="@{item.checked ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/pretendard_semibold"
+                bind:setTextWithEllipsis="@{item.description}"
+                android:textColor="@color/grayscale2"
+                android:textSize="14dp"
+                app:layout_constraintStart_toEndOf="@+id/iv_bool_activated"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="@{item.assetSubcategoryName + ` ‧ `+ item.lineSubcategoryName}"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@{String.valueOf(item.money)}"
+                android:textColor="@color/grayscale2"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_category"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:background="@color/grayscale11"
+            app:layout_constraintBottom_toBottomOf="@+id/li_member_select_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import timber.log.Timber
 
 open class BaseListAdapter(
     @LayoutRes private val layoutResId: Int?,

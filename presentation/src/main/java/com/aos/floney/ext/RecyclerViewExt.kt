@@ -4,8 +4,10 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.aos.floney.base.BaseListAdapter
 import com.aos.floney.base.BaseViewModel
+import timber.log.Timber
 
 @BindingAdapter(
     "items",
@@ -35,5 +37,9 @@ fun RecyclerView.bindSetAdapter(
 
     baseListAdapter.headerItem = headerItem
     baseListAdapter.headerLayoutResId = headerLayoutResId
+
     baseListAdapter.submitList(items?.toList())
+
+    // 깜빡임 애니메이션 효과 제거
+    this.itemAnimator = null
 }

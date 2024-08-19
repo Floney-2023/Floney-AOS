@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.aos.model.home.UiBookMonthModel" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.home.HomeMonthTypeViewModel" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.home.UiBookMonthModel.OnItemClickListener" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="64dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_radius_12_solid_white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".view.home.HomeMonthTypeFragment">
+
+                <LinearLayout
+                    android:id="@+id/ll_week"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center"
+                        android:text="일"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center"
+                        android:text="월"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center"
+                        android:text="화"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center"
+                        android:text="수"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center"
+                        android:text="목"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center"
+                        android:text="금"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center"
+                        android:text="토"
+                        android:textColor="@color/grayscale6"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:minHeight="320dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="@id/ll_week"
+                    app:layout_constraintStart_toStartOf="@id/ll_week"
+                    app:layout_constraintTop_toBottomOf="@id/ll_week"
+                    app:spanCount="7"
+                    bind:diffCallback="@{(Object)UiBookMonthModel.Companion}"
+                    bind:eventHolder="@{eventHolder}"
+                    bind:itemLayout="@{@layout/item_home_calendar}"
+                    bind:items="@{vm.getCalendarList}"
+                    bind:viewModel="@{vm}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="52dp"
+                android:padding="20dp"
+                android:elevation="1dp"
+                android:background="@drawable/custom_radius_12_solid_primary5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_calendar">
+
+                <TextView
+                    android:id="@+id/tv_total_outcome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="총지출"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toStartOf="@id/tv_total_income"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_total_outcome_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="@{vm.getExtData.totalOutcome}"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/tv_total_outcome"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@id/tv_total_outcome"
+                    app:layout_constraintTop_toBottomOf="@id/tv_total_outcome"
+                    app:layout_constraintVertical_bias="1.0"
+                    bind:adjustTotalMoneyText="@{vm.getExtData.totalOutcome}" />
+
+                <TextView
+                    android:id="@+id/tv_total_income"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="총수입"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_total_outcome"
+                    app:layout_constraintTop_toTopOf="@id/tv_total_outcome" />
+
+                <TextView
+                    android:id="@+id/tv_total_income_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="@{vm.getExtData.totalIncome}"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_total_income"
+                    app:layout_constraintTop_toBottomOf="@id/tv_total_income"
+                    bind:adjustTotalMoneyText="@{vm.getExtData.totalIncome}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

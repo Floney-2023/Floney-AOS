@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.aos.model.book.BudgetItem" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.book.UiBookBudgetModel.OnItemClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:background="@{item.isExist ? @drawable/custom_radius_8_solid_primary10 : @drawable/custom_radius_12_solid_grayscale_12}"
+        android:onClick="@{() -> eventHolder.onItemClick(item)}"
+        android:paddingStart="22dp"
+        android:paddingTop="21dp"
+        android:paddingEnd="22dp"
+        android:paddingBottom="21dp">
+
+        <TextView
+            android:id="@+id/tv_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.month + `월`}"
+            android:textColor="@{item.isExist ? @color/primary2 : @color/grayscale6}"
+            android:textSize="13dp"
+            app:fontFamily="@{item.isExist}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.money}"
+            android:textColor="@{item.isExist ? @color/primary2 : @color/grayscale6}"
+            android:textSize="13dp"
+            app:fontFamily="@{item.isExist}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

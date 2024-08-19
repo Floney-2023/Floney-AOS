@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.setting.alarm.MyPageSettingAlarmViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.mypage.setting.alarm.MyPageSettingAlarmFragment">
+
+        <ImageView
+            android:id="@+id/iv_back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_left_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_setting_alarm_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_setting_alarm_title" />
+
+        <TextView
+            android:id="@+id/tv_setting_alarm_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/mypage_main_setting_text1"
+            android:textSize="16dp"
+            android:textColor="@color/grayscale2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/li_alarm_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:paddingStart="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingEnd="20dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_setting_alarm_title">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mypage_main_setting_text4"
+                android:textSize="14dp"
+                android:textColor="@color/grayscale2"
+                android:fontFamily="@font/pretendard_medium"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <com.suke.widget.SwitchButton
+                android:id="@+id/switch_button"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:sb_background="@color/grayscale10"
+                app:sb_border_width="1.5dp"
+                app:sb_checked="@{vm.marketingTerms ?  true : false}"
+                app:sb_checked_color="@color/primary5"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/grayscale10" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

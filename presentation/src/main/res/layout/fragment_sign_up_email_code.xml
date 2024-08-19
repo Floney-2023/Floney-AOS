@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.signup.SignUpEmailCodeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.signup.SignUpAgreeFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="22dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon_back">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="3"
+                android:textColor="@color/grayscale2"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="/"
+                android:textSize="12dp"
+                android:textColor="@color/grayscale6" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="4"
+                android:textColor="@color/grayscale6"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_valid_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/sign_up_input_code"
+            android:textColor="@color/grayscale1"
+            android:textSize="24dp"
+            app:layout_constraintStart_toStartOf="@id/ll_page"
+            app:layout_constraintTop_toBottomOf="@id/ll_page" />
+
+        <TextView
+            android:id="@+id/tv_valid_email_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
+            android:text="@string/sign_up_input_code_text"
+            android:textColor="@color/grayscale6"
+            android:textSize="13dp"
+            app:layout_constraintStart_toStartOf="@id/tv_valid_email"
+            app:layout_constraintTop_toBottomOf="@id/tv_valid_email" />
+
+        <LinearLayout
+            android:id="@+id/ll_email_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="38dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_valid_email_text">
+
+            <EditText
+                android:id="@+id/et_code_first"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edittext_underline"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:text="@={vm.codeFirst}"
+                android:textColor="@color/grayscale2"
+                android:textSize="28dp" />
+
+            <EditText
+                android:id="@+id/et_code_second"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edittext_underline"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:text="@={vm.codeSecond}"
+                android:textColor="@color/grayscale2"
+                android:textSize="28dp" />
+
+            <EditText
+                android:id="@+id/et_code_third"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edittext_underline"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:text="@={vm.codeThird}"
+                android:textColor="@color/grayscale2"
+                android:textSize="28dp" />
+
+            <EditText
+                android:id="@+id/et_code_four"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edittext_underline"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:text="@={vm.codeFour}"
+                android:textColor="@color/grayscale2"
+                android:textSize="28dp" />
+
+            <EditText
+                android:id="@+id/et_code_fifth"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edittext_underline"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:text="@={vm.codeFifth}"
+                android:textColor="@color/grayscale2"
+                android:textSize="28dp" />
+
+            <EditText
+                android:id="@+id/et_code_six"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_edittext_underline"
+                android:fontFamily="@font/pretendard_semibold"
+                android:gravity="center"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLength="1"
+                android:paddingBottom="8dp"
+                android:text="@={vm.codeSix}"
+                android:textColor="@color/grayscale2"
+                android:textSize="28dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/custom_radius_8_solid_primary10"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="@{vm.timerText}"
+            android:textColor="@color/primary2"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_email_code" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="54dp"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:lineHeight="20dp"
+            android:lineSpacingExtra="2sp"
+            android:translationY="-1.24sp"
+            android:text="@string/sign_up_input_code_info_text"
+            android:textColor="@color/grayscale6"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_time" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="38dp"
+            android:background="@drawable/custom_radius_12_solid_primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:onClick="@{() -> vm.checkEmailCode()}"
+            android:text="@string/sign_up_next"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

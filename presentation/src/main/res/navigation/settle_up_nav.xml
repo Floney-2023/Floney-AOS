@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settle_up_nav"
+    app:startDestination="@id/settleUpStartFragment">
+
+    <activity
+        android:id="@+id/settleUpActivity"
+        android:name="com.aos.floney.view.settleup.SettleUpActivity"
+        tools:layout="@layout/activity_settle_up"
+        android:label="SettleUpActivity" />
+    <fragment
+        android:id="@+id/settleUpStartFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpStartFragment"
+        tools:layout="@layout/fragment_settle_up_start"
+        android:label="SettleUpStartFragment" >
+        <action
+            android:id="@+id/action_settleUpStartFragment_to_settleUpMemberSelectFragment"
+            app:destination="@id/settleUpMemberSelectFragment" />
+        <action
+            android:id="@+id/action_settleUpStartFragment_to_settleUpSeeFragment"
+            app:destination="@id/settleUpSeeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpMemberSelectFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpMemberSelectFragment"
+        android:label="SettleUpMemberSelectFragment"
+        tools:layout="@layout/fragment_settle_up_member_select">
+        <action
+            android:id="@+id/action_settleUpMemberSelectFragment_to_settleUpPeriodSelectFragment"
+            app:destination="@id/settleUpPeriodSelectFragment" >
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpPeriodSelectFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpPeriodSelectFragment"
+        android:label="SettleUpPeriodSelectFragment"
+        tools:layout="@layout/fragment_settle_up_period_select">
+        <argument
+            android:name="member"
+            app:argType="string[]" />
+        <action
+            android:id="@+id/action_settleUpPeriodSelectFragment_to_settleUpOutcomesSelectFragment"
+            app:destination="@id/settleUpOutcomesSelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpOutcomesSelectFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpOutcomesSelectFragment"
+        android:label="SettleUpOutcomesSelectFragment"
+        tools:layout="@layout/fragment_settle_up_outcomes_select">
+        <argument
+            android:name="member"
+            app:argType="string[]"/>
+        <argument
+            android:name="startDay"
+            app:argType="string"/>
+        <argument
+            android:name="endDay"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_settleUpOutcomesSelectFragment_to_settleUpCompleteFragment"
+            app:destination="@id/settleUpCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpCompleteFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpCompleteFragment"
+        android:label="SettleUpCompleteFragment"
+        tools:layout="@layout/fragment_settle_up_complete">
+
+        <argument
+            android:name="member"
+            app:argType="string[]"/>
+        <argument
+            android:name="startDay"
+            app:argType="string"/>
+        <argument
+            android:name="endDay"
+            app:argType="string"/>
+        <argument
+            android:name="outcome"
+            app:argType="long[]" />
+        <argument
+            android:name="userEmail"
+            app:argType="string[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpSeeFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpSeeFragment"
+        android:label="SettleUpSeeFragment"
+        tools:layout="@layout/fragment_settle_up_see" >
+        <action
+            android:id="@+id/action_settleUpSeeFragment_to_settleUpDetailSeeFragment"
+            app:destination="@id/settleUpDetailSeeFragment" />
+        <argument
+            android:name="id"
+            app:argType="long" />
+
+        <argument
+            android:name="bookKey"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/settleUpDetailSeeFragment"
+        android:name="com.aos.floney.view.settleup.SettleUpDetailSeeFragment"
+        android:label="SettleUpDetailSeeFragment"
+        tools:layout="@layout/fragment_settle_up_detail_see">
+        <argument
+            android:name="id"
+            app:argType="long"/>
+    </fragment>
+</navigation>

@@ -1,17 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. --><style name="Base.Theme.Floney" parent="Theme.Material3.DayNight.NoActionBar">
-    <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
-    <item name="android:buttonStyle">@style/customButtonFontStyle</item>
-    <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
-    <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
-    <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
-    <item name="android:windowLightStatusBar">true</item>
-    <item name="android:statusBarColor">#FAFAFA</item>
-    <!-- Customize your light theme here. -->
-    <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-</style>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Floney" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
+        <item name="android:buttonStyle">@style/customButtonFontStyle</item>
+        <item name="android:editTextStyle">@style/customEditTextFontStyle</item>
+        <item name="android:radioButtonStyle">@style/customRadioButtonFontStyle</item>
+        <item name="android:checkboxStyle">@style/customCheckboxFontStyle</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
 
     <style name="Theme.Floney" parent="Base.Theme.Floney" />
+
+    <style name="NumberPicker" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="android:textColorPrimary">@color/grayscale3</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 
     <style name="wallet_name">
         <item name="android:textSize">11sp</item>
@@ -132,7 +141,7 @@
     </style>
 
     <style name="first_onboard_passbtn">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">#8C8C8C</item>
     </style>
 
@@ -181,37 +190,48 @@
         <item name="android:textColor">#FAFAFA</item>
     </style>
 
-    <style name="start_button">
-        <item name="android:fontFamily">@font/pretendard_semibold</item>
-        <item name="fontFamily">@font/pretendard_semibold</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#FFFFFF</item>
+    <style name="right_button">
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="left_button">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/grayscale6</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
     </style>
 
     <!--LoginActivity-->
     <style name="login_edit_text" parent="Widget.Design.TextInputLayout">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/grayscale6</item>
-        <item name="android:textCursorDrawable">@color/grayscale6</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/grayscale2</item>
+        <item name="android:textCursorDrawable">@color/grayscale2</item>
         <item name="android:textColorHint">@color/grayscale6</item>
         <item name="hintTextColor">@color/grayscale6</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
     </style>
+
     <style name="login_underscore_text">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#8C8C8C</item>
     </style>
-    <style name="login_popup_text1">
+
+    <style name="popup_title">
         <item name="android:fontFamily">@font/pretendard_bold</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">#0D0D0D</item>
+        <item name="fontFamily">@font/pretendard_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/grayscale1</item>
     </style>
-    <style name="login_popup_text2">
+
+    <style name="popup_info">
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">#0D0D0D</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/grayscale1</item>
     </style>
 
     <!--SignupActivity-->
@@ -219,42 +239,50 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#262626</item>
     </style>
+
     <style name="signup_page_all">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#8C8C8C</item>
     </style>
+
     <style name="signup_first_text">
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">#0D0D0D</item>
     </style>
+
     <style name="sign_up_right_text">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#262626</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
+
     <style name="sign_up_email_authentication">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">#8C8C8C</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
+
     <style name="sign_up_email_authentication_timer">
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">#259D71</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
+
     <style name="sign_up_email_authentication_inform">
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">#8C8C8C</item>
     </style>
+
     <style name="sign_up_input_text">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#8C8C8C</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
+
     <style name="sign_up_input_inform_text">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#8C8C8C</item>
@@ -263,67 +291,75 @@
 
     <!--MypageActivity-->
     <style name="mypage_header_text">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">23dp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_inform_text">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">17dp</item>
         <item name="android:textColor">@color/grayscale1</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
 
     <style name="mypage_user_name">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/grayscale2</item>
-        <item name="android:fontFamily">@font/floney_pretendard_semibold</item>
-        <item name="fontFamily">@font/floney_pretendard_semibold</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="fontFamily">@font/pretendard_bold</item>
     </style>
+
     <style name="mypage_card_view_1">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/grayscale2</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
+
     <style name="mypage_card_view_2">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/floney_pretendard_bold</item>
         <item name="fontFamily">@font/floney_pretendard_bold</item>
     </style>
+
     <style name="mypage_card_view_1_write">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/grayscale3</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
-    </style>
-    <style name="mypage_card_view_2_write">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
-        <item name="fontFamily">@font/pretendard_medium</item>
-    </style>
-    <style name="mypage_user_email">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/grayscale3</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
+
+    <style name="mypage_card_view_2_write">
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+
+    <style name="mypage_user_email">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/grayscale2</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
+
     <style name="mypage_wallet_count">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/grayscale6</item>
         <item name="android:fontFamily">@font/pretendard_regular</item>
         <item name="fontFamily">@font/pretendard_regular</item>
     </style>
+
     <style name="mypage_suppose_text">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/grayscale2</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
     </style>
+
     <style name="mypage_setting_language">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/primary2</item>
@@ -332,8 +368,9 @@
     </style>
 
     <style name="mypage_inform_title_text">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14dp</item>
         <item name="android:textColor">@color/grayscale2</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
 
     <!--인증 코드 6자리 editText style-->
@@ -358,12 +395,12 @@
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:background">@drawable/onboard_area1</item>
         <item name="android:padding">16dp</item>
-        <item name="android:textAppearance">@style/start_button</item>
+        <item name="android:textAppearance">@style/right_button</item>
     </style>
 
     <!--item_toast_sample-->
     <style name="item_toast_sample" parent="Base.Theme.Floney">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">16dp</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="fontFamily">@font/pretendard_medium</item>
@@ -381,7 +418,7 @@
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
         <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent
+        <item name="android:statusBarColor">@color/white
         </item> <!-- And then this will be needed -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
@@ -396,6 +433,46 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
+    </style>
+
+    <!-- 달력에 사용하는 스타일 -->
+    <style name="CustomTextAppearance" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/mcv_text_date_light</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <!-- 여기서 요일, 달력 안 숫자들의 폰트 설정을 수행할 수 있다 -->
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="android:width">34dp</item>
+        <item name="android:height">34dp</item>
+        <item name="colorAccent">@android:color/holo_red_light</item>
+        <item name="colorPrimary">@android:color/holo_blue_light</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <!-- 달력 안의 숫자들에 적용되는 스타일 -->
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@drawable/calendar_inner_text_color</item>
+        <item name="android:weekNumberColor">@android:color/holo_red_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <!-- 달력 안의 요일들에 적용되는 스타일 -->
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/grayscale6</item>
+        <item name="android:weekNumberColor">@android:color/holo_red_light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/pretendard_regular</item>
+    </style>
+
+    <!-- 연, 월을 표시하는 헤더에 적용되는 스타일 -->
+    <style name="CalendarWidgetHeader">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/grayscale2</item>
+        <item name="fontFamily">@font/pretendard_semibold</item>
     </style>
 
 </resources>

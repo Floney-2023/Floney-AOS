@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.aos.floney.view.analyze.AnalyzeAssetViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.analyze.AnalyzeAssetFragment">
+
+        <TextView
+            android:id="@+id/tv_top_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendard_bold"
+            android:lineHeight="33dp"
+            android:text="@{vm.postAssetResult.totalDifference}"
+            android:textColor="@color/grayscale1"
+            android:textSize="22dp"
+            android:lineSpacingExtra="7sp"
+            android:translationY="-3.37sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:lineHeight="18.2dp"
+            android:text="@{vm.postAssetResult.difference}"
+            android:textColor="@color/grayscale6"
+            android:textSize="13dp"
+            android:lineSpacingExtra="3sp"
+            android:translationY="-1.34sp"
+            app:layout_constraintStart_toStartOf="@id/tv_top_text"
+            app:layout_constraintTop_toBottomOf="@id/tv_top_text" />
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            bind:setAnalyzeAssetImage="@{vm.postAssetResult}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_top_text" />
+
+        <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
+            android:id="@+id/barchart_one"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="48dp"
+            app:layout_constraintEnd_toStartOf="@id/barchart_one"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.54"/>
+        <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
+            android:id="@+id/barchart_two"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/barchart_three"
+            app:layout_constraintStart_toEndOf="@id/barchart_one"
+            app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
+
+        <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
+            android:id="@+id/barchart_three"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/barchart_four"
+            app:layout_constraintStart_toEndOf="@id/barchart_two"
+            app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
+
+        <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
+            android:id="@+id/barchart_four"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/barchart_five"
+            app:layout_constraintStart_toEndOf="@id/barchart_three"
+            app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
+
+        <com.aos.floney.view.analyze.AnalyzeAssetMonthBarChart
+            android:id="@+id/barchart_five"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toStartOf="@id/barchart_this_month"
+            app:layout_constraintStart_toEndOf="@id/barchart_four"
+            app:layout_constraintTop_toTopOf="@id/barchart_this_month" />
+
+        <com.aos.floney.view.analyze.AnalyzeAssetThisMonthBarChart
+            android:id="@+id/barchart_this_month"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="28dp"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/barchart_five"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon" />
+
+        <TextView
+            android:id="@+id/tv_one_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:textColor="@color/grayscale6"
+            bind:setAssetMonthText="@{vm.postAssetResult.analyzeResult[0]}"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/barchart_one"
+            app:layout_constraintStart_toStartOf="@id/barchart_one"
+            app:layout_constraintTop_toBottomOf="@id/barchart_one" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:textColor="@color/grayscale6"
+            bind:setAssetMonthText="@{vm.postAssetResult.analyzeResult[1]}"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/barchart_two"
+            app:layout_constraintStart_toStartOf="@id/barchart_two"
+            app:layout_constraintTop_toBottomOf="@id/barchart_two" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:textColor="@color/grayscale6"
+            bind:setAssetMonthText="@{vm.postAssetResult.analyzeResult[2]}"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/barchart_three"
+            app:layout_constraintStart_toStartOf="@id/barchart_three"
+            app:layout_constraintTop_toBottomOf="@id/barchart_three" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:textColor="@color/grayscale6"
+            bind:setAssetMonthText="@{vm.postAssetResult.analyzeResult[3]}"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/barchart_four"
+            app:layout_constraintStart_toStartOf="@id/barchart_four"
+            app:layout_constraintTop_toBottomOf="@id/barchart_four" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:textColor="@color/grayscale6"
+            bind:setAssetMonthText="@{vm.postAssetResult.analyzeResult[4]}"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/barchart_five"
+            app:layout_constraintStart_toStartOf="@id/barchart_five"
+            app:layout_constraintTop_toBottomOf="@id/barchart_five" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:text="이번달"
+            android:textColor="@color/grayscale6"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="@id/barchart_this_month"
+            app:layout_constraintStart_toStartOf="@id/barchart_this_month"
+            app:layout_constraintTop_toBottomOf="@id/barchart_this_month" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재자산"
+            android:textColor="@color/grayscale6"
+            android:textSize="14dp"
+            android:fontFamily="@font/pretendard_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="164dp"
+            android:id="@+id/tv_now_asset"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_now_asset_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="132dp"
+            android:fontFamily="@font/pretendard_bold"
+            bind:adjustOnlyMoneyText="@{vm.postAssetResult.currentAsset}"
+            android:textColor="@color/grayscale2"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="@id/tv_now_asset"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="초기자산"
+            android:textColor="@color/grayscale6"
+            android:textSize="14dp"
+            android:fontFamily="@font/pretendard_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="24dp"
+            android:id="@+id/tv_init_asset"
+            android:layout_marginBottom="76dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_bold"
+            android:layout_marginBottom="44dp"
+            android:textSize="20dp"
+            android:textColor="@color/grayscale2"
+            bind:adjustOnlyMoneyText="@{vm.postAssetResult.initAsset}"
+            app:layout_constraintStart_toStartOf="@id/tv_init_asset"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

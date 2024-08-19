@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.aos.model.home.UiBookDayModel" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.home.HomeViewModel" />
+
+        <variable
+            name="eventHolder"
+            type="com.aos.model.home.UiBookDayModel.OnItemClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background3"
+        tools:context=".view.home.HomeActivity">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="84dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="24dp"
+            android:src="@drawable/logo_floney_horizontal_gray"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_book_profile"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:onClick="@{() -> vm.onClickSettingPage()}"
+            android:visibility="@{vm.onClickedShowDetail != null ? View.INVISIBLE : View.VISIBLE}"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toTopOf="@id/iv_logo">
+
+            <ImageView
+                setBookImageToUrl="@{vm.bookInfo.bookImg}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/icon_chip"
+            app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"
+            app:layout_constraintEnd_toStartOf="@id/cv_book_profile"
+            app:layout_constraintTop_toTopOf="@id/cv_book_profile" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/custom_radious_4_solid_primary4"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@{vm.bookInfo.bookName}"
+            android:textColor="@color/white"
+            android:textSize="11dp"
+            app:layout_constraintBottom_toBottomOf="@id/cv_book_profile"
+            app:layout_constraintEnd_toStartOf="@id/cv_book_profile"
+            app:layout_constraintTop_toTopOf="@id/cv_book_profile" />
+
+        <ImageView
+            android:id="@+id/iv_previous_month"
+            android:layout_width="24dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="-8dp"
+            android:layout_marginTop="35dp"
+            android:onClick="@{() -> vm.onClickPreviousMonth()}"
+            android:src="@drawable/icon_previous_month"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo" />
+
+        <TextView
+            android:id="@+id/tv_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@{vm.showDate}"
+            android:onClick="@{() -> vm.onClickChoiceDate()}"
+            android:textColor="@color/grayscale1"
+            android:textSize="21dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"
+            app:layout_constraintStart_toEndOf="@id/iv_previous_month"
+            app:layout_constraintTop_toTopOf="@id/iv_previous_month" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="28dp"
+            android:onClick="@{() -> vm.onClickNextMonth()}"
+            android:src="@drawable/icon_next_month"
+            app:layout_constraintBottom_toBottomOf="@id/iv_previous_month"
+            app:layout_constraintStart_toEndOf="@id/tv_month"
+            app:layout_constraintTop_toTopOf="@id/iv_previous_month" />
+
+        <LinearLayout
+            android:id="@+id/ll_calendar_type"
+            android:layout_width="116dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/custom_radius_8_solid_grayscale10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/cv_book_profile">
+
+            <TextView
+                android:layout_width="54dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:background="@{vm.clickedShowType.equals(`month`) ? @drawable/custom_radius_5_solid_white : null}"
+                bind:adjustCategoryFont="@{vm.clickedShowType.equals(`month`)}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickShowType(`month`)}"
+                android:text="캘린더"
+                android:textColor="@{vm.clickedShowType.equals(`month`) ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="11dp" />
+
+            <TextView
+                android:layout_width="54dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="4dp"
+                android:background="@{vm.clickedShowType.equals(`day`) ? @drawable/custom_radius_5_solid_white : null}"
+                bind:adjustCategoryFont="@{vm.clickedShowType.equals(`day`)}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickShowType(`day`)}"
+                android:text="일별"
+                android:textColor="@{vm.clickedShowType.equals(`day`) ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="11dp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+        <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/iv_previous_month" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#b3000000"
+            android:onClick="@{() -> vm.onClickCloseShowDetail()}"
+            android:visibility="@{vm.onClickedShowDetail != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/cl_show_detail"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ad_banner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="@{vm.onClickedShowDetail == null &amp;&amp; vm.showAdvertisement == true ? View.VISIBLE : View.GONE}"
+            ads:layout_constraintBottom_toTopOf="@+id/ll_bottom_navigation"
+            ads:layout_constraintEnd_toEndOf="parent"
+            ads:layout_constraintStart_toStartOf="parent"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/9214589741"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_show_detail"
+            android:layout_width="0dp"
+            android:layout_height="384dp"
+            android:background="@drawable/custom_radius_top_left_right_12_solid_white"
+            android:backgroundTint="@null"
+            android:visibility="@{vm.onClickedShowDetail != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{vm.onClickedShowDetail.year + `년`}"
+                android:textColor="@color/grayscale6"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_month_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@{vm.onClickedShowDetail.month + `월 `+ vm.onClickedShowDetail.day + `일`}"
+                android:textColor="@color/grayscale1"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@id/tv_year"
+                app:layout_constraintTop_toBottomOf="@id/tv_year" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:onClick="@{() -> vm.onClickAddHistory()}"
+                android:paddingStart="4dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="10dp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="내역 추가"
+                android:textColor="@color/primary2"
+                android:textSize="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_month_day"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_year" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_show_detail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_month_day"
+                bind:diffCallback="@{(Object)UiBookDayModel.Companion}"
+                bind:eventHolder="@{eventHolder}"
+                bind:itemLayout="@{@layout/item_day_history}"
+                bind:items="@{vm.getMoneyDayList}"
+                tools:listitem="@layout/item_day_history" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="86dp"
+                android:src="@drawable/not_exist_history"
+                android:visibility="@{vm.getMoneyDayList.size() > 0 ? View.GONE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="@id/rv_show_detail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grayscale10"/>
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="#FFFFFF"
+                app:itemPaddingTop="7dp"
+                app:itemPaddingBottom="20dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:itemTextAppearanceActiveBoldEnabled="false"
+                app:itemActiveIndicatorStyle="@android:color/transparent"
+                app:itemIconTint="@drawable/bottom_navigation_setting"
+                app:itemRippleColor="@android:color/transparent"
+                app:itemTextColor="@drawable/bottom_navigation_setting"
+                app:itemTextAppearanceActive="@style/BottomNavigationTextAppearance"
+                app:itemTextAppearanceInactive="@style/BottomNavigationTextAppearance"
+                app:labelVisibilityMode="labeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/nav_menu" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_add_history"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/icon_add_circle"
+            android:onClick="@{() -> vm.onClickTabAddHistory()}"
+            app:layout_constraintBottom_toBottomOf="@id/ll_bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ll_bottom_navigation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

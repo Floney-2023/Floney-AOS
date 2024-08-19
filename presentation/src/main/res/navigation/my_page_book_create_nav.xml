@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_page_book_create_nav"
+    app:startDestination="@id/myPageBookAddInputBookNameFragment">
+
+    <activity
+        android:id="@+id/myPageBookCreateActivity"
+        android:name="com.aos.floney.view.mypage.bookadd.create.MyPageBookCreateActivity"
+        tools:layout="@layout/activity_my_page_book_create"
+        android:label="MyPageBookCreateActivity" />
+
+    <fragment
+        android:id="@+id/myPageBookAddInputBookNameFragment"
+        android:name="com.aos.floney.view.mypage.bookadd.create.MyPageBookAddInputBookNameFragment"
+        tools:layout="@layout/fragment_my_page_book_add_input_book_name"
+        android:label="MyPageBookAddInputBookNameFragment" >
+        <action
+            android:id="@+id/action_myPageBookAddInputBookNameFragment_to_myPageBookAddSettingProfileFragment"
+            app:destination="@id/myPageBookAddSettingProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageBookAddSettingProfileFragment"
+        android:name="com.aos.floney.view.mypage.bookadd.create.MyPageBookAddSettingProfileFragment"
+        tools:layout="@layout/fragment_book_add_setting_profile"
+        android:label="MyPageBookAddSettingProfileFragment" >
+        <action
+            android:id="@+id/action_myPageBookAddSettingProfileFragment_to_myPageBookAddCreateSuccessFragment"
+            app:destination="@id/myPageBookAddCreateSuccessFragment" />
+        <argument
+            android:name="bookname"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageBookAddCreateSuccessFragment"
+        android:name="com.aos.floney.view.mypage.bookadd.create.MyPageBookAddCreateSuccessFragment"
+        tools:layout="@layout/fragment_book_add_create_success"
+        android:label="MyPageBookAddCreateSuccessFragment" >
+        <argument
+            android:name="invitecode"
+            app:argType="string" />
+    </fragment>
+</navigation>

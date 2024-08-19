@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.aos.model.settlement.UiSettlementSeeModel" />
+        <variable
+            name="vm"
+            type="com.aos.floney.view.settleup.SettleUpSeeViewModel" />
+        <variable
+            name="eventHolder"
+            type="com.aos.model.settlement.UiSettlementSeeModel.OnItemClickListener"/>
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.signup.SignUpAgreeFragment">
+
+        <ImageView
+            android:id="@+id/iv_icon_exit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="22dp"
+            android:onClick="@{() -> vm.onClickedExit()}"
+            android:clickable="true"
+            android:padding="5dp"
+            android:src="@drawable/icon_exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_settlement_see_title" />
+
+        <TextView
+            android:id="@+id/tv_settlement_see_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/settle_up_see_title"
+            android:textSize="16dp"
+            android:textColor="@color/grayscale1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_member_select_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settlement_see_title"
+            bind:diffCallback="@{(Object)UiSettlementSeeModel.Companion}"
+            bind:eventHolder="@{eventHolder}"
+            bind:itemLayout="@{@layout/item_settlement_see_view}"
+            bind:items="@{vm.settlementList.settlementList}"
+            bind:viewModel="@{vm}" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="50dp"
+            android:layout_height="84dp"
+            android:src="@drawable/icon_empty_list"
+            android:visibility="@{vm.settlementList.settlementList.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_settlement_see_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="내역이 없습니다."
+            android:textColor="@color/grayscale6"
+            android:textSize="12dp"
+            android:visibility="@{vm.settlementList.settlementList.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@+id/imageView3"
+            app:layout_constraintStart_toStartOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

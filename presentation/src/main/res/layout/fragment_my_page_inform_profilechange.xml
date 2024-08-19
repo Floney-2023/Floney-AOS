@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="vm"
+            type="com.aos.floney.view.mypage.inform.profile.change.MyPageInformProfileChangeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.mypage.inform.profile.change.MyPageInformProfileChangeFragment">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:onClick="@{() -> vm.onClickPreviousPage()}"
+            android:src="@drawable/icon_left_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mypage_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_mypage_title" />
+
+        <TextView
+            android:id="@+id/tv_mypage_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:textSize="16dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:lineSpacingExtra="-3sp"
+            android:text="@string/mypage_main_inform_profile_change"
+            android:textAppearance="@style/mypage_inform_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/profile_view"
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            android:layout_marginTop="68dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypage_title">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_profile_card_view"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:layout_gravity="center"
+                app:cardElevation="0dp"
+                android:onClick="@{() -> vm.onClickSettingImage()}"
+                app:cardCornerRadius="62dp">
+
+                <ImageView
+                    android:id="@+id/profileImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/btn_profile"
+                    android:text="@string/mypage_main_inform_nickname"
+                    android:textAppearance="@style/sign_up_input_text" />
+            </androidx.cardview.widget.CardView>
+
+            <ToggleButton
+                android:id="@+id/btn_photo_camera"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/btn_photo_camera"
+                android:onClick="@{() -> vm.onClickSettingImage()}"
+                android:textOff=""
+                android:textOn="" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/profile_change_basic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="@string/mypage_main_inform_profile_change_basic"
+            android:textColor="@color/grayscale6"
+            android:textSize="12dp"
+            android:onClick="@{() -> vm.onClickBasicSettingImage()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_view" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grayscale2"
+            android:paddingTop="20dp"
+            android:paddingBottom="32dp"
+            android:text="변경하기"
+            android:textSize="14dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:onClick="@{() -> vm.onClickProfileChange()}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
