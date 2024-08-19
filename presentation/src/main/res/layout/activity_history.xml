@@ -15,174 +15,184 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".view.history.HistoryActivity">
 
-        <ScrollView
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:onClick="@{() -> vm.onClickCloseBtn()}"
+            android:src="@drawable/icon_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="3dp"
+            android:onClick="@{() -> vm.onClickFavorite()}"
+            android:padding="4dp"
+            android:src="@drawable/icon_favorite"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_close"
+            app:layout_constraintEnd_toStartOf="@id/iv_repeat"
+            app:layout_constraintTop_toTopOf="@id/iv_close" />
+
+        <ImageView
+            android:id="@+id/iv_repeat"
+            android:layout_width="34dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> vm.onClickRepeat()}"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:src="@{vm.repeatClickItem == null || vm.repeatClickItem.name.equals(`없음`) ? @drawable/icon_repeat : @drawable/icon_repeat_enable}"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_close" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:fontFamily="@font/pretendard_semibold"
+            android:gravity="center"
+            android:text="@{vm.repeatClickItem == null || vm.repeatClickItem.name.equals(`없음`) ? `` : vm.repeatClickItem.name}"
+            android:textColor="@{vm.mode.equals(`add`) ? @color/primary1 : @color/grayscale6}"
+            android:textSize="12dp"
+            android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@+id/iv_repeat"
+            app:layout_constraintStart_toStartOf="@+id/iv_repeat"
+            app:layout_constraintTop_toBottomOf="@id/iv_repeat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:gravity="center"
+            android:minWidth="34dp"
+            android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
+            android:textColor="@color/grayscale6"
+            android:textSize="14dp"
+            android:visibility="@{vm.mode.equals(`add`) ? View.GONE: View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_close" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="52dp"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="금액"
+            android:textColor="@color/grayscale6"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_close" />
+
+        <EditText
+            android:id="@+id/et_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@null"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="left|center_vertical"
+            android:hint="금액을 입력하세요"
+            android:maxLength="18"
+            android:maxLines="1"
+            android:onTextChanged="@{vm.onCostTextChanged}"
+            android:text="@{vm.cost}"
+            android:textColor="@color/primary2"
+            android:textColorHint="@color/grayscale9"
+            android:textCursorDrawable="@drawable/custom_cursor_primary2"
+            android:textSize="38sp"
+            android:autoSizeMaxTextSize="38sp"
+            android:autoSizeMinTextSize="30sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_money"
+            app:layout_constraintTop_toBottomOf="@id/tv_money"
+            bind:inputTypeBasedOnDecimal="@{true}"
+            bind:setSelection="@{vm.cost}" />
+
+        <LinearLayout
+            android:id="@+id/ll_category"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/custom_radius_10_solid_grayscale_12"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_money">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow.equals(`지출`) ? @drawable/custom_radius_8_solid_white : null}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`지출`)}"
+                android:text="지출"
+                android:textColor="@{vm.flow.equals(`지출`) ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp"
+                bind:adjustCategoryFont="@{vm.flow.equals(`지출`)}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow.equals(`수입`) ? @drawable/custom_radius_8_solid_white : null}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`수입`)}"
+                android:text="수입"
+                android:textColor="@{vm.flow.equals(`수입`) ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp"
+                bind:adjustCategoryFont="@{vm.flow.equals(`수입`)}" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:background="@{vm.flow.equals(`이체`) ? @drawable/custom_radius_8_solid_white : null}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.onClickFlow(`이체`)}"
+                android:text="이체"
+                android:textColor="@{vm.flow.equals(`이체`) ? @color/grayscale2 : @color/grayscale8}"
+                android:textSize="14dp"
+                bind:adjustCategoryFont="@{vm.flow.equals(`이체`)}" />
+
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_category">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".view.history.HistoryActivity">
-
-                <ImageView
-                    android:id="@+id/iv_close"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:onClick="@{() -> vm.onClickCloseBtn()}"
-                    android:src="@drawable/icon_close"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/iv_favorite"
-                    android:layout_width="34dp"
-                    android:layout_height="34dp"
-                    android:layout_marginEnd="3dp"
-                    android:onClick="@{() -> vm.onClickFavorite()}"
-                    android:padding="4dp"
-                    android:src="@drawable/icon_favorite"
-                    android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_close"
-                    app:layout_constraintEnd_toStartOf="@id/iv_repeat"
-                    app:layout_constraintTop_toTopOf="@id/iv_close" />
-
-                <ImageView
-                    android:id="@+id/iv_repeat"
-                    android:layout_width="34dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="20dp"
-                    android:onClick="@{() -> vm.onClickRepeat()}"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
-                    android:src="@{vm.repeatClickItem == null || vm.repeatClickItem.name.equals(`없음`) ? @drawable/icon_repeat : @drawable/icon_repeat_enable}"
-                    android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_close"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/iv_close" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:gravity="center"
-                    android:text="@{vm.repeatClickItem == null || vm.repeatClickItem.name.equals(`없음`) ? `` : vm.repeatClickItem.name}"
-                    android:textColor="@{vm.mode.equals(`add`) ? @color/primary1 : @color/grayscale6}"
-                    android:textSize="12dp"
-                    android:visibility="@{vm.mode.equals(`add`) ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_repeat"
-                    app:layout_constraintStart_toStartOf="@+id/iv_repeat"
-                    app:layout_constraintTop_toBottomOf="@id/iv_repeat" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/pretendard_regular"
-                    android:gravity="center"
-                    android:minWidth="34dp"
-                    android:text="@{vm.repeatClickItem != null ? vm.repeatClickItem.name : ``}"
-                    android:textColor="@color/grayscale6"
-                    android:textSize="14dp"
-                    android:visibility="@{vm.mode.equals(`add`) ? View.GONE: View.VISIBLE}"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_close"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/iv_close" />
-
-                <TextView
-                    android:id="@+id/tv_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="52dp"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:text="금액"
-                    android:textColor="@color/grayscale6"
-                    android:textSize="14dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_close" />
-
-                <EditText
-                    android:id="@+id/et_money"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@null"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:gravity="left|center_vertical"
-                    android:hint="금액을 입력하세요"
-                    android:maxLength="18"
-                    android:onTextChanged="@{vm.onCostTextChanged}"
-                    android:text="@{vm.cost}"
-                    android:textColor="@color/primary2"
-                    android:textColorHint="@color/grayscale9"
-                    android:textCursorDrawable="@drawable/custom_cursor_primary2"
-                    android:textSize="39dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tv_money"
-                    app:layout_constraintTop_toBottomOf="@id/tv_money"
-                    bind:inputTypeBasedOnDecimal="@{true}"
-                    bind:setSelection="@{vm.cost}" />
-
-                <LinearLayout
-                    android:id="@+id/ll_category"
-                    android:layout_width="0dp"
-                    android:layout_height="38dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/custom_radius_10_solid_grayscale_12"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/et_money">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_weight="1"
-                        android:background="@{vm.flow.equals(`지출`) ? @drawable/custom_radius_8_solid_white : null}"
-                        android:gravity="center"
-                        android:onClick="@{() -> vm.onClickFlow(`지출`)}"
-                        android:text="지출"
-                        android:textColor="@{vm.flow.equals(`지출`) ? @color/grayscale2 : @color/grayscale8}"
-                        android:textSize="14dp"
-                        bind:adjustCategoryFont="@{vm.flow.equals(`지출`)}" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:background="@{vm.flow.equals(`수입`) ? @drawable/custom_radius_8_solid_white : null}"
-                        android:gravity="center"
-                        android:onClick="@{() -> vm.onClickFlow(`수입`)}"
-                        android:text="수입"
-                        android:textColor="@{vm.flow.equals(`수입`) ? @color/grayscale2 : @color/grayscale8}"
-                        android:textSize="14dp"
-                        bind:adjustCategoryFont="@{vm.flow.equals(`수입`)}" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_marginEnd="4dp"
-                        android:layout_weight="1"
-                        android:background="@{vm.flow.equals(`이체`) ? @drawable/custom_radius_8_solid_white : null}"
-                        android:gravity="center"
-                        android:onClick="@{() -> vm.onClickFlow(`이체`)}"
-                        android:text="이체"
-                        android:textColor="@{vm.flow.equals(`이체`) ? @color/grayscale2 : @color/grayscale8}"
-                        android:textSize="14dp"
-                        bind:adjustCategoryFont="@{vm.flow.equals(`이체`)}" />
-
-                </LinearLayout>
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_date"
@@ -195,7 +205,7 @@
                     android:textColor="@color/grayscale4"
                     android:textSize="14dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ll_category" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -322,7 +332,7 @@
                 <com.suke.widget.SwitchButton
                     android:id="@+id/switch_button"
                     android:layout_width="56dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
                     android:layout_marginEnd="18dp"
                     android:visibility="@{vm.flow.equals(`이체`) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_delete_plan"
@@ -335,49 +345,51 @@
                     app:sb_show_indicator="false"
                     app:sb_uncheck_color="@color/grayscale9" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_delete"
-                    android:layout_width="118dp"
-                    android:layout_height="66dp"
-                    android:background="@color/grayscale2"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:gravity="center"
-                    android:onClick="@{() -> vm.onClickDeleteBtn()}"
-                    android:text="삭제"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    android:visibility="@{vm.mode.equals(`modify`) ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_save"
-                    android:layout_width="0dp"
-                    android:layout_height="66dp"
-                    android:background="@color/primary1"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:gravity="center"
-                    android:onClick="@{() -> vm.onClickSaveBtn()}"
-                    android:text="저장하기"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btn_delete" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="36dp"
                     android:fontFamily="@font/pretendard_medium"
                     android:text="@{`작성자 : ` + vm.nickname}"
                     android:textColor="@color/grayscale8"
                     android:textSize="12dp"
-                    app:layout_constraintBottom_toTopOf="@id/btn_save"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_delete_plan" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete"
+            android:layout_width="118dp"
+            android:layout_height="66dp"
+            android:background="@color/grayscale2"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:onClick="@{() -> vm.onClickDeleteBtn()}"
+            android:text="삭제"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:visibility="@{vm.mode.equals(`modify`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:background="@color/primary1"
+            android:fontFamily="@font/pretendard_bold"
+            android:gravity="center"
+            android:onClick="@{() -> vm.onClickSaveBtn()}"
+            android:text="저장하기"
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_delete" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
