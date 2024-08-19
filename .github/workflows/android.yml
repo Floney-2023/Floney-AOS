@@ -19,6 +19,17 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: gradle
+    - name: access to secrets
+      run: |
+        echo "BASE_URL=$BASE_URL" >> .env
+      env:
+        BASE_URL: ${{secrets.BASE_URL}}
+    - name: access to secrets
+      run: |
+        echo "KAKAO_NATIVE_APP_KEY=$KAKAO_NATIVE_APP_KEY" >> .env
+      env:
+        BASE_URL: ${{secrets.KAKAO_NATIVE_APP_KEY}}
+          
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Clean Bulid
