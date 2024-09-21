@@ -35,6 +35,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "GOOGLE_APP_BANNER_KEY", "${properties['google_app_banner_release_key']}"
+            buildConfigField "String", "GOOGLE_APP_REWARD_KEY", "${properties['google_app_reward_release_key']}"
+        }
+        debug {
+            buildConfigField "String", "GOOGLE_APP_BANNER_KEY", "${properties['google_app_banner_debug_key']}"
+            buildConfigField "String", "GOOGLE_APP_REWARD_KEY", "${properties['google_app_reward_debug_key']}"
         }
         applicationVariants.all { variant ->
             variant.outputs.all {

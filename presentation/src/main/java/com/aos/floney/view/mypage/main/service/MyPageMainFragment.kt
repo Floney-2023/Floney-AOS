@@ -179,7 +179,7 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
         val adRequest = AdRequest.Builder().build()
 
         RewardedAd.load(requireContext(),
-            BuildConfig.google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
+            BuildConfig.GOOGLE_APP_REWARD_KEY, adRequest, object : RewardedAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     dismissLoadingDialog()
                     mRewardAd = null
