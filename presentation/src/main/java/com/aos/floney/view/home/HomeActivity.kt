@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.lifecycleScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.BuildConfig
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.databinding.ActivityHomeBinding
@@ -33,11 +34,12 @@ import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
-import com.aos.floney.BuildConfig.google_app_reward_key
 import com.aos.floney.base.BaseViewModel
 import com.aos.floney.view.common.SuccessToastDialog
 import com.aos.floney.view.common.WarningPopupDialog
 import com.aos.floney.view.login.LoginActivity
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -50,7 +52,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     override fun onResume() {
         super.onResume()
 
-        setUpAdMob()
         val prefs = SharedPreferenceUtil(this)
         lifecycleScope.launch {
             viewModel.getBookInfo(prefs.getString("bookKey", ""))
@@ -73,6 +74,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         setUpViewModelObserver()
         setUpBottomNavigation()
         setUpAccessCheck()
+        setUpAdMob()
     }
     private fun setUpUi() {
         binding.setVariable(BR.eventHolder, this)
@@ -266,33 +268,52 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
     }
     private fun setUpAdMob() {
         showLoadingDialog()
-        MobileAds.initialize(this)
+        MobileAds.initialize(this) { initializationStatus ->
+            loadBannerAd()
+            loadRewardedAd()
+        }
+    }
+
+    private fun loadBannerAd() {
+        val adView = AdView(this)
+        adView.setAdSize(AdSize.BANNER)
+        adView.adUnitId = BuildConfig.GOOGLE_APP_BANNER_KEY
 
         val adRequest = AdRequest.Builder().build()
-        binding.adBanner.loadAd(adRequest)
+        adView.loadAd(adRequest)
+        
+        binding.adBanner.addView(adView)
+    }
 
-        RewardedAd.load(this, google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                mRewardAd = null
-                // 광고 로드 실패 시 로그 출력
-                Timber.e("광고가 아직 로드되지 않음 setup")
-                dismissLoadingDialog()
-            }
+    private fun loadRewardedAd() {
+        val adRequest = AdRequest.Builder().build()
+        RewardedAd.load(
+            this,
+            BuildConfig.GOOGLE_APP_REWARD_KEY,
+            adRequest,
+            object : RewardedAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    mRewardAd = null
+                    Timber.e("광고 로드 실패: ${adError.message}")
+                    dismissLoadingDialog()
+                }
 
-            override fun onAdLoaded(ad: RewardedAd) {
-                dismissLoadingDialog()
-                mRewardAd = ad
+                override fun onAdLoaded(ad: RewardedAd) {
+                    mRewardAd = ad
+                    Timber.d("리워드 광고 로드 성공")
+                    dismissLoadingDialog()
+                }
             }
-        })
+        )
     }
     private fun resetUpAdMob() {
         showLoadingDialog()
         MobileAds.initialize(this)
 
         val adRequest = AdRequest.Builder().build()
-        binding.adBanner.loadAd(adRequest)
+        //binding.adBanner.loadAd(adRequest)
 
-        RewardedAd.load(this, google_app_reward_key, adRequest, object : RewardedAdLoadCallback() {
+        RewardedAd.load(this, BuildConfig.GOOGLE_APP_REWARD_KEY, adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 mRewardAd = null
                 // 광고 로드 실패하더라도 페이지 이동

@@ -18,147 +18,155 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.home.HomeDayTypeFragment">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_total_money"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:elevation="1dp"
-            android:background="@drawable/custom_radius_12_solid_primary5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tv_total_outcome"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="수입"
-                android:textColor="@color/white"
-                android:textSize="12dp"
-                app:layout_constraintEnd_toStartOf="@id/tv_total_income"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_total_outcome_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@{vm.getExtData.totalIncome}"
-                android:fontFamily="@font/pretendard_semibold"
-                android:textColor="@color/white"
-                android:textSize="18dp"
-                app:layout_constraintEnd_toEndOf="@id/tv_total_outcome"
-                app:layout_constraintStart_toStartOf="@id/tv_total_outcome"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_outcome"
-                bind:adjustTotalMoneyText="@{vm.getExtData.totalIncome}"/>
-
-            <TextView
-                android:id="@+id/tv_total_income"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="지출"
-                android:textColor="@color/white"
-                android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tv_total_outcome"
-                app:layout_constraintTop_toTopOf="@id/tv_total_outcome" />
-
-            <TextView
-                android:id="@+id/tv_total_income_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:textColor="@color/white"
-                android:text="@{vm.getExtData.totalOutcome}"
-                android:textSize="18dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/tv_total_income"
-                app:layout_constraintTop_toBottomOf="@id/tv_total_income"
-                bind:adjustTotalMoneyText="@{vm.getExtData.totalOutcome}"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginBottom="64dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="366dp"
-            android:layout_marginTop="16dp"
-            android:id="@+id/cl_money_history"
-            android:background="@drawable/custom_radius_12_solid_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_total_money">
+            android:layout_height="wrap_content"
+            tools:context=".view.home.HomeDayTypeFragment">
 
-            <TextView
-                android:id="@+id/tv_history"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_total_money"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="내역"
-                android:textColor="@color/grayscale1"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:paddingStart="4dp"
-                android:paddingTop="10dp"
-                android:onClick="@{() -> vm.onClickAddHistoryBtn()}"
-                android:paddingEnd="4dp"
-                android:paddingBottom="10dp"
-                android:text="내역 추가"
-                android:textColor="@color/primary2"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_history"
+                android:padding="20dp"
+                android:elevation="1dp"
+                android:background="@drawable/custom_radius_12_solid_primary5"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_history" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                <TextView
+                    android:id="@+id/tv_total_outcome"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="수입"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toStartOf="@id/tv_total_income"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_total_outcome_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@{vm.getExtData.totalIncome}"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    app:layout_constraintEnd_toEndOf="@id/tv_total_outcome"
+                    app:layout_constraintStart_toStartOf="@id/tv_total_outcome"
+                    app:layout_constraintTop_toBottomOf="@id/tv_total_outcome"
+                    bind:adjustTotalMoneyText="@{vm.getExtData.totalIncome}"/>
+
+                <TextView
+                    android:id="@+id/tv_total_income"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="지출"
+                    android:textColor="@color/white"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_total_outcome"
+                    app:layout_constraintTop_toTopOf="@id/tv_total_outcome" />
+
+                <TextView
+                    android:id="@+id/tv_total_income_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:textColor="@color/white"
+                    android:text="@{vm.getExtData.totalOutcome}"
+                    android:textSize="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_total_income"
+                    app:layout_constraintTop_toBottomOf="@id/tv_total_income"
+                    bind:adjustTotalMoneyText="@{vm.getExtData.totalOutcome}"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="366dp"
                 android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginBottom="52dp"
+                android:id="@+id/cl_money_history"
+                android:background="@drawable/custom_radius_12_solid_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:listitem="@layout/item_day_history"
-                bind:diffCallback="@{(Object)UiBookDayModel.Companion}"
-                bind:eventHolder="@{eventHolder}"
-                bind:itemLayout="@{@layout/item_day_history}"
-                bind:items="@{vm.getDayList}"
-                app:layout_constraintTop_toBottomOf="@id/tv_history" />
+                app:layout_constraintTop_toBottomOf="@id/cl_total_money">
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="86dp"
-                android:visibility="@{vm.getDayList.size() > 0 ? View.GONE : View.VISIBLE}"
-                android:src="@drawable/not_exist_history"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/cl_money_history"
-                app:layout_constraintBottom_toBottomOf="@id/cl_money_history"/>
+                <TextView
+                    android:id="@+id/tv_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="내역"
+                    android:textColor="@color/grayscale1"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:paddingStart="4dp"
+                    android:paddingTop="10dp"
+                    android:onClick="@{() -> vm.onClickAddHistoryBtn()}"
+                    android:paddingEnd="4dp"
+                    android:paddingBottom="10dp"
+                    android:text="내역 추가"
+                    android:textColor="@color/primary2"
+                    android:textSize="12dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_history"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_history" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:listitem="@layout/item_day_history"
+                    bind:diffCallback="@{(Object)UiBookDayModel.Companion}"
+                    bind:eventHolder="@{eventHolder}"
+                    bind:itemLayout="@{@layout/item_day_history}"
+                    bind:items="@{vm.getDayList}"
+                    app:layout_constraintTop_toBottomOf="@id/tv_history" />
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="86dp"
+                    android:visibility="@{vm.getDayList.size() > 0 ? View.GONE : View.VISIBLE}"
+                    android:src="@drawable/not_exist_history"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/cl_money_history"
+                    app:layout_constraintBottom_toBottomOf="@id/cl_money_history"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

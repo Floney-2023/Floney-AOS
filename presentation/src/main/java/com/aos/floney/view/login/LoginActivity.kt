@@ -191,12 +191,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
                 if (error != null) {
                     Timber.e("error? ${error}")
-                    viewModel.baseEvent(BaseViewModel.Event.ShowToast("4카카오 로그인에 실패하였습니다."))
                     viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                 } else if (token != null) {
                     UserApiClient.instance.me { user, error ->
                         if (error != null) {
-                            viewModel.baseEvent(BaseViewModel.Event.ShowToast("5카카오 로그인에 실패하였습니다."))
+                            viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                             viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                         } else if (user != null) {
                             if (user.kakaoAccount != null) {
@@ -208,7 +207,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                                 )
                                 viewModel.isAuthTokenCheck("kakao", token.accessToken)
                             } else {
-                                viewModel.baseEvent(BaseViewModel.Event.ShowToast("6카카오 로그인에 실패하였습니다."))
+                                viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                                 viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                             }
                         }
@@ -237,7 +236,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                     } else {
                         UserApiClient.instance.me { user, error ->
                             if (error != null) {
-                                viewModel.baseEvent(BaseViewModel.Event.ShowToast("1카카오 로그인에 실패하였습니다."))
+                                viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                             } else if (user != null) {
                                 if (token != null) {
                                     Timber.e("user $user")
@@ -251,11 +250,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
                                         )
                                         viewModel.isAuthTokenCheck("kakao", token.accessToken)
                                     } else {
-                                        viewModel.baseEvent(BaseViewModel.Event.ShowToast("2카카오 로그인에 실패하였습니다."))
+                                        viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                                         viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                                     }
                                 } else {
-                                    viewModel.baseEvent(BaseViewModel.Event.ShowToast("3카카오 로그인에 실패하였습니다."))
+                                    viewModel.baseEvent(BaseViewModel.Event.ShowToast("카카오 로그인에 실패하였습니다."))
                                     viewModel.baseEvent(BaseViewModel.Event.HideLoading)
                                 }
                             }

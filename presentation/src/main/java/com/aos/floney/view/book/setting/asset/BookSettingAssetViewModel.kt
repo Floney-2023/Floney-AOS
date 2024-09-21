@@ -16,6 +16,8 @@ import com.aos.usecase.booksetting.BooksCodeCheckUseCase
 import com.aos.usecase.booksetting.BooksInfoAssetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -39,6 +41,8 @@ class BookSettingAssetViewModel @Inject constructor(
 
     // 금액
     var cost = MutableLiveData<String>("")
+
+    private val mutex = Mutex()
 
     init {
         settingInitAsset()
@@ -69,19 +73,16 @@ class BookSettingAssetViewModel @Inject constructor(
     // 초기 자산 설정
     fun onClickSaveButton(){
         viewModelScope.launch {
-
-            baseEvent(Event.ShowLoading)
-            booksInfoAssetUseCase(
-                prefs.getString("bookKey",""),
-                settingCost()).onSuccess {
-
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
-                _initAssetSheet.emit(true)
-            }.onFailure {
-
-                baseEvent(Event.HideLoading)
-                baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
+            if (mutex.isLocked) return@launch
+            mutex.withLock {
+                booksInfoAssetUseCase(
+                    prefs.getString("bookKey",""),
+                    settingCost()).onSuccess {
+                    baseEvent(Event.ShowSuccessToast("변경이 완료되었습니다."))
+                    _initAssetSheet.emit(true)
+                }.onFailure {
+                    baseEvent(Event.ShowToast(it.message.parseErrorMsg(this@BookSettingAssetViewModel)))
+                }
             }
         }
     }
