@@ -22,8 +22,8 @@ android {
         applicationId "com.aos.floney"
         minSdk 24
         targetSdk 34
-        versionCode 4
-        versionName "1.0.7"
+        versionCode 10
+        versionName "1.0.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -76,6 +76,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.android.gms:play-services-auth:21.1.1'
 
+
+    implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
+
     // 카카오로그인
     implementation "com.kakao.sdk:v2-all:2.14.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation "com.kakao.sdk:v2-user:2.14.0" // 카카오 로그인
@@ -100,7 +103,7 @@ dependencies {
     implementation 'com.appsflyer:af-android-sdk:6.9.0'
 
     // google AdMob
-    implementation("com.google.android.gms:play-services-ads:22.6.0")
+    implementation("com.google.android.gms:play-services-ads:23.3.0")
 
     // viweModels
     implementation 'androidx.activity:activity-ktx:1.1.0'
