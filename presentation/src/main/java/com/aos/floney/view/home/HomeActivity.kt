@@ -279,18 +279,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(R.layout.a
         adView.setAdSize(AdSize.BANNER)
         adView.adUnitId = BuildConfig.GOOGLE_APP_BANNER_KEY
 
-
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
-
-
+        
         binding.adBanner.addView(adView)
-        /*
-        val adSize = AdSize.BANNER
-        binding.adBanner.setAdSize(adSize)
-        binding.adBanner.adUnitId = BuildConfig.GOOGLE_APP_BANNER_KEY
-        val adRequest = AdRequest.Builder().build()
-        binding.adBanner.loadAd(adRequest)*/
     }
 
     private fun loadRewardedAd() {
