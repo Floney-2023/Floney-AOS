@@ -11,6 +11,7 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialResponse
 import androidx.lifecycle.lifecycleScope
 import com.aos.data.util.SharedPreferenceUtil
+import com.aos.floney.BuildConfig
 import com.aos.floney.R
 import com.aos.floney.base.BaseActivity
 import com.aos.floney.base.BaseViewModel
@@ -283,11 +284,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         Timber.e("onClickGoogleLogin")
 //        googleResultLauncher.launch(googleClient.signInIntent)
 
-        val credentialManager = androidx.credentials.CredentialManager.create(applicationContext)
+        val credentialManager = androidx.credentials.CredentialManager.create(this@LoginActivity)
 
         googleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)
-            .setServerClientId(getString(R.string.default_web_client_id))
+            .setServerClientId(BuildConfig.googleoauthkey)
             .setAutoSelectEnabled(true)
             .build()
 
@@ -300,7 +301,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
             try {
                 val result = credentialManager.getCredential(
                     request = request,
-                    context = applicationContext,
+                    context = this@LoginActivity,
                 )
                 Timber.e("result ${result}")
                 handleSignIn(result)
