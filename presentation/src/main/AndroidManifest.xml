@@ -50,6 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".view.login.LoginActivity"
+            android:launchMode="singleTop"
             android:exported="false" />
         <activity
             android:name=".view.onboard.OnBoardActivity"
