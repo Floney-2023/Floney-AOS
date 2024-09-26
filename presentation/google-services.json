@@ -14,15 +14,31 @@
       },
       "oauth_client": [
         {
-          "client_id": "918730717655-0d30ruqu92n4sufj4ui6ukcee8ktn5su.apps.googleusercontent.com",
+          "client_id": "918730717655-2h45h6uvvskacc8pjfd16p8855oobcp2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.aos.floney",
-            "certificate_hash": "d01462657fff3e92f1d740faa0436803b935d3fb"
+            "certificate_hash": "0868f2c51ed46c3502fc8c121537ab19bad57f92"
           }
         },
         {
-          "client_id": "918730717655-na8j2blf20ud312335ob5a8u0ml45l4a.apps.googleusercontent.com",
+          "client_id": "918730717655-6eau0kgpprse14059qn4a05isfdhk9bm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aos.floney",
+            "certificate_hash": "be2b16ff2dd1c2519511a98b37d45a1633832184"
+          }
+        },
+        {
+          "client_id": "918730717655-ed8e6ebdrh9adsa8uv4i7ng9rbh4jmd6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aos.floney",
+            "certificate_hash": "1682f72492f2bce556c48e2a8d5ccecd05b21253"
+          }
+        },
+        {
+          "client_id": "918730717655-prejp1r7eeh9m1j8fgt6p6k6p7sqd0q9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +51,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "918730717655-na8j2blf20ud312335ob5a8u0ml45l4a.apps.googleusercontent.com",
+              "client_id": "918730717655-fv6illgnhvl3ne5sha3qjjr9kbjuk4ri.apps.googleusercontent.com",
               "client_type": 3
             },
             {

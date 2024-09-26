@@ -64,7 +64,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>(R.layou
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(BuildConfig.GOOGLE_OAUTH_KEY)
+            .requestIdToken("918730717655-prejp1r7eeh9m1j8fgt6p6k6p7sqd0q9.apps.googleusercontent.com")
             .requestEmail()
             .requestProfile()
             .build()
