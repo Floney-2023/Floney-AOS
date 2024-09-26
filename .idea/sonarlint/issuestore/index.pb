@@ -43,3 +43,9 @@ k
 ;domain/src/main/java/com/aos/model/home/UiBookMonthModel.kt,9\f\9fdd89dca3698933aa94707ca9d4295dfc8b091b
 w
 Gdomain/src/main/java/com/aos/usecase/home/GetMoneyHistoryDaysUseCase.kt,4\0\4047bc23f345dd47b2a6dcce1b7f0f4ee84c7033
+X
+(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+i
+9data/src/main/java/com/aos/data/util/CustomCallAdapter.kt,c\b\cba19154eacf2f25af72b1dbb4a25b65f46764d0
+p
+@data/src/main/java/com/aos/data/util/CustomCallAdapterFactory.kt,9\7\97a6ac71c8ff0465c8ec11c3592a86a61755a5ce
