@@ -19,6 +19,7 @@ import com.aos.floney.databinding.ActivityMyPageBinding
 import com.aos.floney.databinding.FragmentMyPageMainBinding
 import com.aos.floney.ext.repeatOnStarted
 import com.aos.floney.view.analyze.AnalyzeActivity
+import com.aos.floney.view.common.ErrorToastDialog
 import com.aos.floney.view.home.HomeActivity
 import com.aos.floney.view.home.HomeMonthTypeFragment
 import com.aos.floney.view.mypage.MyPageActivity
@@ -46,6 +47,7 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.play.core.review.ReviewManagerFactory
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -87,6 +89,26 @@ class MyPageMainFragment : BaseFragment<FragmentMyPageMainBinding, MyPageMainVie
                 if(it) {
                     val activity = requireActivity() as MyPageActivity
                     activity.startInformActivity()
+                }
+            }
+        }
+        repeatOnStarted {
+            viewModel.reviewPage.collect {
+                if(it) {
+                    val manager = ReviewManagerFactory.create(requireContext())
+                    val request = manager.requestReviewFlow()
+                    request.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val reviewInfo = task.result
+                            val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
+                            flow.addOnCompleteListener {
+                                // 리뷰 플로우가 종료된 후의 처리
+                            }
+                        } else {
+                            // 에러 발생 시 처리
+                            ErrorToastDialog(requireContext(), "리뷰 작성하기 페이지 이동 실패하였습니다.").show()
+                        }
+                    }
                 }
             }
         }

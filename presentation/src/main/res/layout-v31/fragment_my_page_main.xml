@@ -127,7 +127,8 @@
                                 android:layout_marginBottom="6dp"
                                 android:fontFamily="@font/floney_pretendard_bold"
                                 android:text="@{vm.mypageInfo.nickname}"
-                                android:textAppearance="@style/mypage_user_name" />
+                                android:textSize="14dp"
+                                android:textColor="@color/grayscale2" />
 
                             <TextView
                                 android:id="@+id/tv_email"

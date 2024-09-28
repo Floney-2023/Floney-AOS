@@ -91,6 +91,9 @@ class MyPageMainViewModel @Inject constructor(
     private var _supposePage = MutableEventFlow<Boolean>()
     val supposePage: EventFlow<Boolean> get() = _supposePage
 
+    // 리뷰 작성하기 페이지
+    private var _reviewPage = MutableEventFlow<Boolean>()
+    val reviewPage: EventFlow<Boolean> get() = _reviewPage
 
     // 마이페이지 정보 로드
     private var _loadCheck = MutableEventFlow<Boolean>()
@@ -215,7 +218,9 @@ class MyPageMainViewModel @Inject constructor(
     // 리뷰 작성하기 페이지 이동
     fun onClickReviewPage()
     {
-
+        viewModelScope.launch {
+            _reviewPage.emit(true)
+        }
     }
 
     // 개인 정보 처리방침 페이지 이동
