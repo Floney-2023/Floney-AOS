@@ -93,6 +93,15 @@
             android:name=".view.book.setting.favorite.BookFavoriteActivity"
             android:exported="false" />
         <activity
+            android:name=".view.subscribe.SubscribeInformActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.subscribe.SubscribePlanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.subscribe.UnsubscribeActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.book.entrance.BookEntranceActivity"
             android:exported="true">
             <intent-filter android:autoVerify="true">
