@@ -39,6 +39,7 @@ class SubscribeInformActivity : BaseActivity<ActivitySubscribeInformBinding, Sub
 
     @Inject
     lateinit var sharedPreferenceUtil: SharedPreferenceUtil
+    private lateinit var billingManager: BillingManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +56,8 @@ class SubscribeInformActivity : BaseActivity<ActivitySubscribeInformBinding, Sub
             // 다시 구독하기
             viewModel.resubscribe.collect {
                 if(it) {
-
+                    billingManager = BillingManager(this@SubscribeInformActivity)
+                    billingManager.startConnection()
                 }
             }
         }
