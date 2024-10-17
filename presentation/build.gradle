@@ -22,7 +22,7 @@ android {
         applicationId "com.aos.floney"
         minSdk 24
         targetSdk 34
-        versionCode 30
+        versionCode 33
         versionName "1.1.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
